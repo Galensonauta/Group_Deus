@@ -1,0 +1,19 @@
+{
+  "name": "group_deus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Galensonauta/Group_Deus.git"
+  },
+  "author": "Galensonauta",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Galensonauta/Group_Deus/issues"
+  },
+  "homepage": "https://github.com/Galensonauta/Group_Deus#readme"
+}
