@@ -4,57 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
     <link rel="stylesheet" href="./styles/app.css"/>
+    <link rel="stylesheet" href="./styles/appSearch.css"/>
 </head>
 <body>
-    <div class="top">
-        <div class="columns">
-            <div class="column is-full featured_wrapper p-0">
-                <img src="https://www.shorturl.at/jnoAK" class="featured">
-                <div class="title_wrapper">
-                    <span class="has-text-white">Trending Today</span>
-                    <h1 class="title is-1 has-text-white">The Untold Story of the great Lorem Ipsum</h1>
-                    <button class="button is-medium">Watch It Now</button>
+    <header>
+        <div class="search-box">
+            <input type="text" class="input-search" placeholder="Type to Search...">
+            <button id="btnSearch"><i class="fas fa-search"></i></button>
+          </div>
+        <div id="portada" class="inactive">
+            <div class="columns">
+                <div class="column is-full featured_wrapper p-0">
+                    <img src="https://scontent.fluq5-1.fna.fbcdn.net/v/t39.30808-6/327392189_1171288710417418_4125230425579375483_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_ohc=Ayo8379yeIcQ7kNvgGXUmIr&_nc_ht=scontent.fluq5-1.fna&oh=00_AYCKRu1Qk4Ljb79RJBlTYWaM-lTXwZmb4p4Uktq9qeBdJw&oe=6679918B" class="featured">
+                    <!-- <div class="title_wrapper">
+                        <span class="has-text-white">Trending Today</span>
+                        <h1 class="title is-1 has-text-white">The Untold Story of the great Lorem Ipsum</h1>
+                        <button class="button is-medium">Watch It Now</button>
+                    </div> -->
+                    <span id="arrowBack">&lt;</span>
+                    <div class="forms">
+                        <!-- <form class="search">
+                            <input type="text" placeholder="Busqueda" />
+                            <button id="searchBtn">🔍</button>
+                        </form> -->
+                        <h1>Seleccione una categoria</h1>
+                        <select id="apiDropdown">
+                            <option>Seleccione un genero</option>
+                        </select>
+                        <h1>Seleccione un pais</h1>
+                        <select id="apiDropdownPais">
+                            <option2>Seleccione un pais</option>
+                        </select>
+                    </div>                  
                 </div>
             </div>
-        </div>
-    </div>
+        </div>    
+    </header>
+    
     <div class="container">
-        <div class="last">
-            <div class="column is-full">
-                <p class="has-text-white">Action Movies Collection</p>
+        <div class="column is-full">
+            <h1 class="collection">Tendencias</h1>
+            <div id="last">                  
             </div>
-            <!-- <div class="column is-one-quarter">
-                <img src="https://www.shorturl.at/nCEN2">
-            </div>
-            <div class="column is-one-quarter">
-                <img src="https://www.shorturl.at/pwMU1">
-            </div>
-            <div class="column is-one-quarter">
-                <img src="https://www.shorturl.at/jkqB8">
-            </div>
-            <div class="column is-one-quarter">
-                <img src="https://www.shorturl.at/ciADR">
-            </div> -->
-        </div>
-        <div class="last2">
-            <!-- <div class="column is-one-quarter">
-                <img src="https://www.shorturl.at/aefq1">
-            </div>
-            <div class="column is-one-quarter">
-                <img src="https://www.shorturl.at/BGV34">
-            </div>
-            <div class="column is-one-quarter">
-                <img src="https://www.shorturl.at/uzCR2">
-            </div>
-            <div class="column is-one-quarter">
-                <img src="https://www.shorturl.at/hCGOT">
-            </div>
-        </div> -->
-    </div>
+            
+       </div>
+      
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
+    <script src="./src/node.js"></script>
     <script type="module" src="./src/main.js"></script>
+    <script type="module" src="./src/navigation.js"></script>
 </body>
 </html>
