@@ -2,7 +2,7 @@
 
 body,
 html {
-	background: #000000;
+	background: #643027af;
 	padding: 0;
 	margin: 0;
 	padding-bottom: 6rem;
@@ -24,12 +24,26 @@ img {
 	-ms-transform: scale(1.1);
 	transform: scale(1.1);
 }
-.last {
-	margin-top: 6.5rem;
+#arrowBack {
+	font-family: "Montserrat", sans-serif;
+	font-size: 36px;
+	margin-bottom: 16px;
+	cursor: pointer;
+	display: inline-block;
+  }
+  .header-arrow--white {
+	color: rgb(red, green, blue)
+  }
+.forms{
+    display: flex;
+    margin-top: 0em;
+    unicode-bidi: isolate;}
+#last {
+	margin-top: .5rem;
     display: flex;
 }
-.last2 {
-	margin-top: 6.5rem;
+#last2 {
+	margin-top: 15rem;
     display: flex;
 }
 .featured_wrapper {
@@ -38,11 +52,11 @@ img {
 .featured_wrapper img {
 	width: 100%;
 	width: 100%;
-	height: 100vh;
+	height: 35vh;
 	-o-object-fit: cover;
 	object-fit: cover;
 	-o-object-position: top;
-	object-position: top;
+	object-position: inherit;
 }
 .title_wrapper {
 	position: absolute;
@@ -57,13 +71,16 @@ img {
 	width: 70%;
 }
 button {
-	background: #f40612 !important;
 	color: #fff !important;
 	font-size: 18px;
 	padding: 0.5rem 3rem;
 	outline: none;
 	border: 0 !important;
 }
+.inactive {
+	display: none;
+  }
+  
 @media (max-width: 768px) {
 	.title_wrapper {
 		text-align: center;
