@@ -1,0 +1,111 @@
+
+  .titlePageH1 {
+    font-family: 'Montserrat', Arial, sans-serif;
+    position: absolute;
+    font-size: calc(3px + 2vw);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    text-shadow: 0 0 0.15em #1da9cc;
+    user-select: none;
+    white-space: nowrap;
+    filter: blur(0.007em);
+    animation: shake 2.5s linear forwards infinite;
+    left: 50%;
+}
+.titlePageH1 .titlePageSpan{  
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+}
+
+
+#containerMovies {
+    background: #000000;
+    border-radius: 5px;
+    position: relative;
+    top: 83px;
+  }
+  #last {    
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+    position: relative;
+    top: 83px;
+    justify-items: stretch; /* Centra las tarjetas sobrantes en la fila */
+    
+    /*grid-auto-rows: 300px;  Establece una altura fija para las tarjetas */
+   /* gap: 1rem; Espacio entre las tarjetas */
+    
+}
+
+.card{
+    color: #ffffff;
+    height: 450px;
+    background: #fff;
+    box-shadow: 0px 4px 7px rgba(0,0,0,.5);
+    cursor: pointer;
+    transition: all .5s cubic-bezier(.8,.5,.2,1.4);
+    overflow: hidden;
+}
+.card img{
+    width: 100%;
+    height:100%;
+    transition: all .7s cubic-bezier(.8,.5,.2,1.4);
+}
+.descriptions{
+    position: absolute;
+    top:0px;
+    left:0px;
+    width:100%;
+    height:100%;
+    padding: 20px;
+    box-sizing: border-box;
+    clip-path: circle(0% at 100% 100%);
+}
+.card.clicked  img{
+    transition: all .5s cubic-bezier(.8,.5,.2,1.4);
+    transform: scale(1.6) rotate(10deg);
+    filter: blur(10px);
+    
+}
+.card.clicked {
+    transition: all .5s cubic-bezier(.8,.5,.2,1.4);
+    box-shadow: 0px 2px 3px rgba(0,0,0,.3);
+    transform: scale(1.2);
+    filter: drop-shadow(12px 12px 10px #892CDC);   
+
+}
+ .card.clicked  .descriptions{
+    left:0px;
+    transition: all .7s ease-in-out;
+    clip-path: circle(75%);
+}
+.movieDirectingPreview:hover{
+    background-color: rgb(94, 255, 0);
+}
+.movieOrigenPreview:hover{
+    background-color: rgb(0, 30, 255);
+}
+.btnMovie-liked::before{
+    content: "🤍";
+    cursor: pointer;
+  
+}
+    
+
+.btnMovie-likeded::before{
+    content: "❤️";    
+    cursor: pointer;    
+   
+}
+.btnMovie-id::before{
+    content: "👁️";
+    cursor: pointer;    
+}
+
+
+
+

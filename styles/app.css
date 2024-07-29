@@ -1,86 +1,53 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;800&display=swap");
 
-body,
 html {
-	background: #643027af;
-	padding: 0;
-	margin: 0;
-	padding-bottom: 6rem;
-	font-family: "Montserrat", sans-serif;
-	width: 100%;
+  padding: 0;
+  margin: 0;
+  padding-bottom: 6rem;
+  font-family: "Montserrat", sans-serif;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
-.container {
-	padding-bottom: 3rem;
+body{ 
+  width:100%;
+  font-family: 'Lato';
+  background-color: #060302;
 }
-img {
-	-webkit-box-reflect: below 5px
-		linear-gradient(transparent, transparent, rgba(0, 0, 0, 0.4));
-	-webkit-transition: all 0.5s ease;
-	-o-transition: all 0.5s ease;
-	transition: all 0.5s ease;
-}
-.container img:hover {
-	-webkit-transform: scale(1.1);
-	-ms-transform: scale(1.1);
-	transform: scale(1.1);
-}
-#arrowBack {
-	font-family: "Montserrat", sans-serif;
-	font-size: 36px;
-	margin-bottom: 16px;
-	cursor: pointer;
-	display: inline-block;
-  }
-  .header-arrow--white {
-	color: rgb(red, green, blue)
-  }
-.forms{
-    display: flex;
-    margin-top: 0em;
-    unicode-bidi: isolate;}
-#last {
-	margin-top: .5rem;
-    display: flex;
-}
-#last2 {
-	margin-top: 15rem;
-    display: flex;
-}
-.featured_wrapper {
+.home{
 	position: relative;
 }
-.featured_wrapper img {
-	width: 100%;
-	width: 100%;
-	height: 35vh;
-	-o-object-fit: cover;
-	object-fit: cover;
-	-o-object-position: top;
-	object-position: inherit;
+#apiDropDownPaisProvider{    
+    background:#892CDC;
+    border-radius: 25px;
+    color:#060302;
+    font-size: 1.2em;
+    font-variant: small-caps;
+    cursor: pointer;
+    position: absolute;
+    bottom: 85%;
+    right: 45%;
+  }
+  #lastLiked{    
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));    
+    left: 1%;
+    position: relative;
+    top: 283px;
+    justify-items: start; 
+    background: linear-gradient( -135deg,transparent 35px,#060302 0);
 }
-.title_wrapper {
-	position: absolute;
-	width: 100%;
-	left: 2rem;
-	bottom: 2rem;
-	padding: 20px 40px;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-}
-.title_wrapper h1 {
-	width: 70%;
-}
-button {
-	color: #fff !important;
-	font-size: 18px;
-	padding: 0.5rem 3rem;
-	outline: none;
-	border: 0 !important;
+#lastLikedTv{
+  display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));    
+    left: 1%;
+    position: relative;
+    top: 283px;
+    justify-items: start; 
+    background: linear-gradient( -135deg,transparent 35px,#060302 0);
 }
 .inactive {
 	display: none;
-  }
-  
+  }  
 @media (max-width: 768px) {
 	.title_wrapper {
 		text-align: center;
@@ -90,9 +57,7 @@ button {
 		font-size: 32px !important;
 		width: 100%;
 	}
-	.container {
-		padding: 20px;
-	}
+	
 }
 @media (max-width: 480px) {
 	.column.is-one-quarter img {
@@ -100,3 +65,5 @@ button {
 		margin-bottom: 7rem;
 	}
 }
+
+
