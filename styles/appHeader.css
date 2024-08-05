@@ -1,40 +1,49 @@
-#portada{
-  width: 99%;
-  height: 100px;
+.cine { 
+  width: 61%;
+  height: 85px;
   margin: 0 auto;
-    padding: 30px 0px;
-    background: linear-gradient( -135deg,transparent 35px,#060302 0);
-    filter: drop-shadow(12px 12px 10px #892CDC);   
-    text-align: center;      
-    position: relative;
-    right: 1%;
-  }
-  .titlePortadaH1--header{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #000;
-    overflow: hidden;
-  }
-  .titlePortadaH1 {
-    font-family: 'Montserrat', Arial, sans-serif;
+  background: linear-gradient(-135deg, transparent 35px, #151515 0);
+  filter: drop-shadow(1px 2px 6px  #DC84F3);
+  text-align: center;
+  position: relative;
+  right: 19%;
+}
+.series {
+  width: 61%;
+  height: 85px;
+  margin: 0 auto;
+  background: linear-gradient(-135deg, transparent 35px, #151515 0);
+  filter: drop-shadow(1px 2px 6px  #910A67);
+  text-align: center;
+  position: relative;
+  right: 19%;
+}
+.titlePortadaH1--header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #000;
+  overflow: hidden;
+}
+.titlePortadaH1 {
+  font-family: 'Montserrat', Arial, sans-serif;
     position: absolute;
-    font-size: calc(20px + 5vw);
+    font-size: calc(26px + 3vw);
     font-weight: 700;
     color: #fff;
     letter-spacing: 0.02em;
     text-transform: uppercase;
-    text-shadow: 0 0 0.15em #1da9cc;
+    text-shadow: 0 0 0.15em #8C3061;
     user-select: none;
     white-space: nowrap;
     filter: blur(0.007em);
-    animation: shake 2.5s linear forwards ;
-      right: 69%;
-    top: -12%;
+    animation: shake 2.5s linear forwards;
+    right: 70%;
+    top: -19%;
     cursor: pointer;
 }
-.titlePortadaH1 .titlePortadaSpan{  
+.titlePortadaH1 .titlePortadaSpan {
   position: absolute;
   top: 0;
   left: 0;
@@ -43,188 +52,261 @@
 }
 .titlePortadaH1::before,
 .titlePortadaH1::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 .titlePortadaH1::before {
-  animation: crack1 3.5s linear forwards ;
-          clip-path: polygon(0% 0%, 10% 0%, 55% 100%, 0% 100%);
-        
+  animation: crack1 3.5s linear forwards;
+  clip-path: polygon(0% 0%, 10% 0%, 55% 100%, 0% 100%);
+
 }
 .titlePortadaH1::after {
-  animation: crack2 3.5s linear forwards ;
+  animation: crack2 3.5s linear forwards;
   clip-path: polygon(44% 0%, 100% 0%, 100% 100%, 70% 100%);
 
 }
-@keyframes shake {
-  5%, 15%, 25%, 35%, 55%, 65%, 75%, 95% {
-      filter: blur(0.018em);
-      transform: translateY(0.018em) rotate(0deg);
-  }
-
-  10%, 30%, 40%, 50%, 70%, 80%, 90% {
-      filter: blur(0.01em);
-      transform: translateY(-0.018em) rotate(0deg);
-  }
-
-  20%, 60% {
-      filter: blur(0.03em);
-      transform: translate(-0.018em, 0.018em) rotate(0deg);
-  }
-
-  45%, 85% {
-      filter: blur(0.03em);
-      transform: translate(0.018em, -0.018em) rotate(0deg);
-  }
-
-  100% {
-      filter: blur(0.007em);
-      transform: translate(0) rotate(-0.5deg);
-  }
+#modeH1{
+  font-family: 'Montserrat', Arial, sans-serif;
+  position: absolute;
+  font-size: calc(15px + 3vw);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-shadow: 0 0 0.15em #C63C51;
+  user-select: none;
+  white-space: nowrap;
+  filter: blur(0.007em);
+  animation: shake 2.5s linear forwards;
+  right: 6%;
+  top: -52%;
 }
-@keyframes crack1 {
-  0%, 95% {
-      transform: translate(-50%, -50%);
-  }
-  100% {
-      transform: translate(-51%, -48%);
-  }
+#btnMode {
+  background: #151515;
+  cursor: pointer;
+  position: absolute;
+  top: 40%;
+  right: 34%;
+  border-radius: 70%;
+  white-space: nowrap;
 }
-@keyframes crack2 {
-  0%, 95% {
-      transform: translate(-50%, -50%);
-  }
-  100% {
-      transform: translate(-49%, -53%);
-  }
-}
-  .search-box {
-    width: 30%;
-    height: fit-content;
-    position: absolute;
-    top: 70%;
-    right: 84%;
-}  
-  .input-search {
-    height: 25px;
-    width: 75%;
-    border-style: none;
-    padding: 5px;
-    font-size: 15px;
-    letter-spacing: 2px;
-    outline: none;
-    border-radius: 25px;
-    transition: all .5s ease-in-out;
-    background-color: #52057B;
-    padding-right: 47px;
-    color: #ffffff;
-    font-family: "Montserrat", sans-serif;
-    position: absolute;
-}
-  .input-search::placeholder{
-    font-family: "Montserrat", sans-serif;
-    color:#060302;
-    font-size: 18px;
-    letter-spacing: 2px;
-    font-weight: 800;
-  }
-  #btnSearch{
-    position: absolute;
-    border-style: none;
-    font-size: 20px;
-    font-weight: bold;
-    outline: none;
-    cursor: pointer;
-    border-radius: 50%;
-    color: #ffffff;
-    background-color: transparent;
-    pointer-events: painted;
-    left: 127%;
-  } 
-  .input-search:focus{
-    font-family: "Montserrat", sans-serif;
-    width: 300px;
-    border-radius: 0px;
-    background-color: transparent;
-    border-bottom:1px solid #892CDC;
-    transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
-  }
-  #apiDropdownPais{    
-    background:#892CDC;
-    border-radius: 25px;
-    color:#060302;
-    font-size: 1.2em;
-    font-variant: small-caps;
-    cursor: pointer;
-    position: absolute;
-    top: 75%;
-    right: 25%;
-  }
-#apiDropdown {
-  background: #892CDC;
+#apiDropDownPaisProvider{    
+  background:#060302;
   border-radius: 25px;
-    color:#060302;
-    font-size: 1.2em;
-    font-variant: small-caps;
-    cursor: pointer;
-    position: absolute;
-    top: 75%;
-    right: 58%;
-
-}
-select::after {
-  float: right;
-  content: "+";
-}
-#btnTrends{
-  background:  #0f0f0f;  
-  color: white;
+  color:#fff;
   font-size: 1.2em;
   font-variant: small-caps;
   cursor: pointer;
   position: absolute;
-  top: 74%;
-  right: 1%;
-
+  top: 130%;
+  left: 2%;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-weight: 700;
+  text-shadow: 0 0 0.15em #1da9cc;
+}
+#apiDropdownPais {
+  background: #151515;
+  border-radius: 25px;
+  color: #fff;
+  font-size: 1.2em;
+  font-variant: small-caps;
+  cursor: pointer;
+  position: absolute;
+  top: 3%;
+  left: 103%;
 }
 
+#apiDropdown {
+  background: #151515;
+  border-radius: 25px;
+  color: #fff;
+  font-size: 1.2em;
+  font-variant: small-caps;
+  cursor: pointer;
+  position: absolute;
+  top: 40%;
+  left: 103%;  
+}
+.search-box {
+  width: 25%;
+  height: fit-content;
+  position: absolute;
+  top: 75%;
+  left:90%;;
+}  
+.input-search {
+  height: 25px;
+  width: 85%;
+  border-style: none;
+  padding: 5px;
+  font-size: 18px;
+  letter-spacing: 2px;
+  outline: none;
+  border-radius: 25px;
+  transition: all .5s ease-in-out;
+  background-color: #151515;
+  padding-right: 100px;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  position: absolute;
+  font-weight: 700;
+}  
+.input-search::placeholder {
+  font-family: "Montserrat", sans-serif;
+  color: #ffffff;
+  font-size: 18px;
+  letter-spacing: 2px;
+  font-weight: 800;
+}  
+#btnSearch {
+  position: absolute;
+  border-style: none;
+  font-size: 20px;
+  font-weight: bold;
+  outline: none;
+  cursor: pointer;
+  border-radius: 50%;
+  color: #ffffff;
+  background-color: transparent;
+  pointer-events: painted;
+  left: 165%;
+}
+.input-search:focus {
+  font-family: "Montserrat", sans-serif;
+  border-radius: 10px;
+  background-color: #151515b2;
+  border-bottom: 1px solid #892CDC;
+}
+
+select::after {
+  float: right;
+  content: "+";
+}  
+#btnTrends {
+  background: #151515;
+  color: #fff;
+  font-size: 1.2em;
+  font-variant: small-caps;
+  cursor: pointer;
+  position: absolute;
+  top: 130%;
+  left: 50%;
+  border-radius: 25px;
+}
 #btnTrends:hover {
   background: rgb(243, 242, 242);
   color: #52057B;
 }
-#btnMode{  
-  background:  #0f0f0f;
-  color: white;
+#btnRank {
+  background: #151515;
+  color: #fff;
   font-size: 1.2em;
   font-variant: small-caps;
   cursor: pointer;
   position: absolute;
-  top: 74%;
-  right: 11%;
+  top: 130%;
+  left: 67%;
+  border-radius: 25px;
 }
-
-#btnCollection:hover {
-  background: rgb(239, 235, 235);
+#btnRank:hover {
+  background: rgb(243, 242, 242);
   color: #52057B;
 }
+.titlePageH1 {
+  font-family: 'Montserrat', Arial, sans-serif;
+  position: absolute;
+  font-size: calc(3px + 2vw);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-shadow: 0 0 0.15em #522258;
+  user-select: none;
+  white-space: nowrap;
+  filter: blur(0.007em);
+  animation: shake 2.5s linear forwards infinite;
+}
+.titlePageH1 .titlePageSpan{  
+  position: absolute;
+  top: 25px;
+  left: 890px;
+  transform: translate(-50%, -50%);
+}
+@keyframes shake {
 
+  5%,
+  15%,
+  25%,
+  35%,
+  55%,
+  65%,
+  75%,
+  95% {
+    filter: blur(0.018em);
+    transform: translateY(0.018em) rotate(0deg);
+  }
 
-@media (max-width: 480px){
-#portada{
-  width: 99%;
-  margin: 0 auto;
+  10%,
+  30%,
+  40%,
+  50%,
+  70%,
+  80%,
+  90% {
+    filter: blur(0.01em);
+    transform: translateY(-0.018em) rotate(0deg);
+  }
+
+  20%,
+  60% {
+    filter: blur(0.03em);
+    transform: translate(-0.018em, 0.018em) rotate(0deg);
+  }
+
+  45%,
+  85% {
+    filter: blur(0.03em);
+    transform: translate(0.018em, -0.018em) rotate(0deg);
+  }
+
+  100% {
+    filter: blur(0.007em);
+    transform: translate(0) rotate(-0.5deg);
+  }
+}
+@keyframes crack1 {
+
+  0%,
+  95% {
+    transform: translate(-50%, -50%);
+  }
+
+  100% {
+    transform: translate(-51%, -48%);
+  }
+}
+@keyframes crack2 {
+
+  0%,
+  95% {
+    transform: translate(-50%, -50%);
+  }
+
+  100% {
+    transform: translate(-49%, -53%);
+  }
+}
+@media (max-width: 480px) {
+  #portada {
+    width: 99%;
+    margin: 0 auto;
     padding: 30px 0px;
-    background: linear-gradient( -135deg,transparent 35px,#060302 0);
-    filter: drop-shadow(2px 2px 10px  #52057B);   
-    text-align: center;      
+    background: linear-gradient(-135deg, transparent 35px, #060302 0);
+    filter: drop-shadow(2px 2px 10px #52057B);
+    text-align: center;
     position: relative;
     right: 1%;
-}
-}  
-/* @keyframes titlePortadaH1 {
-  to {
-      text-shadow: 2px 2px 10px rgba(212,32,212,0.9);
   }
-} */
+}
