@@ -14,9 +14,13 @@
 
 <body>
   <header>
-    <nav id="portada" class="inactive">
+    <nav id="portada" class="inactive" class="series" class="cine">
       <div class="titlePortada--header">
         <h1 class="titlePortadaH1" data-text=""><span class="titlePortadaSpan"></span></h1>
+      </div>      
+      <div id="mode">        
+        <button id="btnMode"></button>
+        <h1 id="modeH1"></h1>
       </div>
       <div class="search-box">
         <input type="text" class="input-search" placeholder="Busque...">
@@ -25,28 +29,23 @@
       <select id="apiDropdown" class="dropDown">
         <option class="slide">genero</option>
       </select>
-      <select id="apiDropdownPais" class="dropDown" >
+      <select id="apiDropdownPais" class="dropDown">
         <option class="slide">Pais</option>
-      </select>      
+      </select>
       <div id="trends">
         <button id="btnTrends">Tendencias</button>
       </div>
-     
-      <div id="mode">
-        <button id="btnMode">Cine</button>
+      <div id="rank">
+        <button id="btnRank">Ranking</button>
       </div>
       <select id="apiDropDownPaisProvider" class="dropDown">
-        <option class="slide">Donde estas?</option>
-      </select>
+        <option class="slide"></option>
+      </select>  
     </nav>
   </header>
-  <div class="home">
+  <div class="home">      
     <h1 class="titlePageH1" class="inactive"><span class="titlePageSpan"></span></h1>
-    <nav class="headerMoviePage">
-     
-     
-    </nav>
-    <div id="containerLiked" class="inactive">
+    <div id="containerLiked" class="inactive">      
       <div id="lastLiked">
         <div class="card">
           <div class="descriptions">
@@ -59,41 +58,53 @@
           </div>
         </div>
       </div>
+      <div id="lastTrend">
+        <div class="card">
+          <div class="descriptions">
+          </div>
+        </div>
+      </div>
+      <div id="lastRank">
+        <div class="card">
+          <div class="descriptions">
+          </div>
+        </div>
+      </div>
     </div>
   </div>
  
+
   <div id="containerLast" class="inactive">
     <div id="last">
       <div class="card">
         <div class="descriptions">
-          <h1 class="movieTitleText">titulo peli</h1>
         </div>
       </div>
     </div>
   </div>
   <div class="moviePage" class="inactive">
-   <div class="portadaMovie">    
-    <section class="carousel">
-      <ol class="afiche">
-        <h2 class="nameVideo"></h2>
-        <li class="carousel__slide"></li>
-        <button class="nextBtn">&lt</span>
-          <button class="prevBtn">&lt</span>
-      </ol>      
-    </section>
-    <div class="logos">
+    <div class="portadaMovie">
+      <section class="carousel">
+        <ol class="afiche">
+          <h2 class="nameVideo"></h2>
+          <li class="carousel__slide"></li>
+          <button class="nextBtn">&lt</span>
+            <button class="prevBtn">&lt</span>
+        </ol>
+      </section>
+      <div class="logos">
+      </div>
+
     </div>
-    
-  </div>
     <div class="containerDetail">
       <div id="background" class="info-card">
         <div class="titles">
-          <h2 class="title1"></h2>        
-            <h2 class="title2"></h2>
-            <span class="year"></span>
-            <span class="rating"></span>
-        </div>     
-     </div>
+          <h2 class="title1"></h2>
+          <h2 class="title2"></h2>
+          <span class="year"></span>
+          <span class="rating"></span>
+        </div>
+      </div>
       <div class="origenCountry">
         <span class="origen"></span>
       </div>
@@ -101,24 +112,21 @@
         <span class="tag">action</span>
         <span class="tag">fantasy</span>
         <span class="tag">adventure</span>
-      </div>      
+      </div>
     </div>
-        <div class="column2">
-          <p class="overview"></p>
-          <div class="castMovie">        
-        </div>        
-        </div>
-
-      
-      <div id="lastSimilar">
-        <div class="card">
-          <div class="descriptions">
-            <h1 class="movieTitleText">titulo peli</h1>
-            <p class="movieOverview">Descripcion</p>
-          </div>
+    <div class="column2">
+      <p class="overview"></p>
+      <div class="castMovie">
+      </div>
+    </div>
+    <div id="lastSimilar">
+      <div class="card">
+        <div class="descriptions">
+          <h1 class="movieTitleText">titulo peli</h1>
+          <p class="movieOverview">Descripcion</p>
         </div>
       </div>
-    
+    </div>
   </div>
 
   <div id="fin" style="height: 1px;"></div>

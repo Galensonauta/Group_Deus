@@ -19,7 +19,6 @@ function idCountry() {
   else{
     idCountry=null
   }
-  console.log(idCountry)
   return idCountry
 }
 function idCountrySelect(idC) {
@@ -37,7 +36,6 @@ export async function getProvider() {
   const apiDropDownPaisProvider = document.getElementById("apiDropDownPaisProvider");
   const { data: provider } = await api(`watch/providers/regions?language=en-US`)
   const forCountry = provider.results
-  console.log(forCountry)
   createCategoriesProvider(forCountry, apiDropDownPaisProvider, "iso_3166_1", "native_name")
 }
 function createCategoriesProvider(categories, container, id, name) {
@@ -93,7 +91,6 @@ function likedTvList(){
   } else {
     tvs = {}
   }
-  console.log(tvs)
   return tvs
 }
 function likeMovie(movie) {
@@ -145,6 +142,7 @@ export async function createAfiches(afiche, container, {
       movieDirectingPreview.classList.add("movieDirectingPreview")
       const created = type==="movie"?creditPreview.crew.filter((casting) => casting.known_for_department === "Directing").slice(0, 1)
       :aficheDetail.created_by.slice(0, 1)
+      console.log(created)
       created.forEach(dire => {
         movieDirectingPreview.innerHTML = dire.name
         movieDirectingPreview.addEventListener("click", () => {
@@ -152,8 +150,9 @@ export async function createAfiches(afiche, container, {
         })
       })
       const movieOrigenPreview = document.createElement("h2")
-      movieOrigenPreview.classList.add("movieOrigenPreview")
-      const origenCountry = aficheDetail.production_countries.slice(0, 1)
+      movieOrigenPreview.classList.add("movieOrigenPreview")     
+      const origenCountry = aficheDetail.production_countries.slice(0, 3)
+      console.log(origenCountry)
       origenCountry.forEach(origen => {
         movieOrigenPreview.innerHTML = origen.name
         movieOrigenPreview.addEventListener("click", () => {
@@ -227,13 +226,11 @@ export async function createAfiches(afiche, container, {
 export function getLikedMovie() {
   const addedMovies = likedMoviesList()
   const movies = Object.values(addedMovies)
-  console.log(movies)
   createAfiches(movies, lastLiked, {type:"movie", lazyLoad: true, clean: true }) 
 }
 export function getLikedTv(){
   const addedTvs = likedTvList()
   const tvs = Object.values(addedTvs)
-  console.log(tvs)
   createAfiches(tvs, lastLikedTv, {type:"tv", lazyLoad: true, clean: true }) 
 }
 export function createCategories(categories, container, id, nombre) {
@@ -259,8 +256,6 @@ export function createCategories(categories, container, id, nombre) {
 export function getScrollInfinite({ url, query = undefined, searchBy = undefined,type="movie" }) {
   return async function () {
     const parameter = { page}
-    console.log(page)
-    console.log(maxPage)
     if (searchBy === '#categoryByGenre=') parameter.with_genres = query
     if (searchBy === 'search') parameter.query = query
     if (searchBy === "#categoryByAct=") parameter.with_cast = query
@@ -272,26 +267,60 @@ export function getScrollInfinite({ url, query = undefined, searchBy = undefined
       params: parameter
     })
     const movies = data.results
-    console.log(movies)
   createAfiches(movies, last, { type, lazyLoad: true, clean: false })
-  // createAfiches(movies, lastSimilar, { type, lazyLoad: true, clean: false })
-
         page++;
   }
 }
+export async function getTrendingHome(media) {
+  if(media==="movie"){
+    const { data:movie } = await api('trending/movie/day')
+    const movies = movie.results.slice(0,4)
+    movies.sort((a, b) => b.vote_average - a.vote_average)
+    createAfiches(movies, lastTrend, { type:"movie", lazyLoad: true, clean: true })
+  }else{
+    const { data:tv } = await api("trending/tv/day")  
+    const tvs=tv.results.slice(0,4)  
+    tvs.sort((a, b) => b.vote_average - a.vote_average)
+    createAfiches(tvs, lastTrend, { type:"tv", lazyLoad: true, clean: true })
+  }
+}
+export async function getRankHome(media) {
+  if(media==="movie"){
+    const { data:movie } = await api('movie/top_rated')
+    const movies = movie.results.slice(0,4)
+    movies.sort((a, b) => b.vote_average - a.vote_average)
+    createAfiches(movies, lastRank, { type:"movie", lazyLoad: true, clean: true })
+  }else{
+    const { data:tv } = await api("tv/top_rated")  
+    const tvs=tv.results.slice(0,4)  
+    tvs.sort((a, b) => b.vote_average - a.vote_average)
+    createAfiches(tvs, lastRank, { type:"tv", lazyLoad: true, clean: true })
+  }
+}
 export async function getTrendingMoviesPreview() {
-  const { data } = await api('movie/popular')  
-  const movies = data.results
+  const { data } = await api('trending/movie/day')  
+  const movies = data.results  
   movies.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movies, last, { type:"movie", lazyLoad: true, clean: true })
 }
 export async function getTrendingTvPreview() {
-  const { data } = await api("tv/popular")
+  const { data } = await api("trending/tv/day")
   const tv = data.results
   tv.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(tv, last, { type:"tv", lazyLoad: true, clean: true })
 }
-
+export async function getRankTvPreview() {
+  const { data } = await api("tv/top_rated")
+  const tv = data.results
+  tv.sort((a, b) => b.vote_average - a.vote_average)
+  createAfiches(tv, last, { type:"tv", lazyLoad: true, clean: true })
+}
+export async function getRankMoviePreview() {
+  const { data } = await api("movie/top_rated")
+  const movie = data.results
+  movie.sort((a, b) => b.vote_average - a.vote_average)
+  createAfiches(movie, last, { type:"movie", lazyLoad: true, clean: true })
+}
 export async function getCategoriesPreview() {
   const apiDropDown = document.getElementById("apiDropdown");
   const { data: genero } = await api('genre/movie/list');
@@ -319,7 +348,6 @@ export async function getInfoMovieByAct(id) {
     }
   });
   const movies = data.results;
-  console.log(data)
   movies.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movies, last, { type:"movie", lazyLoad: true, clean: true })
 }
@@ -327,7 +355,6 @@ export async function getInfoTvByAct(id) {
   const { data } = await api('person/'+id+"/tv_credits");
 
   const movies = data.cast;
-  console.log(movies)
   movies.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movies, last, { type:"tv", lazyLoad: true, clean: true })
 }
@@ -348,7 +375,6 @@ export async function getMoviesByGenres(id) {
   });
   maxPage = data.total_pages
   const movies = data.results;
-  console.log(movies)
   movies.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movies, last, { type:"movie", lazyLoad: true, clean: true })
 }
@@ -377,7 +403,6 @@ export async function getMoviesBySearch(query) {
     },
   });
   const media = data.results;
-  console.log(media)
   createAfiches(media, last, { type:"movie", lazyLoad: true, clean: true })
 }
 export async function getTvBySearch(query) {
@@ -387,7 +412,6 @@ export async function getTvBySearch(query) {
     },
   });
   const media = data.results;
-  console.log(media)
   createAfiches(media, last, { type:"tv", lazyLoad: true, clean: true })}
 export async function getTvById(id) {
   const { data: movie } = await api(`tv/${id}?append_to_response=videos,images`);
@@ -502,7 +526,6 @@ export async function getMovieById(id) {
 export async function getSimilarMovieById(id) {
   const { data: movie } = await api("movie/" + id + "/similar?language=es-ES")
   const similares = movie.results
-  console.log(similares)
 
   createAfiches(similares, lastSimilar, { type:"movie", lazyLoad: true, clean: true })
 }
@@ -537,7 +560,12 @@ export async function getInfoMovieById(id) {
     movieScore.innerHTML = "Calificación: " + movie.vote_average + " / 10"
     //manejo de info(overview)
     const overview = document.querySelector(".overview")
-    overview.innerHTML = movie.overview
+    if(!movie.overview){
+      overview.innerHTML = "Sin descripción"
+    }else{
+      overview.innerHTML = movie.overview
+    }
+    
     //manejo de info(origen)
     const origenMovie = movie.production_countries
     const containerOrigen = document.querySelector(".origenCountry")
@@ -556,14 +584,12 @@ export async function getInfoMovieById(id) {
     const logos = document.querySelector(".logos")
     logos.innerHTML = ""
     const iso_3166_1 = idCountry()
-    console.log(iso_3166_1)
-    console.log(provider.results[iso_3166_1])
+    
     if (!provider.results[iso_3166_1]||!provider.results[iso_3166_1].flatrate||!provider.results[iso_3166_1].free) {
       console.log("No esta")
     } else {
       const providerByCountry = provider.results[iso_3166_1].flatrate || provider.results[iso_3166_1].free || []
       providerByCountry.forEach(id => {
-        console.log(logos)
         const providerImg = document.createElement("img")
         providerImg.classList.add("logoProvider")
         providerImg.setAttribute("src", "https://image.tmdb.org/t/p/w300" + id.logo_path)
@@ -574,10 +600,9 @@ export async function getInfoMovieById(id) {
     //manejo de info(cast)
     const acting = credit.cast.filter((casting) => casting.known_for_department === "Acting").slice(0, 10)
     acting.sort((a, b) => a.order - b.order)
-    const directing = credit.crew.filter((casting) => casting.known_for_department === "Directing").slice(0, 1)
-    console.log(directing)
+    const directing = credit.crew.filter((casting) => casting.known_for_department === "Directing").filter((cast)=>cast.job==="Director")
     const castTotal = [...acting, ...directing]
-    console.log(castTotal)
+    console.log(directing)
     const containerCast = document.querySelector(".castMovie")
     containerCast.innerHTML = ""
     castTotal.forEach(act => {
@@ -668,13 +693,11 @@ export async function getInfoTvById(id) {
     logos.innerHTML = "" 
     const objCountry=idCountry()   
     const idC=Object.keys(objCountry)[0]
-    console.log(provider.results[idC])
     if (!provider.results[idC]&&!provider.results[idC].flatrate&&!provider.results[idC].free) {
       console.log("No esta")
     } else {
       const providerByCountry = provider.results[idC].flatrate || provider.results[idC].free || []
       providerByCountry.forEach(id => {
-        console.log(logos)
         const providerImg = document.createElement("img")
         providerImg.classList.add("logoProvider")
         providerImg.setAttribute("src", "https://image.tmdb.org/t/p/w300" + id.logo_path)
@@ -686,9 +709,7 @@ export async function getInfoTvById(id) {
     const acting = credit.cast.filter((casting) => casting.known_for_department === "Acting").slice(0, 10)
     acting.sort((a, b) => a.order - b.order)
     const directing = movie.created_by.slice(0, 2)
-    console.log(directing)
     const castTotal = [...acting, ...directing]
-    console.log(castTotal)
     const containerCast = document.querySelector(".castMovie")
     containerCast.innerHTML = ""
     castTotal.forEach(act => {
