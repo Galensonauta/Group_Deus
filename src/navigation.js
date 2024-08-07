@@ -1,32 +1,24 @@
 import {
-  getTrendingTvPreview,
-  getCategoriesTvPreview,
-  getTrendingMoviesPreview,
+  getTrendingPreview,
   getCategoriesPreview,
-  getMoviesByCountry,
-  getTvByCountry,
-  getMoviesBySearch,
-  getTvBySearch,
-  getMovieById,
-  getTvById,
-  getInfoMovieById,
-  getInfoTvById,
-  getSimilarMovieById,
-  getSimilarTvById,
-  getMoviesByGenres,
-  getTvByGenres,
-  getInfoMovieByAct,
-  getInfoTvByAct,
+  getByCountry,
+  getBySearch,
+  getById,
+  getInfoById,
+  getSimilarById,
+  getByGenres,
+  getInfoByAct,
   getScrollInfinite,
   getLikedMovie,
   getProvider,
   getLikedTv,
-  getRankMoviePreview,
-  getRankTvPreview,
+  getRankPreview,
   getTrendingHome,
   getRankHome
 } from './main.js';
 import { base64IconCine, base64IconTv } from './imagesDefault.js';
+let mode = false
+
 function portadaBlackMirror() {
   const titlePortada = document.querySelector(".titlePortadaSpan")
   titlePortada.innerHTML = "GrupoDeus"
@@ -34,7 +26,9 @@ function portadaBlackMirror() {
   titlePortadaData.setAttribute("data-text", "Grupo Deus")
   const titlePortadaDiv = document.querySelector(".titlePortada--header")
   titlePortadaDiv.addEventListener("click", () => {
-    location.hash = "#"
+  // location.hash="#Cine"
+  location.hash= mode ?"#Series":"#Cine"
+
   })
 }
 const searchInput = document.querySelector(".search-box input")
@@ -50,7 +44,6 @@ const btnRank = document.querySelector("#btnRank")
 btnRank.addEventListener("click", () => {
   location.hash = "#rank="
 })
-let mode = false
 const btnMode = document.querySelector("#btnMode")
 const modeDiv = document.querySelector("#mode")
 const modeH1= document.querySelector("#modeH1")
@@ -68,19 +61,15 @@ modeDiv.appendChild(btnMode)
 
 btnMode.addEventListener("click", () => {
   mode = !mode;
-
-  portada.classList.toggle("cine", !mode);
+  portada.classList.toggle("cine", !mode);  
   portada.classList.toggle("series", mode);
   btnMode.innerHTML = "";
   modeH1.innerHTML = mode ? "Series" : "Cine";
-  btnMode.appendChild(mode ? iconTv : iconCine);
-  
+  btnMode.appendChild(mode ? iconTv : iconCine);  
   modeDiv.appendChild(modeH1);
   modeDiv.appendChild(btnMode);
-
-  location.hash = "#";
+  location.hash= mode ?"#Series":"#Cine"
 })
-
 
 window.addEventListener('DOMContentLoaded', navigator, false);
 window.addEventListener('hashchange', navigator, false);
@@ -92,7 +81,6 @@ function navigator() {
   else if (location.hash.startsWith('#media-')) {
     movieDetailsPage();
   }
-
   else if (location.hash.startsWith('#trend=')) {
     trendPage()
   }
@@ -105,8 +93,11 @@ function navigator() {
     } else {
       categoryPage()
     }
+  }else if(!location.hash||location.hash==="#"){
+    // location.hash="#Cine"
+    location.hash= mode ?"#Series":"#Cine"
   }
-  else {
+  else{
     homePage();
   }
   document.body.scrollTop = 0;
@@ -140,16 +131,16 @@ function homePage() {
   const titlePageSpan = document.querySelector(".titlePageSpan")
   titlePageSpan.classList.add("inactive")
   portadaBlackMirror()
-  if (mode) {
-    getCategoriesTvPreview()
-    getTrendingTvPreview()
-    getRankTvPreview()
+  if (location.hash==="#Series") {   
+    getCategoriesPreview("tv")
+    getTrendingPreview("tv")
+    getRankPreview("tv")
     getTrendingHome("tv")
     getRankHome("tv")
-  } else {
-    getCategoriesPreview()
-    getTrendingMoviesPreview()
-    getRankMoviePreview()
+  }else  if(location.hash==="#Cine") {
+    getCategoriesPreview("movie")
+    getTrendingPreview("movie")
+     getRankPreview("movie")
     getTrendingHome("movie")
     getRankHome("movie")
   }
@@ -171,17 +162,19 @@ function trendPage() {
   titlePageSpan.classList.remove("inactive")
 
   if (mode) {
-    getTrendingTvPreview()
-    getCategoriesTvPreview()
+    getTrendingPreview("tv")
+    getCategoriesPreview("TV")
     titlePageSpan.innerHTML = "Estrenos Series"
     setscrollInfinitParam({ url: "trending/tv/day", query: null, searchBy: "#trend=", type: "tv" })
   } else {
-    getTrendingMoviesPreview()
-    getCategoriesPreview()
+    getTrendingPreview("movie")
+    getCategoriesPreview("movie")
     titlePageSpan.innerHTML = "Estrenos Cine"
     setscrollInfinitParam({ url: "trending/movie/day", query: null, searchBy: "#trend=", type: "movie" })
   }
   portadaBlackMirror()
+  getProvider()
+
   const fin = document.getElementById("fin")
   observer.observe(fin)
 }
@@ -200,17 +193,19 @@ function rankPage() {
   titlePageSpan.classList.remove("inactive")
 
   if (mode) {
-    getRankTvPreview()
-    getCategoriesTvPreview()
+    getRankPreview("tv")
+    getCategoriesPreview("tv")
     titlePageSpan.innerHTML = "Mejores Series "
     setscrollInfinitParam({ url: "tv/top_rated", query: null, searchBy: "#rank=", type: "tv" })
   } else {
-    getRankMoviePreview()
-    getCategoriesPreview()
+    getRankPreview("movie")
+    getCategoriesPreview("movie")
     titlePageSpan.innerHTML = "Mejores Peliculas"
     setscrollInfinitParam({ url: "movie/top_rated", query: null, searchBy: "#rank=", type: "movie" })
   }
   portadaBlackMirror()
+  getProvider()
+
   const fin = document.getElementById("fin")
   observer.observe(fin)
 }
@@ -227,17 +222,19 @@ function searchPage() {
 
   // ['#search', 'platzi']
   portadaBlackMirror()
+  getProvider()
+
   const [_, query] = location.hash.split('=');
   const titlePageSpan = document.querySelector(".titlePageSpan")
   titlePageSpan.classList.remove("inactive")
   titlePageSpan.innerHTML = query
   if (mode) {
-    getCategoriesTvPreview()
-    getTvBySearch(query);
+    getCategoriesPreview("tv")
+    getBySearch({query:query,media:"tv"});
     setscrollInfinitParam({ url: "search/tv", query: query, searchBy: "search", type: "tv" })
   } else {
-    getMoviesBySearch(query);
-    getCategoriesPreview()
+    getBySearch({query:query,media:"movie"});
+    getCategoriesPreview("movie")
     setscrollInfinitParam({ url: "search/movie", query: query, searchBy: "search", type: "movie" })
   }
   observer.observe(document.getElementById("fin"))
@@ -254,18 +251,20 @@ function categoryPageAct() {
   movieDetails.classList.add("inactive")
   //     // ['#category', 'id-name']
   portadaBlackMirror()
+  getProvider()
+
   const [_, categoryData] = location.hash.split('=');
   const [categoryId, categoryName] = categoryData.split('-');
   const titlePageSpan = document.querySelector(".titlePageSpan")
   titlePageSpan.innerHTML = categoryName.replace("%20", " ")
   if (mode) {
-    getInfoTvByAct(categoryId)
-    getCategoriesTvPreview()
-    setscrollInfinitParam({ url: "person/" + categoryId + "/tv_credits", query: query, searchBy: "#categoryByAct=", type: "tv" })
+    getInfoByAct({id:categoryId,media:"tv"})
+    getCategoriesPreview("tv")
+    setscrollInfinitParam({ url: "person/" + categoryId + "/tv_credits", query: categoryId, searchBy: "#categoryByAct=", type: "tv" })
   } else {
-    getInfoMovieByAct(categoryId)
-    getCategoriesPreview()
-    setscrollInfinitParam({ url: "'discover/movie'", query: query, searchBy: "#categoryByAct=", type: "movie" })
+    getInfoByAct({id:categoryId,media:"movie"})
+    getCategoriesPreview("movie")
+    setscrollInfinitParam({ url: "'discover/movie'", query: categoryId, searchBy: "#categoryByAct=", type: "movie" })
   }
   observer.observe(document.getElementById("fin"))
 }
@@ -282,6 +281,8 @@ function categoryPage() {
   //     // ['#category', 'id-name']
 
   portadaBlackMirror()
+  getProvider()
+
   const [_, categoryData] = location.hash.split('=');
   const [categoryId, categoryName] = categoryData.split('-');
   const titlePageSpan = document.querySelector(".titlePageSpan")
@@ -290,22 +291,22 @@ function categoryPage() {
   titlePageSpan.innerHTML = categoryName
   if (mode) {
     if (!isNaN(categoryId)) {
-      getTvByGenres(categoryId)
+      getByGenres({id:categoryId,media:"tv"})
       setscrollInfinitParam({ url: "discover/tv", query: categoryId, searchBy: "#categoryByGenre=", type: "tv" })
     } else {
-      getTvByCountry(categoryId)
+      getByCountry({id:categoryId,media:"tv"})
       setscrollInfinitParam({ url: "discover/tv", query: categoryId, searchBy: "#categoryByCountry=", type: "tv" })
     }
-    getCategoriesTvPreview()
+    getCategoriesPreview("tv")
   } else {
     if (!isNaN(categoryId)) {
-      getMoviesByGenres(categoryId)
+      getByGenres({id:categoryId,media:"movie"})
       setscrollInfinitParam({ url: "discover/movie", query: categoryId, searchBy: "#categoryByGenre=", type: "movie" })
     } else {
-      getMoviesByCountry(categoryId)
+      getByCountry({id:categoryId,media:"movie"})
       setscrollInfinitParam({ url: "discover/movie", query: categoryId, searchBy: "#categoryByCountry=", type: "movie" })
     }
-    getCategoriesPreview()
+    getCategoriesPreview("movie")
   }
 
   const fin = document.getElementById("fin")
@@ -331,15 +332,17 @@ function movieDetailsPage() {
 
   const [_, movieId] = location.hash.split('=');
   if (_ === "#media-tv") {
-    getTvById(movieId)
-    getInfoTvById(movieId)
-    getSimilarTvById(movieId)
-    getCategoriesTvPreview()
+    getById({id:movieId,media:"tv"})
+    getInfoById({id:movieId,media:"tv"})
+    getSimilarById({id:movieId,media:"tv"})
+    getCategoriesPreview("tv")
   } else {
-    getMovieById(movieId)
-    getInfoMovieById(movieId)
-    getSimilarMovieById(movieId)
-    getCategoriesPreview()
+    getById({id:movieId,media:"movie"})
+    getInfoById({id:movieId,media:"movie"})
+    getSimilarById({id:movieId,media:"movie"})
+    getCategoriesPreview("movie")
   }
   portadaBlackMirror()
+  getProvider()
+
 }

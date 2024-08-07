@@ -133,8 +133,8 @@
   width: 25%;
   height: fit-content;
   position: absolute;
-  top: 75%;
-  left:90%;;
+  top: 85%;
+  left:90.3%;;
 }  
 .input-search {
   height: 25px;
@@ -157,8 +157,8 @@
   font-family: "Montserrat", sans-serif;
   color: #ffffff;
   font-size: 18px;
-  letter-spacing: 2px;
-  font-weight: 800;
+  letter-spacing: 3px;
+  font-weight: 700;
 }  
 #btnSearch {
   position: absolute;
@@ -172,6 +172,7 @@
   background-color: transparent;
   pointer-events: painted;
   left: 165%;
+  z-index: 1;
 }
 .input-search:focus {
   font-family: "Montserrat", sans-serif;
@@ -192,7 +193,7 @@ select::after {
   cursor: pointer;
   position: absolute;
   top: 130%;
-  left: 50%;
+  left: 51%;
   border-radius: 25px;
 }
 #btnTrends:hover {
@@ -207,7 +208,7 @@ select::after {
   cursor: pointer;
   position: absolute;
   top: 130%;
-  left: 67%;
+  left: 66%;
   border-radius: 25px;
 }
 #btnRank:hover {
@@ -217,7 +218,7 @@ select::after {
 .titlePageH1 {
   font-family: 'Montserrat', Arial, sans-serif;
   position: absolute;
-  font-size: calc(3px + 2vw);
+  font-size: calc(2px + 2vw);
   font-weight: 700;
   color: #fff;
   letter-spacing: 0.02em;
@@ -230,9 +231,9 @@ select::after {
 }
 .titlePageH1 .titlePageSpan{  
   position: absolute;
-  top: 25px;
-  left: 890px;
-  transform: translate(-50%, -50%);
+    top: 35px;
+    left: 855px;
+    transform: translate(-50%, -50%);
 }
 @keyframes shake {
 
