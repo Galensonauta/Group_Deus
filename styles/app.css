@@ -13,28 +13,6 @@ body{
   font-family: 'Lato';
   background-color: #060302;
 }
-
-  #lastLiked{    
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));    
-    left: 1%;
-    padding-right: 2%;
-    position: relative;
-    top: 70px;
-    justify-items: start; 
-    background: linear-gradient( -135deg,transparent 35px,#060302 0);
-}
-#lastLikedTv{
-  display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));    
-    left: 1%;
-    padding-right: 2%;
-    position: relative;
-    top: 70px;
-    justify-items: start; 
-    background: linear-gradient( -135deg,transparent 35px,#060302 0);
-}
-
 #lastTrend {    
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));    
@@ -42,33 +20,60 @@ body{
   top: 83px;
   justify-items: stretch;    
 }
-
 #lastRank {    
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));    
   position: relative;
-  top: 83px;
+  top: 132px;
   justify-items: stretch;    
 }
+
+  #lastLiked{    
+    display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));    
+  position: relative;
+  top: 160px;
+  justify-items: start; 
+}
+#lastLikedTv{ display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));    
+  position: relative;
+  top: 160px;
+  justify-items: start; 
+}
+.likedH1C {
+  background: #151515;
+  color: #fff;
+  font-size: 1.2em;
+  font-variant: small-caps;
+  position: absolute;
+  top: 198%;
+  left: 2%;
+  border-radius: 25px;
+  margin-top: 20px;
+}
+.likedH1S {
+  background: #151515;
+  color: #fff;
+  font-size: 1.2em;
+  font-variant: small-caps;
+  position: absolute;
+  top: 287%;
+  left: 2%;
+  border-radius: 25px;
+  margin-top: 20px;
+}
+
+
 .inactive {
 	display: none;
   }  
-@media (max-width: 768px) {
-	.title_wrapper {
-		text-align: center;
-		left: 0;
-	}
-	.title_wrapper h1 {
-		font-size: 32px !important;
-		width: 100%;
-	}
-	
+@media (width <= 500px) {
+  #lastLiked,#lastLikedTv,#lastTrend,#lastRank {
+    top: 17em;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 0fr));
+    left: 6%;
 }
-@media (max-width: 480px) {
-	.column.is-one-quarter img {
-		width: 100%;
-		margin-bottom: 7rem;
-	}
 }
 
 

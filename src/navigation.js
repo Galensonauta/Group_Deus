@@ -44,30 +44,19 @@ const btnRank = document.querySelector("#btnRank")
 btnRank.addEventListener("click", () => {
   location.hash = "#rank="
 })
-const btnMode = document.querySelector("#btnMode")
 const modeDiv = document.querySelector("#mode")
 const modeH1= document.querySelector("#modeH1")
-
 const portada = document.getElementById("portada");
 portada.classList.add("cine")
-modeH1.innerHTML= "Cine"    
-
-const iconTv = document.createElement("img")
-iconTv.setAttribute("src", base64IconTv)
-const iconCine = document.createElement("img")
-iconCine.setAttribute("src", base64IconCine)
-btnMode.appendChild(iconCine)
-modeDiv.appendChild(btnMode)
-
-btnMode.addEventListener("click", () => {
+modeH1.innerHTML= "Cine"
+modeDiv.appendChild(modeH1)
+modeH1.addEventListener("click", () => {
   mode = !mode;
   portada.classList.toggle("cine", !mode);  
   portada.classList.toggle("series", mode);
-  btnMode.innerHTML = "";
+  modeH1.innerHTML = "";
   modeH1.innerHTML = mode ? "Series" : "Cine";
-  btnMode.appendChild(mode ? iconTv : iconCine);  
   modeDiv.appendChild(modeH1);
-  modeDiv.appendChild(btnMode);
   location.hash= mode ?"#Series":"#Cine"
 })
 
@@ -122,6 +111,8 @@ function homePage() {
   console.log("home")
   const portada = document.getElementById("portada");
   portada.classList.remove("inactive")
+  const trendRank=document.getElementById("trendRank")
+  trendRank.classList.remove("inactive")
   const containerLiked = document.getElementById("containerLiked")
   containerLiked.classList.remove("inactive")
   const containerLast = document.getElementById("containerLast")
@@ -152,6 +143,8 @@ function trendPage() {
   console.log("trend")
   const portada = document.getElementById("portada");
   portada.classList.remove("inactive")
+  const trendRank=document.getElementById("trendRank")
+  trendRank.classList.add("inactive")
   const containerLiked = document.getElementById("containerLiked")
   containerLiked.classList.add("inactive")
   const containerLast = document.getElementById("containerLast")
@@ -183,6 +176,8 @@ function rankPage() {
   const portada = document.getElementById("portada");
   portada.classList.remove("inactive")
 
+  const trendRank=document.getElementById("trendRank")
+  trendRank.classList.add("inactive")
   const containerLiked = document.getElementById("containerLiked")
   containerLiked.classList.add("inactive")
   const containerLast = document.getElementById("containerLast")
@@ -213,6 +208,9 @@ function searchPage() {
   console.log("busqueda")
   const portada = document.getElementById("portada");
   portada.classList.remove("inactive")
+  
+  const trendRank=document.getElementById("trendRank")
+  trendRank.classList.add("inactive")
   const containerLiked = document.getElementById("containerLiked")
   containerLiked.classList.add("inactive")
   const containerLast = document.getElementById("containerLast")
@@ -243,6 +241,9 @@ function categoryPageAct() {
   console.log("categorias por actor")
   const portada = document.getElementById("portada");
   portada.classList.remove("inactive")
+  
+  const trendRank=document.getElementById("trendRank")
+  trendRank.classList.add("inactive")
   const containerLiked = document.getElementById("containerLiked")
   containerLiked.classList.add("inactive")
   const containerLast = document.getElementById("containerLast")
@@ -272,6 +273,9 @@ function categoryPage() {
   console.log("categorias")
   const portada = document.getElementById("portada");
   portada.classList.remove("inactive")
+  
+  const trendRank=document.getElementById("trendRank")
+  trendRank.classList.add("inactive")
   const containerLiked = document.getElementById("containerLiked")
   containerLiked.classList.add("inactive")
   const containerLast = document.getElementById("containerLast")
@@ -287,8 +291,8 @@ function categoryPage() {
   const [categoryId, categoryName] = categoryData.split('-');
   const titlePageSpan = document.querySelector(".titlePageSpan")
   titlePageSpan.classList.add("inactive")
-
   titlePageSpan.innerHTML = categoryName
+  
   if (mode) {
     if (!isNaN(categoryId)) {
       getByGenres({id:categoryId,media:"tv"})
@@ -320,6 +324,9 @@ function movieDetailsPage() {
   console.log("detalles peli")
   const portada = document.getElementById("portada");
   portada.classList.remove("inactive")
+  
+  const trendRank=document.getElementById("trendRank")
+  trendRank.classList.add("inactive")
   const containerLiked = document.getElementById("containerLiked")
   containerLiked.classList.add("inactive")
   const containerLast = document.getElementById("containerLast")

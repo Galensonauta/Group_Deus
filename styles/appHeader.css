@@ -18,6 +18,7 @@
   position: relative;
   right: 19%;
 }
+
 .titlePortadaH1--header {
   display: flex;
   justify-content: center;
@@ -34,14 +35,18 @@
     color: #fff;
     letter-spacing: 0.02em;
     text-transform: uppercase;
-    text-shadow: 0 0 0.15em #8C3061;
+    text-shadow: 0 0 0.15em #910A67;
     user-select: none;
     white-space: nowrap;
     filter: blur(0.007em);
     animation: shake 2.5s linear forwards;
-    right: 70%;
+    right: 69%;
     top: -19%;
     cursor: pointer;
+}
+.titlePortadaH1:hover{
+  text-shadow: 0 0 0.15em #DC84F3;
+
 }
 .titlePortadaH1 .titlePortadaSpan {
   position: absolute;
@@ -71,40 +76,35 @@
   font-family: 'Montserrat', Arial, sans-serif;
   position: absolute;
   font-size: calc(15px + 3vw);
-  font-weight: 700;
   color: #fff;
   letter-spacing: 0.02em;
   text-transform: uppercase;
-  text-shadow: 0 0 0.15em #C63C51;
+  text-shadow: 0 0 0.15em #910A67;
   user-select: none;
   white-space: nowrap;
   filter: blur(0.007em);
   animation: shake 2.5s linear forwards;
-  right: 6%;
-  top: -52%;
-}
-#btnMode {
-  background: #151515;
+  right: 8%;
+  top: -45%;
   cursor: pointer;
-  position: absolute;
-  top: 40%;
-  right: 34%;
-  border-radius: 70%;
-  white-space: nowrap;
 }
+#modeH1:hover{
+  text-shadow: 0 0 0.15em #DC84F3;
+
+}
+
 #apiDropDownPaisProvider{    
-  background:#060302;
+  background:#151515;
   border-radius: 25px;
   color:#fff;
   font-size: 1.2em;
   font-variant: small-caps;
   cursor: pointer;
   position: absolute;
-  top: 130%;
-  left: 2%;
+  top: 3%;
+  left: 103%;
+  width: 6em;
   font-family: 'Montserrat', Arial, sans-serif;
-  font-weight: 700;
-  text-shadow: 0 0 0.15em #1da9cc;
 }
 #apiDropdownPais {
   background: #151515;
@@ -114,10 +114,11 @@
   font-variant: small-caps;
   cursor: pointer;
   position: absolute;
-  top: 3%;
+  top: 80%;
   left: 103%;
+  width: 6em;  
+  font-family: 'Montserrat', Arial, sans-serif;
 }
-
 #apiDropdown {
   background: #151515;
   border-radius: 25px;
@@ -126,19 +127,22 @@
   font-variant: small-caps;
   cursor: pointer;
   position: absolute;
-  top: 40%;
-  left: 103%;  
+  top: 44%;
+  left: 103%; 
+  width: 6em;  
+
+  font-family: 'Montserrat', Arial, sans-serif;
+ 
 }
 .search-box {
-  width: 25%;
   height: fit-content;
   position: absolute;
-  top: 85%;
-  left:90.3%;;
+  top: 120%;
+  width: fit-content;
 }  
 .input-search {
   height: 25px;
-  width: 85%;
+  width: 700px;
   border-style: none;
   padding: 5px;
   font-size: 18px;
@@ -171,7 +175,8 @@
   color: #ffffff;
   background-color: transparent;
   pointer-events: painted;
-  left: 165%;
+  left: 770px;
+  top: 3px;
   z-index: 1;
 }
 .input-search:focus {
@@ -180,7 +185,6 @@
   background-color: #151515b2;
   border-bottom: 1px solid #892CDC;
 }
-
 select::after {
   float: right;
   content: "+";
@@ -192,8 +196,8 @@ select::after {
   font-variant: small-caps;
   cursor: pointer;
   position: absolute;
-  top: 130%;
-  left: 51%;
+  top: 120%;
+  left: 140%;
   border-radius: 25px;
 }
 #btnTrends:hover {
@@ -207,8 +211,8 @@ select::after {
   font-variant: small-caps;
   cursor: pointer;
   position: absolute;
-  top: 130%;
-  left: 66%;
+  top: 760%;
+  left: 140%;
   border-radius: 25px;
 }
 #btnRank:hover {
@@ -231,9 +235,8 @@ select::after {
 }
 .titlePageH1 .titlePageSpan{  
   position: absolute;
-    top: 35px;
-    left: 855px;
-    transform: translate(-50%, -50%);
+  top: 5px;
+  left: 940px;
 }
 @keyframes shake {
 
@@ -299,15 +302,53 @@ select::after {
     transform: translate(-49%, -53%);
   }
 }
-@media (max-width: 480px) {
-  #portada {
-    width: 99%;
-    margin: 0 auto;
-    padding: 30px 0px;
-    background: linear-gradient(-135deg, transparent 35px, #060302 0);
-    filter: drop-shadow(2px 2px 10px #52057B);
-    text-align: center;
-    position: relative;
-    right: 1%;
+@media (width <= 500px) {   
+  .cine, .series{
+    width: 94%;
+    height: 91px;    
+    right: 3%;    
+  }
+  .titlePortadaH1 {    
+    font-size: calc(24px + 4vw);    
+    right: 57%;
+    top: -7%;
+  }
+  #modeH1{
+    font-size: calc(17px + 4vw);
+    right: 35%;
+    top: 22%;
+  }
+  #btnMode{
+    top: 52%;
+    right: 79%;
+  }
+  #apiDropDownPaisProvider {
+    top: 118%;
+    width: 320px;
+  }
+  #apiDropdownPais{
+    top: 155%;
+    left: 1%;
+    width: 326px;
+  }
+  #apiDropdown{
+    top: 190%;
+    left: 1%;
+  }
+  .search-box{
+    top: 230%;
+    left: -11%;
+  }
+  #btnSearch {
+    left: 211%;
+    top: 8px;
+  }
+  #btnTrends{
+    top: 300%;
+    left: 13%;
+  }
+  #btnRank{ 
+    top: 300%;
+    left: 65%;
   }
 }
