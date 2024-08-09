@@ -39,6 +39,10 @@ export async function getProvider() {
 }
 function createCategoriesProvider(categories, container, id, name) {
   container.innerHTML = ""
+  const apiDropDownPaisProvider = document.getElementById("apiDropDownPaisProvider");
+  const countryList = document.createElement("option")
+  countryList.textContent="Ubicación"
+  apiDropDownPaisProvider.appendChild(countryList)
   categories.forEach((value) => {
     const countryList = document.createElement("option")
     countryList.classList.add("slide")
@@ -206,9 +210,7 @@ export async function createAfiches(afiche, container, {
       observador.observe(movieImg)
     }
     movieImg.dataset.triedLocal = "false";
-    
-
-     movieImg.addEventListener("error",()=>{
+         movieImg.addEventListener("error",()=>{
       if (movieImg.dataset.triedLocal === "false") {
         movieImg.setAttribute(        
           "src",base64 )
@@ -230,23 +232,45 @@ export function getLikedTv(){
   createAfiches(tvs, lastLikedTv, {type:"tv", lazyLoad: true, clean: true }) 
 }
 export function createCategories(categories, container, id, nombre) {
-  container.innerHTML = "";
+  container.innerHTML= ""  
+  const apiDropDown = document.getElementById("apiDropdown");
+  const apiDropDownPais = document.getElementById("apiDropdownPais");  
+  const categoryOptions1 = document.createElement("option")
+  const categoryOptions2 = document.createElement("option")
+  categoryOptions1.innerHTML = "Generos"
+  categoryOptions2.innerHTML = "Origen"
+  apiDropDown.appendChild(categoryOptions1) 
+  apiDropDownPais.appendChild(categoryOptions2) 
+
   categories.forEach(category => {
     const categoryOptions = document.createElement("option")
     categoryOptions.value = category[id]
     categoryOptions.textContent = category[nombre]
     container.appendChild(categoryOptions)
-  })
-  container.addEventListener("change", () => {
-    const catId = container.value
-    const catName = container.textContent
-    // const catNameArray = catName.match(/([A-Z][a-záéíóúüñ]+(?:\s+[a-záéíóúüñ]+)*)/g)
-    if (!isNaN(catId)) {
-      location.hash = `#categoryByGenre=${catId}`
-    } else {
-      location.hash = `#categoryByCountry=${catId}`
-    }
-  })
+  })   
+    container.addEventListener("change", (event) => {    
+    const catId = event.target.value
+    //  let catNameCountry = categories.find(country => country[id] === catId);   
+      if(catId===""){
+        container.value = "";
+      }else if(!isNaN(catId)) {        
+        location.hash = `#categoryByGenre=${catId}`
+        }      
+      else {      
+        location.hash = `#categoryByCountry=${catId}`
+      }      
+    })    
+   
+}
+export async function getCategoriesPreview(media) {
+  const apiDropDown = document.getElementById("apiDropdown");
+  const apiDropDownPais = document.getElementById("apiDropdownPais");  
+  const { data: genero } = await api("genre/"+media+"/list");
+  const { data: country } = await api('configuration/countries?language=es-LA');
+  const countrys = country
+  const generos = genero.genres;
+  createCategories(generos, apiDropDown, "id", "name");
+  createCategories(countrys, apiDropDownPais, "iso_3166_1", "native_name");  
 }
 let maxPage;
 let page=1;
@@ -291,16 +315,7 @@ export async function getRankPreview(media) {
     movie.sort((a, b) => b.vote_average - a.vote_average)
     createAfiches(movie, last, { type:media, lazyLoad: true, clean: true })
 }
-export async function getCategoriesPreview(media) {
-    const apiDropDown = document.getElementById("apiDropdown");
-    const { data: genero } = await api("genre/"+media+"/list");
-    const apiDropDownPais = document.getElementById("apiDropdownPais");
-    const { data: country } = await api('configuration/countries?language=es-LA');
-    const countrys = country
-    const generos = genero.genres;
-    createCategories(generos, apiDropDown, "id", "name");
-    createCategories(countrys, apiDropDownPais, "iso_3166_1", "native_name");  
-}
+
 export async function getInfoByAct({id,media}) { 
     if(media==="movie"){
       const { data } = await api('discover/movie', {
@@ -420,7 +435,6 @@ export async function getById({id,media}) {
 export async function getSimilarById({id,media}) {
   const { data } = await api(`${media}/${id}/similar?language=es-ES`)
   const similares = data.results
-
   createAfiches(similares, lastSimilar, { type:media, lazyLoad: true, clean: true })
 }
 export async function getInfoById({id,media}) {
@@ -442,7 +456,7 @@ export async function getInfoById({id,media}) {
           movieTitleEs.textContent = movie.title
           movieTitleOriginal.textContent = movie.original_title
         }
-    }else{
+    }else if(media==="tv"){
       if(movie.title === movie.original_name){
         movieTitleOriginal.textContent = movie.original_name
       }else{
@@ -477,7 +491,7 @@ export async function getInfoById({id,media}) {
     origenMovie.forEach(o => {
       const origen = document.createElement("span")
       origen.classList.add("origen")
-      origen.innerHTML = o.name
+      origen.innerHTML = o.name+" /"
       containerOrigen.appendChild(origen)
       origen.addEventListener("click", () => {
         location.hash = "#category=" + o.iso_3166_1
@@ -489,6 +503,7 @@ export async function getInfoById({id,media}) {
     logos.innerHTML = ""
     const iso_3166_1 = idCountry()
     console.log(iso_3166_1)
+    console.log(provider.results)
     if (!provider.results[iso_3166_1]||!provider.results[iso_3166_1].flatrate||!provider.results[iso_3166_1].free) {
       console.log("No esta")
       const logosMensaje= document.createElement("h2")
@@ -544,122 +559,10 @@ export async function getInfoById({id,media}) {
     tags.forEach(t => {
       const generos = document.createElement("span")
       generos.classList.add("tag")
-      generos.textContent = t.name
+      generos.textContent = t.name+" / "
       column1.appendChild(generos)
       generos.addEventListener("click", () => {
         location.hash = "#category=" + t.id
       })
     })
-
   } 
-// export async function getInfoTvById(id) {
-//   try {
-//     const { data: movie } = await api("tv/" + id + "?language=es-ES")
-//     const { data: credit } = await api(`tv/${id}/credits?language=en-US`)
-//     const { data: provider } = await api(`tv/${id}/watch/providers`)
-
-//     const column2 = document.querySelector(".column2")
-//     const moviePage = document.querySelector(".moviePage")
-//     //titulo original y en español
-//     const movieTitleOriginal = document.querySelector(".title1")
-//     const movieTitleEs = document.querySelector(".title2")
-//     movieTitleEs.innerHTML = ""
-//     if (movie.title === movie.original_name) {
-//       movieTitleOriginal.textContent = movie.original_name
-//     } else {
-//       movieTitleEs.textContent = movie.title
-//       movieTitleOriginal.textContent = movie.original_name
-//     }
-//     //manejo de info(año)
-//     const yearMovie = document.querySelector(".year")
-//     yearMovie.innerHTML = "Estrenada: " + movie.first_air_date.split("-")[0]
-//     //manejo de info(score)
-//     const movieScore = document.querySelector(".rating")
-//     movieScore.innerHTML = "Calificación: " + movie.vote_average + " / 10"
-//     //manejo de info(overview)
-//     const overview = document.querySelector(".overview")
-//     overview.innerHTML = movie.overview
-//     //manejo de info(origen)
-//     const origenMovie = movie.production_countries
-//     const containerOrigen = document.querySelector(".origenCountry")
-//     containerOrigen.innerHTML = ""
-//     origenMovie.forEach(o => {
-//       const origen = document.createElement("span")
-//       origen.classList.add("origen")
-//       origen.innerHTML = o.name
-//       containerOrigen.appendChild(origen)
-//       origen.addEventListener("click", () => {
-//         location.hash = "#category=" + o.iso_3166_1
-//       })
-//     })
-
-//     // createLogoProviderByid
-//     const logos = document.querySelector(".logos")
-//     logos.innerHTML = ""
-//     const iso_3166_1 = idCountry()
-//     console.log(iso_3166_1)
-
-//     if (!provider.results[iso_3166_1]||!provider.results[iso_3166_1].flatrate||!provider.results[iso_3166_1].free) {
-//       console.log("No esta")
-//       const logosMensaje= document.createElement("h2")
-//       logosMensaje.classList.add("logosMensaje")
-//       logosMensaje.innerHTML="No disponible en tu pais, en las principales plataformas"
-//       logos.appendChild(logosMensaje)
-//     } else {
-//       const providerByCountry = provider.results[iso_3166_1].flatrate || provider.results[iso_3166_1].free || []
-//       providerByCountry.forEach(id => {
-//         const providerImg = document.createElement("img")
-//         providerImg.classList.add("logoProvider")
-//         providerImg.setAttribute("src", "https://image.tmdb.org/t/p/w300" + id.logo_path)
-//         logos.appendChild(providerImg)
-//         moviePage.appendChild(logos)
-//       })
-//     }
-//     //manejo de info(cast)
-//     const acting = credit.cast.filter((casting) => casting.known_for_department === "Acting").slice(0, 10)
-//     acting.sort((a, b) => a.order - b.order)
-//     const directing = movie.created_by.slice(0, 2)
-//     const castTotal = [...acting, ...directing]
-//     const containerCast = document.querySelector(".castMovie")
-//     containerCast.innerHTML = ""
-//     castTotal.forEach(act => {
-//       const castName = document.createElement("h1")
-//       castName.classList.add("castName")
-//       if (act.known_for_department === "Directing") {
-//         castName.innerHTML = `<h1 style="color: red; font-size: 21px;">Creador :</h1> ${act.name}   `
-//       } else {
-//         castName.innerHTML = act.name
-//       }
-//       const castId = act.id
-//       const castImg = document.createElement("img")
-//       castImg.classList.add("movieImg")
-//       castImg.setAttribute("src", "https://image.tmdb.org/t/p/w200" + act.profile_path)
-//       castImg.addEventListener("error",()=>{
-//         castImg.setAttribute("src", base64Cast)
-//       })
-
-//       castName.addEventListener("click", () => {
-//         location.hash = "#categoryByAct=" + castId + "-" + act.name
-//       })
-//       containerCast.appendChild(castName)
-//       containerCast.appendChild(castImg)
-//       column2.appendChild(containerCast)
-//     })
-//     //manejo de info(generos)
-//     const column1 = document.querySelector(".column1")
-//     column1.innerHTML = ""
-//     const tags = movie.genres
-//     tags.forEach(t => {
-//       const generos = document.createElement("span")
-//       generos.classList.add("tag")
-//       generos.textContent = t.name
-//       column1.appendChild(generos)
-//       generos.addEventListener("click", () => {
-//         location.hash = "#category=" + t.id
-//       })
-//     })
-
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }

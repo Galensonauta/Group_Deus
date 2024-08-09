@@ -73,6 +73,10 @@
     cursor: pointer;    
 }
 
-
-
-
+@media(width<=500px){
+#last{
+    top: 17em;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 0fr));
+    left: 6%;
+}
+}

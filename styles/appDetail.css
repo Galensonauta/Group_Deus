@@ -1,6 +1,6 @@
-/* @import url(https://fonts.googleapis.com/css?family=Lato:400,300,700);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,300,700);
 
-@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css); */
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
 .moviePage {
   font-family: 'Montserrat', Arial, sans-serif;
@@ -24,15 +24,7 @@
     left: 35%;
     position: absolute;
   }
-  /* .afiche {
-    width: auto;
-    height: auto;
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    top: 565px;
-    position: absolute;
-  } */
+ 
    .nextBtn {
     cursor: pointer;
     height: 50px;
@@ -68,7 +60,7 @@ li {
     width: 55%;
     position: relative;
     top: -23px;
-    LEFT: 300px;
+    left: 300px;
   }
   .logoProvider {
     width: 100px;
@@ -121,12 +113,8 @@ li {
   top: 217px;
   width: max-content;
 }
-.origen {
-  font-size: 20px;
-  line-height: 25px;
-  color: #d5d2f8;
+.origen { 
   cursor: pointer;
-  padding: 4px;
 }
 .origen:hover {
   background: #060302;
@@ -139,13 +127,8 @@ li {
   width: max-content;
 
 }
-.tag {
-  font-size: 20px;
-  line-height: 25px;
-  color: #d5d2f8;
+.tag { 
   cursor: pointer;
-  padding: 4px;
-
 }
 .tag:hover {
   background: #060302;
@@ -156,13 +139,6 @@ li {
   position: absolute;
   top: 875px;
   width: 95%;
-
-}
-.bodyMovie{
-  margin-bottom: 20px;
-}
-.bodyMovie:last-child{
-margin-bottom: 0px;
 }
 .overview {
   font-size: 20px;
@@ -196,7 +172,6 @@ a:hover {
   text-decoration: none;
 }
 #lastSimilar {
-
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   width: 96vw;
@@ -208,10 +183,37 @@ a:hover {
 .footerMovie{
   position: absolute;
   top: 1450px;}
- 
-
-
-
-
+@media(width<=500px){
+  .containerDetail { 
+    top: 10em;
+    .title1{
+      font-size: calc(10px + 4vw);
+    }
+    .origenCountry{
+      top: 12.3em;
+    }
+    .column1{
+      top: 13.7em;
+    }
+}
+.logos{
+  top: 25em;
+    left: -19em;
+}
+  .poster{
+    top: 29em;
+    left: 0%;
+  }
+  .column2{
+    top: 66em;
+  }
+  .footerMovie{
+    top: 180em;
+  }
+  #lastSimilar{
+    grid-template-columns: repeat(auto-fit, minmax(300px, 0fr));
+    left: 6%;
+  }
+}
 
 
