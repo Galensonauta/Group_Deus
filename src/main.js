@@ -315,7 +315,6 @@ export async function getRankPreview(media) {
     movie.sort((a, b) => b.vote_average - a.vote_average)
     createAfiches(movie, last, { type:media, lazyLoad: true, clean: true })
 }
-
 export async function getInfoByAct({id,media}) { 
     if(media==="movie"){
       const { data } = await api('discover/movie', {
@@ -362,27 +361,52 @@ export async function getBySearch({query,media}) {
 }
 export async function getById({id,media}) {
   const { data: movie } = await api(`${media}/${id}?append_to_response=videos,images`);
-  const carrousel = []
-  const headerSection = document.querySelector(".afiche")
-  const containerVid = document.querySelector(".carousel__slide")
+  
+  
   const poster= document.querySelector(".poster")
   poster.innerHTML=""
-  const movieImg = document.createElement('img');
+  const imgPoster = document.createElement('img');
+  imgPoster.classList.add("imgPoster")
+  const refeMobile = window.innerWidth;
+imgPoster.dataset.triedLocal = "false"; 
+
+if (refeMobile<=500){
+  imgPoster.setAttribute("src", 'https://image.tmdb.org/t/p/w342' + movie.poster_path)  
+  imgPoster.addEventListener("error",()=>{
+    if (imgPoster.dataset.triedLocal === "false") {
+      imgPoster.setAttribute(        
+        "src",base64 )
+        imgPoster.dataset.triedLocal = "true";
+        imgPoster.style.width = "342px"; // Establecer el ancho deseado
+        imgPoster.style.height = "520px"; // Establecer la altura deseada
+    }      
+   })
+}else{
+  imgPoster.setAttribute("src", 'https://image.tmdb.org/t/p/w1280' + movie.backdrop_path)  
+  imgPoster.addEventListener("error",()=>{
+    if (imgPoster.dataset.triedLocal === "false") {
+      imgPoster.setAttribute(        
+        "src",base64 )
+        imgPoster.dataset.triedLocal = "true";
+        imgPoster.style.width = "1280px"; // Establecer el ancho deseado
+        imgPoster.style.height = "725px"; // Establecer la altura deseada
+        imgPoster.style.objectFit = "contain";
+    }      
+   })
+} 
+  
+   poster.appendChild(imgPoster)
+
+   const carrousel = []
+   const headerSection = document.querySelector(".afiche")
+
+  const containerVid = document.querySelector(".carousel__slide")
+  containerVid.innerHTML = ""
+
   const movieVideo = movie.videos.results
-  movieImg.setAttribute("src", 'https://image.tmdb.org/t/p/w400' + movie.poster_path)
-  movieImg.dataset.triedLocal = "false";
-     movieImg.addEventListener("error",()=>{
-      if (movieImg.dataset.triedLocal === "false") {
-        movieImg.setAttribute(        
-          "src",base64 )
-        movieImg.dataset.triedLocal = "true";
-        movieImg.style.width = "400px"; // Establecer el ancho deseado
-        movieImg.style.height = "600px"; // Establecer la altura deseada
-      }      
-     })
-   poster.appendChild(movieImg)
      movieVideo.forEach(vid => {
     const video = document.createElement("iframe")
+    video.classList.add("video")
     video.setAttribute("src", `https://www.youtube.com/embed/${vid.key}`)
     video.setAttribute("width", "900"); // Ajusta el ancho
     video.setAttribute("height", "450"); // Ajusta la altura
@@ -390,7 +414,6 @@ export async function getById({id,media}) {
   })
   let contIndex = 0
   function showCarrousel(index) {
-    containerVid.innerHTML = ""
     containerVid.appendChild(carrousel[index])
   }
   function next() {
@@ -402,8 +425,6 @@ export async function getById({id,media}) {
     showCarrousel(contIndex)
   }
   function carrouselVideos(){
-    containerVid.innerHTML = ""
-
     const imgNext=document.createElement("img")
     imgNext.src=base64NextBtn
   const imgPrev=document.createElement("img")
@@ -411,6 +432,7 @@ export async function getById({id,media}) {
   if(carrousel.length===0){
     console.log("sin videos")
     headerSection.style.display="none"
+    headerSection.appendChild(containerVid)
   }else{
     headerSection.style.display="flex"
     const nextBtn = document.createElement("button")
@@ -427,10 +449,13 @@ export async function getById({id,media}) {
     headerSection.appendChild(nextBtn)
     headerSection.appendChild(prevBtn)
     headerSection.appendChild(containerVid)
+
   }
   }
-  headerSection.innerHTML = ""
   carrouselVideos()
+
+
+
 }
 export async function getSimilarById({id,media}) {
   const { data } = await api(`${media}/${id}/similar?language=es-ES`)
@@ -444,6 +469,7 @@ export async function getInfoById({id,media}) {
     const { data: provider } = await api(`${media}/${id}/watch/providers`)
 
     const column2 = document.querySelector(".column2")
+
     const moviePage = document.querySelector(".moviePage")
     //titulo original y en español
     const movieTitleOriginal = document.querySelector(".title1")
@@ -544,7 +570,6 @@ export async function getInfoById({id,media}) {
       castImg.addEventListener("error",()=>{
         castImg.setAttribute("src", base64Cast)
       })
-
       castName.addEventListener("click", () => {
         location.hash = "#categoryByAct=" + castId + "-" + act.name
       })
@@ -552,6 +577,16 @@ export async function getInfoById({id,media}) {
       containerCast.appendChild(castImg)
       column2.appendChild(containerCast)
     })
+
+    //manejo de la refe para margin-top entre cast y video
+
+
+
+    const refeCast= containerCast.getBoundingClientRect().bottom;
+    console.log(refeCast)
+    const footerMovie=document.querySelector(".footerMovie")
+    footerMovie.style.marginTop= refeCast+"px"
+
     //manejo de info(generos)
     const column1 = document.querySelector(".column1")
     column1.innerHTML = ""

@@ -119,8 +119,8 @@ function homePage() {
     containerLast.classList.add("inactive")
   const movieDetails = document.querySelector(".moviePage");
   movieDetails.classList.add("inactive")
-  const titlePageSpan = document.querySelector(".titlePageSpan")
-  titlePageSpan.classList.add("inactive")
+  const titlePageH1 = document.querySelector(".titlePageH1")
+  titlePageH1.classList.add("inactive")
   portadaBlackMirror()
   if (location.hash==="#Series") {   
     getCategoriesPreview("tv")
@@ -151,18 +151,18 @@ function trendPage() {
   containerLast.classList.remove("inactive")
   const movieDetails = document.querySelector(".moviePage");
   movieDetails.classList.add("inactive")
-  const titlePageSpan = document.querySelector(".titlePageSpan")
-  titlePageSpan.classList.remove("inactive")
+  const titlePageH1 = document.querySelector(".titlePageH1")
+  titlePageH1.classList.remove("inactive")
 
   if (mode) {
     getTrendingPreview("tv")
     getCategoriesPreview("TV")
-    titlePageSpan.innerHTML = "Estrenos Series"
+    titlePageH1.innerHTML = "Estrenos Series"
     setscrollInfinitParam({ url: "trending/tv/day", query: null, searchBy: "#trend=", type: "tv" })
   } else {
     getTrendingPreview("movie")
     getCategoriesPreview("movie")
-    titlePageSpan.innerHTML = "Estrenos Cine"
+    titlePageH1.innerHTML = "Estrenos Cine"
     setscrollInfinitParam({ url: "trending/movie/day", query: null, searchBy: "#trend=", type: "movie" })
   }
   portadaBlackMirror()
@@ -184,18 +184,18 @@ function rankPage() {
   containerLast.classList.remove("inactive")
   const movieDetails = document.querySelector(".moviePage");
   movieDetails.classList.add("inactive")
-  const titlePageSpan = document.querySelector(".titlePageSpan")
-  titlePageSpan.classList.remove("inactive")
+  const titlePageH1 = document.querySelector(".titlePageH1")
+  titlePageH1.classList.remove("inactive")
 
   if (mode) {
     getRankPreview("tv")
     getCategoriesPreview("tv")
-    titlePageSpan.innerHTML = "Mejores Series "
+    titlePageH1.innerHTML = "Mejores Series "
     setscrollInfinitParam({ url: "tv/top_rated", query: null, searchBy: "#rank=", type: "tv" })
   } else {
     getRankPreview("movie")
     getCategoriesPreview("movie")
-    titlePageSpan.innerHTML = "Mejores Peliculas"
+    titlePageH1.innerHTML = "Mejores Peliculas"
     setscrollInfinitParam({ url: "movie/top_rated", query: null, searchBy: "#rank=", type: "movie" })
   }
   portadaBlackMirror()
@@ -223,9 +223,9 @@ function searchPage() {
   getProvider()
 
   const [_, query] = location.hash.split('=');
-  const titlePageSpan = document.querySelector(".titlePageSpan")
-  titlePageSpan.classList.remove("inactive")
-  titlePageSpan.innerHTML = query
+  const titlePageH1 = document.querySelector(".titlePageH1")
+  titlePageH1.classList.remove("inactive")
+  titlePageH1.innerHTML = query
   if (mode) {
     getCategoriesPreview("tv")
     getBySearch({query:query,media:"tv"});
@@ -256,8 +256,8 @@ function categoryPageAct() {
 
   const [_, categoryData] = location.hash.split('=');
   const [categoryId, categoryName] = categoryData.split('-');
-  const titlePageSpan = document.querySelector(".titlePageSpan")
-  titlePageSpan.innerHTML = categoryName.replace("%20", " ")
+  const titlePageH1 = document.querySelector(".titlePageH1")
+  titlePageH1.innerHTML = categoryName.replace("%20", " ")
   if (mode) {
     getInfoByAct({id:categoryId,media:"tv"})
     getCategoriesPreview("tv")
@@ -289,9 +289,9 @@ function categoryPage() {
 
   const [_, categoryData] = location.hash.split('=');
   const [categoryId, categoryName] = categoryData.split('-');
-  const titlePageSpan = document.querySelector(".titlePageSpan")
-  titlePageSpan.classList.add("inactive")
-  titlePageSpan.innerHTML = categoryName
+  const titlePageH1 = document.querySelector(".titlePageH1")
+  titlePageH1.classList.add("inactive")
+  titlePageH1.innerHTML = categoryName
   
   if (mode) {
     if (!isNaN(categoryId)) {
@@ -333,9 +333,9 @@ function movieDetailsPage() {
   containerLast.classList.add("inactive")
   const movieDetails = document.querySelector(".moviePage");
   movieDetails.classList.remove("inactive")
-  const titlePageSpan = document.querySelector(".titlePageSpan")
+  const titlePageH1 = document.querySelector(".titlePageH1")
 
-  titlePageSpan.classList.add("inactive")
+  titlePageH1.classList.add("inactive")
 
   const [_, movieId] = location.hash.split('=');
   if (_ === "#media-tv") {
