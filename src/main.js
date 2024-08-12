@@ -35,6 +35,7 @@ export async function getProvider() {
   const apiDropDownPaisProvider = document.getElementById("apiDropDownPaisProvider");
   const { data: provider } = await api(`watch/providers/regions?language=en-US`)
   const forCountry = provider.results
+  console.log(forCountry)
   createCategoriesProvider(forCountry, apiDropDownPaisProvider, "iso_3166_1", "native_name")
 }
 function createCategoriesProvider(categories, container, id, name) {
@@ -55,6 +56,7 @@ function createCategoriesProvider(categories, container, id, name) {
     let idCountry = categories.find(country => country[id] === selectedOptions);
     if (idCountry && idCountry[id]) {
       idCountrySelect(idCountry);
+      
     } else {
       console.error("idCountry o idCountry[id] es undefined");
     }
@@ -402,7 +404,6 @@ if (refeMobile<=500){
 
   const containerVid = document.querySelector(".carousel__slide")
   containerVid.innerHTML = ""
-
   const movieVideo = movie.videos.results
      movieVideo.forEach(vid => {
     const video = document.createElement("iframe")
@@ -453,9 +454,6 @@ if (refeMobile<=500){
   }
   }
   carrouselVideos()
-
-
-
 }
 export async function getSimilarById({id,media}) {
   const { data } = await api(`${media}/${id}/similar?language=es-ES`)
@@ -525,25 +523,34 @@ export async function getInfoById({id,media}) {
     })
 
     // createLogoProviderByid
+    const portadaMovie=document.querySelector(".portadaMovie")
     const logos = document.querySelector(".logos")
-    logos.innerHTML = ""
-    const iso_3166_1 = idCountry()
-    console.log(iso_3166_1)
-    console.log(provider.results)
-    if (!provider.results[iso_3166_1]||!provider.results[iso_3166_1].flatrate||!provider.results[iso_3166_1].free) {
-      console.log("No esta")
-      const logosMensaje= document.createElement("h2")
+    const logosMensaje= document.createElement("p")
       logosMensaje.classList.add("logosMensaje")
-      logosMensaje.innerHTML="No disponible en tu pais, en las principales plataformas"
+    logos.innerHTML = ""
+    const isoCou=Object.values(idCountry())
+    const iso_3166_1=isoCou[0].iso_3166_1
+    const native_name=isoCou[0].native_name
+    console.log(native_name)
+    console.log(provider.results[iso_3166_1])
+    if (!provider.results[iso_3166_1]||!provider.results[iso_3166_1].flatrate&&!provider.results[iso_3166_1].free) {
+      console.log("No esta")      
+      logosMensaje.innerHTML="No disponible en "+native_name+", en las principales plataformas"
       logos.appendChild(logosMensaje)
+      portadaMovie.appendChild(logos)
+
     } else {
       const providerByCountry = provider.results[iso_3166_1].flatrate || provider.results[iso_3166_1].free || []
+      logosMensaje.innerHTML= " disponibilidad en "+native_name+":"
+      logos.appendChild(logosMensaje)
+      portadaMovie.appendChild(logos)
+
       providerByCountry.forEach(id => {
         const providerImg = document.createElement("img")
         providerImg.classList.add("logoProvider")
         providerImg.setAttribute("src", "https://image.tmdb.org/t/p/w300" + id.logo_path)
         logos.appendChild(providerImg)
-        moviePage.appendChild(logos)
+        portadaMovie.appendChild(logos)
       })
     }
     //manejo de info(cast)
