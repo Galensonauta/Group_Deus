@@ -135,10 +135,8 @@
  
 }
 .search-box {
-  height: fit-content;
   position: absolute;
-  top: 120%;
-  width: fit-content;
+  top: 130%;
 }  
 .input-search {
   height: 25px;
@@ -196,7 +194,7 @@ select::after {
   font-variant: small-caps;
   cursor: pointer;
   position: absolute;
-  top: 120%;
+  top: 140%;
   left: 140%;
   border-radius: 25px;
 }
@@ -211,7 +209,7 @@ select::after {
   font-variant: small-caps;
   cursor: pointer;
   position: absolute;
-  top: 760%;
+  top: 725%;
   left: 140%;
   border-radius: 25px;
 }
@@ -219,6 +217,7 @@ select::after {
   background: rgb(243, 242, 242);
   color: #52057B;
 }
+
 .titlePageH1 {
   font-family: 'Montserrat', Arial, sans-serif;
   position: absolute;
@@ -232,10 +231,7 @@ select::after {
   white-space: nowrap;
   filter: blur(0.007em);
   animation: shake 2.5s linear forwards infinite;
-}
-.titlePageH1 .titlePageSpan{  
-  position: absolute;
-  top: 5px;
+  top: 105px;
   left: 940px;
 }
 @keyframes shake {
@@ -305,50 +301,57 @@ select::after {
 @media (width <= 500px) {   
   .cine, .series{
     width: 94%;
-    height: 91px;    
     right: 3%;    
   }
   .titlePortadaH1 {    
     font-size: calc(24px + 4vw);    
     right: 57%;
-    top: -7%;
+    top: -10%;
   }
   #modeH1{
     font-size: calc(17px + 4vw);
-    right: 35%;
-    top: 22%;
-  }
-  #btnMode{
-    top: 52%;
-    right: 79%;
+    right: 45%;
+    top: 18%;
   }
   #apiDropDownPaisProvider {
     top: 118%;
-    width: 320px;
+    left: 0cqmin;
+    width: 125px;
   }
   #apiDropdownPais{
-    top: 155%;
-    left: 1%;
-    width: 326px;
+    top: 118%;
+    left: 33cqmin;
+    width: 125px;
   }
   #apiDropdown{
-    top: 190%;
-    left: 1%;
+    top: 118%;
+    left: 65cqmin;
+    width: 125px;
   }
   .search-box{
-    top: 230%;
-    left: -11%;
+    top: 205%;
   }
+.input-search{
+  height: 29px;
+    width: 280px;
+    font-size: 1em;
+}
   #btnSearch {
-    left: 211%;
-    top: 8px;
+    left: 345px;
   }
   #btnTrends{
     top: 300%;
-    left: 13%;
+    left: 0cqmin;
   }
   #btnRank{ 
-    top: 300%;
-    left: 65%;
+    top: 47.5em;
+    left: 0cqmin;
+  }
+
+  .titlePageH1{
+    top: 8em;
+    left: 5.5cqmin;
+    font-size: calc(8px + 5vw);
+
   }
 }
