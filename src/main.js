@@ -35,14 +35,15 @@ export async function getProvider() {
   const apiDropDownPaisProvider = document.getElementById("apiDropDownPaisProvider");
   const { data: provider } = await api(`watch/providers/regions?language=en-US`)
   const forCountry = provider.results
-  console.log(forCountry)
   createCategoriesProvider(forCountry, apiDropDownPaisProvider, "iso_3166_1", "native_name")
 }
 function createCategoriesProvider(categories, container, id, name) {
   container.innerHTML = ""
   const apiDropDownPaisProvider = document.getElementById("apiDropDownPaisProvider");
   const countryList = document.createElement("option")
-  countryList.textContent="Ubicación"
+  const isoCou=Object.values(idCountry())
+  const native_name=isoCou[0].native_name
+  countryList.textContent=native_name
   apiDropDownPaisProvider.appendChild(countryList)
   categories.forEach((value) => {
     const countryList = document.createElement("option")
@@ -56,11 +57,12 @@ function createCategoriesProvider(categories, container, id, name) {
     let idCountry = categories.find(country => country[id] === selectedOptions);
     if (idCountry && idCountry[id]) {
       idCountrySelect(idCountry);
-      
+
     } else {
       console.error("idCountry o idCountry[id] es undefined");
     }
   })
+
 }
 let options = {
   root: null,
