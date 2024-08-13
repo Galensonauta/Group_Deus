@@ -11,7 +11,7 @@ html {
 body {
   width: 100%;
   font-family: 'Lato';
-  background-color: #060302;
+  background-color: #151515;
 }
 #lastTrend,
 #lastRank,
@@ -41,6 +41,24 @@ body {
   position: absolute;
   border-radius: 25px;
   margin-top: 4em;
+}
+footer{
+  background-color: #730b534d;
+    color: #fff;
+    height: 36px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    width: 100%;
+    margin-top: auto;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+.imgGitHub{
+  height: 25px;
+  cursor: pointer;
+  padding: 15px;
 }
 .inactive {
   display: none;

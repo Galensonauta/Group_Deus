@@ -23,20 +23,18 @@
   .imgPoster{
     object-fit: cover;
   }
- 
+
    .nextBtn {
     cursor: pointer;
-    height: 50px;
     position: absolute;
-    right: 135px;
-    top: 7%;
+    right: 178px;
+    top: 25%;
   }
   .prevBtn {
     cursor: pointer;
-    height: 50px;
     position: absolute;
-    left: 135px;
-    top: 7%;
+    left: 178px;
+    top: 25%;
   } 
   ol,
 li {

@@ -35,12 +35,23 @@
     height:100%;
     padding: 20px;
     box-sizing: border-box;
-    clip-path: circle(0% at 100% 100%);
+    clip-path: circle(0% at 100% 100%);   
 }
 .card.clicked  img{
     transition: all .5s cubic-bezier(.8,.5,.2,1.4);
     transform: scale(1.6) rotate(10deg);
-    filter: blur(3px);    
+    filter: blur(3px);      
+}
+#btnMovie-id{
+    cursor: pointer;
+    width: 60px;
+    filter: none;
+    height: 60px;
+    transform: rotate(0deg);
+ } 
+ #btnMovie-id:hover{
+    transform: scale(1.5);
+    color: #030637;
 }
 .card.clicked {
     transition: all .5s cubic-bezier(.8,.5,.2,1.4);
@@ -60,19 +71,19 @@
 .movieOrigenPreview:hover{
     color:#3C0753;
 }
-.btnMovie-liked::before{
-    background-color: none;
-    content: "🤍";
-    cursor: pointer;  
+#btnMovie-liked{
+    cursor: pointer;
+    width: 30px;
+    filter: none;
+    height: 30px;
+    transform: rotate(0deg);
+    position: absolute;
+    left: 231px;
+    top: 300px;
+    z-index: 2;
 }
-.btnMovie-likeded::before{
-    content: "❤️";    
-    cursor: pointer;  
-}
-.btnMovie-id::before{
-    content: "👁️";
-    cursor: pointer;    
-}
+
+
 
 @media(width<=500px){
 #last{

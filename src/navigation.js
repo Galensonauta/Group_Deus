@@ -16,7 +16,7 @@ import {
   getTrendingHome,
   getRankHome
 } from './main.js';
-import { base64IconCine, base64IconTv } from './imagesDefault.js';
+import{base64GitHub}from "./imagesDefault.js"
 let mode = false
 
 function portadaBlackMirror() {
@@ -91,6 +91,16 @@ function navigator() {
   }
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
+  const imgGitHub=document.createElement("img")
+  imgGitHub.classList.add("imgGitHub")
+  const footer=document.querySelector("footer")
+  imgGitHub.src=base64GitHub
+  footer.appendChild(imgGitHub)
+  imgGitHub.addEventListener("click",()=>{
+    window.location.href="https://github.com/Galensonauta"
+  })
+
+
 }
 let scrollInfinitParam = {
   url: "",
