@@ -1,5 +1,5 @@
 import { API_KEY } from "./apiKey.js";
-import {base64, base64Cast, base64NextBtn, base64PrevBtn} from "./imagesDefault.js"
+import {base64, base64Cast, base64NextBtn, base64PrevBtn, base64LupaBtn, base64heartEmpty,base64heartFill, base64GitHub} from "./imagesDefault.js"
 const api = axios.create({
   baseURL: 'https://api.themoviedb.org/3/',
   headers: {
@@ -123,8 +123,7 @@ export async function createAfiches(afiche, container, {
   type= "movie"||"tv",
   lazyLoad = false,
   clean = true
-} = {}
-) {
+} = {}) {
   if (clean) {
     container.innerHTML = '';
   }
@@ -142,7 +141,8 @@ export async function createAfiches(afiche, container, {
       movieYearPreview.innerHTML =  type==="movie"? aficheDetail.release_date.split("-")[0] 
       :aficheDetail.first_air_date.split("-")[0]
       const movieScorePreview = document.createElement("h2")
-      movieScorePreview.innerHTML = "Valoracion: " + aficheDetail.vote_average + "/10"
+
+      movieScorePreview.innerHTML = "valoración: " + aficheDetail.vote_average + "/10"
 
       const movieDirectingPreview = document.createElement("h2")
       movieDirectingPreview.classList.add("movieDirectingPreview")
@@ -163,8 +163,9 @@ export async function createAfiches(afiche, container, {
           location.hash = "#category=" + origen.iso_3166_1
         })
       })
-      const btnMovieById = document.createElement("button")
-      btnMovieById.classList.add("btnMovie-id")
+      const btnMovieById = document.createElement("img")
+      btnMovieById.src=base64LupaBtn
+      btnMovieById.id="btnMovie-id"
       if(type==="movie"){
         btnMovieById.addEventListener("click", () => {
           location.hash="#media-movie=" + movie.id;
@@ -174,19 +175,28 @@ export async function createAfiches(afiche, container, {
           location.hash="#media-tv=" + movie.id;
         })
       }
-      const btnMovieLiked = document.createElement("button")
-      btnMovieLiked.classList.add("btnMovie-liked")      
+      const btnMovieLiked = document.createElement("img")      
+      btnMovieLiked.src=base64heartEmpty
+      btnMovieLiked.id="btnMovie-liked"            
       if(type==="movie"){
-        likedMoviesList()[movie.id]&& btnMovieLiked.classList.add("btnMovie-likeded")
-        btnMovieLiked.addEventListener("click", () => {
-          btnMovieLiked.classList.toggle("btnMovie-likeded")
+        likedMoviesList()[movie.id]&&(btnMovieLiked.src=base64heartFill)
+        btnMovieLiked.addEventListener("click", () => {                  
+          if( btnMovieLiked.src.includes(base64heartEmpty)){
+            btnMovieLiked.src=base64heartFill
+          }else{
+            btnMovieLiked.src=base64heartEmpty
+          }                
           likeMovie(movie)
           getLikedMovie()        
         })
       }else{
-         likedTvList()[movie.id]&&btnMovieLiked.classList.add("btnMovie-likeded")
+         likedTvList()[movie.id]&&(btnMovieLiked.src=base64heartFill)
          btnMovieLiked.addEventListener("click", () => {
-           btnMovieLiked.classList.toggle("btnMovie-likeded")
+          if( btnMovieLiked.src.includes(base64heartEmpty)){
+            btnMovieLiked.src=base64heartFill
+          }else{
+            btnMovieLiked.src=base64heartEmpty
+          }            
            likeTvs(movie)
            getLikedTv()
          })
@@ -364,16 +374,13 @@ export async function getBySearch({query,media}) {
     createAfiches(movie, last, { type:media, lazyLoad: true, clean: true }) 
 }
 export async function getById({id,media}) {
-  const { data: movie } = await api(`${media}/${id}?append_to_response=videos,images`);
-  
-  
+  const { data: movie } = await api(`${media}/${id}?append_to_response=videos,images`);  
   const poster= document.querySelector(".poster")
   poster.innerHTML=""
   const imgPoster = document.createElement('img');
   imgPoster.classList.add("imgPoster")
   const refeMobile = window.innerWidth;
 imgPoster.dataset.triedLocal = "false"; 
-
 if (refeMobile<=500){
   imgPoster.setAttribute("src", 'https://image.tmdb.org/t/p/w342' + movie.poster_path)  
   imgPoster.addEventListener("error",()=>{
@@ -386,28 +393,34 @@ if (refeMobile<=500){
     }      
    })
 }else{
-  imgPoster.setAttribute("src", 'https://image.tmdb.org/t/p/w1280' + movie.backdrop_path)  
-  imgPoster.addEventListener("error",()=>{
-    if (imgPoster.dataset.triedLocal === "false") {
-      imgPoster.setAttribute(        
-        "src",base64 )
-        imgPoster.dataset.triedLocal = "true";
-        imgPoster.style.width = "1280px"; // Establecer el ancho deseado
-        imgPoster.style.height = "725px"; // Establecer la altura deseada
-        imgPoster.style.objectFit = "contain";
-    }      
-   })
-} 
-  
-   poster.appendChild(imgPoster)
+  if(!movie.backdrop_path){
+    imgPoster.setAttribute("src", 'https://image.tmdb.org/t/p/w1280' + movie.poster_path)
+    imgPoster.style.width = "1280px"; // Establecer el ancho deseado
+    imgPoster.style.height = "725px"; // Establecer la altura deseada  
+
+  }else{
+    imgPoster.setAttribute("src", 'https://image.tmdb.org/t/p/w1280' + movie.backdrop_path)  
+    imgPoster.addEventListener("error",()=>{
+      if (imgPoster.dataset.triedLocal === "false") {
+        imgPoster.setAttribute(        
+          "src",base64 )
+          imgPoster.dataset.triedLocal = "true";
+          imgPoster.style.width = "1280px"; // Establecer el ancho deseado
+          imgPoster.style.height = "725px"; // Establecer la altura deseada
+          imgPoster.style.objectFit = "contain";
+      }      
+     })
+  }  
+}   
+poster.appendChild(imgPoster)
 
    const carrousel = []
    const headerSection = document.querySelector(".afiche")
-
   const containerVid = document.querySelector(".carousel__slide")
-  containerVid.innerHTML = ""
+
+
   const movieVideo = movie.videos.results
-     movieVideo.forEach(vid => {
+  movieVideo.forEach(vid => {
     const video = document.createElement("iframe")
     video.classList.add("video")
     video.setAttribute("src", `https://www.youtube.com/embed/${vid.key}`)
@@ -417,42 +430,39 @@ if (refeMobile<=500){
   })
   let contIndex = 0
   function showCarrousel(index) {
+    containerVid.innerHTML=""
+    
     containerVid.appendChild(carrousel[index])
   }
   function next() {
-    contIndex = (contIndex + 1) % carrousel.length;
+    contIndex = (contIndex + 1) % carrousel.length;   
     showCarrousel(contIndex)
   }
   function prev() {
     contIndex = (contIndex - 1 + carrousel.length) % carrousel.length;
+   
     showCarrousel(contIndex)
-  }
-  function carrouselVideos(){
-    const imgNext=document.createElement("img")
-    imgNext.src=base64NextBtn
+  } 
+  function carrouselVideos(){    
+  const imgNext=document.createElement("img")
+  imgNext.src=base64NextBtn
+    imgNext.classList.add("nextBtn")    
   const imgPrev=document.createElement("img")
   imgPrev.src=base64PrevBtn
+  imgPrev.classList.add("prevBtn")   
   if(carrousel.length===0){
     console.log("sin videos")
     headerSection.style.display="none"
     headerSection.appendChild(containerVid)
   }else{
     headerSection.style.display="flex"
-    const nextBtn = document.createElement("button")
-    nextBtn.classList.add("nextBtn")    
-    nextBtn.appendChild(imgNext)
-  nextBtn.addEventListener("click", next)
-  
-  const prevBtn = document.createElement("button")
-  prevBtn.classList.add("prevBtn")
-  prevBtn.appendChild(imgPrev)  
-  prevBtn.addEventListener("click", prev)
-
+    
+  imgNext.addEventListener("click", next)    
+  imgPrev.addEventListener("click", prev)
     showCarrousel(contIndex);
-    headerSection.appendChild(nextBtn)
-    headerSection.appendChild(prevBtn)
+    containerVid.appendChild(imgNext)
+    containerVid.appendChild(imgPrev)
     headerSection.appendChild(containerVid)
-
   }
   }
   carrouselVideos()
@@ -587,9 +597,7 @@ export async function getInfoById({id,media}) {
       column2.appendChild(containerCast)
     })
 
-    //manejo de la refe para margin-top entre cast y video
-
-
+    //manejo de la refe para margin-top entre cast y video 
 
     const refeCast= containerCast.getBoundingClientRect().bottom;
     console.log(refeCast)
