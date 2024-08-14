@@ -28,13 +28,13 @@
     cursor: pointer;
     position: absolute;
     right: 178px;
-    top: 25%;
+    top: 205px;
   }
   .prevBtn {
     cursor: pointer;
     position: absolute;
     left: 178px;
-    top: 25%;
+    top: 205px;
   } 
   ol,
 li {
@@ -206,7 +206,7 @@ a:hover {
     left: 6%;
   }
   .column2{
-    top: 57em;
+    top: 60em;
   }
   .castMovie {
     grid-template-columns: repeat(auto-fill, minmax(95px, 0fr));
@@ -228,12 +228,12 @@ a:hover {
     height: 250px;
   }
   .nextBtn{
-    right: 8px;
-    top: 8.4%;
-  }
+    right: 3px;
+    top: 110.4px;
+    }
   .prevBtn{
-    left: 8px;
-    top: 8.4%;
+    left: 3px;
+    top: 110.4px;
   }
   #lastSimilar{
     margin-top: -10%;

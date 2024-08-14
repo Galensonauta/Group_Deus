@@ -59,6 +59,15 @@ modeH1.addEventListener("click", () => {
   modeDiv.appendChild(modeH1);
   location.hash= mode ?"#Series":"#Cine"
 })
+const imgGitHub=document.createElement("img")
+  imgGitHub.classList.add("imgGitHub")
+  const footer=document.querySelector("footer")
+  imgGitHub.src=base64GitHub
+  footer.appendChild(imgGitHub)
+  imgGitHub.addEventListener("click",()=>{
+    window.open("https://github.com/Galensonauta/Group_Deus","_blank")
+  })
+
 
 window.addEventListener('DOMContentLoaded', navigator, false);
 window.addEventListener('hashchange', navigator, false);
@@ -91,14 +100,7 @@ function navigator() {
   }
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
-  const imgGitHub=document.createElement("img")
-  imgGitHub.classList.add("imgGitHub")
-  const footer=document.querySelector("footer")
-  imgGitHub.src=base64GitHub
-  footer.appendChild(imgGitHub)
-  imgGitHub.addEventListener("click",()=>{
-    window.location.href="https://github.com/Galensonauta"
-  })
+  
 
 
 }
@@ -148,6 +150,7 @@ function homePage() {
   getLikedTv()
   getLikedMovie()
   getProvider()
+  
 }
 function trendPage() {
   console.log("trend")
