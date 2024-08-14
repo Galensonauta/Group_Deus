@@ -106,6 +106,10 @@
   width: 6em;
   font-family: 'Montserrat', Arial, sans-serif;
 }
+#apiDropDownPaisProvider:hover,#apiDropdownPais:hover,#apiDropdown:hover{
+  color: rgba(225, 218, 218, 0.517);
+
+}
 #apiDropdownPais {
   background: #151515;
   border-radius: 25px;
@@ -140,7 +144,7 @@
 }  
 .input-search {
   height: 25px;
-  width: 700px;
+  width: 840px;
   border-style: none;
   padding: 5px;
   font-size: 18px;
@@ -157,10 +161,9 @@
 }  
 .input-search::placeholder {
   font-family: "Montserrat", sans-serif;
-  color: #ffffff;
-  font-size: 18px;
+  color: #ffffff17;
+  font-size: 15px;
   letter-spacing: 3px;
-  font-weight: 700;
 }  
 #btnSearch {
   position: absolute;
@@ -173,7 +176,7 @@
   color: #ffffff;
   background-color: transparent;
   pointer-events: painted;
-  left: 770px;
+  left: 910px;
   top: 3px;
   z-index: 1;
 }
@@ -195,7 +198,7 @@ select::after {
   cursor: pointer;
   position: absolute;
   top: 140%;
-  left: 140%;
+  left: 120%;
   border-radius: 25px;
 }
 #btnTrends:hover {
@@ -210,7 +213,7 @@ select::after {
   cursor: pointer;
   position: absolute;
   top: 725%;
-  left: 140%;
+  left: 120%;
   border-radius: 25px;
 }
 #btnRank:hover {
@@ -232,7 +235,7 @@ select::after {
   filter: blur(0.007em);
   animation: shake 2.5s linear forwards infinite;
   top: 105px;
-  left: 940px;
+  left: 75%;
 }
 @keyframes shake {
 

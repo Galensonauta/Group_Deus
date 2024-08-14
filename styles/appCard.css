@@ -48,10 +48,12 @@
     filter: none;
     height: 60px;
     transform: rotate(0deg);
+    position: absolute;
+    top: 78%;
+    right: 70%;
  } 
  #btnMovie-id:hover{
     transform: scale(1.5);
-    color: #030637;
 }
 .card.clicked {
     transition: all .5s cubic-bezier(.8,.5,.2,1.4);
@@ -78,9 +80,12 @@
     height: 30px;
     transform: rotate(0deg);
     position: absolute;
-    left: 231px;
-    top: 300px;
-    z-index: 2;
+    left: 80%;
+    top: 78%;
+   
+}
+#btnMovie-liked:hover{
+    transform: scale(1.5);
 }
 
 
