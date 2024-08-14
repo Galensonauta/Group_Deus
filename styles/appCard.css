@@ -1,0 +1,112 @@
+
+  #last {    
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    top: 90px;
+    justify-content: flex-start;   
+}
+.card{
+    flex: 0 1 270px;
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-weight: 700;
+    text-shadow: 0 0 0.15em #720455;
+    color: #ffffff;
+    background: #fff;
+    box-shadow: 0px 4px 7px rgba(0, 0, 0, .5);
+    cursor: pointer;
+    transition: all .5s cubic-bezier(.8,.5,.2,1.4);
+    overflow: hidden;
+    border-radius: 10%;
+    margin: 20px;
+}
+.card img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all .7s cubic-bezier(.8,.5,.2,1.4);
+}
+.descriptions{
+    position: absolute;
+    font-size: .8em;
+    top:0px;
+    left:0px;
+    width:100%;
+    height:100%;
+    padding: 20px;
+    box-sizing: border-box;
+    clip-path: circle(0% at 100% 100%);   
+}
+.card.clicked  img{
+    transition: all .5s cubic-bezier(.8,.5,.2,1.4);
+    transform: scale(1.6) rotate(10deg);
+    filter: blur(3px);      
+}
+#btnMovie-id{
+    cursor: pointer;
+    width: 60px;
+    filter: none;
+    height: 60px;
+    transform: rotate(0deg);
+    position: absolute;
+    top: 78%;
+    right: 70%;
+ } 
+ #btnMovie-id:hover{
+    transform: scale(1.5);
+}
+.card.clicked {
+    transition: all .5s cubic-bezier(.8,.5,.2,1.4);
+    box-shadow: 0px 2px 3px rgba(0,0,0,.3);
+    transform: scale(1.2);
+    filter: drop-shadow(12px 12px 10px #910A67);
+    z-index: 1;
+}
+ .card.clicked  .descriptions{
+    left:0px;
+    transition: all .7s ease-in-out;
+    clip-path: circle(75%);
+}
+.movieDirectingPreview:hover{
+    color: #030637;
+}
+.movieOrigenPreview:hover{
+    color:#3C0753;
+}
+#btnMovie-liked{
+    cursor: pointer;
+    width: 30px;
+    filter: none;
+    height: 30px;
+    transform: rotate(0deg);
+    position: absolute;
+    left: 80%;
+    top: 78%;
+   
+}
+#btnMovie-liked:hover{
+    transform: scale(1.5);
+}
+
+
+
+@media(width<=500px){
+#last{
+    top: 14em;
+    left: -1.5cqmin;
+}
+.card{
+    flex: 0 1 180px;
+    margin: 10px;
+    margin-right: 15px;
+}
+
+.card.clicked{
+    transform: scale(1.1);
+}
+.descriptions{
+    font-size: 0.6em;
+    padding: 11.5px;
+    bottom: 1em;
+}
+}

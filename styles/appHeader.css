@@ -1,0 +1,360 @@
+.cine { 
+  width: 61%;
+  height: 85px;
+  margin: 0 auto;
+  background: linear-gradient(-135deg, transparent 35px, #151515 0);
+  filter: drop-shadow(1px 2px 6px  #DC84F3);
+  text-align: center;
+  position: relative;
+  right: 19%;
+}
+.series {
+  width: 61%;
+  height: 85px;
+  margin: 0 auto;
+  background: linear-gradient(-135deg, transparent 35px, #151515 0);
+  filter: drop-shadow(1px 2px 6px  #910A67);
+  text-align: center;
+  position: relative;
+  right: 19%;
+}
+
+.titlePortadaH1--header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #000;
+  overflow: hidden;
+}
+.titlePortadaH1 {
+  font-family: 'Montserrat', Arial, sans-serif;
+    position: absolute;
+    font-size: calc(26px + 3vw);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    text-shadow: 0 0 0.15em #910A67;
+    user-select: none;
+    white-space: nowrap;
+    filter: blur(0.007em);
+    animation: shake 2.5s linear forwards;
+    right: 69%;
+    top: -19%;
+    cursor: pointer;
+}
+.titlePortadaH1:hover{
+  text-shadow: 0 0 0.15em #DC84F3;
+
+}
+.titlePortadaH1 .titlePortadaSpan {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  clip-path: polygon(10% 0%, 44% 0%, 70% 100%, 55% 100%);
+}
+.titlePortadaH1::before,
+.titlePortadaH1::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.titlePortadaH1::before {
+  animation: crack1 3.5s linear forwards;
+  clip-path: polygon(0% 0%, 10% 0%, 55% 100%, 0% 100%);
+
+}
+.titlePortadaH1::after {
+  animation: crack2 3.5s linear forwards;
+  clip-path: polygon(44% 0%, 100% 0%, 100% 100%, 70% 100%);
+
+}
+#modeH1{
+  font-family: 'Montserrat', Arial, sans-serif;
+  position: absolute;
+  font-size: calc(15px + 3vw);
+  color: #fff;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-shadow: 0 0 0.15em #910A67;
+  user-select: none;
+  white-space: nowrap;
+  filter: blur(0.007em);
+  animation: shake 2.5s linear forwards;
+  right: 8%;
+  top: -45%;
+  cursor: pointer;
+}
+#modeH1:hover{
+  text-shadow: 0 0 0.15em #DC84F3;
+
+}
+
+#apiDropDownPaisProvider{    
+  background:#151515;
+  border-radius: 25px;
+  color:#fff;
+  font-size: 1.2em;
+  font-variant: small-caps;
+  cursor: pointer;
+  position: absolute;
+  top: 3%;
+  left: 103%;
+  width: 6em;
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+#apiDropDownPaisProvider:hover,#apiDropdownPais:hover,#apiDropdown:hover{
+  color: rgba(225, 218, 218, 0.517);
+
+}
+#apiDropdownPais {
+  background: #151515;
+  border-radius: 25px;
+  color: #fff;
+  font-size: 1.2em;
+  font-variant: small-caps;
+  cursor: pointer;
+  position: absolute;
+  top: 80%;
+  left: 103%;
+  width: 6em;  
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+#apiDropdown {
+  background: #151515;
+  border-radius: 25px;
+  color: #fff;
+  font-size: 1.2em;
+  font-variant: small-caps;
+  cursor: pointer;
+  position: absolute;
+  top: 44%;
+  left: 103%; 
+  width: 6em;  
+
+  font-family: 'Montserrat', Arial, sans-serif;
+ 
+}
+.search-box {
+  position: absolute;
+  top: 130%;
+}  
+.input-search {
+  height: 25px;
+  width: 840px;
+  border-style: none;
+  padding: 5px;
+  font-size: 18px;
+  letter-spacing: 2px;
+  outline: none;
+  border-radius: 25px;
+  transition: all .5s ease-in-out;
+  background-color: #151515;
+  padding-right: 100px;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  position: absolute;
+  font-weight: 700;
+}  
+.input-search::placeholder {
+  font-family: "Montserrat", sans-serif;
+  color: #ffffff17;
+  font-size: 15px;
+  letter-spacing: 3px;
+}  
+#btnSearch {
+  position: absolute;
+  border-style: none;
+  font-size: 20px;
+  font-weight: bold;
+  outline: none;
+  cursor: pointer;
+  border-radius: 50%;
+  color: #ffffff;
+  background-color: transparent;
+  pointer-events: painted;
+  left: 910px;
+  top: 3px;
+  z-index: 1;
+}
+.input-search:focus {
+  font-family: "Montserrat", sans-serif;
+  border-radius: 10px;
+  background-color: #151515b2;
+  border-bottom: 1px solid #892CDC;
+}
+select::after {
+  float: right;
+  content: "+";
+}  
+#btnTrends {
+  background: #151515;
+  color: #fff;
+  font-size: 1.2em;
+  font-variant: small-caps;
+  cursor: pointer;
+  position: absolute;
+  top: 140%;
+  left: 120%;
+  border-radius: 25px;
+}
+#btnTrends:hover {
+  background: rgb(243, 242, 242);
+  color: #52057B;
+}
+#btnRank {
+  background: #151515;
+  color: #fff;
+  font-size: 1.2em;
+  font-variant: small-caps;
+  cursor: pointer;
+  position: absolute;
+  top: 725%;
+  left: 120%;
+  border-radius: 25px;
+}
+#btnRank:hover {
+  background: rgb(243, 242, 242);
+  color: #52057B;
+}
+
+.titlePageH1 {
+  font-family: 'Montserrat', Arial, sans-serif;
+  position: absolute;
+  font-size: calc(2px + 2vw);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-shadow: 0 0 0.15em #522258;
+  user-select: none;
+  white-space: nowrap;
+  filter: blur(0.007em);
+  animation: shake 2.5s linear forwards infinite;
+  top: 105px;
+  left: 75%;
+}
+@keyframes shake {
+
+  5%,
+  15%,
+  25%,
+  35%,
+  55%,
+  65%,
+  75%,
+  95% {
+    filter: blur(0.018em);
+    transform: translateY(0.018em) rotate(0deg);
+  }
+
+  10%,
+  30%,
+  40%,
+  50%,
+  70%,
+  80%,
+  90% {
+    filter: blur(0.01em);
+    transform: translateY(-0.018em) rotate(0deg);
+  }
+
+  20%,
+  60% {
+    filter: blur(0.03em);
+    transform: translate(-0.018em, 0.018em) rotate(0deg);
+  }
+
+  45%,
+  85% {
+    filter: blur(0.03em);
+    transform: translate(0.018em, -0.018em) rotate(0deg);
+  }
+
+  100% {
+    filter: blur(0.007em);
+    transform: translate(0) rotate(-0.5deg);
+  }
+}
+@keyframes crack1 {
+
+  0%,
+  95% {
+    transform: translate(-50%, -50%);
+  }
+
+  100% {
+    transform: translate(-51%, -48%);
+  }
+}
+@keyframes crack2 {
+
+  0%,
+  95% {
+    transform: translate(-50%, -50%);
+  }
+
+  100% {
+    transform: translate(-49%, -53%);
+  }
+}
+@media (width <= 500px) {   
+  .cine, .series{
+    width: 94%;
+    right: 3%;    
+  }
+  .titlePortadaH1 {    
+    font-size: calc(24px + 4vw);    
+    right: 57%;
+    top: -10%;
+  }
+  #modeH1{
+    font-size: calc(17px + 4vw);
+    right: 45%;
+    top: 18%;
+  }
+  #apiDropDownPaisProvider {
+    top: 118%;
+    left: 0cqmin;
+    width: 125px;
+  }
+  #apiDropdownPais{
+    top: 118%;
+    left: 33cqmin;
+    width: 125px;
+  }
+  #apiDropdown{
+    top: 118%;
+    left: 65cqmin;
+    width: 125px;
+  }
+  .search-box{
+    top: 205%;
+  }
+.input-search{
+  height: 29px;
+    width: 280px;
+    font-size: 1em;
+}
+  #btnSearch {
+    left: 345px;
+  }
+  #btnTrends{
+    top: 300%;
+    left: 0cqmin;
+  }
+  #btnRank{ 
+    top: 47.5em;
+    left: 0cqmin;
+  }
+
+  .titlePageH1{
+    top: 8em;
+    left: 5.5cqmin;
+    font-size: calc(8px + 5vw);
+
+  }
+}
