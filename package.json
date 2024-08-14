@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/Galensonauta/Group_Deus/issues"
   },
-  "homepage": "https://github.com/Galensonauta/Group_Deus#readme"
+  "homepage": "https://github.com/Galensonauta/Group_Deus#readme",
+  "devDependencies": {
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4"
+  }
 }
