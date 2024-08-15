@@ -1,4 +1,6 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   // Entry nos permite decir el punto de entrada de nuestra aplicación
@@ -12,7 +14,36 @@ module.exports = {
     filename: "main.js"
   },
   resolve: {
-    // Aqui ponemos las extensiones que tendremos en nuestro proyecto para webpack los lea
+    // Aqui ponemos las extensiones que tendremos en nuestro proyecto 
+    //para webpack los lea
     extensions: [".js"]
   },
+  module: {
+     // REGLAS PARA TRABAJAR CON WEBPACK
+    rules: [
+      {
+        // LEE LOS ARCHIVOS CON EXTENSION .JS,
+        test: /\.m?js$/,
+         // IGNORA LOS MODULOS DE LA CARPETA
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+        },
+      },
+      {
+        test: /\.css|.styl$/i,
+        use: [ MiniCssExtractPlugin.loader, 'css-loader' , 'stylus-loader' ]
+    }
+    ],
+  },
+  //seccion de plugins
+  plugins: [
+    new HtmlWebpackPlugin({ 
+    inject: 'body',
+    template: './index.html',
+    filename: './index.html'
+}),
+new MiniCssExtractPlugin() 
+// INSTANCIAMOS EL PLUGIN
+]
 }
