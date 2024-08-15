@@ -1,3 +1,6 @@
+import  "./styles/main.css";
+import "./main.js"
+
 import {
   getTrendingPreview,
   getCategoriesPreview,

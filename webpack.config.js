@@ -4,14 +4,15 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   // Entry nos permite decir el punto de entrada de nuestra aplicación
-  entry: "./src/main.js",
-  // Output nos permite decir hacia dónde va enviar lo que va a preparar webpacks
+  entry: "./src/navigation.js",
+  // Output nos permite decir hacia dónde va enviar lo que va a 
+  //preparar webpacks
   output: {
     // path es donde estará la carpeta donde se guardará los archivos
     // Con path.resolve podemos decir dónde va estar la carpeta y la ubicación del mismo
     path: path.resolve(__dirname, "dist"),
     // filename le pone el nombre al archivo final
-    filename: "main.js"
+    filename: "index.js",
   },
   resolve: {
     // Aqui ponemos las extensiones que tendremos en nuestro proyecto 
@@ -31,19 +32,24 @@ module.exports = {
         },
       },
       {
-        test: /\.css|.styl$/i,
-        use: [ MiniCssExtractPlugin.loader, 'css-loader' , 'stylus-loader' ]
-    }
+        test: /\.css$/i, // Archivos CSS
+        use: [
+          MiniCssExtractPlugin.loader,  // Extrae el CSS en archivos separados
+          'css-loader' 
+        ],
+      }
     ],
   },
   //seccion de plugins
   plugins: [
     new HtmlWebpackPlugin({ 
-    inject: 'body',
+    inject: true,
     template: './index.html',
     filename: './index.html'
 }),
-new MiniCssExtractPlugin() 
+new MiniCssExtractPlugin({
+  filename: 'main.css',  // Nombre del archivo CSS generado
+}),
 // INSTANCIAMOS EL PLUGIN
 ]
 }
