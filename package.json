@@ -21,7 +21,7 @@
     "webpack-dev-server": "^5.0.4"
   },
   "scripts": {
-    "build": "node ./scripts/create-env.js && --mode production --config webpack.config.js",
+    "build": "node ./scripts/create-env.js --mode production --config webpack.config.js",
     "dev": "webpack --config webpack.config.dev.js",
     "start": "webpack serve --open"
   }
