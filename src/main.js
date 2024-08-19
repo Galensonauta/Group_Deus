@@ -1,6 +1,6 @@
-import { API_KEY } from "./apiKey.js";
-import { base64, base64Cast, base64NextBtn, base64PrevBtn, base64LupaBtn, base64heartEmpty, base64heartFill } from "./imagesDefault.js"
-
+// import { API_KEY } from "@src/apiKey.js";
+import { base64, base64Cast, base64NextBtn, base64PrevBtn, base64LupaBtn, base64heartEmpty, base64heartFill } from "@src/imagesDefault.js"
+const {API_KEY} =process.env
 const api = axios.create({
   baseURL: 'https://api.themoviedb.org/3/',
   headers: {

@@ -1,5 +1,5 @@
-import  "./styles/main.css";
-import "./main.js"
+import  "@styles/main.css";
+import "@src/main.js"
 
 import {
   getTrendingPreview,
@@ -18,8 +18,8 @@ import {
   getRankPreview,
   getTrendingHome,
   getRankHome
-} from './main.js';
-import{base64GitHub}from "./imagesDefault.js"
+} from '@src/main.js';
+import{base64GitHub}from "@src/imagesDefault.js"
 let mode = false
 
 function portadaBlackMirror() {

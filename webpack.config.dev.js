@@ -5,7 +5,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const { watch } = require('fs');
 
 module.exports = {
   // Entry nos permite decir el punto de entrada de nuestra aplicación
@@ -28,13 +28,8 @@ module.exports = {
       "@src":path.resolve(__dirname,"src")
     }
   },
-  optimization: {
-    minimize: true,
-    minimizer: [
-      new CssMinimizerPlugin(),
-      new TerserPlugin()
-    ]
-  },
+  mode: "development",
+  watch: true,
   module: {
      // REGLAS PARA TRABAJAR CON WEBPACK
     rules: [
@@ -76,7 +71,6 @@ new CopyPlugin({
   ]
 }),
 new Dotenv(),
-new CleanWebpackPlugin(),
 // INSTANCIAMOS EL PLUGIN
 ]
 }
