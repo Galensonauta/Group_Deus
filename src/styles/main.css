@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;800&display=swap");
-
+@import url(https://fonts.googleapis.com/css?family=Lato:400,300,700);
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 html {
   padding: 0;
   margin: 0;
@@ -25,7 +26,6 @@ body {
   justify-content: flex-start;
   margin-top: 30px;
 }
-
 .likedH1C,.likedH1S {
   background: #151515;
   color: #fff;
@@ -58,25 +58,6 @@ footer{
 .inactive {
   display: none;
 }
-@media (width <=500px) {
-  #lastLiked,
-  #lastLikedTv,
-  #lastTrend,
-  #lastRank {
-    top: 10em;
-    margin-top: 15%;
-  }
-  .likedH1C {
-    margin-top: 10em;
-    left: 3cqmin;
-  }
-  .likedH1S {
-    margin-top: 9em;
-    left: 3cqmin;
-  }
-}
-
-
 #last {    
     display: flex;
     flex-wrap: wrap;
@@ -127,8 +108,8 @@ footer{
     height: 60px;
     transform: rotate(0deg);
     position: absolute;
-    top: 78%;
-    right: 70%;
+    top: 76%;
+    right: 65%;
  } 
  #btnMovie-id:hover{
     transform: scale(1.5);
@@ -158,41 +139,13 @@ footer{
     height: 30px;
     transform: rotate(0deg);
     position: absolute;
-    left: 80%;
-    top: 78%;
+    left: 65%;
+    top: 76%;
    
 }
 #btnMovie-liked:hover{
     transform: scale(1.5);
 }
-
-
-
-@media(width<=500px){
-#last{
-    top: 14em;
-    left: -1.5cqmin;
-}
-.card{
-    flex: 0 1 180px;
-    margin: 10px;
-    margin-right: 15px;
-}
-
-.card.clicked{
-    transform: scale(1.1);
-}
-.descriptions{
-    font-size: 0.6em;
-    padding: 11.5px;
-    bottom: 1em;
-}
-}
-
-@import url(https://fonts.googleapis.com/css?family=Lato:400,300,700);
-
-@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
-
 .moviePage {
   font-family: 'Montserrat', Arial, sans-serif;
   color: #ffffff;
@@ -204,6 +157,7 @@ footer{
   align-items: center;
     display: flex;
     margin-top: 5px;
+    margin-left: 10px;
   }
   .poster{
     width: auto;
@@ -362,94 +316,23 @@ a:hover {
 .footerMovie{
   position: absolute;
 }
-@media(width<=500px){
-  .containerDetail { 
-    top: 4em;
-    .title1{
-      font-size: 21px;
-    }
-    .title2{
-      font-size: 17px;
-    }
-    .infoExtra{
-      margin-top: 1px;
-    }
-    .origenCountry{
-      top: 9.5em;
-    }
-    .column1{
-      top: 11em;
-    }
-}
-.logos{
-  top: 16em;
-    left: 0cqmin
-}
-.logosMensaje{
-  width: 76%;
-}
-.logoProvider{
-  width: 15%;
-  height: 15%;
-}
-  .poster{
-    top: 27em;
-    left: 6%;
-  }
-  .column2{
-    top: 60em;
-  }
-  .castMovie {
-    grid-template-columns: repeat(auto-fill, minmax(95px, 0fr));
-    }
-  .castName {
-    font-size: .9em; 
-    width: 50%;
-}
-  .movieImg {
-    width: 75px;
-    height: 75px;
-  }
-  .footerMovie{
-    /* margin-top: 100em;     */
-    left: -4cqmin;
-  }
-  .video{
-    width: 385px;
-    height: 250px;
-  }
-  .nextBtn{
-    right: 3px;
-    top: 110.4px;
-    }
-  .prevBtn{
-    left: 3px;
-    top: 110.4px;
-  }
-  #lastSimilar{
-    margin-top: -10%;
-  }
-}
+
 
 .cine { 
-    width: 61%;
-    height: 85px;
-    margin: 0 auto;
+    width: 86%;
+    height: 85px;   
     background: linear-gradient(-135deg, transparent 35px, #151515 0);
     filter: drop-shadow(1px 2px 6px  #DC84F3);
     text-align: center;
     position: relative;
-    right: 19%;
   }
   .series {
-    width: 61%;
-    height: 85px;
-    margin: 0 auto;
+    width: 86%;
+    height: 85px; 
     background: linear-gradient(-135deg, transparent 35px, #151515 0);
     filter: drop-shadow(1px 2px 6px  #910A67);
     text-align: center;
-    position: relative;
-    right: 19%;
+    position: relative;    
   }
   
   .titlePortadaH1--header {
@@ -631,7 +514,7 @@ a:hover {
     cursor: pointer;
     position: absolute;
     top: 140%;
-    left: 120%;
+    left: 87%;
     border-radius: 25px;
   }
   #btnTrends:hover {
@@ -646,7 +529,7 @@ a:hover {
     cursor: pointer;
     position: absolute;
     top: 725%;
-    left: 120%;
+    left: 87%;
     border-radius: 25px;
   }
   #btnRank:hover {
@@ -657,7 +540,7 @@ a:hover {
   .titlePageH1 {
     font-family: 'Montserrat', Arial, sans-serif;
     position: absolute;
-    font-size: calc(2px + 2vw);
+    font-size: 25px;
     font-weight: 700;
     color: #fff;
     letter-spacing: 0.02em;
@@ -734,10 +617,45 @@ a:hover {
       transform: translate(-49%, -53%);
     }
   }
-  @media (width <= 500px) {   
+  
+
+  @media(width<=500px){
+    #lastLiked,
+    #lastLikedTv,
+    #lastTrend,
+    #lastRank {
+      top: 10em;
+      margin-top: 15%;
+    }
+    .likedH1C {
+      margin-top: 10em;
+      left: 3cqmin;
+    }
+    .likedH1S {
+      margin-top: 9em;
+      left: 3cqmin;
+    }
+    #last{
+      top: 14em;
+      left: -1.5cqmin;
+  }
+  .card{
+      flex: 0 1 160px;
+      margin: 10px;
+      margin-right: 15px;
+  }
+  
+  .card.clicked{
+      transform: scale(1.1);
+  }
+  .descriptions{
+      font-size: 0.5em;
+      padding: 11.5px;
+      bottom: 1em;
+  }
     .cine, .series{
-      width: 94%;
-      right: 3%;    
+      width: 95vw;
+      left: 0cqmin;
     }
     .titlePortadaH1 {    
       font-size: calc(24px + 4vw);    
@@ -756,12 +674,12 @@ a:hover {
     }
     #apiDropdownPais{
       top: 118%;
-      left: 33cqmin;
+      left: 34cqmin;
       width: 125px;
     }
     #apiDropdown{
       top: 118%;
-      left: 65cqmin;
+      left: 68cqmin;
       width: 125px;
     }
     .search-box{
@@ -769,26 +687,94 @@ a:hover {
     }
   .input-search{
     height: 29px;
-      width: 280px;
+      width: 265px;
       font-size: 1em;
   }
     #btnSearch {
-      left: 345px;
+      left: 330px;
     }
     #btnTrends{
       top: 300%;
       left: 0cqmin;
     }
     #btnRank{ 
-      top: 47.5em;
+      top: 1000%;
       left: 0cqmin;
     }
   
     .titlePageH1{
-      top: 8em;
+      top: 9.3em;
       left: 5.5cqmin;
-      font-size: calc(8px + 5vw);
-  
+      font-size: 25px;  
+    }
+    .containerDetail { 
+      top: 4em;
+      .title1{
+        font-size: 21px;
+      }
+      .title2{
+        font-size: 17px;
+      }
+      .infoExtra{
+        margin-top: 1px;
+      }
+      .origenCountry{
+        top: 9.5em;
+      }
+      .column1{
+        top: 11em;
+      }
+  }
+  .logos{
+    top: 16em;
+      left: 0cqmin
+  }
+  .logosMensaje{
+    width: 76%;
+  }
+  .logoProvider{
+    width: 15%;
+    height: 15%;
+  }
+    .poster{
+      top: 27em;
+      left: 6%;
+    }
+    .column2{
+      top: 60em;
+    }
+    .castMovie {
+      grid-template-columns: repeat(auto-fill, minmax(95px, 0fr));
+      }
+    .castName {
+      font-size: .9em; 
+      width: 50%;
+  }
+    .movieImg {
+      width: 75px;
+      height: 75px;
+    }
+    .footerMovie{
+      left: -4cqmin;
+    }
+    .video{
+      width: 385px;
+      height: 250px;
+    }
+    .nextBtn{
+      right: 3px;
+      top: 110.4px;
+      }
+    .prevBtn{
+      left: 3px;
+      top: 110.4px;
+    }
+    #lastSimilar{
+      margin-top: -10%;
     }
   }
+  @media(width<=375){
+
+  }
+  
   
