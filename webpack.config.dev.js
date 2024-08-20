@@ -2,10 +2,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyPlugin = require('copy-webpack-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
-const { watch } = require('fs');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin; 
 
 module.exports = {
   // Entry nos permite decir el punto de entrada de nuestra aplicación
@@ -29,7 +27,7 @@ module.exports = {
     }
   },
   mode: "development",
-  watch: true,
+  devtool:"source-map",
   module: {
      // REGLAS PARA TRABAJAR CON WEBPACK
     rules: [
@@ -70,7 +68,23 @@ new CopyPlugin({
     }
   ]
 }),
-new Dotenv(),
+new Dotenv({
+  path: './.env.dev.local'}
+),
+new BundleAnalyzerPlugin(),
 // INSTANCIAMOS EL PLUGIN
-]
+],
+devServer: {
+  static: 
+  {
+    directory: path.join(__dirname, "dist"),
+    watch: true,
+  },
+  watchFiles: path.join(__dirname, "./**"), //observa los cambios en todos nuestros archivos y actualiza el navegador
+  compress: true,
+  historyApiFallback: true,
+  port: 3006,
+  open: true, //Hace que se abra en el navegador
+  
+},
 }

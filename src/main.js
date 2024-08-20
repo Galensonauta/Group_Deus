@@ -42,8 +42,8 @@ function createCategoriesProvider(categories, container, id, name) {
   container.innerHTML = ""
   const apiDropDownPaisProvider = document.getElementById("apiDropDownPaisProvider");
   const countryList = document.createElement("option")
-  const isoCou = Object.values(idCountry())
-  const native_name = isoCou[0].native_name
+  const isoCou = Object.values(idCountry()||{})
+  const native_name =  isoCou[0] ? isoCou[0].native_name : "Ubicación";
   countryList.textContent = native_name
   apiDropDownPaisProvider.appendChild(countryList)
   categories.forEach((value) => {
