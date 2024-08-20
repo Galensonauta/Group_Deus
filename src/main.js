@@ -42,9 +42,10 @@ function createCategoriesProvider(categories, container, id, name) {
   container.innerHTML = ""
   const apiDropDownPaisProvider = document.getElementById("apiDropDownPaisProvider");
   const countryList = document.createElement("option")
-  const isoCou = Object.values(idCountry()||{})
-  const native_name =  isoCou[0] ? isoCou[0].native_name : "Ubicación";
-  countryList.textContent = native_name
+  const isoCou = Object.values(idCountry()||{iso_3166_1: 'AR',native_name:"Argentina"})
+  const nativeName =  isoCou[0].native_name || "Argentina"
+  console.log(nativeName)
+  countryList.textContent = nativeName
   apiDropDownPaisProvider.appendChild(countryList)
   categories.forEach((value) => {
     const countryList = document.createElement("option")
@@ -541,9 +542,9 @@ export async function getInfoById({ id, media }) {
   const logosMensaje = document.createElement("p")
   logosMensaje.classList.add("logosMensaje")
   logos.innerHTML = ""
-  const isoCou = Object.values(idCountry())
-  const iso_3166_1 = isoCou[0].iso_3166_1
-  const native_name = isoCou[0].native_name
+  const isoCou = Object.values(idCountry()||{iso_3166_1:"AR"})
+  const iso_3166_1 = isoCou[0].iso_3166_1||Object.values({iso_3166_1:"AR"})
+  const native_name = isoCou[0].native_name||Object.values({native_name:"Argentina"})
   if (!provider.results[iso_3166_1] || !provider.results[iso_3166_1].flatrate && !provider.results[iso_3166_1].free) {
     console.log("No esta")
     logosMensaje.innerHTML = "No disponible en " + native_name + ", en las principales plataformas"

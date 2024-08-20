@@ -624,19 +624,19 @@ a:hover {
     #lastLikedTv,
     #lastTrend,
     #lastRank {
-      top: 10em;
+      top: 7em;
       margin-top: 15%;
     }
     .likedH1C {
-      margin-top: 10em;
+      margin-top: 6em;
       left: 3cqmin;
     }
     .likedH1S {
-      margin-top: 9em;
+      margin-top: 5.4em;
       left: 3cqmin;
     }
     #last{
-      top: 14em;
+      top: 12em;
       left: -1.5cqmin;
   }
   .card{
@@ -683,7 +683,7 @@ a:hover {
       width: 125px;
     }
     .search-box{
-      top: 205%;
+      top: 196%;
     }
   .input-search{
     height: 29px;
@@ -694,11 +694,11 @@ a:hover {
       left: 330px;
     }
     #btnTrends{
-      top: 300%;
+      top: 270%;
       left: 0cqmin;
     }
     #btnRank{ 
-      top: 1000%;
+      top: 950%;
       left: 0cqmin;
     }
   
