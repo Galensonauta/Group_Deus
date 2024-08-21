@@ -1,6 +1,5 @@
 import  "@styles/main.css";
 import "@src/main.js";
-import "@src/imagesDefault.js"
 
 import {
   getTrendingPreview,
@@ -273,8 +272,8 @@ function categoryPageAct() {
 
   const [_, categoryData] = location.hash.split('=');
   const [categoryId, categoryName] = categoryData.split('-');
-  const titlePageH1 = document.querySelector(".titlePageH1")
-  titlePageH1.innerHTML = categoryName.replace("%20", " ")
+  // const titlePageH1 = document.querySelector(".titlePageH1")
+  // titlePageH1.innerHTML = categoryName.replace("%20", " ")
   if (mode) {
     getInfoByAct({id:categoryId,media:"tv"})
     getCategoriesPreview("tv")
