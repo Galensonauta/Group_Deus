@@ -75,7 +75,7 @@ new CopyPlugin({
     }
   ]
 }),
-new Dotenv(),
+new Dotenv({path: './.env'}),
 new CleanWebpackPlugin(),
 // INSTANCIAMOS EL PLUGIN
 ]
