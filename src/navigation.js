@@ -1,5 +1,6 @@
 import  "@styles/main.css";
-import "@src/main.js"
+import "@src/main.js";
+import "@src/imagesDefault.js"
 
 import {
   getTrendingPreview,
@@ -339,8 +340,7 @@ function categoryPage() {
 function movieDetailsPage() {
   console.log("detalles peli")
   const portada = document.getElementById("portada");
-  portada.classList.remove("inactive")
-  
+  portada.classList.remove("inactive")  
   const trendRank=document.getElementById("trendRank")
   trendRank.classList.add("inactive")
   const containerLiked = document.getElementById("containerLiked")
@@ -350,8 +350,10 @@ function movieDetailsPage() {
   const movieDetails = document.querySelector(".moviePage");
   movieDetails.classList.remove("inactive")
   const titlePageH1 = document.querySelector(".titlePageH1")
-
   titlePageH1.classList.add("inactive")
+
+  portadaBlackMirror()
+  getProvider()
 
   const [_, movieId] = location.hash.split('=');
   if (_ === "#media-tv") {
@@ -365,7 +367,6 @@ function movieDetailsPage() {
     getSimilarById({id:movieId,media:"movie"})
     getCategoriesPreview("movie")
   }
-  portadaBlackMirror()
-  getProvider()
+ 
 
 }

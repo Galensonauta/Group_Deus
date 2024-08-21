@@ -36,7 +36,6 @@ body {
   margin-top: 3em;
   padding: 2px;
 }
-
 footer{
   background-color: #730b534d;
     color: #fff;
@@ -44,7 +43,7 @@ footer{
     display: flex;
     justify-content: end;
     align-items: center;
-    width: 100%;
+    width: 100vw;
     margin-top: auto;
     position: fixed;
     bottom: 0;
@@ -316,8 +315,6 @@ a:hover {
 .footerMovie{
   position: absolute;
 }
-
-
 .cine { 
     width: 86%;
     height: 85px;   
@@ -326,15 +323,14 @@ a:hover {
     text-align: center;
     position: relative;
   }
-  .series {
+.series {
     width: 86%;
     height: 85px; 
     background: linear-gradient(-135deg, transparent 35px, #151515 0);
     filter: drop-shadow(1px 2px 6px  #910A67);
     text-align: center;
     position: relative;    
-  }
-  
+  }  
   .titlePortadaH1--header {
     display: flex;
     justify-content: center;
@@ -407,8 +403,7 @@ a:hover {
   #modeH1:hover{
     text-shadow: 0 0 0.15em #DC84F3;
   
-  }
-  
+  }  
   #apiDropDownPaisProvider{    
     background:#151515;
     border-radius: 25px;
@@ -535,8 +530,7 @@ a:hover {
   #btnRank:hover {
     background: rgb(243, 242, 242);
     color: #52057B;
-  }
-  
+  }  
   .titlePageH1 {
     font-family: 'Montserrat', Arial, sans-serif;
     position: absolute;
@@ -618,8 +612,47 @@ a:hover {
     }
   }
   
-
-  @media(width<=500px){
+  @media(width <= 768px){
+    #lastLiked,
+    #lastLikedTv,
+    #lastTrend,
+    #lastRank, #last {
+      flex-wrap: nowrap;
+    }
+    .card{
+      flex: 0 0 183px;
+    }
+    .cine, .series {
+      left: 0cqmin;
+      width: 96vw;
+  }
+  .titlePortadaH1{
+    font-size: 59px;
+  }
+  #modeH1{
+    font-size: 52px;
+  }
+  .input-search{
+    width: 75vw;
+  }
+  #btnSearch{
+    left: 84vw;
+  }
+  #btnTrends {
+    left: 100%;
+  }
+  #btnRank{
+    left: 100%;
+    top: 573%
+    }
+    .descriptions{
+      font-size: .56em;
+    }
+    .logos{
+      left: 85vw;
+    }
+  }
+  @media(width <=500px){
     #lastLiked,
     #lastLikedTv,
     #lastTrend,
@@ -654,8 +687,8 @@ a:hover {
       bottom: 1em;
   }
     .cine, .series{
-      width: 95vw;
-      left: 0cqmin;
+      width: 90vw;
+      left: 2cqmin;
     }
     .titlePortadaH1 {    
       font-size: calc(24px + 4vw);    
@@ -772,9 +805,34 @@ a:hover {
     #lastSimilar{
       margin-top: -10%;
     }
+  } 
+  @media(width<=374px){
+    .cine, .series {
+      left: 0cqmin;
+      width: 112vw;
   }
-  @media(width<=375){
-
+  #apiDropdown {
+    left: 81cqmin;
+    top: 118%;
+    width: 101px;
+}
+#apiDropdownPais {
+  left: 41cqmin;
+  top: 118%;
+  width: 113px;
+}
+#lastLiked, #lastLikedTv, #lastRank, #lastTrend {
+  margin-top: 23%;
+  top: 8em;
+  left: 22px;
+}
+.card {
+  flex: 0 1 151px;
+  margin: 10px 5px 6px 3px;
+}
+.carousel{
+  margin-left: 0px;
+}
   }
   
   

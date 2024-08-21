@@ -1,6 +1,6 @@
 // import { API_KEY } from "@src/apiKey.js";
-import { base64, base64Cast, base64NextBtn, base64PrevBtn, base64LupaBtn, base64heartEmpty, base64heartFill } from "@src/imagesDefault.js"
-const {API_KEY} =process.env
+import { base64, base64Gr, base64Cast, base64NextBtn, base64PrevBtn, base64LupaBtn, base64heartEmpty, base64heartFill } from "@src/imagesDefault.js"
+const { API_KEY } = process.env
 const api = axios.create({
   baseURL: 'https://api.themoviedb.org/3/',
   headers: {
@@ -42,8 +42,8 @@ function createCategoriesProvider(categories, container, id, name) {
   container.innerHTML = ""
   const apiDropDownPaisProvider = document.getElementById("apiDropDownPaisProvider");
   const countryList = document.createElement("option")
-  const isoCou = Object.values(idCountry()||{iso_3166_1: 'AR',native_name:"Argentina"})
-  const nativeName =  isoCou[0].native_name || "Argentina"
+  const isoCou = Object.values(idCountry() || { iso_3166_1: 'AR', native_name: "Argentina" })
+  const nativeName = isoCou[0].native_name || "Argentina"
   console.log(nativeName)
   countryList.textContent = nativeName
   apiDropDownPaisProvider.appendChild(countryList)
@@ -383,6 +383,7 @@ export async function getById({ id, media }) {
   imgPoster.classList.add("imgPoster")
   const refeMobile = window.innerWidth;
   imgPoster.dataset.triedLocal = "false";
+  console.log(refeMobile)
   if (refeMobile <= 500) {
     imgPoster.setAttribute("src", 'https://image.tmdb.org/t/p/w342' + movie.poster_path)
     imgPoster.addEventListener("error", () => {
@@ -394,28 +395,38 @@ export async function getById({ id, media }) {
         imgPoster.style.height = "520px"; // Establecer la altura deseada
       }
     })
-  } else {
+  }
+  if (refeMobile <= 1199 && refeMobile >= 499) {
+    imgPoster.setAttribute("src", 'https://image.tmdb.org/t/p/w500' + movie.backdrop_path)
+    imgPoster.style.width = "100vw";
+    imgPoster.style.height = "75vh";
+    if (!movie.backdrop_path) {
+      imgPoster.setAttribute("src", 'https://image.tmdb.org/t/p/w500' + movie.poster_path)
+    } if (!movie.backdrop_path && !movie.poster_path) {
+      imgPoster.addEventListener("error", () => {
+        imgPoster.setAttribute(
+          "src", base64Gr)
+        imgPoster.style.objectFit = "contain";
+      })
+    }
+  }
+  if (refeMobile >= 1200) {
+    imgPoster.setAttribute("src", 'https://image.tmdb.org/t/p/w1280' + movie.backdrop_path)
     if (!movie.backdrop_path) {
       imgPoster.setAttribute("src", 'https://image.tmdb.org/t/p/w1280' + movie.poster_path)
       imgPoster.style.width = "1280px"; // Establecer el ancho deseado
       imgPoster.style.height = "725px"; // Establecer la altura deseada  
-
-    } else {
-      imgPoster.setAttribute("src", 'https://image.tmdb.org/t/p/w1280' + movie.backdrop_path)
+    } if (!movie.backdrop_path && !movie.poster_path) {
       imgPoster.addEventListener("error", () => {
-        if (imgPoster.dataset.triedLocal === "false") {
-          imgPoster.setAttribute(
-            "src", base64)
-          imgPoster.dataset.triedLocal = "true";
-          imgPoster.style.width = "1280px"; // Establecer el ancho deseado
-          imgPoster.style.height = "725px"; // Establecer la altura deseada
-          imgPoster.style.objectFit = "contain";
-        }
+        imgPoster.setAttribute(
+          "src", base64Gr)
+        imgPoster.style.width = "1280px"; // Establecer el ancho deseado
+        imgPoster.style.height = "725px"; // Establecer la altura deseada
+        imgPoster.style.objectFit = "contain";
       })
     }
   }
   poster.appendChild(imgPoster)
-
   const carrousel = []
   const headerSection = document.querySelector(".afiche")
   const containerVid = document.querySelector(".carousel__slide")
@@ -424,8 +435,8 @@ export async function getById({ id, media }) {
     const video = document.createElement("iframe")
     video.classList.add("video")
     video.setAttribute("src", `https://www.youtube.com/embed/${vid.key}`)
-    video.setAttribute("width", "900"); // Ajusta el ancho
-    video.setAttribute("height", "450"); // Ajusta la altura
+    video.style.width= "90vw";
+    video.style.height= "45vw";
     carrousel.push(video)
   })
   let contIndex = 0
@@ -443,7 +454,7 @@ export async function getById({ id, media }) {
     showCarrousel(contIndex)
   }
 
-  
+
   function carrouselVideos() {
     if (carrousel.length === 0) {
       console.log("sin videos")
@@ -542,9 +553,9 @@ export async function getInfoById({ id, media }) {
   const logosMensaje = document.createElement("p")
   logosMensaje.classList.add("logosMensaje")
   logos.innerHTML = ""
-  const isoCou = Object.values(idCountry()||{iso_3166_1:"AR"})
-  const iso_3166_1 = isoCou[0].iso_3166_1||Object.values({iso_3166_1:"AR"})
-  const native_name = isoCou[0].native_name||Object.values({native_name:"Argentina"})
+  const isoCou = Object.values(idCountry() || { iso_3166_1: "AR" })
+  const iso_3166_1 = isoCou[0].iso_3166_1 || Object.values({ iso_3166_1: "AR" })
+  const native_name = isoCou[0].native_name || Object.values({ native_name: "Argentina" })
   if (!provider.results[iso_3166_1] || !provider.results[iso_3166_1].flatrate && !provider.results[iso_3166_1].free) {
     console.log("No esta")
     logosMensaje.innerHTML = "No disponible en " + native_name + ", en las principales plataformas"
