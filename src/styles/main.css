@@ -254,7 +254,6 @@ li {
   position: absolute;
   top: 47em;
   z-index: 1;
-
 }
 
 .title1 {
@@ -879,10 +878,14 @@ select::after {
       top: 11em;
     }
   }
+  #btnMovie-liked-Id {
+    height: 33px;
+  }
 
   .logos {
     top: 16em;
-    left: 0cqmin
+    left: 0cqmin;
+    display: block;
   }
 
   .logosMensaje {
@@ -935,6 +938,7 @@ select::after {
     left: 3px;
     top: 110.4px;
   }
+  
 
   #lastSimilar {
     margin-top: -10%;
@@ -942,7 +946,6 @@ select::after {
 }
 
 @media(width<=374px) {
-
   .cine,
   .series {
     left: 0cqmin;
@@ -977,6 +980,17 @@ select::after {
   }
 
   .carousel {
-    margin-left: 0px;
+    margin-left: 57px;
   }
+  .nextBtn {
+    left: 359px;
+    top: 75.4px;
+}
+.prevBtn {
+  left: 16px;
+  top: 75.4px;
+}
+#btnMovie-liked-Id {
+  height: 33px;
+}
 }
