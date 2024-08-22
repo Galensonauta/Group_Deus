@@ -327,8 +327,7 @@ export async function getRankPreview(media) {
   movie.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movie, last, { type: media, lazyLoad: true, clean: true })
 }
-export async function getInfoByAct({ id, media }) {
-  if (media === "movie") {
+export async function getInfoByActByMovie(id) {  
     const { data } = await api('discover/movie', {
       params: {
         with_cast: id
@@ -337,13 +336,29 @@ export async function getInfoByAct({ id, media }) {
     const movies = data.results;
     movies.sort((a, b) => b.vote_average - a.vote_average)
     createAfiches(movies, last, { type: "movie", lazyLoad: true, clean: true })
-  } else {
-    const { data } = await api('person/' + id + "/tv_credits");
-    const credits = data.cast;
-    credits.sort((a, b) => b.vote_average - a.vote_average)
-    createAfiches(credits, last, { type: "tv", lazyLoad: true, clean: true })
   }
-}
+  export async function getInfoByActByTv (id){
+  const { data } = await api('person/' + id + "/tv_credits");
+  const credits = data.cast;
+  credits.sort((a, b) => b.vote_average - a.vote_average)
+  createAfiches(credits, last, { type: "tv", lazyLoad: true, clean: true })}
+// export async function getInfoByAct({ id, media }) {
+//   if (media === "movie") {
+//     const { data } = await api('discover/movie', {
+//       params: {
+//         with_cast: id
+//       }
+//     });
+//     const movies = data.results;
+//     movies.sort((a, b) => b.vote_average - a.vote_average)
+//     createAfiches(movies, last, { type: "movie", lazyLoad: true, clean: true })
+//   } else {
+//     const { data } = await api('person/' + id + "/tv_credits");
+//     const credits = data.cast;
+//     credits.sort((a, b) => b.vote_average - a.vote_average)
+//     createAfiches(credits, last, { type: "tv", lazyLoad: true, clean: true })
+//   }
+// }
 export async function getByCountry({ id, media }) {
   const { data } = await api("discover/" + media, { params: { with_origin_country: id } })
   const movie = data.results;
@@ -357,7 +372,7 @@ export async function getByGenres({ id, media }) {
       page
     }
   });
-  maxPage = data.total_pages
+  // maxPage = data.total_pages
   const movies = data.results;
   movies.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movies, last, { type: media, lazyLoad: true, clean: true })

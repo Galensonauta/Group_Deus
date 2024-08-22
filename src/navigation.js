@@ -10,7 +10,8 @@ import {
   getInfoById,
   getSimilarById,
   getByGenres,
-  getInfoByAct,
+  getInfoByActByMovie,
+  getInfoByActByTv,
   getScrollInfinite,
   getLikedMovie,
   getProvider,
@@ -282,11 +283,11 @@ function categoryPageAct() {
   // const titlePageH1 = document.querySelector(".titlePageH1")
   // titlePageH1.innerHTML = categoryName.replace("%20", " ")
   if (mode) {
-    getInfoByAct({id:categoryId,media:"tv"})
+    getInfoByActByTv({id:categoryId})
     getCategoriesPreview("tv")
     setscrollInfinitParam({ url: "person/" + categoryId + "/tv_credits", query: categoryId, searchBy: "#categoryByAct=", type: "tv" })
   } else {
-    getInfoByAct({id:categoryId,media:"movie"})
+    getInfoByActByMovie({id:categoryId})
     getCategoriesPreview("movie")
     setscrollInfinitParam({ url: "'discover/movie'", query: categoryId, searchBy: "#categoryByAct=", type: "movie" })
   }
