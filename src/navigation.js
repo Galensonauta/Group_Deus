@@ -38,6 +38,13 @@ const searchInput = document.querySelector(".search-box input")
 const btnSearch = document.querySelector("#btnSearch")
 btnSearch.addEventListener('click', () => {
   location.hash = '#search=' + searchInput.value;
+  searchInput.value=""
+});
+searchInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    location.hash = '#search=' + searchInput.value;
+    searchInput.value=""
+  }
 });
 const btnTrends = document.querySelector("#btnTrends")
 btnTrends.addEventListener("click", () => {

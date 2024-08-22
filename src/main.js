@@ -42,7 +42,6 @@ function createCategoriesProvider(categories, container, id, name) {
   const countryList = document.createElement("option")
   const isoCou = Object.values(idCountry() || { iso_3166_1: 'AR', native_name: "Argentina" })
   const nativeName = isoCou[0].native_name || "Argentina"
-  console.log(nativeName)
   countryList.textContent = nativeName
   apiDropDownPaisProvider.appendChild(countryList)
   categories.forEach((value) => {
@@ -286,13 +285,12 @@ export async function getCategoriesPreview(media) {
   createCategories(generos, apiDropDown, "id", "name");
   createCategories(countrys, apiDropDownPais, "iso_3166_1", "native_name");
 }
-let maxPage;
+// let maxPage;
 let page = 1;
 export function getScrollInfinite({ url, query = undefined, searchBy = undefined, type = "movie" }) {
   return async function () {
     page++;
     const parameter = { page }
-    console.log(page)
     if (searchBy === '#categoryByGenre=') { parameter.with_genres = query }
     if (searchBy === 'search') { parameter.query = query }
     if (searchBy === "#categoryByAct=") { parameter.with_cast = query }
@@ -381,7 +379,6 @@ export async function getById({ id, media }) {
   imgPoster.classList.add("imgPoster")
   const refeMobile = window.innerWidth;
   imgPoster.dataset.triedLocal = "false";
-  console.log(refeMobile)
   if (refeMobile <= 500) {
     imgPoster.setAttribute("src", 'https://image.tmdb.org/t/p/w342' + movie.poster_path)
     imgPoster.addEventListener("error", () => {
@@ -511,6 +508,34 @@ export async function getInfoById({ id, media }) {
       movieTitleOriginal.textContent = movie.original_name
     }
   }
+  //manejo corazoncito
+  const btnMovieLikedId = document.createElement("img")
+      btnMovieLikedId.src = base64heartEmpty
+      btnMovieLikedId.id = "btnMovie-liked-Id"
+      if (media === "movie") {
+        likedMoviesList()[movie.id] && (btnMovieLikedId.src = base64heartFill)
+        btnMovieLikedId.addEventListener("click", () => {
+          if (btnMovieLikedId.src.includes(base64heartEmpty)) {
+            btnMovieLikedId.src = base64heartFill
+          } else {
+            btnMovieLikedId.src = base64heartEmpty
+          }
+          likeMovie(movie)
+          getLikedMovie()
+        })
+      } else {
+        likedTvList()[movie.id] && (btnMovieLikedId.src = base64heartFill)
+        btnMovieLikedId.addEventListener("click", () => {
+          if (btnMovieLikedId.src.includes(base64heartEmpty)) {
+            btnMovieLikedId.src = base64heartFill
+          } else {
+            btnMovieLikedId.src = base64heartEmpty
+          }
+          likeTvs(movie)
+          getLikedTv()
+        })
+      }
+      movieTitleOriginal.appendChild(btnMovieLikedId)
 
   //manejo de info(año)
   const yearMovie = document.querySelector(".year")
@@ -546,7 +571,7 @@ export async function getInfoById({ id, media }) {
   })
 
   // createLogoProviderByid
-  const portadaMovie = document.querySelector(".portadaMovie")
+  // const moviePage = document.querySelector(".moviePage")
   const logos = document.querySelector(".logos")
   const logosMensaje = document.createElement("p")
   logosMensaje.classList.add("logosMensaje")
@@ -558,20 +583,20 @@ export async function getInfoById({ id, media }) {
     console.log("No esta")
     logosMensaje.innerHTML = "No disponible en " + native_name + ", en las principales plataformas"
     logos.appendChild(logosMensaje)
-    portadaMovie.appendChild(logos)
+    moviePage.appendChild(logos)
 
   } else {
     const providerByCountry = provider.results[iso_3166_1].flatrate || provider.results[iso_3166_1].free || []
     logosMensaje.innerHTML = " disponibilidad en " + native_name + ":"
     logos.appendChild(logosMensaje)
-    portadaMovie.appendChild(logos)
+    moviePage.appendChild(logos)
 
     providerByCountry.forEach(id => {
       const providerImg = document.createElement("img")
       providerImg.classList.add("logoProvider")
       providerImg.setAttribute("src", "https://image.tmdb.org/t/p/w300" + id.logo_path)
       logos.appendChild(providerImg)
-      portadaMovie.appendChild(logos)
+      moviePage.appendChild(logos)
     })
   }
   //manejo de info(cast)
@@ -610,7 +635,7 @@ export async function getInfoById({ id, media }) {
 
   const refeCast = containerCast.getBoundingClientRect().bottom;
   const footerMovie = document.querySelector(".footerMovie")
-  footerMovie.style.marginTop = refeCast - 150 + "px"
+  footerMovie.style.marginTop = refeCast+ "px"
 
   //manejo de info(generos)
   const column1 = document.querySelector(".column1")
