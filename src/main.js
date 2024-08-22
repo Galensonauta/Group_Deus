@@ -341,7 +341,8 @@ export async function getInfoByActByMovie(id) {
   const { data } = await api('person/' + id + "/tv_credits");
   const credits = data.cast;
   credits.sort((a, b) => b.vote_average - a.vote_average)
-  createAfiches(credits, last, { type: "tv", lazyLoad: true, clean: true })}
+  createAfiches(credits, last, { type: "tv", lazyLoad: true, clean: true })
+}
 // export async function getInfoByAct({ id, media }) {
 //   if (media === "movie") {
 //     const { data } = await api('discover/movie', {
