@@ -871,7 +871,7 @@ select::after {
     }
 
     .origenCountry {
-      top: 9.5em;
+      top: 13em;
     }
 
     .column1 {
@@ -883,7 +883,7 @@ select::after {
   }
 
   .logos {
-    top: 16em;
+    top: 18em;
     left: 0cqmin;
     display: block;
   }
