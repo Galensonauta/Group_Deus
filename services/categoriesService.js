@@ -1,4 +1,4 @@
-
+const boom = require("@hapi/boom")
 
 // Clase de la entidad donde se define la logica de negocio para
 // esa entidad en particular
@@ -86,11 +86,21 @@ class CategoriesService {
   }  
    // Retorna los productos almacenados
    async find() {
-    return this.categories;
+    const category= this.categories;
+    if(!category){
+      throw boom.notFound("No existe la categoria")
+    }else{
+      return category  
+    }    
   }
   // Retorna el elemento buscado por id
   async findOne(id) {
-    return this.categories.find((item) => item.id === id);
+    const category=this.categories.find((item) => item.id === id);
+    if(!category){
+      throw boom.notFound("No existe la categoria")
+    }else{
+      return category  
+    } 
   }
 }
 

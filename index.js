@@ -1,10 +1,23 @@
 const express = require('express'); // Requerir libreria express
 const routerApi = require('./routes');
 
+const { logErrors, errorHandler, boomErrorHandler } = require("./middlewares/errorHandler")
+
 const app = express(); // Crear instancia de aplicacion de express
 const port = 3001; // Puerto en el que se ejecutara el servidor
 
 app.use(express.json())
+routerApi(app);
+
+app.use(logErrors)
+app.use(boomErrorHandler)
+app.use(errorHandler)
+
+// Escuchar en que puerto se ejecutara el servidor
+app.listen(port, () => {
+  console.log(`El servidor esta corriendo en el puerto ${port}`);
+});
+
 
 // Enrutador de la aplicacion
 /**
@@ -13,20 +26,14 @@ app.use(express.json())
  */
 // ...
 // Enrutamiento
-app.get('/', (req, res) => {
-    // Respuesta al cliente
-    res.send('Hola mi server en express');
-  });  
-  app.get('/nueva-ruta', (req, res) => {
-    // Respuesta al cliente
-    res.send('Hola , soy una nueva ruta');
-  });
-  
-  routerApi(app);
-// Escuchar en que puerto se ejecutara el servidor
-app.listen(port, () => {
-  console.log(`El servidor esta corriendo en el puerto ${port}`);
-});
+// app.get('/', (req, res) => {
+//     // Respuesta al cliente
+//     res.send('Hola mi server en express');
+//   });
+//   app.get('/nueva-ruta', (req, res) => {
+//     // Respuesta al cliente
+//     res.send('Hola , soy una nueva ruta');
+//   });
 
 
 

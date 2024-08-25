@@ -1,5 +1,6 @@
 // Libreria para poblar de datos falsos la app
 const { faker } = require("@faker-js/faker");
+const boom = require("@hapi/boom")
 
 // Clase de la entidad donde se define la logica de negocio para
 // esa entidad en particular
@@ -12,18 +13,19 @@ class ProductsService {
   // En este caso se crea un metodo para generar los datos falsos
   //  con fines practicos para desarrollo
   async generate() {
-    const limit = 3;
+    const limit = 5;
     for (let index = 0; index < limit; index++) {
       this.products.push({
         name: faker.commerce.productName(),
         price: parseInt(faker.commerce.price()),
         image: faker.image.imageUrl(),
+        isBlock: faker.datatype.boolean(),
         id: faker.datatype.uuid(),
       });
     }
   }
 
-  async  create(data) {
+  async create(data) {
     const newProduct = {
       id: faker.datatype.uuid(),
       ...data,
@@ -37,24 +39,39 @@ class ProductsService {
   }
   // Retorna el elemento buscado por id
   async findOne(id) {
-    return this.products.find((item) => item.id === id);
+    const product = this.products.find((item) => item.id === id);
+    if (!product) {
+      throw boom.notFound('Product not found');
+    }
+    if (product.isBlock) {
+      throw boom.conflict("producto no permitido")
+    }
+    return product
   }
-  async  update(id, data) {
+  async update(id, data) {
     const indexProduct = this.products.findIndex((item) => item.id === id);
     if (indexProduct === -1) {
-      throw new Error('Product not found');
+      throw boom.notFound('Product not found');
+    }else{
+    const product = this.products[indexProduct]
+    if (product.isBlock) {
+      throw boom.conflict("producto no permitido")
     }
-    const product = this.products[indexProduct];
     this.products[indexProduct] = {
       ...product,
-      ...data,
+      ...data
     };
-    return this.products[indexProduct];
+    return this.products[indexProduct];}
   }
+
   async delete(id) {
     const indexProduct = this.products.findIndex((item) => item.id === id);
+    const product=this.products[indexProduct]
     if (indexProduct === -1) {
-      throw new Error('Product not found');
+      throw boom.notFound('Product not found');
+    }
+    if (product.isBlock) {
+      throw boom.conflict("producto no permitido")
     }
     this.products.splice(indexProduct, 1);
     return { id };
