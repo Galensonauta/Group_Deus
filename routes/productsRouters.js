@@ -1,57 +1,91 @@
 const express = require('express'); // Requerir libreria express
 const router = express.Router();
-const ProductsService= require("./../services/productsService")
+const ProductsService = require("./../services/productsService")
 
 // Instanciar servicio productos
 const service = new ProductsService();
 
 // Recuperar todos los productos
-router.get('/', (req, res) => {
-    const products = service.find();
+router.get('/', async (req, res) => {
+  try {
+    const products = await service.find();
     // Respuesta al cliente
     res.json(products);
-  });
-  
-  // Recuperar un producto en especifico
-  router.get('/:id', (req, res) => {
-    const { id } = req.params;
-    const product = service.findOne(id);
-    // Respuesta al cliente del producto
-    res.json(product);
+  }
+  catch (error) {
+    res.status(404).json({
+      message: error.message
+    })}
   });
 
-  //crear un producto
-  router.post('/', (req, res) => {
+
+// Recuperar un producto en especifico
+router.get('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await service.findOne(id);
+    // Respuesta al cliente del producto
+    res.json(product);
+  } catch (error) {
+    res.status(404).json({
+      message: error.message
+    })
+  }
+
+});
+
+//crear un producto
+router.post('/', async (req, res) => {
+  try {
     const body = req.body;
-    const newProduct = service.create(body);  
+    const newProduct = await service.create(body);
     res.status(201).json({
       message: 'created',
       data: newProduct,
     });
-  });
-  
-  //Actualizar un producto
-  router.patch('/:id', (req, res) => {
+  }
+  catch (error) {
+    res.status(404).json({
+      message: error.message
+    })
+  }
+});
+
+//Actualizar un producto
+router.patch('/:id', async (req, res) => {
+  try {
     const { id } = req.params;
     const body = req.body;
-    const product = service.update(id, body);
+    const product = await service.update(id, body);
     res.status(200).json({
       message: 'update',
       data: product,
       id,
     });
-  });
-  
-  //eliminar un producto
-  router.delete('/:id', (req, res) => {
+  } catch (error) {
+    res.status(404).json({
+      message: error.message
+    })
+  }
+});
+
+//eliminar un producto
+router.delete('/:id', async (req, res) => {
+  try {
     const { id } = req.params;
-    const product = service.delete(id);
+    const product = await service.delete(id);
     res.status(204).json({
-      message: 'delete',
+      message: 'Element borrado exitososamente',
       id: product.id,
     });
-  });
-module.exports= router;
+  } catch (error) {
+    res.status(404).json({
+      message: error.message
+    })
+  }
+
+});
+module.exports = router;
 
 //En nuestro proyecto y siguiendo clean architecture
 //Deberiamos en productsRouters.js manejar los controlaresdonde nos encargamos del routing y los middlewares

@@ -9,7 +9,7 @@ function routerApi(app){
     app.use("/api/v1", router)
     router.use("/products",productsRouters)
     router.use("/users",usersRouters)
-    router.use("./categories", categoriesRouters)
+    router.use("/categories", categoriesRouters)
 }
 
 module.exports=routerApi

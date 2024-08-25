@@ -11,8 +11,8 @@ class ProductsService {
   }
   // En este caso se crea un metodo para generar los datos falsos
   //  con fines practicos para desarrollo
-  generate() {
-    const limit = 5;
+  async generate() {
+    const limit = 3;
     for (let index = 0; index < limit; index++) {
       this.products.push({
         name: faker.commerce.productName(),
@@ -23,7 +23,7 @@ class ProductsService {
     }
   }
 
-  create(data) {
+  async  create(data) {
     const newProduct = {
       id: faker.datatype.uuid(),
       ...data,
@@ -32,14 +32,14 @@ class ProductsService {
     return newProduct;
   }
   // Retorna los productos almacenados
-  find() {
+  async find() {
     return this.products;
   }
   // Retorna el elemento buscado por id
-  findOne(id) {
+  async findOne(id) {
     return this.products.find((item) => item.id === id);
   }
-  update(id, data) {
+  async  update(id, data) {
     const indexProduct = this.products.findIndex((item) => item.id === id);
     if (indexProduct === -1) {
       throw new Error('Product not found');
@@ -51,7 +51,7 @@ class ProductsService {
     };
     return this.products[indexProduct];
   }
-  delete(id) {
+  async delete(id) {
     const indexProduct = this.products.findIndex((item) => item.id === id);
     if (indexProduct === -1) {
       throw new Error('Product not found');
