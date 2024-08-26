@@ -1,6 +1,7 @@
 // Libreria para poblar de datos falsos la app
 const { faker } = require("@faker-js/faker");
 const boom = require("@hapi/boom")
+const pool = require("./../libs/postgres.pool")
 
 // Clase de la entidad donde se define la logica de negocio para
 // esa entidad en particular
@@ -9,6 +10,8 @@ class ProductsService {
   constructor() {
     this.products = [];
     this.generate();
+    this.pool = pool
+    this.pool.on("error", (err)=>{console.log(err)})
   }
   // En este caso se crea un metodo para generar los datos falsos
   //  con fines practicos para desarrollo
@@ -35,7 +38,9 @@ class ProductsService {
   }
   // Retorna los productos almacenados
   async find() {
-    return this.products;
+    const query = "SELECT * FROM tasks"
+    const res = await this.pool.query(query)
+    return res.rows
   }
   // Retorna el elemento buscado por id
   async findOne(id) {
