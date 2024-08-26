@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+// eslint-disable-next-line no-undef
 const Joi = require('joi');
 
 const id = Joi.string().uuid();

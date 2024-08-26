@@ -132,3 +132,6 @@ dist
 # apiKey.js
 src/apiKey.js
 .env
+
+#base de datos con persistencia de Postgres
+db-volume
