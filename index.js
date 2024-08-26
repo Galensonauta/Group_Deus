@@ -1,4 +1,5 @@
 const express = require('express'); // Requerir libreria express
+const cors=require("cors")
 const routerApi = require('./routes');
 
 const { logErrors, errorHandler, boomErrorHandler } = require("./middlewares/errorHandler")
@@ -7,6 +8,17 @@ const app = express(); // Crear instancia de aplicacion de express
 const port = 3001; // Puerto en el que se ejecutara el servidor
 
 app.use(express.json())
+const whiteList=["http://localhost:3001"]
+const options={
+  origin: (origin, callback)=>{
+    if(whiteList.includes(origin)||!origin){
+      callback(null,true)
+    }else{
+      callback(new Error("No permitido"))
+    }
+  }
+}
+app.use(cors(options))
 routerApi(app);
 
 app.use(logErrors)
