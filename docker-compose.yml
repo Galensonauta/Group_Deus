@@ -1,9 +1,8 @@
 services:
   postgres:
     image: ${PG_APP}
-    container_name: ${PG_HOST}
     environment:
-      - POSTGRES_DB=${PG_DB}
+      - POSTGRES_DB=${PG_NAME}
       - POSTGRES_USER=${PG_USER}
       - POSTGRES_PASSWORD=${PG_PASS}
     env_file: .env
@@ -15,8 +14,8 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@mail.com
-      - PGADMIN_DEFAULT_PASSWORD=root
+      - PGADMIN_DEFAULT_EMAIL=${PGA_MAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGA_PASS}
     ports:
       - 5050:80
 
