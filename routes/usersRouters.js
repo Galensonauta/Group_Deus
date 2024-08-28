@@ -70,7 +70,6 @@ router.delete('/:id',
   }
 );
 
-module.exports = router;
 
 
 // router.get("/:id", (req,res)=>{

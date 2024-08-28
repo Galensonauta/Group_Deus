@@ -3,13 +3,13 @@ const {config}=require("./../config/config")
 const setupModels=require("./../db/model")
 
 
-const USER= encodeURIComponent(config.dbUser)
-const PASS= encodeURIComponent(config.dbPassword)
+const USER= encodeURIComponent(config.dbUserMysql)
+const PASS= encodeURIComponent(config.dbPasswordMysql)
 
-const URI=`postgres://${USER}:${PASS}@${config.dbHost}:${config.dbPort}/${config.dbName}`
+const URI=`mysql://${USER}:${PASS}@${config.dbHost}:${config.dbPort}/${config.dbName}`
 
 const sequelize = new Sequelize(URI,{
-    dialect:"postgres",
+    dialect:"mysql",
     logging:true
 });
 

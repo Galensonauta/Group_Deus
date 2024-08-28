@@ -9,7 +9,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - db-volume:/var/lib/postgresql/data
+      - ./db-volume:/var/lib/postgresql/data
 
   pgadmin:
     image: dpage/pgadmin4
@@ -19,5 +19,22 @@ services:
     ports:
       - 5050:80
 
-volumes:
-  db-volume:
+  mysql:
+    image: mysql:5
+    environment:
+      - MYSQL_DATABASE=${PG_NAME}
+      - MYSQL_USER=${MY_USER}
+      - MYSQL_ROOT_PASSWORD=${MY_PASS}
+      - MYSQL_PORT=3306
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - MYSQL_ROOT_PASSWORD=${PGA_PASS}
+      - PMA_HOST=mysql
+    ports:
+      - 8080:80

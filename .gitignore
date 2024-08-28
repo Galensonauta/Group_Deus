@@ -135,3 +135,6 @@ src/apiKey.js
 
 #base de datos con persistencia de Postgres
 db-volume
+
+#base de datos con persistencia de mysql
+mysql_data

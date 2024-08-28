@@ -14,10 +14,16 @@ const UserSchema = {
         type: DataTypes.STRING,
         unique: true,
     },
+    username:{
+        allowNull: false,
+        type: DataTypes.STRING,
+        unique: true,
+    },
     password: {
         allowNull: false,
         type: DataTypes.STRING
-    }, createdAt: {
+    }, 
+    createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
         field: 'create_at',
