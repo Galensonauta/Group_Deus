@@ -1,3 +1,5 @@
+// const {config} = require('./../config/config')
+
 require("dotenv").config()
 
 const config ={

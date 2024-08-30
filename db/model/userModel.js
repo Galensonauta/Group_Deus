@@ -13,25 +13,30 @@ const UserSchema = {
         allowNull: false,
         type: DataTypes.STRING,
         unique: true,
-    },
-    username:{
-        allowNull: false,
-        type: DataTypes.STRING,
-        unique: true,
-    },
+      },
     password: {
         allowNull: false,
         type: DataTypes.STRING
     }, 
+    role:{
+        allowNull: false,
+        type: DataTypes.STRING,
+        defaultValue: "Amigo"
+    },      
     createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
         field: 'create_at',
         defaultValue: Sequelize.fn('NOW')
-    }
+     } 
 }
 class User extends Model {
-    static associate() { }
+    static associate(models) {
+        this.hasOne(models.Customer,{
+            as:"customer",
+            foreignKey: "userId"
+        })
+     }
     static config(sequelize) {
         return {
             sequelize,
