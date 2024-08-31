@@ -11,12 +11,12 @@ class UserService {
   }
 
   async find() {
-    const res = await models.User.findAll()
+    const res = await models.User.findAll({include:["customer"]})
     return res
   }
 
   async findOne(id) {
-    const user = await models.User.findByPk(id)
+    const user = await models.User.findByPk(id,{include:["customer"]})
     if(!user){
       throw boom.notFound("No existe")
     }

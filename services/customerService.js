@@ -6,15 +6,17 @@ class CustomerService {
   constructor() {}
 
   async create(data) {
-    const newUser = await models.Customer.create(data)
-    return newUser;
+    const newCustomer = await models.Customer.create(data,{
+      include: ["user"]
+    })
+    return newCustomer;
   }
   async find() {
-    const res = await models.Customer.findAll()
+    const res = await models.Customer.findAll({include:["user"]})
     return res
   }
   async findOne(id) {
-    const user = await models.Customer.findByPk(id)
+    const user = await models.Customer.findByPk(id,{include:["customer"]})
     if(!user){
       throw boom.notFound("No existe")
     }
