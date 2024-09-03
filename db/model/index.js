@@ -1,11 +1,14 @@
 const { User, UserSchema } = require('./userModel');
-const { Customer, CustomerSchema } = require('./customerModel');
+const { Favoritos, FavoritoSchema } = require('./favoritoModel');
+const { Movies, MovieSchema } = require('./movieModel');
 
 function setupModels(sequelize) {
   User.init(UserSchema, User.config(sequelize));
-  Customer.init(CustomerSchema, Customer.config(sequelize));
+  Movies.init(MovieSchema, Movies.config(sequelize))
+  Favoritos.init(FavoritoSchema, Favoritos.config(sequelize));
   User.associate(sequelize.models)
-  Customer.associate(sequelize.models)
+  Movies.associate(sequelize.models)
+  Favoritos.associate(sequelize.models)
 }
 
 module.exports = setupModels;

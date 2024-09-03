@@ -9,8 +9,8 @@ const service = new UserService();
 
 router.get('/', async (req, res, next) => {
   try {
-    const categories = await service.find();
-    res.json(categories);
+    const users = await service.find();
+    res.json(users);
   } catch (error) {
     next(error);
   }
@@ -28,6 +28,7 @@ router.get('/:id',
     }
   }
 );
+
 
 router.post('/',
   validatorHandler(createUserSchema, 'body'),
