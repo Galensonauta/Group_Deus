@@ -6,21 +6,31 @@ class FavoritosService {
   constructor() {
   }  
   async create(data) {
-    const newFavoritos = await models.Favoritos.create(data,{
-      include: ["movies","user"]      
-    })
+    const newFavoritos = await models.Favoritos.create(data)
     return newFavoritos;
   }
+  async find() {
+    const favorito= await models.Favoritos.findAll({include:["user","mov"]});
+    if(!favorito){
+      throw boom.notFound()
+    }else{
+      return favorito
+    }    
+  }
   async findOne(id) {    
-    const favorito = await models.Favoritos.findByPk(id,{include:["movies","user"]})
+    const favorito = await models.Favoritos.findByPk(id,{include:["user","mov"]});
     if(!favorito){
       throw boom.notFound("No existe")
     }
     return favorito;
+  }  
+  async addMovie(data){
+    const newMovie = await models.FavoritoMovie.create(data)
+    return newMovie
   }
   async update(id, changes) {
-    const favoritos = await this.findOne(id)
-    const res = await favoritos.update(changes)
+    const favorito = await this.findOne(id)
+    const res = await favorito.update(changes)
     return res
   }
   async delete(id) {

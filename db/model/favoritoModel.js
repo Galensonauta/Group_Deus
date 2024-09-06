@@ -1,60 +1,56 @@
 const { Model, DataTypes, Sequelize } = require("sequelize")
 const { USER_TABLE } = require('./userModel')
-const { MOVIE_TABLE} = require ("./movieModel")
 
 
-const FAVORITO_TABLE = "favoritos"
+const FAVORITOS_TABLE = "favoritos"
 
-const FavoritoSchema ={
-createdAt: {
-  allowNull: false,
-  type: DataTypes.DATE,
-  field: 'create_at',
-  defaultValue: Sequelize.fn('NOW')
-},
+const FavoritosSchema ={ 
+    name: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
     userId: {
         field: 'user_id',
         allowNull: false,
         type: DataTypes.INTEGER,
-        unique: true,
-        primaryKey: true,
         references: {
           model: USER_TABLE,
           key: 'id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'
-      },
-      movieId: {
-        field: 'movie_id',
-        allowNull: false,
-        type: DataTypes.INTEGER,
-        references: {
-          model: MOVIE_TABLE,
-          key: 'id',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
       }, 
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        field: 'create_at',
+        defaultValue: Sequelize.fn('NOW')
+      }      
 }
 class Favoritos extends Model {
-    static associate(models) {    
+    static associate(models) {
       this.belongsTo(models.User,{
-        as: "user",
-        foreignKey: "userId"
-       });
-       this.belongsTo(models.Movies,{
-        as: "movies",
-        foreignKey: "movieId"
-       })        
-     }
+        as:"user"});
+      this.belongsToMany(models.Movies,{
+        as: "mov",
+        through: models.FavoritoMovie,
+        foreignKey: 'favId',
+        otherKey: 'movieId'
+      })
+    }
     static config(sequelize) {
         return {
             sequelize,
-            tableName: FAVORITO_TABLE,
+            tableName: FAVORITOS_TABLE,
             modelName: 'Favoritos',
             timestamps: false
         }
     }
 }
-module.exports = { FAVORITO_TABLE, FavoritoSchema, Favoritos }
+module.exports = { FAVORITOS_TABLE, FavoritosSchema, Favoritos }

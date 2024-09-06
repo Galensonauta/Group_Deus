@@ -11,12 +11,14 @@ const MovieSchema={
 },
 title:{
     allowNull: false,
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    unique: true
 },
 originalTitle:{
     allowNull: false,
     type: DataTypes.STRING,
-    field: "original_title"
+    field: "original_title",
+    unique: true
 },
 overview: {
   allowNull: true,
@@ -39,12 +41,7 @@ overview: {
 };
 
 class Movies extends Model {
-    static associate(models) {
-           this.hasMany(models.Favoritos,{
-            as: "favoritos",
-            foreignKey: "movieId"
-           })
-         }
+    static associate() {}
         static config(sequelize) {
             return {
                 sequelize,

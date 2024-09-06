@@ -13,7 +13,7 @@ class MoviesService {
   }
    // Retorna los productos almacenados
    async find() {
-    const movie= await models.Movies.findAll({include:["favoritos"]});
+    const movie= await models.Movies.findAll();
     if(!movie){
       throw boom.notFound()
     }else{
@@ -22,9 +22,7 @@ class MoviesService {
   }
   // Retorna el elemento buscado por id
   async findOne(id) {
-    const movie=await models.Movies.findByPk(id,
-      {include:["favoritos"]}
-    )
+    const movie=await models.Movies.findByPk(id)
     if(!movie){
       throw boom.notFound("No existe la pelicula")
     }else{
@@ -47,7 +45,7 @@ module.exports= MoviesService
 
  //   this.movies =[
   // //   {    
-  //   id: "0",
+  //   "id": "0",
   //   "title": "Trap",
   //   "original_title": "Trap",
   //   "overview": "A father and teen daughter attend a pop concert, where they realize they're at the center of a dark and sinister event.", 
@@ -77,12 +75,11 @@ module.exports= MoviesService
   //   "title": "The Deliverance",
   //   "originalTitle": "The Deliverance",
   //   "overview": "Ebony Jackson, a struggling single mother fighting her personal demons, moves her family into a new home for a fresh start. But when strange occurrences inside the home raise the suspicions of Child Protective Services and threaten to tear the family apart, Ebony soon finds herself locked in a battle for her life and the souls of her children.",
-  //   
   //   "popularity": 44492,
   //   "releaseDate": "2024-08-16",   
   // },
   // {   
-  //   "id": 3,
+  //   "id": 0,
   //   "title": "Longlegs",
   //   "originalTitle": "Longlegs",
   //   "overview": "FBI Agent Lee Harker is assigned to an unsolved serial killer case that takes an unexpected turn, revealing evidence of the occult. Harker discovers a personal connection to the killer and must stop him before he strikes again.",
@@ -90,17 +87,12 @@ module.exports= MoviesService
   //   "releaseDate": "2024-07-10",
   // },
   // {
-  //   id: "4",
-  //   "title": "Kinds of Kindness",
-  //   "original_title": "Kinds of Kindness",
-  //   "overview": "A triptych fable following a man without choice who tries to take control of his own life; a policeman who is alarmed that his wife who was missing-at-sea has returned and seems a different person; and a woman determined to find a specific someone with a special ability, who is destined to become a prodigious spiritual leader.",
-  //   "media_type": "movie",
-  //   "genre_ids": [
-  //     35,
-  //     18
-  //   ],
-  //   "popularity": 508.804,
-  //   "release_date": "2024-05-30",
+  //   id: "1",
+    // "title": "Kinds of Kindness",
+    // "originalTitle": "Kinds of Kindness",
+    // "overview": "A triptych fable following a man without choice who tries to take control of his own life; a policeman who is alarmed that his wife who was missing-at-sea has returned and seems a different person; and a woman determined to find a specific someone with a special ability, who is destined to become a prodigious spiritual leader.",  //   
+    // "popularity": 508.804,
+    // "releaseDate": "2024-05-30",
   // },
   // {  
   //   id: "5",

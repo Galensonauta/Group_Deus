@@ -6,6 +6,6 @@ module.exports = {
  await  queryInterface.createTable(FAVORITO_TABLE, FavoritoSchema)
   },
   down:async (queryInterface)=> {
-  await queryInterface.dropTable(FavoritoSchema)
+  await queryInterface.dropTable(FAVORITO_TABLE)
   }
 };

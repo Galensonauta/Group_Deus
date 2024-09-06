@@ -9,7 +9,6 @@ const popularity = Joi.number().integer();
 const releaseDate = Joi.string()
 
 const createMovieSchema = Joi.object({
-  id: id.required(),
   title: title.required(),  
   originalTitle: originalTitle.required(),
   overview: overview,
