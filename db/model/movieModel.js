@@ -14,30 +14,10 @@ title:{
     type: DataTypes.STRING,
     unique: true
 },
-originalTitle:{
-    allowNull: false,
-    type: DataTypes.STRING,
-    field: "original_title",
-    unique: true
-},
 overview: {
   allowNull: true,
   type: DataTypes.TEXT,
-},
-  genreIds:{
-    allowNull: true,
-    type: DataTypes.STRING,
-    field: "genre_ids"
-  },
-  popularity: {
-    allowNull: true,
-    type: DataTypes.INTEGER,
-  },
-  releaseDate: {
-    allowNull: true,
-    type: DataTypes.STRING,
-    field: "release_data"
-  },
+}
 };
 
 class Movies extends Model {

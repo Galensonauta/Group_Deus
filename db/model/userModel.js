@@ -9,6 +9,10 @@ const UserSchema = {
         primaryKey: true,
         type: DataTypes.INTEGER
     },
+    nick:{
+        allowNull: false,
+        type: DataTypes.STRING,
+    },
     email: {
         allowNull: false,
         type: DataTypes.STRING,

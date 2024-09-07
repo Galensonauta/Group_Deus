@@ -37,3 +37,23 @@ class UserService {
 }
 
 module.exports = UserService;
+
+// "nick": "Marian",
+// "email": "123@mail.com",
+// "password":"12345",
+// "role":"circuloRojo"
+
+// "nick": "Morgui",
+// "email": "123@mail.com",
+// "password":"12345",
+// "role":"circuloRojo"
+
+// "nick": "Fabi",
+// "email": "123@mail.com",
+// "password":"12345",
+// "role":"circuloRojo"
+
+// "nick": "Denis",
+// "email": "123@mail.com",
+// "password":"12345",
+// "role":"circuloRojo"

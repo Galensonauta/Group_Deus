@@ -28,6 +28,14 @@ class FavoritosService {
     const newMovie = await models.FavoritoMovie.create(data)
     return newMovie
   }
+
+  async destroyMovie(data){
+    const {  movieId  } = data;
+    const movie = await models.FavoritoMovie.destroy({where:{
+      movieId: movieId
+    }})
+    return movie + "Fue eliminada"
+  }
   async update(id, changes) {
     const favorito = await this.findOne(id)
     const res = await favorito.update(changes)

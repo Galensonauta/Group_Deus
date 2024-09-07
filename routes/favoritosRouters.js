@@ -6,7 +6,8 @@ const {
   createFavoritoSchema, 
   addMovieSchema, 
   getFavoritoSchema,
-  updateFavoritoSchema
+  updateFavoritoSchema,
+  destroyMovieSchema
 } = require('../schemas/favoritosSchema');
 
 const router = express.Router();
@@ -56,6 +57,8 @@ router.post('/add-movie',
   }
 );
 
+
+
 router.patch('/:id',
   validationHandler(getFavoritoSchema, 'params'),
   validationHandler(updateFavoritoSchema, 'body'),
@@ -71,7 +74,17 @@ router.patch('/:id',
   }
 );
 
-
+router.delete('/movie-id',  
+  validationHandler(destroyMovieSchema,"body"),
+  async (req, res, next) => {
+    try {
+      const body = req.body
+      res.status(201).json(await service.destroyMovie(body));
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 router.delete('/:id',
   validationHandler(getFavoritoSchema, 'params'),
   async (req, res, next) => {

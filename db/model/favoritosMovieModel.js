@@ -34,6 +34,10 @@ const FavoritoMovieSchema = {
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL',
   },
+  rank:{
+    allowNull: true,
+    type: DataTypes.INTEGER
+  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
