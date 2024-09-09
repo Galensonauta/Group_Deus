@@ -38,6 +38,14 @@ const FavoritoMovieSchema = {
     allowNull: true,
     type: DataTypes.INTEGER
   },
+  commit:{
+    allowNull: true,
+    type: DataTypes.STRING
+  },
+  tag:{
+    allowNull: true,
+    type: DataTypes.STRING
+  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,

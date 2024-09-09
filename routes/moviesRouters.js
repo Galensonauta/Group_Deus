@@ -5,7 +5,9 @@ const validatorHandler = require('./../middlewares/validatorHandler');
 const { 
   createMovieSchema, 
   updateMovieSchema, 
-  getMovieSchema } = require("./../schemas/movieSchema")
+  getMovieSchema,
+  queryParamsMovieSchema
+ } = require("./../schemas/movieSchema")
 
 // Instanciar servicio de peliculas
 const service = new MoviesService();
@@ -23,9 +25,11 @@ router.post('/',
   }
 );
 // Recuperar todas las pelis
-router.get('/', async (req, res,next) => {
+router.get('/',
+  validatorHandler(queryParamsMovieSchema, 'query'),
+   async (req, res,next) => {
   try{    
-  const movies = await service.find();
+  const movies = await service.find(req.query);
   // Respuesta al cliente
   res.json(movies);
   }catch(err){

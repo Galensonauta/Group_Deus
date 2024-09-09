@@ -21,7 +21,14 @@ overview: {
 };
 
 class Movies extends Model {
-    static associate() {}
+    static associate(models) {
+        this.belongsToMany(models.Favoritos, {
+            as: 'fav',
+            through:  models.FavoritoMovie,
+            foreignKey: 'movieId',
+            otherKey: 'favId'
+          });
+    }
         static config(sequelize) {
             return {
                 sequelize,

@@ -8,6 +8,7 @@ const FavoritosSchema ={
     name: {
       allowNull: false,
       type: DataTypes.STRING,
+      unique: true
     },
     id: {
       allowNull: false,

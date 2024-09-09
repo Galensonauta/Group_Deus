@@ -12,8 +12,17 @@ class MoviesService {
     return newMovie;
   }
    // Retorna los productos almacenados
-   async find() {
-    const movie= await models.Movies.findAll();
+   async find(query) {
+    const options={
+      include:["fav"]
+    }
+      const { offset,limit}=query
+      if(offset&&limit){
+        options.offset=offset
+        options.limit=limit
+      }    
+  
+    const movie= await models.Movies.findAll(options);
     if(!movie){
       throw boom.notFound()
     }else{
