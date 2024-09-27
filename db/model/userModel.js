@@ -12,21 +12,12 @@ const UserSchema = {
     nick:{
         allowNull: false,
         type: DataTypes.STRING,
+        unique: true
     },
-    email: {
-        allowNull: false,
-        type: DataTypes.STRING,
-        unique: true,
-      },
     password: {
         allowNull: false,
         type: DataTypes.STRING
-    }, 
-    role:{
-        allowNull: false,
-        type: DataTypes.STRING,
-        defaultValue: "Comunero"
-    },      
+    },
     createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
@@ -36,17 +27,39 @@ const UserSchema = {
 }
 class User extends Model {
     static associate(models) {
-        this.hasMany(models.Favoritos, {
-          as: 'favoritos',
+        this.hasMany(models.Listas, {
+          as: 'userList',
           foreignKey: 'userId'
         });
+        this.belongsToMany(models.Movies, {
+            as: 'userMovie',
+            through:  models.UserMovie,
+            foreignKey: 'userId',
+            otherKey: 'movieId'
+          });
+          this.belongsToMany(models.Tvs, {
+            as: 'userTv',
+            through:  models.UserTv,
+            foreignKey: 'userId',
+            otherKey: 'tvId'
+          });
     }
     static config(sequelize) {
         return {
             sequelize,
             tableName: USER_TABLE,
             modelName: 'User',
-            timestamps: false
+            timestamps: false,
+            hooks: {
+                afterCreate: async (user, options) => {
+                    const { Listas } = sequelize.models;
+                    // Crear una lista de películas favoritas por defecto al crear un usuario
+                    await Listas.create({
+                        name: 'Favoritos',   // Nombre de la lista por defecto
+                        userId: user.id      // Asignar la lista al usuario recién creado
+                    });
+                }
+            }
         }
     }
 }

@@ -3,7 +3,7 @@ const router = express.Router();
 
 const UserService = require('./../services/usersService');
 const validatorHandler = require('./../middlewares/validatorHandler');
-const { updateUserSchema, createUserSchema, getUserSchema } = require('./../schemas/usersSchema');
+const { updateUserSchema, createUserSchema, getUserSchema,getUserInteractionSchema } = require('./../schemas/usersSchema');
 
 const service = new UserService();
 
@@ -16,6 +16,18 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.get('/:type/:movie',
+  validatorHandler(getUserInteractionSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const {type,movie } = req.params;
+      const user = await service.findInteractionId(type,movie);
+      res.json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 router.get('/:id',
   validatorHandler(getUserSchema, 'params'),
   async (req, res, next) => {
@@ -28,7 +40,6 @@ router.get('/:id',
     }
   }
 );
-
 
 router.post('/',
   validatorHandler(createUserSchema, 'body'),
@@ -57,7 +68,6 @@ router.patch('/:id',
     }
   }
 );
-
 router.delete('/:id',
   validatorHandler(getUserSchema, 'params'),
   async (req, res, next) => {

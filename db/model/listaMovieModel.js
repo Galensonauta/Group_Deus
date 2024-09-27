@@ -1,27 +1,27 @@
 const { Model, DataTypes, Sequelize } = require("sequelize")
-const { FAVORITOS_TABLE } = require('./favoritoModel')
+const { LISTAS_TABLE } = require('./listaModel')
 const { MOVIE_TABLE } = require("./movieModel")
 
 
-const FAVORITO_MOVIE_TABLE = "favorito_movie"
+const LISTAS_MOVIE_TABLE = "listas_movies"
 
-const FavoritoMovieSchema = {
+const ListaMovieSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
+    type: DataTypes.INTEGER,
     primaryKey: true,
-    type: DataTypes.INTEGER
   },
-  favId: {
-    field: 'fav_id',
+   listId: {
+    field: 'list_id',
     allowNull: false,
     type: DataTypes.INTEGER,
     references: {
-      model: FAVORITOS_TABLE,
+      model: LISTAS_TABLE,
       key: 'id'
     },
     onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
+    onDelete: 'CASCADE'
   },
   movieId: {
     field: 'movie_id',
@@ -32,19 +32,7 @@ const FavoritoMovieSchema = {
       key: 'id',
     },
     onUpdate: 'CASCADE',
-    onDelete: 'SET NULL',
-  },
-  rank:{
-    allowNull: true,
-    type: DataTypes.INTEGER
-  },
-  commit:{
-    allowNull: true,
-    type: DataTypes.STRING
-  },
-  tag:{
-    allowNull: true,
-    type: DataTypes.STRING
+    onDelete: 'CASCADE',
   },
   createdAt: {
     allowNull: false,
@@ -53,15 +41,15 @@ const FavoritoMovieSchema = {
     defaultValue: Sequelize.fn('NOW')
   }
 }
-class FavoritoMovie extends Model {
+class ListaMovie extends Model {
   static associate() { }
   static config(sequelize) {
     return {
       sequelize,
-      tableName: FAVORITO_MOVIE_TABLE,
-      modelName: 'FavoritoMovie',
+      tableName: LISTAS_MOVIE_TABLE,
+      modelName: 'ListaMovie',
       timestamps: false
     }
   }
 }
-module.exports = { FAVORITO_MOVIE_TABLE, FavoritoMovieSchema, FavoritoMovie }
+module.exports = { LISTAS_MOVIE_TABLE, ListaMovieSchema, ListaMovie }

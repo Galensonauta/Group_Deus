@@ -1,11 +1,11 @@
 'use strict';
 
-const {FavoritosSchema, FAVORITOS_TABLE}= require ("../model/favoritoModel")
+const {ListasSchema, LISTAS_TABLE}= require ("../model/listaModel")
 module.exports = {
   up :async (queryInterface)=> {
- await  queryInterface.createTable(FAVORITOS_TABLE, FavoritosSchema)
+ await  queryInterface.createTable(LISTAS_TABLE, ListasSchema)
   },
   down:async (queryInterface)=> {
-  await queryInterface.dropTable(FAVORITOS_TABLE)
+  await queryInterface.dropTable("listas")
   }
 };

@@ -1,44 +1,52 @@
 const { Model, DataTypes } = require("sequelize");
 
-const MOVIE_TABLE = "movies"
+const TV_TABLE = "tv"
 
-const MovieSchema={
+const TvSchema={
 id: {  // Campo para guardar el ID de TMDb
     allowNull: false,
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-title:{
+name:{
     type: DataTypes.STRING,    
 },
-original_title:{   
+   original_name:{
     type: DataTypes.STRING,
    },
-adult:{ 
+adult:{
+ 
     type: DataTypes.BOOLEAN
 },
-backdrop_path:{  
+backdrop_path:{ 
+ 
     type: DataTypes.STRING,
 },
-genre_ids:{  
-    type: DataTypes.JSONB,
+genre_ids:{ 
+ 
+    type: DataTypes.JSONB
 },
-media_type:{  
+media_type:{ 
+ 
     type: DataTypes.STRING
 },
-original_language:{  
+original_language:{ 
+ 
     type: DataTypes.STRING
 },
-overview: { 
+overview: {
+ 
     type: DataTypes.TEXT
 },
 popularity:{ 
+ 
     type: DataTypes.FLOAT
 },
-poster_path: { 
+poster_path: {
+ 
     type: DataTypes.STRING
 },
-release_date:{ 
+first_air_date:{
     type: DataTypes.STRING
 },
 video:{ 
@@ -49,37 +57,37 @@ vote_average:{
 },
 vote_count:{ 
     type: DataTypes.FLOAT
-} ,
+},
 cast: {
     type: DataTypes.JSONB
 },
 crew:{
     type: DataTypes.JSONB
-}
+} 
 };
-class Movies extends Model {
+class Tvs extends Model {
     static associate(models) {
         this.belongsToMany(models.User, {
-            as: 'userMovie',
-            through:  models.UserMovie,
-            foreignKey: 'movieId',
+            as: 'userTv',
+            through:  models.UserTv,
+            foreignKey: 'tvId',
             otherKey: 'userId'
           });
         this.belongsToMany(models.Listas, {
             as: 'list',
-            through:  models.ListaMovie,
-            foreignKey: 'movieId',
+            through:  models.ListaTv,
+            foreignKey: 'tvId',
             otherKey: 'listId'
           });
     }
         static config(sequelize) {
             return {
                 sequelize,
-                tableName: MOVIE_TABLE,
-                modelName: 'Movies',
+                tableName: TV_TABLE,
+                modelName: 'Tvs',
                 timestamps: false
             }
         }
     }
-    module.exports = { MOVIE_TABLE, MovieSchema, Movies }
+    module.exports = { TV_TABLE, TvSchema, Tvs }
   

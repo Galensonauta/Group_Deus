@@ -1,15 +1,16 @@
-const express = require('express'); // Requerir libreria express
 
-const usersRouters=require("./usersRouters");
-const moviesRouters=require("./moviesRouters")
-const favoritosRouters=require("./favoritosRouters")
+const express = require('express');
+const usersRouters = require('./usersRouters');
+const moviesRouters = require('./moviesRouters');
+const listasRouters = require('./listasRouters');
 
 function routerApi(app){
     const router = express.Router();
-    app.use("/api/v1", router)
+    
+    app.use( "/api/v1", router)
     router.use("/users",usersRouters)
-    router.use("/favoritos",favoritosRouters)
+    router.use("/listas",listasRouters)
     router.use("/movies", moviesRouters)
 }
 
-module.exports=routerApi
+module.exports= routerApi

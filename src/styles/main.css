@@ -576,7 +576,17 @@ select::after {
   float: right;
   content: "+";
 }
-
+#btnUser{
+  background: #151515;
+  color: #fff;
+  font-size: 1.2em;
+  font-variant: small-caps;
+  cursor: pointer;
+  position: absolute;
+  top: 140%;
+  left: 102%;
+  border-radius: 25px;
+}
 #btnTrends {
   background: #151515;
   color: #fff;
@@ -609,6 +619,62 @@ select::after {
 #btnRank:hover {
   background: rgb(243, 242, 242);
   color: #52057B;
+}
+#btnComment{
+  background: #151515;
+  color: #fff;
+  font-size: 1.2em;
+  font-variant: small-caps;
+  cursor: pointer;
+  position: absolute;
+  top: 140%;
+  left: 102%;
+  border-radius: 25px;
+}
+#btnRankMovie{
+  background: #151515;
+  color: #fff;
+  font-size: 1.2em;
+  font-variant: small-caps;
+  cursor: pointer;
+  position: absolute;
+  top: 140%;
+  left: 102%;
+  border-radius: 25px;
+}
+.input-comment {
+  height: 25px;
+  width: 840px;
+  border-style: none;
+  padding: 5px;
+  font-size: 18px;
+  letter-spacing: 2px;
+  outline: none;
+  border-radius: 25px;
+  transition: all .5s ease-in-out;
+  background-color: #151515;
+  padding-right: 100px;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  position: absolute;
+  font-weight: 700;
+}
+.inputRank{
+  height: 25px;
+  width: 840px;
+  border-style: none;
+  padding: 5px;
+  font-size: 18px;
+  letter-spacing: 2px;
+  outline: none;
+  border-radius: 25px;
+  transition: all .5s ease-in-out;
+  background-color: #151515;
+  padding-right: 100px;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  position: absolute;
+  font-weight: 700;
 }
 
 .titlePageH1 {

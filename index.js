@@ -1,14 +1,23 @@
-const express = require('express'); // Requerir libreria express
-const cors=require("cors")
-const routerApi = require('./routes');
 
-const { logErrors, errorHandler, boomErrorHandler, ormErrorHandler } = require("./middlewares/errorHandler")
+const express = require('express'); // Requiere librería express
+const { json } = express; // Extrae 'json' del módulo 'express'
+const cors = require('cors');
+const routerApi = require('./routes/index.js');
+require('dotenv').config();
+
+
+// Acceder a la arquitectura
+// Requiere los middlewares desde el archivo
+const { logErrors, 
+  errorHandler, 
+  boomErrorHandler, 
+  ormErrorHandler } = require('./middlewares/errorHandler.js');
 
 const app = express(); // Crear instancia de aplicacion de express
-const port = 3001; // Puerto en el que se ejecutara el servidor
+const port = process.env.PORT || 3001;
 
-app.use(express.json())
-const whiteList=["http://localhost:3001"]
+app.use(json())
+const whiteList=["http://localhost:8080"]
 const options={
   origin: (origin, callback)=>{
     if(whiteList.includes(origin)||!origin){
@@ -30,7 +39,6 @@ app.use(errorHandler)
 app.listen(port, () => {
   console.log(`El servidor esta corriendo en el puerto ${port}`);
 });
-
 
 // Enrutador de la aplicacion
 /**

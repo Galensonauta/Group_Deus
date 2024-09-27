@@ -1,21 +1,17 @@
 const Joi = require('joi');
+const id=Joi.number().integer();
+const userId = Joi.number().integer();
+const type = Joi.string()
 
-const id = Joi.number().integer();
-const title = Joi.string()
-const overview = Joi.string()
+const comment = Joi.string()
+const rank = Joi.number().integer().min(0).max(10);
+const tag = Joi.string()
+
 const limit=Joi.number().integer();
 const offset=Joi.number().integer();
-
 const createMovieSchema = Joi.object({
-  title: title.required(),  
-  overview: overview  
+  id: id.required(),  
 });
-
-const updateMovieSchema = Joi.object({
-    title: title,  
-    overview: overview
-});
-
 const getMovieSchema = Joi.object({
   id: id.required(),
 });
@@ -23,5 +19,15 @@ const queryParamsMovieSchema=Joi.object({
   limit,
   offset
 })
+const verificarInteraction =Joi.object({
+  id: id.required(),
+  userId:userId.required(),
+  type:type.required(),
+})
+const addInteractionMovie=Joi.object({
+  comment,
+  rank,
+  tag
+})
 
-module.exports = { createMovieSchema, updateMovieSchema, getMovieSchema ,queryParamsMovieSchema}
+module.exports = { createMovieSchema, getMovieSchema ,queryParamsMovieSchema,addInteractionMovie,verificarInteraction}

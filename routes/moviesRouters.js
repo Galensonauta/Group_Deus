@@ -1,30 +1,16 @@
-const express = require('express'); // Requerir libreria express
-const router = express.Router();
-const MoviesService = require('../services/movieService');
+const express = require('express');
+const MoviesService = require('../services/movieService.js');
 const validatorHandler = require('./../middlewares/validatorHandler');
 const { 
-  createMovieSchema, 
-  updateMovieSchema, 
   getMovieSchema,
-  queryParamsMovieSchema
+  queryParamsMovieSchema,
+  addInteractionMovie,
+  verificarInteraction
  } = require("./../schemas/movieSchema")
 
 // Instanciar servicio de peliculas
+const router = express.Router();
 const service = new MoviesService();
-
-router.post('/',
-  validatorHandler(createMovieSchema, 'body'),
-  async (req, res, next) => {
-    try {
-      const body = req.body;
-      const newMovie = await service.create(body);
-      res.status(201).json(newMovie);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-// Recuperar todas las pelis
 router.get('/',
   validatorHandler(queryParamsMovieSchema, 'query'),
    async (req, res,next) => {
@@ -36,8 +22,6 @@ router.get('/',
     next(err)
   }
 });
-
-// Recuperar un producto en especifico
 router.get('/:id', 
   validatorHandler(getMovieSchema, 'params'),
   async (req, res,next) => {
@@ -49,32 +33,21 @@ router.get('/:id',
     next(err)
   }
 })
-router.patch('/:id',
-  validatorHandler(getMovieSchema, 'params'),
-  validatorHandler(updateMovieSchema, 'body'),
+router.post("/:userId/:type/:id",
+  validatorHandler(verificarInteraction, 'params'),
+  validatorHandler(addInteractionMovie, 'body'),
   async (req, res, next) => {
     try {
-      const { id } = req.params;
-      const body = req.body;
-      const movie = await service.update(id, body);
-      res.json(movie);
+      const { userId,type, id}=req.params
+      const body=req.body
+      const newMovie = await service.addInteraction(userId,type, id,body);
+      res.status(201).json(newMovie);
     } catch (error) {
       next(error);
     }
   }
 );
-router.delete('/:id',
-  validatorHandler(getMovieSchema, 'params'),
-  async (req, res, next) => {
-    try {
-      const { id } = req.params;
-      await service.delete(id);
-      res.status(201).json({id});
-    } catch (error) {
-      next(error);
-    }
-  }
-);
+
 
 
 module.exports= router;

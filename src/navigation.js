@@ -1,6 +1,5 @@
 import  "@styles/main.css";
-import "@src/main.js";
-
+import "@src/main.mjs";
 import {
   getTrendingPreview,
   getCategoriesPreview,
@@ -18,9 +17,11 @@ import {
   getLikedTv,
   getRankPreview,
   getTrendingHome,
-  getRankHome
-} from '@src/main.js';
-import{base64GitHub}from "@src/imagesDefault.js"
+  getRankHome,
+  getInteractionMovieId
+} from '@src/main.mjs';
+import{base64GitHub}from "@imagesDefault"
+
 let mode = false
 
 function portadaBlackMirror() {
@@ -32,7 +33,6 @@ function portadaBlackMirror() {
   titlePortadaDiv.addEventListener("click", () => {
   // location.hash="#Cine"
   location.hash= mode ?"#Series":"#Cine"
-
   })
 }
 const searchInput = document.querySelector(".search-box input")
@@ -78,8 +78,6 @@ const imgGitHub=document.createElement("img")
   imgGitHub.addEventListener("click",()=>{
     window.open("https://github.com/Galensonauta/Group_Deus","_blank")
   })
-
-
 window.addEventListener('DOMContentLoaded', navigator, false);
 window.addEventListener('hashchange', navigator, false);
 
@@ -90,6 +88,9 @@ function navigator() {
   else if (location.hash.startsWith('#media-')) {
     movieDetailsPage();
   }
+  // else if(location.hash.startsWith('#user=')){
+  //   userPage()
+  // }
   else if (location.hash.startsWith('#trend=')) {
     trendPage()
   }
@@ -111,9 +112,6 @@ function navigator() {
   }
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
-  
-
-
 }
 let scrollInfinitParam = {
   url: "",
@@ -163,6 +161,9 @@ function homePage() {
   getProvider()
   
 }
+// function userPage(){
+//    //logica con user service para crear usuario, eliminar e ingresar
+// }
 function trendPage() {
   console.log("trend")
   const portada = document.getElementById("portada");
@@ -180,7 +181,7 @@ function trendPage() {
 
   if (mode) {
     getTrendingPreview("tv")
-    getCategoriesPreview("TV")
+    getCategoriesPreview("tv")
     titlePageH1.innerHTML = "Estrenos Series"
     setscrollInfinitParam({ url: "trending/tv/day", query: null, searchBy: "#trend=", type: "tv" })
   } else {
@@ -264,8 +265,7 @@ function searchPage() {
 function categoryPageAct() {
   console.log("categorias por actor")
   const portada = document.getElementById("portada");
-  portada.classList.remove("inactive")
-  
+  portada.classList.remove("inactive")  
   const trendRank=document.getElementById("trendRank")
   trendRank.classList.add("inactive")
   const containerLiked = document.getElementById("containerLiked")
@@ -344,7 +344,7 @@ function categoryPage() {
     console.error("fin no funca")
   }
 }
-function movieDetailsPage() {
+async function movieDetailsPage() {
   console.log("detalles peli")
   const portada = document.getElementById("portada");
   portada.classList.remove("inactive")  
@@ -362,18 +362,29 @@ function movieDetailsPage() {
   portadaBlackMirror()
   getProvider()
 
+
   const [_, movieId] = location.hash.split('=');
+  const interaction=await getInteractionMovieId("movie",movieId)
+  console.log(interaction)
+  // const interaction=await getInteractionMovieId({type:"movie",movieId})
+  // const interobj=  Object.values(interaction)
+  // console.log(interaction)
+  // console.log(interobj)
   if (_ === "#media-tv") {
     getById({id:movieId,media:"tv"})
     getInfoById({id:movieId,media:"tv"})
     getSimilarById({id:movieId,media:"tv"})
     getCategoriesPreview("tv")
+    // getInteractionMovieId({type:"tv",movie:movieId})
+    // console.log(getInteractionMovieId)
   } else {
     getById({id:movieId,media:"movie"})
     getInfoById({id:movieId,media:"movie"})
     getSimilarById({id:movieId,media:"movie"})
     getCategoriesPreview("movie")
-  }
- 
+    
 
+    // getInteractionMovieId({type:"movie",movie:movieId})
+    // console.log(getInteractionMovieId)
+  }
 }

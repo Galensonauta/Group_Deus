@@ -1,47 +1,154 @@
 const boom = require("@hapi/boom")
 const {models} = require("../libs/sequelize")
+async function loadApi() {
+  const api = await import('../src/tmdbApi.mjs'); // Cargar módulo ESM dinámicamente    
+  return api; 
+}
+//"Lo importante es hacer el bien, sin importar que para eso se requiera la ayuda del mal"
+//"A veces en el camino infinito del mal y del bien, necesitan interactuar para seguir adelante con sus inexorables cometidos"
 
-// Clase de la entidad donde se define la logica de negocio para
-// esa entidad en particular
 
 class MoviesService {
   constructor() {}
-
-  async create(data) {
-    const newMovie = await models.Movies.create(data)
-    return newMovie;
+ // Retorna los productos almacenados
+ async find(query) {
+  const options={
+    include:["list","userMovie"]
   }
-   // Retorna los productos almacenados
-   async find(query) {
-    const options={
-      include:["fav"]
-    }
-      const { offset,limit}=query
-      if(offset&&limit){
-        options.offset=offset
-        options.limit=limit
-      }    
-  
-    const movie= await models.Movies.findAll(options);
-    if(!movie){
-      throw boom.notFound()
-    }else{
-      return movie  
+    const { offset,limit}=query
+    if(offset&&limit){
+      options.offset=offset
+      options.limit=limit
     }    
-  }
-  // Retorna el elemento buscado por id
-  async findOne(id) {
-    const movie=await models.Movies.findByPk(id)
+
+  const movie= await models.Movies.findAll(options);
+  if(!movie){
+    throw boom.notFound()
+  }else{
+    return movie  
+  }    
+}   
+  async findOneMovie(id) {   
+    const movie = await models.Movies.findByPk(id)
     if(!movie){
-      throw boom.notFound("No existe la pelicula")
+      throw boom.notFound("No existe")
+    }
+    return movie;}
+    async findOneTv(id){
+      const tv = await models.Tvs.findByPk(id)
+      if(!tv){
+        throw boom.notFound("No existe")}
+      
+      return tv;
+      } 
+  async getMovieId(id){
+    // Obtener la película desde la API de TMDb    
+    const load = await loadApi()
+    const api = load.api
+    const response =await api(`movie/${id}?language=es-LA`)
+    const responseCredits = await api(`movie/${id}/credits?language=es-LA`);
+  
+
+      const movieData = response.data
+      const movieCredits = responseCredits.data
+      if (!movieData) {
+        throw boom.notFound('La película no fue encontrada en TMDb');
+       }
+       const movie = await models.Movies.findOne({
+         where: { id: movieData.id }
+       });
+       if (!movie) {
+         const newMovie = await models.Movies.create({
+           id: movieData.id,             // Utilizar el ID de TMDb como ID en tu base de datos
+           title: movieData.title,
+           original_title:movieData.original_title,
+           adult: movieData.adult,
+           backdrop_path: movieData.backdrop_path,
+           media_type:movieData.media_type,
+           original_language:movieData.original_language,
+           overview:movieData.overview,
+           vote_count:movieData.vote_count,
+           popularity:movieData.popularity,
+           poster_path:movieData.poster_path,
+           release_date:movieData.release_date,
+           video:movieData.video,
+           vote_average:movieData.vote_average,
+           genre_ids:movieData.genre_ids,
+           cast: movieCredits.cast,
+           crew: movieCredits.crew
+         });
+         return newMovie;  
+       }
+       return movieData
+    }
+    async getTvId(id){
+      // Obtener la película desde la API de TMDb    
+    const load = await loadApi()
+    const api = load.api
+    const response =await api(`tv/${id}?language=es-LA`) 
+    const responseCredits = await api(`tv/${id}/credits?language=es-LA`);
+
+      const tvData = response.data
+      const tvCredits=responseCredits.data
+      if (!tvData) {
+        throw boom.notFound('La serie no fue encontrada en TMDb');
+       }
+       const movie = await models.Tvs.findOne({
+         where: { id: tvData.id }
+       });
+       if (!movie) {
+         const newTv = await models.Tvs.create({
+           id: tvData.id,  // Utilizar el ID de TMDb como ID en tu base de datos
+           name: tvData.name,
+           original_name:tvData.original_name,
+           adult: tvData.adult,
+           backdrop_path: tvData.backdrop_path,
+           media_type:tvData.media_type,
+           original_language:tvData.original_language,
+           overview:tvData.overview,
+           vote_count:tvData.vote_count,
+           popularity:tvData.popularity,
+           poster_path:tvData.poster_path,
+           first_air_date:tvData.first_air_date,
+           video:tvData.video,
+           vote_average:tvData.vote_average,
+           genre_ids:tvData.genre_ids,
+           cast: tvCredits.cast,
+           crew: tvCredits.crew
+         });
+         return newTv;  
+       }
+       return tvData
+    }       
+  async addInteraction(userId,type,id,body) {
+    const usersId = await models.User.findOne({where:{id:userId}});    
+    if (!usersId) {
+      throw new Error('El usuario noe xiste');
+    }    
+    if(type==="movie"){
+      const movId = await this.getMovieId(id)
+      id=movId.id||movId.id
+      const newInteraction = await models.UserMovie.create({
+        userId,
+        movieId: id,
+        comment: body.comment,
+        rank: body.rank,
+        tag: body.tag
+      })
+      return newInteraction       
     }else{
-      return movie  
-    } 
-  }
-  async update(id, changes) {
-    const movie = await this.findOne(id)
-    const res = await movie.update(changes)
-    return res
+      const tvId = await this.getTvId(id)
+     id= tvId.id
+    const newInteraction = await models.UserTv.create({
+      userId,
+      tvId: id,
+      comment: body.comment,
+      rank: body.rank,
+      tag: body.tag
+    })
+    return newInteraction    
+    }    
+   
   }
   async delete(id) {
     const movie = await this.findOne(id)
@@ -52,35 +159,3 @@ class MoviesService {
 
 module.exports= MoviesService
 
- 
-  //   {
-  // 
-  //   "title": "Trap", 
-  //   "overview": "A father and teen daughter attend a pop concert, where they realize they're at the center of a dark and sinister event.",   //   
-  // },
-  // {   
-  //   id: 1,
-  //   "title": "Borderlands",
-  //   "overview": "Returning to her home planet, an infamous bounty hunter forms an unexpected alliance with a team of unlikely heroes. Together, they battle monsters and dangerous bandits to protect a young girl who holds the key to unimaginable power.",
-  // },
-  // {   
-  //   "id": 2,
-  //   "title": "The Deliverance",
-  //   "overview": "Ebony Jackson, a struggling single mother fighting her personal demons, moves her family into a new home for a fresh start. But when strange occurrences inside the home raise the suspicions of Child Protective Services and threaten to tear the family apart, Ebony soon finds herself locked in a battle for her life and the souls of her children.",
-  //   },
-  // {   
-  //   "id": 0,
-  //   "title": "Longlegs",  //   
-  //   "overview": "FBI Agent Lee Harker is assigned to an unsolved serial killer case that takes an unexpected turn, revealing evidence of the occult. Harker discovers a personal connection to the killer and must stop him before he strikes again.",
-  //     // },
-  // {
-  //   id: "1",
-    // "title": "Kinds of Kindness",
-    // "overview": "A triptych fable following a man without choice who tries to take control of his own life; a policeman who is alarmed that his wife who was missing-at-sea has returned and seems a different person; and a woman determined to find a specific someone with a special ability, who is destined to become a prodigious spiritual leader.",
-  // },
-  // {  
-  //   id: "5",
-  //   "title": "Inside Out 2",
-  //   "overview": "Teenager Riley's mind headquarters is undergoing a sudden demolition to make room for something entirely unexpected: new Emotions! Joy, Sadness, Anger, Fear and Disgust, who’ve long been running a successful operation by all accounts, aren’t sure how to feel when Anxiety shows up. And it looks like she’s not alone.",
-  //   }
-  //     

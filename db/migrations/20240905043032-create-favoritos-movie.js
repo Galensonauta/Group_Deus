@@ -1,12 +1,12 @@
 'use strict';
 
-const { FAVORITO_MOVIE_TABLE, FavoritoMovieSchema } = require('./../model/favoritosMovieModel');
+const { LISTAS_MOVIE_TABLE, ListaMovieSchema } = require('./../model/listaMovieModel');
 
 module.exports = {
   up: async (queryInterface) => {
-    await queryInterface.createTable(FAVORITO_MOVIE_TABLE, FavoritoMovieSchema);
+    await queryInterface.createTable(LISTAS_MOVIE_TABLE, ListaMovieSchema);
   },
   down: async (queryInterface) => {
-    await queryInterface.dropTable(FAVORITO_MOVIE_TABLE);
+    await queryInterface.dropTable("listas_movies");
   }
 };

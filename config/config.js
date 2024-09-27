@@ -3,15 +3,16 @@
 require("dotenv").config()
 
 const config ={
-    env: process.env.NODE_ENV||"dev",
+    env: process.env.NODE_ENV||"development",
     port: process.env.PORT||3001,
     dbUser: process.env.PG_USER,
-    dbUserMysql: process.env.MY_USER,
-    dbPassword: process.env.PG_PASS,
-    dbPasswordMysql: process.env.MY_PASS,
     dbHost: process.env.PG_HOST,
     dbName: process.env.PG_NAME,
-    dbPort: process.env.PG_PORT,    
+    dbPassword: process.env.PG_PASS,
+    dbPort: process.env.PG_PORT,   
+    dbUserMysql: process.env.MY_USER,
+
+    dbPasswordMysql: process.env.MY_PASS,    
   };
   
   module.exports = { config };

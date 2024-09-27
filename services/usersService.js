@@ -1,34 +1,77 @@
 const boom = require('@hapi/boom');
-
-const {models} = require("./../libs/sequelize")
+const {models} = require("./../libs/sequelize");
 
 class UserService {
   constructor() {}
-
-  async create(data) {
-    const newUser = await models.User.create(data)
-    return newUser;
-  }
-
   async find() {
-    const res = await models.User.findAll({include:{association: "favoritos",include: ["mov"]}})
+    const options ={
+       include: [    
+        {
+          association:"userList",
+          include:["moviesList"],
+        },           
+        {
+        association: "userMovie",
+        attributes:["title"]
+      },
+      {
+      association: "userTv",
+        attributes:["name"]}
+      ]
+    }
+    const res = await models.User.findAll(options)
     return res
   }
-
+  async findInteractionId(type,movie){
+    // const user = await this.findOne(userId)
+    // if(!user){
+    //   throw boom.notFound("No existe")
+    // }
+  if(type==="movie"){
+    const userMovie= await models.UserMovie.findOne({
+      where: { movieId: movie}
+    })   
+    return userMovie
+  }else{
+      const userTv= await models.UserTv.findOne({
+        where: {tvId: movie }
+      })
+    return userTv    
+  }
+  }
   async findOne(id) {
-    const user = await models.User.findByPk(id,{include:{association: "favoritos",include: ["mov"]}})
+    const user = await models.User.findByPk(id,{  
+        include: [    
+         {
+           association:"userList",
+           include:["moviesList"],
+
+         },           
+         {
+         association: "userMovie",
+         attributes:["title"]
+       },
+       {
+       association: "userTv",
+         attributes:["name"]
+        }
+       ]})
+     
+      // {include:{association: "userList",include: ["moviesList"]}})
     if(!user){
       throw boom.notFound("No existe")
     }
     return user;
   }
-
+  async create(data) {
+    const newUser = await models.User.create(data)
+    return newUser;
+  }
   async update(id, changes) {
     const user = await this.findOne(id)
     const res = await user.update(changes)
     return res
   }
-
   async delete(id) {
     const user = await this.findOne(id)
     await user.destroy(id)

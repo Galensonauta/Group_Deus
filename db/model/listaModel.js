@@ -2,13 +2,13 @@ const { Model, DataTypes, Sequelize } = require("sequelize")
 const { USER_TABLE } = require('./userModel')
 
 
-const FAVORITOS_TABLE = "favoritos"
+const LISTAS_TABLE = "listas"
 
-const FavoritosSchema ={ 
+const ListasSchema ={ 
     name: {
       allowNull: false,
       type: DataTypes.STRING,
-      unique: true
+      defaultValue: "Favoritos"
     },
     id: {
       allowNull: false,
@@ -25,7 +25,7 @@ const FavoritosSchema ={
           key: 'id'
         },
         onUpdate: 'CASCADE',
-        onDelete: 'SET NULL'
+        onDelete: 'CASCADE'
       }, 
       createdAt: {
         allowNull: false,
@@ -34,24 +34,32 @@ const FavoritosSchema ={
         defaultValue: Sequelize.fn('NOW')
       }      
 }
-class Favoritos extends Model {
+class Listas extends Model {
     static associate(models) {
-      this.belongsTo(models.User,{
-        as:"user"});
+      this.belongsTo(models.User,{ 
+        foreignKey: 'userId',
+        as:"userList"
+      });
       this.belongsToMany(models.Movies,{
-        as: "mov",
-        through: models.FavoritoMovie,
-        foreignKey: 'favId',
+        as: "moviesList",
+        through: models.ListaMovie,
+        foreignKey: 'listId',
         otherKey: 'movieId'
+      })
+      this.belongsToMany(models.Tvs,{
+        as: "tvsList",
+        through: models.ListaTv,
+        foreignKey: 'listId',
+        otherKey: 'tvId'
       })
     }
     static config(sequelize) {
         return {
             sequelize,
-            tableName: FAVORITOS_TABLE,
-            modelName: 'Favoritos',
+            tableName: LISTAS_TABLE,
+            modelName: 'Listas',
             timestamps: false
         }
     }
 }
-module.exports = { FAVORITOS_TABLE, FavoritosSchema, Favoritos }
+module.exports = { LISTAS_TABLE, ListasSchema, Listas }

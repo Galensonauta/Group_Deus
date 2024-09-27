@@ -1,13 +1,18 @@
+
+
 // import { API_KEY } from "@src/apiKey.js";
-import { base64, base64Gr, base64Cast, base64NextBtn, base64PrevBtn, base64LupaBtn, base64heartEmpty, base64heartFill } from "@src/imagesDefault.js"
-const { API_KEY } = process.env
-const api = axios.create({
-  baseURL: 'https://api.themoviedb.org/3/',
-  headers: {
-    'Content-Type': 'application/json;charset=utf-8',
-    "Authorization":API_KEY,
-  }
-});
+import axios from 'axios';
+// const { API_KEY } = process.env
+// const api = axios.create({
+//   baseURL: 'https://api.themoviedb.org/3/',
+//   headers: {
+//     'Content-Type': 'application/json;charset=utf-8',
+//     "Authorization":API_KEY,
+//   }
+// });
+import {api} from "./tmdbApi.mjs"
+
+import { base64, base64Gr, base64Cast, base64NextBtn, base64PrevBtn, base64LupaBtn, base64heartEmpty, base64heartFill } from "@imagesDefault"
 
 function idCountry() {
   const item = JSON.parse(localStorage.getItem("id_country"))
@@ -68,7 +73,6 @@ let options = {
   rootMargin: "0px",
   threshold: 0.5,
 }
-
 const observador = new IntersectionObserver((imgs) => {
   imgs.forEach((img) => {
     if (img.isIntersecting) {
@@ -78,46 +82,207 @@ const observador = new IntersectionObserver((imgs) => {
     }
   })
 }, options)
-function likedMoviesList() {
-  const item = JSON.parse(localStorage.getItem("liked_movie"))
-  let movies;
-  if (item) {
-    movies = item
-  } else {
-    movies = {}
+async function likedMoviesList() {
+  try {
+    const response = await fetch(`http://localhost:3001/api/v1/listas/1/movie`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+    const data = await response.json();
+    if (response.ok) {
+      return data.moviesList; // Devuelve la lista de películas desde el backend
+    } else {
+      console.error("Error al obtener las películas likeadas:", data);
+      return {}; // Retorna un objeto vacío si hay un error
+    }
+  } catch (error) {
+    console.error("Error al conectar con el servidor de peliculas:", error);
+    return {}; // Retorna un objeto vacío si hay un error en la conexión
   }
-  return movies
-}
-function likedTvList() {
-  const item = JSON.parse(localStorage.getItem("liked_tv"))
-  let tvs;
-  if (item) {
-    tvs = item
-  } else {
-    tvs = {}
+} 
+export async function getInteractionMovieId(type,movie){
+  try{
+    const response = await fetch(`http://localhost:3001/api/v1/users/${type}/${movie}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }})
+      const data = await response.json()
+      console.log(movie)
+      console.log("esto trae",data)
+      if (response.ok) {
+        return data; // Devuelve la lista de interacciones desde el backend
+      } else {
+        console.error("Error al obtener las interacciones:", data);
+        return {}; // Retorna un objeto vacío si hay un error
+      }
+    } catch (error) {
+      console.error("Error al conectar con el servidor de interacciones:", error);
+      return {}; // Retorna un objeto vacío si hay un error en la conexión
   }
-  return tvs
 }
-function likeMovie(movie) {
-  const addedMovies = likedMoviesList()
-  if (addedMovies[movie.id]) {
-    //eliminar
-    addedMovies[movie.id] = undefined
-  } else {
-    //agregar
-    addedMovies[movie.id] = movie
+export async function addInteraction(type,movie,interactionData){
+  try{
+    const response = await fetch(`http://localhost:3001/api/v1/movies/1/${type}/${movie.id}`,{
+      method: "POST",
+      headers:{
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(interactionData),
+    })
+    const data= await response.json()
+    if (response.ok) {
+      console.log("interaccion agregada", data);
+    } else {
+      console.error("Error al agregar la interaccion", data);
+    }
+  } catch (error) {
+    console.error("Error al hacer la solicitud al servidor:", error);
   }
-  localStorage.setItem("liked_movie", JSON.stringify(addedMovies))
-}
-function likeTvs(tv) {
-  const addedTvs = likedTvList()
-  if (addedTvs[tv.id]) {
-    addedTvs[tv.id] = undefined
-  } else {
-    addedTvs[tv.id] = tv
   }
-  localStorage.setItem("liked_tv", JSON.stringify(addedTvs))
+
+async function likeMovie(movie) {  
+  try {
+  const response = await fetch(`http://localhost:3001/api/v1/listas/1/movie/${movie.id}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ movieId: movie.id })  // Pasar el ID de la película también en el cuerpo
+  });
+  const data = await response.json();
+  if (response.ok) {
+    console.log("Película agregada a la lista", data);
+  } else {
+    console.error("Error al agregar la película", data);
+  }
+} catch (error) {
+  console.error("Error al hacer la solicitud al servidor:", error);
 }
+}
+ async function deleteMovieList(movie){
+  try {
+    const response = await fetch(`http://localhost:3001/api/v1/listas/1/movie/${movie.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await response.json();
+    if (response.ok) {
+      console.log("Película eliminada de la lista", data);
+    } else {
+      console.error("Error al eliminar la película", data);
+    }
+  } catch (error) {
+    console.error("Error al hacer la solicitud al servidor:", error);
+  }
+  }
+async function likedTvList() {
+  try {
+    const response = await fetch(`http://localhost:3001/api/v1/listas/1/tv`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+    const data = await response.json();
+    if (response.ok) {
+      return data.tvsList; // Devuelve la lista de películas desde el backend
+    } else {
+      console.error("Error al obtener las películas likeadas:", data);
+      return {}; // Retorna un objeto vacío si hay un error
+    }
+  } catch (error) {
+    console.error("Error al conectar con el servidor de listas:", error);
+    return {}; // Retorna un objeto vacío si hay un error en la conexión
+  }
+}
+async function likeTvs(tv) {
+  try {
+    const response = await fetch(`http://localhost:3001/api/v1/listas/1/tv/${tv.id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ tvId: tv.id })  // Pasar el ID de la película también en el cuerpo
+    });
+    const data = await response.json();
+    if (response.ok) {
+      console.log("serie agregada a la lista", data);
+    } else {
+      console.error("Error al agregar la serie", data);
+    }
+  } catch (error) {
+    console.error("Error al hacer la solicitud al servidor:", error);
+  }
+}
+async function deleteTvList(movie){
+  try {
+    const response = await fetch(`http://localhost:3001/api/v1/listas/1/tv/${movie.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await response.json();
+    if (response.ok) {
+      console.log("Película eliminada de la lista", data);
+    } else {
+      console.error("Error al eliminar la película", data);
+    }
+  } catch (error) {
+    console.error("Error al hacer la solicitud al servidor:", error);
+  }
+}
+async function addMovieList(movie,button){    
+          const lista= await likedMoviesList()
+          const listaId= lista.find(id=>id.id===movie.id)
+          refreshHeart(listaId,button)
+    
+        button.addEventListener("click", async() => {
+          const lista= await likedMoviesList()
+          const listaId= lista.find(id=>id.id===movie.id)
+  if(!listaId) { 
+    refreshHeart(true, button);
+    await likeMovie(movie);
+    // Agregar la película a la lista  
+  } else{
+    refreshHeart(false, button);
+    await  deleteMovieList(movie)   
+      } 
+   getLikedMovie()
+}); 
+}
+async function addTvList(tv,button){
+  const lista= await likedTvList()
+  const listaId= lista.find(id=>id.id===tv.id)
+  refreshHeart(listaId,button)
+  button.addEventListener("click", async() => {
+    const lista= await likedTvList()
+    const listaId= lista.find(id=>id.id===tv.id)
+if(!listaId) { 
+refreshHeart(true, button);
+await likeTvs(tv);
+// Agregar la película a la lista  
+} else{
+refreshHeart(false, button);
+await  deleteTvList(tv)   
+} 
+getLikedTv()
+})
+}
+
+function refreshHeart(isLiked, button){
+  if(isLiked){    
+    button.src=base64heartFill
+  }else{
+    button.src=base64heartEmpty
+  }
+}
+
 export async function createAfiches(afiche, container, {
   type = "movie" || "tv",
   lazyLoad = false,
@@ -130,23 +295,32 @@ export async function createAfiches(afiche, container, {
     const movieContainer = document.createElement('div');
     movieContainer.classList.add('card');
     movieContainer.addEventListener('click', async () => {
-      const { data: aficheDetail } = await api(`${type}/${movie.id}?language=es-LA`)
+      try{   
+      const { data: movieDetail } = await api(`${type}/${movie.id}?language=es-LA`)
       const { data: creditPreview } = await api(`${type}/${movie.id}/credits?language=es-LA`);
+      const aficheDetail={
+      ...movieDetail,
+      ...creditPreview,
+      // movieDetailDbArrId           
+          }          
       const movieTitleText = document.createElement("h1")
       movieTitleText.classList.add("movieTitleText")
       movieTitleText.innerHTML = type === "movie" ? aficheDetail.original_title
         : aficheDetail.original_name
-      const movieYearPreview = document.createElement("h2")
-      movieYearPreview.innerHTML = type === "movie" ? aficheDetail.release_date.split("-")[0]
-        : aficheDetail.first_air_date.split("-")[0]
+        const movieYearPreview = document.createElement("h2");
+        // Verificar si los valores existen antes de usar `split`
+       const releaseDate = aficheDetail.release_date ? aficheDetail.release_date.split("-")[0] : "N/A";
+       const firstAirDate = aficheDetail.first_air_date ? aficheDetail.first_air_date.split("-")[0] : "N/A";        
+        // Asignar el año dependiendo del tipo
+        movieYearPreview.innerHTML = type === "movie" ? releaseDate : firstAirDate;        
       const movieScorePreview = document.createElement("h2")
-
       movieScorePreview.innerHTML = "valoración: " + aficheDetail.vote_average + "/10"
 
       const movieDirectingPreview = document.createElement("h2")
       movieDirectingPreview.classList.add("movieDirectingPreview")
-      const created = type === "movie" ? creditPreview.crew.filter((casting) => casting.known_for_department === "Directing").slice(0, 1)
+      const created = type === "movie" ? aficheDetail.crew.filter((casting) => casting.known_for_department === "Directing").slice(0, 1)
         : aficheDetail.created_by.slice(0, 1)
+
       created.forEach(dire => {
         movieDirectingPreview.innerHTML = dire.name
         movieDirectingPreview.addEventListener("click", () => {
@@ -175,31 +349,11 @@ export async function createAfiches(afiche, container, {
         })
       }
       const btnMovieLiked = document.createElement("img")
-      btnMovieLiked.src = base64heartEmpty
       btnMovieLiked.id = "btnMovie-liked"
-      if (type === "movie") {
-        likedMoviesList()[movie.id] && (btnMovieLiked.src = base64heartFill)
-        btnMovieLiked.addEventListener("click", () => {
-          if (btnMovieLiked.src.includes(base64heartEmpty)) {
-            btnMovieLiked.src = base64heartFill
-          } else {
-            btnMovieLiked.src = base64heartEmpty
-          }
-          likeMovie(movie)
-          getLikedMovie()
-        })
-      } else {
-        likedTvList()[movie.id] && (btnMovieLiked.src = base64heartFill)
-        btnMovieLiked.addEventListener("click", () => {
-          if (btnMovieLiked.src.includes(base64heartEmpty)) {
-            btnMovieLiked.src = base64heartFill
-          } else {
-            btnMovieLiked.src = base64heartEmpty
-          }
-          likeTvs(movie)
-          getLikedTv()
-        })
-      }
+      if(type==="movie"){
+      addMovieList(movie,btnMovieLiked)}else{
+      addTvList(movie,btnMovieLiked)}
+
       const detailContainer = document.createElement("div")
       detailContainer.classList.add("descriptions")
       detailContainer.appendChild(movieTitleText)
@@ -211,7 +365,11 @@ export async function createAfiches(afiche, container, {
       detailContainer.appendChild(btnMovieLiked)
       movieContainer.appendChild(detailContainer)
       movieContainer.classList.toggle("clicked")
-    });
+    }catch (error) {
+      console.error('Error al obtener los detalles de la película:', error);
+    }
+  });
+    
     const movieImg = document.createElement('img');
     movieImg.classList.add('movie-img');
     movieImg.setAttribute('alt', movie.title);
@@ -234,14 +392,16 @@ export async function createAfiches(afiche, container, {
     container.appendChild(movieContainer);
   }
 }
-export function getLikedMovie() {
-  const addedMovies = likedMoviesList()
-  const movies = Object.values(addedMovies)
+
+export async function getLikedMovie() {
+  const addedMovies = await likedMoviesList()
+  const movies=Object.values(addedMovies)
+  console.log(movies)
   createAfiches(movies, lastLiked, { type: "movie", lazyLoad: true, clean: true })
 }
-export function getLikedTv() {
-  const addedTvs = likedTvList()
-  const tvs = Object.values(addedTvs)
+export async function getLikedTv() {
+  const addedTvs = await likedTvList()  
+  const tvs=Object.values(addedTvs)
   createAfiches(tvs, lastLikedTv, { type: "tv", lazyLoad: true, clean: true })
 }
 export function createCategories(categories, container, id, nombre) {
@@ -307,6 +467,7 @@ export async function getTrendingHome(media) {
   const { data: movie } = await api("trending/" + media + "/day")
   const movies = movie.results.slice(0, 4)
   movies.sort((a, b) => b.vote_average - a.vote_average)
+  console.log(movies)
   createAfiches(movies, lastTrend, { type: media, lazyLoad: true, clean: true })
 }
 export async function getRankHome(media) {
@@ -463,8 +624,6 @@ export async function getById({ id, media }) {
     contIndex = (contIndex - 1 + carrousel.length) % carrousel.length;
     showCarrousel(contIndex)
   }
-
-
   function carrouselVideos() {
     if (carrousel.length === 0) {
       console.log("sin videos")
@@ -496,13 +655,11 @@ export async function getSimilarById({ id, media }) {
   createAfiches(similares, lastSimilar, { type: media, lazyLoad: true, clean: true })
 }
 export async function getInfoById({ id, media }) {
-
   const { data: movie } = await api(`${media}/${id}?language=es-ES`)
   const { data: credit } = await api(`${media}/${id}/credits?language=en-US`)
   const { data: provider } = await api(`${media}/${id}/watch/providers`)
 
   const column2 = document.querySelector(".column2")
-
   const moviePage = document.querySelector(".moviePage")
   //titulo original y en español
   const movieTitleOriginal = document.querySelector(".title1")
@@ -524,33 +681,12 @@ export async function getInfoById({ id, media }) {
     }
   }
   //manejo corazoncito
-  const btnMovieLikedId = document.createElement("img")
-      btnMovieLikedId.src = base64heartEmpty
-      btnMovieLikedId.id = "btnMovie-liked-Id"
-      if (media === "movie") {
-        likedMoviesList()[movie.id] && (btnMovieLikedId.src = base64heartFill)
-        btnMovieLikedId.addEventListener("click", () => {
-          if (btnMovieLikedId.src.includes(base64heartEmpty)) {
-            btnMovieLikedId.src = base64heartFill
-          } else {
-            btnMovieLikedId.src = base64heartEmpty
-          }
-          likeMovie(movie)
-          getLikedMovie()
-        })
-      } else {
-        likedTvList()[movie.id] && (btnMovieLikedId.src = base64heartFill)
-        btnMovieLikedId.addEventListener("click", () => {
-          if (btnMovieLikedId.src.includes(base64heartEmpty)) {
-            btnMovieLikedId.src = base64heartFill
-          } else {
-            btnMovieLikedId.src = base64heartEmpty
-          }
-          likeTvs(movie)
-          getLikedTv()
-        })
-      }
-      movieTitleOriginal.appendChild(btnMovieLikedId)
+  const btnMovieLiked = document.createElement("img")
+  btnMovieLiked.id = "btnMovie-liked"
+  if(media==="movie"){
+  addMovieList(movie,btnMovieLiked)}else{
+  addTvList(movie,btnMovieLiked)}
+  movieTitleOriginal.appendChild(btnMovieLiked)
 
   //manejo de info(año)
   const yearMovie = document.querySelector(".year")
@@ -559,10 +695,48 @@ export async function getInfoById({ id, media }) {
   } else {
     yearMovie.innerHTML = "Estrenada: " + movie.first_air_date.split("-")[0]
   }
+   //manejo interacciones
+   const btnComment =document.querySelector("#btnComment")
+   const commentInput = document.querySelector(".inputComment")
+   const btnRankMovie =document.querySelector("#btnRankMovie")
+   const rankInput = document.querySelector(".inputRank")
+   let interactionData={}
+     //comentarios   
+    btnComment.addEventListener("click", async () => {
+      // Guardar el comentario antes de reemplazar el input
+      interactionData = {
+        comment: commentInput.value
+      };      
+      // Agregar la interacción (enviar el comentario al servidor)
+      const comentar = await addInteraction(media, movie, interactionData);       
+      console.log("Comentario agregado", comentar);
+      // Reemplazar el input con un texto fijo que muestre el comentario
+    const commentText = document.createElement("p");
+    commentText.textContent = commentInput.value;      
+    // Reemplazar el input por el nuevo elemento de texto
+    commentInput.replaceWith(commentText);   
+    });
+     
 
-  //manejo de info(score)
+// commentInput.addEventListener('keydown', (event) => {
+//   if (event.key === 'Enter') {
+//    commentInput.value;
+//     commentInput.value=""
+//   }
+// });   
+  //score
+  btnRankMovie.addEventListener("click",async()=>{
+    interactionData={rank: rankInput.value}      
+    const rank = await addInteraction(media,movie,interactionData)
+    const rankText = document.createElement("p");
+    rankText.textContent = rankInput.value;      
+    // Reemplazar el input por el nuevo elemento de texto
+    rankInput.replaceWith(rankText);    
+    console.log("Comentario agregado", rank);
+   })
   const movieScore = document.querySelector(".rating")
   movieScore.innerHTML = "Calificación: " + movie.vote_average + " / 10"
+
   //manejo de info(overview)
   const overview = document.querySelector(".overview")
   if (!movie.overview) {
@@ -586,7 +760,6 @@ export async function getInfoById({ id, media }) {
   })
 
   // createLogoProviderByid
-  // const moviePage = document.querySelector(".moviePage")
   const logos = document.querySelector(".logos")
   const logosMensaje = document.createElement("p")
   logosMensaje.classList.add("logosMensaje")
@@ -626,7 +799,6 @@ export async function getInfoById({ id, media }) {
     const castName = document.createElement("h1")
     castName.classList.add("castName")
     if (act.known_for_department === "Directing") {
-
       castName.innerHTML = `<h1 style="color: red; font-size: 21px;">Director :</h1> ${act.name}   `
     } else {
       castName.innerHTML = act.name
