@@ -128,28 +128,43 @@ class MoviesService {
     if(type==="movie"){
       const movId = await this.getMovieId(id)
       id=movId.id||movId.id
-      const newInteraction = await models.UserMovie.create({
-        userId,
-        movieId: id,
-        comment: body.comment,
-        rank: body.rank,
-        tag: body.tag
-      })
-      return newInteraction       
+      const userInteractionMovie= await models.UserMovie.findOne({where:{movieId:id}})
+      if(userInteractionMovie){
+        const updateInteraction=await userInteractionMovie.update({
+          comment: body.comment,
+                rank: body.rank,
+                tag: body.tag
+        })
+           return updateInteraction
+          }else{
+            const newUserInteraction = await models.UserMovie.create({
+              userId,
+              movieId: id,
+              ...body
+                        })
+            newUserInteraction
+          }        
     }else{
       const tvId = await this.getTvId(id)
-     id= tvId.id
-    const newInteraction = await models.UserTv.create({
+     id= tvId.id||tvId.id
+     const userInteractionTv= await models.UserTv.findOne({where:{tvId:id}})
+     if(userInteractionTv){
+     const updateInteractionTv= await userInteractionTv.update({
+      comment: body.comment,
+            rank: body.rank,
+            tag: body.tag
+      })
+          return updateInteractionTv    
+          }    else{
+     const newUserInteraction = await models.UserTv.create({
       userId,
       tvId: id,
-      comment: body.comment,
-      rank: body.rank,
-      tag: body.tag
+      ...body       
     })
-    return newInteraction    
-    }    
-   
+    return newUserInteraction
+  }   
   }
+}
   async delete(id) {
     const movie = await this.findOne(id)
     await movie.destroy(id)

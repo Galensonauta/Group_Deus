@@ -150,8 +150,7 @@ footer {
 .movieOrigenPreview:hover {
   color: #3C0753;
 }
-
-#btnMovie-liked {
+#btnMovie-liked-preview{
   cursor: pointer;
   width: 30px;
   filter: none;
@@ -160,6 +159,16 @@ footer {
   position: absolute;
   left: 65%;
   top: 76%;
+}
+#btnMovie-liked {
+  cursor: pointer;
+  filter: none;
+  height: 30px;
+  left: 9em;
+  position: absolute;
+  top: -2.5em;
+  transform: rotate(0deg);
+  width: 30px;
 }
 #btnMovie-liked-Id{
 cursor: pointer;
@@ -222,9 +231,11 @@ li {
   display: flex;
   justify-content: flex-end;
   flex-wrap: wrap;
+  margin-right: 22px;
 }
 
 .logosMensaje {
+  font-family: 'Montserrat', Arial, sans-serif;
   font-size: 20px;
   line-height: 25px;
   color: #d5d2f8;
@@ -240,19 +251,25 @@ li {
 }
 
 .info-card {
-  left: 3px;
   overflow: hidden;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   position: absolute;
-  top: 65px;
-  white-space: nowrap;
-  line-height: .6;
+  top: 65px;  
+  line-height: 1.3;
 }
-
+.infoExtra{
+  place-content: space-around;
+    position: absolute;
+    top: 506px;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: baseline;
+    white-space: nowrap;  
+}
 .containerDetail {
   position: absolute;
-  top: 47em;
+  top: 45em;
   z-index: 1;
 }
 
@@ -265,6 +282,7 @@ li {
   text-shadow: 0 0 0.15em #522258;
   user-select: none;
   filter: blur(0.007em);
+  white-space: nowrap;
 }
 
 .title2 {
@@ -279,9 +297,9 @@ li {
 }
 
 .origenCountry {
-  position: absolute;
+  /* position: absolute;
   left: 3px;
-  top: 217px;
+  top: 217px; */
   width: max-content;
 }
 
@@ -295,9 +313,9 @@ li {
 }
 
 .column1 {
-  position: absolute;
+  /* position: absolute;
   left: 3px;
-  top: 245px;
+  top: 245px; */
   width: max-content;
 
 }
@@ -314,7 +332,7 @@ li {
 .column2 {
   padding-left: 5px;
   position: absolute;
-  top: 63em;
+  top: 84em;
   width: 95%;
 }
 
@@ -620,6 +638,10 @@ select::after {
   background: rgb(243, 242, 242);
   color: #52057B;
 }
+.interaction {
+  position: absolute;
+  top: 200px;
+}
 #btnComment{
   background: #151515;
   color: #fff;
@@ -627,55 +649,62 @@ select::after {
   font-variant: small-caps;
   cursor: pointer;
   position: absolute;
-  top: 140%;
-  left: 102%;
+  top: 5em;
+  left: 15em;
   border-radius: 25px;
 }
-#btnRankMovie{
-  background: #151515;
-  color: #fff;
-  font-size: 1.2em;
-  font-variant: small-caps;
-  cursor: pointer;
-  position: absolute;
-  top: 140%;
-  left: 102%;
-  border-radius: 25px;
-}
-.input-comment {
-  height: 25px;
-  width: 840px;
-  border-style: none;
-  padding: 5px;
-  font-size: 18px;
-  letter-spacing: 2px;
-  outline: none;
-  border-radius: 25px;
-  transition: all .5s ease-in-out;
-  background-color: #151515;
-  padding-right: 100px;
-  color: #ffffff;
-  font-family: "Montserrat", sans-serif;
-  position: absolute;
-  font-weight: 700;
+#btnRankMovie{  
+    background: #151515;
+    border-radius: 25px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-variant: small-caps;
+    left: 15em;
+    position: absolute;
+    top: -2em;
 }
 .inputRank{
-  height: 25px;
-  width: 840px;
+  color: #fff;
+    background: aliceblue;
+    font-weight: 700;
+    position: absolute;
+    /* width: 10px; */
+    border-radius: 50px;
+    left: 232px;
+    bottom: 35px;
+}
+.inputComment{
+  background-color: #151515;
+  border-radius: 25px;
   border-style: none;
-  padding: 5px;
+  color: #fff;
+  font-family: Montserrat, sans-serif;
   font-size: 18px;
+  font-weight: 700;
+  height: 25px;
   letter-spacing: 2px;
   outline: none;
-  border-radius: 25px;
-  transition: all .5s ease-in-out;
-  background-color: #151515;
-  padding-right: 100px;
-  color: #ffffff;
-  font-family: "Montserrat", sans-serif;
+  padding: 5px 100px 5px 5px;
   position: absolute;
-  font-weight: 700;
+  transition: all .5s ease-in-out;
+  width: 840px;
+
 }
+.inputComment::placeholder {
+  font-family: "Montserrat", sans-serif;
+  color: #ffffff17;
+  font-size: 15px;
+  letter-spacing: 3px;
+}
+.inputComment:focus {
+  font-family: "Montserrat", sans-serif;
+  border-radius: 10px;
+  background-color: #151515b2;
+  border-bottom: 1px solid #892CDC;
+}
+
+
 
 .titlePageH1 {
   font-family: 'Montserrat', Arial, sans-serif;

@@ -33,7 +33,7 @@ router.get('/:id',
     next(err)
   }
 })
-router.post("/:userId/:type/:id",
+router.patch("/:userId/:type/:id",
   validatorHandler(verificarInteraction, 'params'),
   validatorHandler(addInteractionMovie, 'body'),
   async (req, res, next) => {

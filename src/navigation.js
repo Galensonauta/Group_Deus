@@ -364,8 +364,7 @@ async function movieDetailsPage() {
 
 
   const [_, movieId] = location.hash.split('=');
-  const interaction=await getInteractionMovieId("movie",movieId)
-  console.log(interaction)
+
   // const interaction=await getInteractionMovieId({type:"movie",movieId})
   // const interobj=  Object.values(interaction)
   // console.log(interaction)
@@ -375,6 +374,8 @@ async function movieDetailsPage() {
     getInfoById({id:movieId,media:"tv"})
     getSimilarById({id:movieId,media:"tv"})
     getCategoriesPreview("tv")
+    getInteractionMovieId("tv",movieId)
+
     // getInteractionMovieId({type:"tv",movie:movieId})
     // console.log(getInteractionMovieId)
   } else {
@@ -382,9 +383,6 @@ async function movieDetailsPage() {
     getInfoById({id:movieId,media:"movie"})
     getSimilarById({id:movieId,media:"movie"})
     getCategoriesPreview("movie")
-    
-
-    // getInteractionMovieId({type:"movie",movie:movieId})
-    // console.log(getInteractionMovieId)
+    getInteractionMovieId("movie",movieId)
   }
 }

@@ -22,6 +22,7 @@ const UserTvSchema = {
   tvId: {
     allowNull: false,
     type: DataTypes.INTEGER,
+    unique: true,
     references: {
       model: 'tv', // nombre de la tabla Movie
       key: 'id',

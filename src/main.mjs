@@ -103,30 +103,41 @@ async function likedMoviesList() {
   }
 } 
 export async function getInteractionMovieId(type,movie){
-  try{
-    const response = await fetch(`http://localhost:3001/api/v1/users/${type}/${movie}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      }})
-      const data = await response.json()
-      console.log(movie)
-      console.log("esto trae",data)
+    try {
+      const response = await fetch(`http://localhost:3001/api/v1/users/${type}/${movie}`, {
+        method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            }})
+        const interactionData = await response.json();
+  console.log(interactionData)
       if (response.ok) {
-        return data; // Devuelve la lista de interacciones desde el backend
+        // Si hay un comentario guardado, reemplazar el input con el texto
+        const commentInput = document.querySelector(".inputComment");
+        const rankInput = document.querySelector(".inputRank")
+        if (interactionData.comment||interactionData.rank) {
+          const commentText = document.createElement("p");
+          commentText.textContent = interactionData.comment;
+          commentInput.replaceWith(commentText);
+          const rankText = document.createElement("p");
+          rankText.textContent = rankInput.value;      
+          // Reemplazar el input por el nuevo elemento de texto
+          rankInput.replaceWith(rankText);                        
+        }    
       } else {
-        console.error("Error al obtener las interacciones:", data);
-        return {}; // Retorna un objeto vacío si hay un error
+        console.error("Error al cargar la interacción", interactionData);
       }
     } catch (error) {
-      console.error("Error al conectar con el servidor de interacciones:", error);
-      return {}; // Retorna un objeto vacío si hay un error en la conexión
+      console.error("Error al hacer la solicitud al servidor:", error);
+    }
   }
-}
+
+  
+
 export async function addInteraction(type,movie,interactionData){
   try{
     const response = await fetch(`http://localhost:3001/api/v1/movies/1/${type}/${movie.id}`,{
-      method: "POST",
+      method: "PATCH",
       headers:{
         'Content-Type': 'application/json',
       },
@@ -349,7 +360,7 @@ export async function createAfiches(afiche, container, {
         })
       }
       const btnMovieLiked = document.createElement("img")
-      btnMovieLiked.id = "btnMovie-liked"
+      btnMovieLiked.id = "btnMovie-liked-preview"
       if(type==="movie"){
       addMovieList(movie,btnMovieLiked)}else{
       addTvList(movie,btnMovieLiked)}
@@ -680,13 +691,7 @@ export async function getInfoById({ id, media }) {
       movieTitleOriginal.textContent = movie.original_name
     }
   }
-  //manejo corazoncito
-  const btnMovieLiked = document.createElement("img")
-  btnMovieLiked.id = "btnMovie-liked"
-  if(media==="movie"){
-  addMovieList(movie,btnMovieLiked)}else{
-  addTvList(movie,btnMovieLiked)}
-  movieTitleOriginal.appendChild(btnMovieLiked)
+ 
 
   //manejo de info(año)
   const yearMovie = document.querySelector(".year")
@@ -695,12 +700,48 @@ export async function getInfoById({ id, media }) {
   } else {
     yearMovie.innerHTML = "Estrenada: " + movie.first_air_date.split("-")[0]
   }
+  const movieScore = document.querySelector(".rating")
+  movieScore.innerHTML = "Calificación: " + movie.vote_average + " / 10"
+  //manejo de info(origen)
+  const origenMovie = movie.production_countries
+  const containerOrigen = document.querySelector(".origenCountry")
+  containerOrigen.innerHTML = ""
+  origenMovie.forEach(o => {
+    const origen = document.createElement("span")
+    origen.classList.add("origen")
+    origen.innerHTML = o.name + " /"
+    containerOrigen.appendChild(origen)
+    origen.addEventListener("click", () => {
+      location.hash = "#category=" + o.iso_3166_1
+    })
+  })
+  
+  //manejo de info(generos)
+  const column1 = document.querySelector(".column1")
+  column1.innerHTML = ""
+  const tags = movie.genres
+  tags.forEach(t => {
+    const generos = document.createElement("span")
+    generos.classList.add("tag")
+    generos.textContent = t.name + " / "
+    column1.appendChild(generos)
+    generos.addEventListener("click", () => {
+      location.hash = "#category=" + t.id
+    })
+  })
    //manejo interacciones
+   const interaction =document.querySelector(".interaction")
+   //manejo corazoncito
+   const btnMovieLiked = document.createElement("img")
+   btnMovieLiked.id = "btnMovie-liked"
+   if(media==="movie"){
+   addMovieList(movie,btnMovieLiked)}else{
+   addTvList(movie,btnMovieLiked)}
+   interaction.appendChild(btnMovieLiked)
    const btnComment =document.querySelector("#btnComment")
-   const commentInput = document.querySelector(".inputComment")
+   const commentInput = document.querySelector(".interaction input")
    const btnRankMovie =document.querySelector("#btnRankMovie")
-   const rankInput = document.querySelector(".inputRank")
-   let interactionData={}
+   let interactionData={} 
      //comentarios   
     btnComment.addEventListener("click", async () => {
       // Guardar el comentario antes de reemplazar el input
@@ -717,7 +758,7 @@ export async function getInfoById({ id, media }) {
     commentInput.replaceWith(commentText);   
     });
      
-
+   
 // commentInput.addEventListener('keydown', (event) => {
 //   if (event.key === 'Enter') {
 //    commentInput.value;
@@ -725,6 +766,8 @@ export async function getInfoById({ id, media }) {
 //   }
 // });   
   //score
+  const rankInput = document.querySelector(".inputRank")
+
   btnRankMovie.addEventListener("click",async()=>{
     interactionData={rank: rankInput.value}      
     const rank = await addInteraction(media,movie,interactionData)
@@ -734,8 +777,7 @@ export async function getInfoById({ id, media }) {
     rankInput.replaceWith(rankText);    
     console.log("Comentario agregado", rank);
    })
-  const movieScore = document.querySelector(".rating")
-  movieScore.innerHTML = "Calificación: " + movie.vote_average + " / 10"
+  
 
   //manejo de info(overview)
   const overview = document.querySelector(".overview")
@@ -745,38 +787,20 @@ export async function getInfoById({ id, media }) {
     overview.innerHTML = movie.overview
   }
 
-  //manejo de info(origen)
-  const origenMovie = movie.production_countries
-  const containerOrigen = document.querySelector(".origenCountry")
-  containerOrigen.innerHTML = ""
-  origenMovie.forEach(o => {
-    const origen = document.createElement("span")
-    origen.classList.add("origen")
-    origen.innerHTML = o.name + " /"
-    containerOrigen.appendChild(origen)
-    origen.addEventListener("click", () => {
-      location.hash = "#category=" + o.iso_3166_1
-    })
-  })
+  
 
   // createLogoProviderByid
   const logos = document.querySelector(".logos")
-  const logosMensaje = document.createElement("p")
-  logosMensaje.classList.add("logosMensaje")
   logos.innerHTML = ""
   const isoCou = Object.values(idCountry() || { iso_3166_1: "AR" })
   const iso_3166_1 = isoCou[0].iso_3166_1 || Object.values({ iso_3166_1: "AR" })
-  const native_name = isoCou[0].native_name || Object.values({ native_name: "Argentina" })
   if (!provider.results[iso_3166_1] || !provider.results[iso_3166_1].flatrate && !provider.results[iso_3166_1].free) {
     console.log("No esta")
-    logosMensaje.innerHTML = "No disponible en " + native_name + ", en las principales plataformas"
-    logos.appendChild(logosMensaje)
     moviePage.appendChild(logos)
 
   } else {
     const providerByCountry = provider.results[iso_3166_1].flatrate || provider.results[iso_3166_1].free || []
-    logosMensaje.innerHTML = " disponibilidad en " + native_name + ":"
-    logos.appendChild(logosMensaje)
+    
     moviePage.appendChild(logos)
 
     providerByCountry.forEach(id => {
@@ -824,17 +848,4 @@ export async function getInfoById({ id, media }) {
   const footerMovie = document.querySelector(".footerMovie")
   footerMovie.style.marginTop = refeCast+ "px"
 
-  //manejo de info(generos)
-  const column1 = document.querySelector(".column1")
-  column1.innerHTML = ""
-  const tags = movie.genres
-  tags.forEach(t => {
-    const generos = document.createElement("span")
-    generos.classList.add("tag")
-    generos.textContent = t.name + " / "
-    column1.appendChild(generos)
-    generos.addEventListener("click", () => {
-      location.hash = "#category=" + t.id
-    })
-  })
 } 
