@@ -128,9 +128,10 @@ class MoviesService {
     if(type==="movie"){
       const movId = await this.getMovieId(id)
       id=movId.id||movId.id
-      const userInteractionMovie= await models.UserMovie.findOne({where:{movieId:id}})
-      if(userInteractionMovie){
-        const updateInteraction=await userInteractionMovie.update({
+      const interactionMovie= await models.UserMovie.findOne({where:{movieId:id}})      
+      const userMovie= await models.UserMovie.findOne({where:{userId}})
+      if(interactionMovie&&userMovie){
+        const updateInteraction=await userMovie.update({
           comment: body.comment,
                 rank: body.rank,
                 tag: body.tag
@@ -142,14 +143,16 @@ class MoviesService {
               movieId: id,
               ...body
                         })
-            newUserInteraction
+           return newUserInteraction
           }        
     }else{
       const tvId = await this.getTvId(id)
      id= tvId.id||tvId.id
-     const userInteractionTv= await models.UserTv.findOne({where:{tvId:id}})
-     if(userInteractionTv){
-     const updateInteractionTv= await userInteractionTv.update({
+     const interactionTv= await models.UserTv.findOne({where:{tvId:id}})
+     const userTv= await models.UserTv.findOne({where:{userId}})
+
+     if(interactionTv&&userTv){
+     const updateInteractionTv= await userTv.update({
       comment: body.comment,
             rank: body.rank,
             tag: body.tag

@@ -1,4 +1,8 @@
 const express = require('express');
+// const jwt = require("jsonwebtoken")
+// const {config}=require("../config/config")
+
+const passport=require("passport")
 const MoviesService = require('../services/movieService.js');
 const validatorHandler = require('./../middlewares/validatorHandler');
 const { 
@@ -34,6 +38,7 @@ router.get('/:id',
   }
 })
 router.patch("/:userId/:type/:id",
+  passport.authenticate("jwt", {session:false}),
   validatorHandler(verificarInteraction, 'params'),
   validatorHandler(addInteractionMovie, 'body'),
   async (req, res, next) => {

@@ -12,6 +12,7 @@ const UserMovieSchema = {
   userId: {
     allowNull: false,
     type: DataTypes.INTEGER,
+    unique: true,
     references: {
       model: 'users', // nombre de la tabla User
       key: 'id',
@@ -22,7 +23,6 @@ const UserMovieSchema = {
   movieId: {
     allowNull: false,
     type: DataTypes.INTEGER,
-    unique: true,
     references: {
       model: 'movies', // nombre de la tabla Movie
       key: 'id',
