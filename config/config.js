@@ -12,6 +12,7 @@ const config ={
     dbPort: process.env.PG_PORT,   
     dbUserMysql: process.env.MY_USER,
     apiKeyProd: process.env.API,
+    jwtSecret: process.env.JWT_SECRET,
     dbPasswordMysql: process.env.MY_PASS,    
   };
   
