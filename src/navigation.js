@@ -88,9 +88,6 @@ function navigator() {
   else if (location.hash.startsWith('#media-')) {
     movieDetailsPage();
   }
-  // else if(location.hash.startsWith('#user=')){
-  //   userPage()
-  // }
   else if (location.hash.startsWith('#trend=')) {
     trendPage()
   }
@@ -104,7 +101,6 @@ function navigator() {
       categoryPage()
     }
   }else if(!location.hash||location.hash==="#"){
-    // location.hash="#Cine"
     location.hash= mode ?"#Series":"#Cine"
   }
   else{

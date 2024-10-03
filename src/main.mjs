@@ -130,9 +130,7 @@ export async function getInteractionMovieId(type,movie){
     } catch (error) {
       console.error("Error al hacer la solicitud al servidor:", error);
     }
-  }
-
-  
+  } 
 
 export async function addInteraction(type,movie,interactionData){
   try{
@@ -691,8 +689,6 @@ export async function getInfoById({ id, media }) {
       movieTitleOriginal.textContent = movie.original_name
     }
   }
- 
-
   //manejo de info(año)
   const yearMovie = document.querySelector(".year")
   if (media === "movie") {
@@ -714,8 +710,7 @@ export async function getInfoById({ id, media }) {
     origen.addEventListener("click", () => {
       location.hash = "#category=" + o.iso_3166_1
     })
-  })
-  
+  })  
   //manejo de info(generos)
   const column1 = document.querySelector(".column1")
   column1.innerHTML = ""
@@ -729,6 +724,8 @@ export async function getInfoById({ id, media }) {
       location.hash = "#category=" + t.id
     })
   })
+
+
    //manejo interacciones
    const interaction =document.querySelector(".interaction")
    //manejo corazoncito
@@ -737,47 +734,48 @@ export async function getInfoById({ id, media }) {
    if(media==="movie"){
    addMovieList(movie,btnMovieLiked)}else{
    addTvList(movie,btnMovieLiked)}
-   interaction.appendChild(btnMovieLiked)
-   const btnComment =document.querySelector("#btnComment")
+   //manejo de comentarios y rank
    const commentInput = document.querySelector(".interaction input")
+   const rankInput = document.querySelector(".inputRank")
    const btnRankMovie =document.querySelector("#btnRankMovie")
+   const commentText = document.createElement("p");
+   const rankText = document.createElement("p");
    let interactionData={} 
-     //comentarios   
-    btnComment.addEventListener("click", async () => {
-      // Guardar el comentario antes de reemplazar el input
-      interactionData = {
-        comment: commentInput.value
-      };      
-      // Agregar la interacción (enviar el comentario al servidor)
-      const comentar = await addInteraction(media, movie, interactionData);       
-      console.log("Comentario agregado", comentar);
-      // Reemplazar el input con un texto fijo que muestre el comentario
-    const commentText = document.createElement("p");
-    commentText.textContent = commentInput.value;      
-    // Reemplazar el input por el nuevo elemento de texto
-    commentInput.replaceWith(commentText);   
-    });
-     
-   
-// commentInput.addEventListener('keydown', (event) => {
-//   if (event.key === 'Enter') {
-//    commentInput.value;
-//     commentInput.value=""
-//   }
-// });   
-  //score
-  const rankInput = document.querySelector(".inputRank")
-
-  btnRankMovie.addEventListener("click",async()=>{
+  //  if(interactionData==={}){
+  //   commentInput.value = ""   
+  //  }else{
+  //   commentText
+  //  }
+   const btnComment =document.createElement("button")   
+   btnComment.id="btnComment"
+   btnComment.addEventListener("click", async () => {
+     // Guardar el comentario antes de reemplazar el input
+     interactionData = {
+       comment: commentInput.value
+     };      
+     // Agregar la interacción (enviar el comentario al servidor)
+     const comentar = await addInteraction(media, movie, interactionData);       
+     console.log("Comentario agregado", comentar);
+     // Reemplazar el input con un texto fijo que muestre el comentario
+   commentText.textContent = commentInput.value;      
+   // Reemplazar el input por el nuevo elemento de texto
+   commentInput.replaceWith(commentText);   
+   }); 
+   btnRankMovie.addEventListener("click",async()=>{
     interactionData={rank: rankInput.value}      
     const rank = await addInteraction(media,movie,interactionData)
-    const rankText = document.createElement("p");
     rankText.textContent = rankInput.value;      
     // Reemplazar el input por el nuevo elemento de texto
     rankInput.replaceWith(rankText);    
-    console.log("Comentario agregado", rank);
-   })
-  
+    console.log("Puntuacion agregada", rank);
+   })  
+  //  interaction.appendChild(btnMovieLiked)
+  //  interaction.appendChild(btnRankMovie)
+  // interaction.appendChild(rankInput)
+  // interaction.appendChild(commentInput)
+  // interaction.appendChild(btnComment)
+ 
+   
 
   //manejo de info(overview)
   const overview = document.querySelector(".overview")
@@ -787,7 +785,8 @@ export async function getInfoById({ id, media }) {
     overview.innerHTML = movie.overview
   }
 
-  
+  column2.appendChild(overview)
+  moviePage.appendChild(column2)
 
   // createLogoProviderByid
   const logos = document.querySelector(".logos")
@@ -847,5 +846,7 @@ export async function getInfoById({ id, media }) {
   const refeCast = containerCast.getBoundingClientRect().bottom;
   const footerMovie = document.querySelector(".footerMovie")
   footerMovie.style.marginTop = refeCast+ "px"
+
+  moviePage.appendChild(footerMovie)
 
 } 

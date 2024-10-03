@@ -11,7 +11,7 @@ const config ={
     dbPassword: process.env.PG_PASS,
     dbPort: process.env.PG_PORT,   
     dbUserMysql: process.env.MY_USER,
-
+    apiKeyProd: process.env.API,
     dbPasswordMysql: process.env.MY_PASS,    
   };
   

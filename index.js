@@ -4,6 +4,7 @@ const { json } = express; // Extrae 'json' del módulo 'express'
 const cors = require('cors');
 const routerApi = require('./routes/index.js');
 require('dotenv').config();
+const { checkApiKey } = require('./middlewares/authHandler.js');
 
 
 // Acceder a la arquitectura
@@ -27,7 +28,15 @@ const options={
     }
   }
 }
+app.get('/nueva-ruta', checkApiKey,(req, res) => {
+  // Respuesta al cliente
+     res.send('Hola , soy una nueva ruta');
+   });
+  
 app.use(cors(options))
+// const passport=
+require("./utils/auth")
+// app.use(passport.initialize());
 routerApi(app);
 
 app.use(logErrors)
@@ -51,11 +60,7 @@ app.listen(port, () => {
 //     // Respuesta al cliente
 //     res.send('Hola mi server en express');
 //   });
-//   app.get('/nueva-ruta', (req, res) => {
-//     // Respuesta al cliente
-//     res.send('Hola , soy una nueva ruta');
-//   });
-
+// 
 
 
 
