@@ -10,6 +10,7 @@ const rank_min=Joi.number().integer();
 const rank_max=Joi.number().integer();
 
 const createListaSchema = Joi.object({
+  name: name,
   userId: userId.required()  
 });
 const getListaSchema = Joi.object({

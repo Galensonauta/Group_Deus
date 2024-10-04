@@ -11,6 +11,7 @@ const role = Joi.string()
 const createUserSchema = Joi.object({
   nick: nick.required(),
   password: password.required(),
+  role:role  
 });
 const updateUserSchema = Joi.object({
   nick: nick,

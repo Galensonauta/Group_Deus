@@ -10,7 +10,8 @@ const {
   queryParamsMovieSchema,
   addInteractionMovie,
   verificarInteraction
- } = require("./../schemas/movieSchema")
+ } = require("./../schemas/movieSchema");
+const { checkRoles } = require('../middlewares/authHandler.js');
 
 // Instanciar servicio de peliculas
 const router = express.Router();
@@ -39,6 +40,7 @@ router.get('/:id',
 })
 router.patch("/:userId/:type/:id",
   passport.authenticate("jwt", {session:false}),
+  checkRoles("admin","citizen"),
   validatorHandler(verificarInteraction, 'params'),
   validatorHandler(addInteractionMovie, 'body'),
   async (req, res, next) => {

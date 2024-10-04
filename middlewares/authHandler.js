@@ -9,5 +9,20 @@ function checkApiKey(req,res,next){
        next( boom.unauthorized())
     }
 }
+//Los 3 puntos transorma todo argumento en array
+function checkRoles(...roles){
+    //el return que retorna otra funcion nos indica que se estan utilizando clouseres
+        return(req,res,next)=>{
+            console.log(req.user)
+            const user=req.user;
+            //Compara el role del usuario con los roles permitidos enviados
+            if(roles.includes(user.role)){
+                next();
+            }else{
+                next(boom.unauthorized());
+            }
+        }
+    }
+    
 
-module.exports={checkApiKey}
+module.exports={checkApiKey,checkRoles}

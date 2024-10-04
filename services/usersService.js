@@ -9,9 +9,18 @@ class UserService {
     const options ={
        include: [    
         {
-          association:"userList",
-          include:["moviesList"],
-        },           
+          association: "userList",
+          include: [
+            {
+              association: "moviesList",   // Lista de películas
+              attributes: ["title"],       // Solo obtener el título de las películas
+            },
+            {
+              association: "tvsList",      // Lista de series
+              attributes: ["name"],        // Solo obtener el nombre de las series
+            }
+          ],
+        },               
         {
         association: "userMovie",
         attributes:["title"]
@@ -42,22 +51,30 @@ class UserService {
   }
   }
   async findOne(id) {
-    const user = await models.User.findByPk(id,{  
-        include: [    
-         {
-           association:"userList",
-           include:["moviesList"],
-
-         },           
-         {
-         association: "userMovie",
-         attributes:["title"]
-       },
-       {
-       association: "userTv",
-         attributes:["name"]
-        }
-       ]})
+    const user = await models.User.findByPk(id,{          
+          include: [    
+            {
+              association: "userList",
+              include: [
+                {
+                  association: "moviesList",   // Lista de películas
+                  attributes: ["title"],       // Solo obtener el título de las películas
+                },
+                {
+                  association: "tvsList",      // Lista de series
+                  attributes: ["name"],        // Solo obtener el nombre de las series
+                }
+              ],
+            },               
+            {
+            association: "userMovie",
+            attributes:["title"]
+          },
+          {
+          association: "userTv",
+            attributes:["name"]}
+          ]
+       })
      
       // {include:{association: "userList",include: ["moviesList"]}})
     if(!user){
@@ -73,7 +90,6 @@ class UserService {
   }
   async create(data) {
     const hash= await bcrypt.hash(data.password, 10)
-
     const newUser = await models.User.create({
       ...data,
       password: hash}

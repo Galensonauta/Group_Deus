@@ -1,7 +1,8 @@
 const express = require('express');
 const ListasService = require('../services/listaService');
 const validatorHandler = require('../middlewares/validatorHandler');
-
+const passport=require("passport")
+const { checkRoles } = require('../middlewares/authHandler');
 const {
   createListaSchema, 
   addMovieSchema, 
@@ -37,6 +38,8 @@ router.get('/:listId/:type',
 });
 
 router.post('/',
+  passport.authenticate("jwt", {session:false}),
+  checkRoles("admin"),
   validatorHandler(createListaSchema, 'body'),
   async (req, res, next) => {
     try {            
@@ -49,6 +52,8 @@ router.post('/',
 );
 
 router.post('/:listId/:type/:id',
+  passport.authenticate("jwt", {session:false}),
+  checkRoles("admin","citizen"),
   validatorHandler(addMovieSchema, 'params'),
   async (req, res, next) => {
     try {
@@ -61,6 +66,8 @@ router.post('/:listId/:type/:id',
 );
 
 router.patch('/:id',
+  passport.authenticate("jwt", {session:false}),
+  checkRoles("admin"),
   validatorHandler(getListaSchema, 'params'),
   validatorHandler(updateListaSchema, 'body'),
   async (req, res, next) => {
@@ -75,6 +82,8 @@ router.patch('/:id',
   }
 );
 router.delete('/:listId/:type/:id',
+  passport.authenticate("jwt", {session:false}),
+  checkRoles("admin","citizen"),
   validatorHandler(deleteMovieSchema, 'params'),
   async (req, res, next) => {
     try {     
@@ -86,6 +95,8 @@ router.delete('/:listId/:type/:id',
   }
 );
 router.delete('/:id',
+  passport.authenticate("jwt", {session:false}),
+  checkRoles("admin"),
   validatorHandler(getListaSchema, 'params'),
   async (req, res, next) => {
     try {

@@ -46,8 +46,7 @@ class MoviesService {
     const load = await loadApi()
     const api = load.api
     const response =await api(`movie/${id}?language=es-LA`)
-    const responseCredits = await api(`movie/${id}/credits?language=es-LA`);
-  
+    const responseCredits = await api(`movie/${id}/credits?language=es-LA`); 
 
       const movieData = response.data
       const movieCredits = responseCredits.data

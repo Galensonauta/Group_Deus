@@ -75,11 +75,11 @@ class ListasService {
     
   }
   async createLista(data) {   
+    
     const newListas = await models.Listas.create(data)
     return newListas;
   } 
-  async addMovieToList(listId,type, id) {
-   
+  async addMovieToList(listId,type, id) {   
     const listaId = await this.findOne(listId);    
     if (!listaId) {
       throw new Error('Lista de listas no encontrada');
@@ -105,6 +105,7 @@ class ListasService {
     }
     
   }
+
   async updateLista(listId, changes) {  
     const listaId = await models.Listas.findByPk(listId);    
     if (!listaId) {
@@ -160,30 +161,3 @@ throw boom.notFound('La película no fue encontrada en TMDb');
 }
 module.exports = ListasService;
 
-//   async function addMovieToList(userId, listId, movieDb) {
-//     // Buscar la lista para el usuario dado
-//     const lista = await models.Listas.findOne({
-//       where: { id: listId, userId: userId }
-//     });
-//     if (!lista) {
-//       throw new Error('Lista no encontrada');
-//     }
-//     // Buscar o crear la película en la base de datos
-//     const movie = await models.Movies.findOrCreateMovieFromTmdb(movieDb);
-//     // Agregar la película a la lista
-//     await lista.addMovie(movie);
-//   }
-// async function addMovieToUserList(req, res, next) {
-// const { userId, listId, tmdbMovieId } = req.body;
-//   try {
-//   // Llamada a la API de TMDb para obtener la película
-//   const { data: tmdbMovie } = await api(`movie/${tmdbMovieId}`);
-
-//   // Agregar la película a la lista del usuario
-//   await addMovieToList(userId, listId, tmdbMovie);
-
-//   res.json({ message: 'Película agregada a la lista con éxito' });
-// } catch (error) {
-//   next(error);
-// }
-// }
