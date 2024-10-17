@@ -2,7 +2,7 @@ const Joi = require('joi');
 
 const id = Joi.number().integer();
 const type = Joi.string()
-const movie = Joi.number().integer();
+const movieId = Joi.number().integer();
 const nick=Joi.string().max(16)
 const email = Joi.string().email();
 const password = Joi.string()
@@ -25,7 +25,7 @@ const getUserSchema = Joi.object({
 const getUserInteractionSchema=Joi.object({
   id,
   type,
-movie
+movieId
 })
 
 module.exports = { createUserSchema, updateUserSchema, getUserSchema,getUserInteractionSchema }

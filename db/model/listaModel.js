@@ -8,7 +8,7 @@ const ListasSchema ={
     name: {
       allowNull: false,
       type: DataTypes.STRING,
-      defaultValue: "Favoritos"
+      defaultValue: "Favoritos",
     },
     id: {
       allowNull: false,

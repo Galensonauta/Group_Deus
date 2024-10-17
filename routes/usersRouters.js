@@ -18,32 +18,56 @@ router.get('/', async (req, res, next) => {
     next(error);
   }
 });
-
-router.get('/:type/:movie',
+router.get("/interactions-movies/:type/:movieId",
+async (req,res,next)=>{
+  try{
+    const{type,movieId}=req.params
+    const interaction= await service.findInterByMovie(type,movieId)
+    res.json(interaction)
+  }catch(error){
+    next(error)
+  }
+}
+)
+router.get("/rank-movies/:type/",
+  async (req,res,next)=>{
+    try{
+      const{type}=req.params
+      const rank= await service.findTopRatedMoviesForCarousel(type)
+      console.log(rank)
+      res.json(rank)
+    }catch(error){
+      next(error)
+    }
+  }
+  )
+router.get('/my-interaction-detail/:type/:movieId',
+  passport.authenticate("jwt", {session:false}),
   validatorHandler(getUserInteractionSchema, 'params'),
   async (req, res, next) => {
     try {
-      const {type,movie } = req.params;
-      const user = await service.findInteractionId(type,movie);
-      res.json(user);
+      const user = req.user.sub
+      const {type,movieId } = req.params;
+      const userList= await service.findUserInteraction(user,type,movieId);
+      res.json(userList);
     } catch (error) {
       next(error);
     }
   }
 );
-router.get('/:id',
-  validatorHandler(getUserSchema, 'params'),
+router.get('/my-interaction-list/:type',
+  passport.authenticate("jwt", {session:false}),
   async (req, res, next) => {
     try {
-      const { id } = req.params;
-      const user = await service.findOne(id);
-      res.json(user);
+      const { type } = req.params;
+      const user = req.user.sub
+      const interactionUser= await service.findUserList(user,type);
+      res.json(interactionUser);
     } catch (error) {
       next(error);
     }
   }
 );
-
 router.post('/',
   validatorHandler(createUserSchema, 'body'),
   async (req, res, next) => {
@@ -87,29 +111,5 @@ router.delete('/:id',
     }
   }
 );
-
-
-
-// router.get("/:id", (req,res)=>{
-//   const {id}=req.params;
-//   res.json(
-// {
-//   "avatar": {
-//     "gravatar": {
-//       "hash": "caaa79da9eeb7a1a9d4396f0d5010313"
-//     },
-//     "tmdb": {
-//       "avatar_path": null
-//     }
-//   },
-//   "id": 18928639,
-//   "iso_639_1": "en",
-//   "iso_3166_1": "AR",
-//   "name": "",
-//   "include_adult": false,
-//   "username": "galenso"
-// }
-//   )
-// })
 
 module.exports= router;

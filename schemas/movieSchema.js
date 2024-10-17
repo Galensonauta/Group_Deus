@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const id=Joi.number().integer();
-const userId = Joi.number().integer();
+const movieId = Joi.number().integer();
 const type = Joi.string()
 
 const comment = Joi.string()
@@ -20,8 +20,7 @@ const queryParamsMovieSchema=Joi.object({
   offset
 })
 const verificarInteraction =Joi.object({
-  id: id.required(),
-  userId:userId.required(),
+  movieId: movieId.required(),
   type:type.required(),
 })
 const addInteractionMovie=Joi.object({

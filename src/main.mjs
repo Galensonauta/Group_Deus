@@ -1,18 +1,33 @@
-
-
-// import { API_KEY } from "@src/apiKey.js";
-import axios from 'axios';
-// const { API_KEY } = process.env
-// const api = axios.create({
-//   baseURL: 'https://api.themoviedb.org/3/',
-//   headers: {
-//     'Content-Type': 'application/json;charset=utf-8',
-//     "Authorization":API_KEY,
-//   }
-// });
-import {api} from "./tmdbApi.mjs"
-
-import { base64, base64Gr, base64Cast, base64NextBtn, base64PrevBtn, base64LupaBtn, base64heartEmpty, base64heartFill } from "@imagesDefault"
+import {api,axiosInstance} from "./tmdbApi.mjs"
+function getCookieValue(name) {
+  const match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+  return match ? decodeURIComponent(match[3]) : null;
+}
+// Agrega un interceptor para incluir el token en las solicitudes
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = getCookieValue("token"); // Asumiendo que el token se guarda en cookies
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+      console.log('Token añadido a la solicitud:', config.headers.Authorization); // <-- Añadir este console.log
+    }else{
+  console.log('No se encontró el token en las cookies');
+}    
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+import { base64, 
+  base64Gr, 
+  base64Cast, 
+  base64NextBtn, 
+  base64PrevBtn, 
+  base64LupaBtn, 
+  base64heartEmpty, 
+  base64heartFill } 
+from "@imagesDefault"
 
 function idCountry() {
   const item = JSON.parse(localStorage.getItem("id_country"))
@@ -30,8 +45,8 @@ function idCountrySelect(idC) {
   if (idC && idC.iso_3166_1) {
     addIdC[idC.iso_3166_1] = idC
   } else {
-    addIdC[idC.iso_3166_1] = undefined
     console.error("paso")
+    addIdC[idC.iso_3166_1] = undefined
   }
   localStorage.setItem("id_country", JSON.stringify(addIdC))
 }
@@ -82,60 +97,52 @@ const observador = new IntersectionObserver((imgs) => {
     }
   })
 }, options)
-async function likedMoviesList() {
+
+//llamados a API del Grupo Deus
+export async function loginUser(nick, password) {
   try {
-    const response = await fetch(`http://localhost:3001/api/v1/listas/1/movie`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      }
+    const response = await axiosInstance.post('/auth/login', {
+      nick,
+      password,
     });
-    const data = await response.json();
-    if (response.ok) {
-      return data.moviesList; // Devuelve la lista de películas desde el backend
-    } else {
-      console.error("Error al obtener las películas likeadas:", data);
-      return {}; // Retorna un objeto vacío si hay un error
-    }
+    console.log('Usuario autenticado con éxito:', response.data.token);
+    return response.data;    
   } catch (error) {
-    console.error("Error al conectar con el servidor de peliculas:", error);
-    return {}; // Retorna un objeto vacío si hay un error en la conexión
+    console.error('Error al iniciar sesión:', error.response ? error.response.data.message : error.message);
+    alert('Error al iniciar sesión. Verifica tus credenciales.');
   }
-} 
-export async function getInteractionMovieId(type,movie){
-    try {
-      const response = await fetch(`http://localhost:3001/api/v1/users/${type}/${movie}`, {
-        method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            }})
-        const interactionData = await response.json();
-  console.log(interactionData)
-      if (response.ok) {
-        // Si hay un comentario guardado, reemplazar el input con el texto
-        const commentInput = document.querySelector(".inputComment");
-        const rankInput = document.querySelector(".inputRank")
-        if (interactionData.comment||interactionData.rank) {
-          const commentText = document.createElement("p");
-          commentText.textContent = interactionData.comment;
-          commentInput.replaceWith(commentText);
-          const rankText = document.createElement("p");
-          rankText.textContent = rankInput.value;      
-          // Reemplazar el input por el nuevo elemento de texto
-          rankInput.replaceWith(rankText);                        
-        }    
-      } else {
-        console.error("Error al cargar la interacción", interactionData);
-      }
-    } catch (error) {
-      console.error("Error al hacer la solicitud al servidor:", error);
-    }
-  } 
+}
+
+async function likedMoviesList(type) {
+  try {
+    const response = await axiosInstance.get(`/users/my-interaction-list/${type}`);    
+    if (response.status === 200) {
+      return response.data;  // Devuelve los datos para su uso posterior  
+    }else{
+      console.log("el usuario no tiene lista")
+    }    
+  } catch (error) {
+    console.log(error.response.data)
+    console.error('Error al acceder a la lista del usuario:', error.message || 'Error de red');   
+  }
+}
+export async function getInteractionMovie(type,movie){
+  try{
+    const response = await axiosInstance(`/users/interactions-movies/${type}/${movie}`)  
+
+if (response.ok) {   
+  const interactionData = await response.json();
+  console.log("todos los comment",interactionData)
+  return interactionData
+  }}
+  catch(error){
+    console.error("Error al hacer la solicitud al servidor:", error);
+  }
+}
 
 export async function addInteraction(type,movie,interactionData){
   try{
-    const response = await fetch(`http://localhost:3001/api/v1/movies/1/${type}/${movie.id}`,{
-      method: "PATCH",
+    const response = await axiosInstance.patch(`/movies/my-interaction-new/${type}/${movie}`,{
       headers:{
         'Content-Type': 'application/json',
       },
@@ -151,34 +158,27 @@ export async function addInteraction(type,movie,interactionData){
     console.error("Error al hacer la solicitud al servidor:", error);
   }
   }
-
-async function likeMovie(movie) {  
+async function likeMovie(type,movie) {  
   try {
-  const response = await fetch(`http://localhost:3001/api/v1/listas/1/movie/${movie.id}`, {
-    method: 'POST',
+  const response = await axiosInstance.post(`/listas/${type}/${movie.id}`, {
     headers: {
       'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ movieId: movie.id })  // Pasar el ID de la película también en el cuerpo
-  });
-  const data = await response.json();
-  if (response.ok) {
-    console.log("Película agregada a la lista", data);
+    }});
+  if (response.status === 201) {
+    console.log("Película agregada a la lista", response);
   } else {
-    console.error("Error al agregar la película", data);
+    console.error("Error al agregar la película", response);
   }
 } catch (error) {
   console.error("Error al hacer la solicitud al servidor:", error);
 }
 }
- async function deleteMovieList(movie){
+ async function deleteMovieList(type,movie){
   try {
-    const response = await fetch(`http://localhost:3001/api/v1/listas/1/movie/${movie.id}`, {
-      method: 'DELETE',
+    const response = await axiosInstance.delete(`/listas/${type}/${movie.id}`, {
       headers: {
         'Content-Type': 'application/json',
-      },
-    });
+      }});
     const data = await response.json();
     if (response.ok) {
       console.log("Película eliminada de la lista", data);
@@ -189,99 +189,53 @@ async function likeMovie(movie) {
     console.error("Error al hacer la solicitud al servidor:", error);
   }
   }
-async function likedTvList() {
-  try {
-    const response = await fetch(`http://localhost:3001/api/v1/listas/1/tv`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    });
-    const data = await response.json();
-    if (response.ok) {
-      return data.tvsList; // Devuelve la lista de películas desde el backend
-    } else {
-      console.error("Error al obtener las películas likeadas:", data);
-      return {}; // Retorna un objeto vacío si hay un error
-    }
-  } catch (error) {
-    console.error("Error al conectar con el servidor de listas:", error);
-    return {}; // Retorna un objeto vacío si hay un error en la conexión
-  }
-}
-async function likeTvs(tv) {
-  try {
-    const response = await fetch(`http://localhost:3001/api/v1/listas/1/tv/${tv.id}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ tvId: tv.id })  // Pasar el ID de la película también en el cuerpo
-    });
-    const data = await response.json();
-    if (response.ok) {
-      console.log("serie agregada a la lista", data);
-    } else {
-      console.error("Error al agregar la serie", data);
-    }
-  } catch (error) {
-    console.error("Error al hacer la solicitud al servidor:", error);
-  }
-}
-async function deleteTvList(movie){
-  try {
-    const response = await fetch(`http://localhost:3001/api/v1/listas/1/tv/${movie.id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    const data = await response.json();
-    if (response.ok) {
-      console.log("Película eliminada de la lista", data);
-    } else {
-      console.error("Error al eliminar la película", data);
-    }
-  } catch (error) {
-    console.error("Error al hacer la solicitud al servidor:", error);
-  }
-}
-async function addMovieList(movie,button){    
-          const lista= await likedMoviesList()
+async function addMovieList(movie,button){
+  isAuthenticated().then(async isAuth => {
+    if (isAuth) {
+      const lista= await likedMoviesList("movie")
           const listaId= lista.find(id=>id.id===movie.id)
-          refreshHeart(listaId,button)
-    
-        button.addEventListener("click", async() => {
-          const lista= await likedMoviesList()
+          refreshHeart(listaId,button)    
+        button.addEventListener("click", async() => {       
+          const lista= await likedMoviesList("movie")
           const listaId= lista.find(id=>id.id===movie.id)
-  if(!listaId) { 
-    refreshHeart(true, button);
-    await likeMovie(movie);
-    // Agregar la película a la lista  
-  } else{
+  if(listaId) {    
     refreshHeart(false, button);
-    await  deleteMovieList(movie)   
+    await deleteMovieList("movie",movie)  
+  } else{
+    refreshHeart(true, button);
+    await likeMovie("movie",movie);
+    // Agregar la película a la lista   
       } 
    getLikedMovie()
 }); 
-}
+    } else {
+      console.log('Usuario no autenticado. Nopuede agregar peliculas.');
+    }
+  });        
+         }
 async function addTvList(tv,button){
-  const lista= await likedTvList()
+  isAuthenticated().then(async isAuth => {
+    if (isAuth) {
+  const lista= await likedMoviesList("tv")
   const listaId= lista.find(id=>id.id===tv.id)
   refreshHeart(listaId,button)
   button.addEventListener("click", async() => {
-    const lista= await likedTvList()
+    const lista= await likedMoviesList("tv")
     const listaId= lista.find(id=>id.id===tv.id)
 if(!listaId) { 
 refreshHeart(true, button);
-await likeTvs(tv);
+await likeMovie("tv",tv);
 // Agregar la película a la lista  
 } else{
 refreshHeart(false, button);
-await  deleteTvList(tv)   
+await  deleteMovieList("tv",tv)   
 } 
 getLikedTv()
 })
+} else {
+  console.log('Usuario no autenticado. Nopuede agregar peliculas.');
+}
+}); 
 }
 
 function refreshHeart(isLiked, button){
@@ -291,7 +245,23 @@ function refreshHeart(isLiked, button){
     button.src=base64heartEmpty
   }
 }
+export async function isAuthenticated() {
+  const token = getCookieValue("token"); // Asumiendo que el token se guarda en cookies
+  if (!token) {
+    console.log("no hay token")
 
+    return false; // No hay token en las cookies, por lo tanto, el usuario no está autenticado
+  }
+  try {
+    const response = await axiosInstance.get('/auth/validate-token');
+    return response.status === 200; // Si el servidor responde con un 200, el token es válido
+  } catch (error) {
+    console.error('Token inválido o expirado:', error.message || 'Error de red');
+    return false; // Si ocurre un error, asumimos que el token no es válido
+  }
+}
+
+// llamados a API de The Movie DB
 export async function createAfiches(afiche, container, {
   type = "movie" || "tv",
   lazyLoad = false,
@@ -361,7 +331,7 @@ export async function createAfiches(afiche, container, {
       btnMovieLiked.id = "btnMovie-liked-preview"
       if(type==="movie"){
       addMovieList(movie,btnMovieLiked)}else{
-      addTvList(movie,btnMovieLiked)}
+        addTvList(movie,btnMovieLiked)}
 
       const detailContainer = document.createElement("div")
       detailContainer.classList.add("descriptions")
@@ -403,15 +373,17 @@ export async function createAfiches(afiche, container, {
 }
 
 export async function getLikedMovie() {
-  const addedMovies = await likedMoviesList()
-  const movies=Object.values(addedMovies)
-  console.log(movies)
-  createAfiches(movies, lastLiked, { type: "movie", lazyLoad: true, clean: true })
+   
+      const movies = await likedMoviesList("movie")
+
+      createAfiches(movies, lastLiked, { type: "movie", lazyLoad: true, clean: true })
+   
 }
 export async function getLikedTv() {
-  const addedTvs = await likedTvList()  
-  const tvs=Object.values(addedTvs)
-  createAfiches(tvs, lastLikedTv, { type: "tv", lazyLoad: true, clean: true })
+ 
+      const tvs = await likedMoviesList("tv")     
+    createAfiches(tvs, lastLikedTv, { type: "tv", lazyLoad: true, clean: true })
+     
 }
 export function createCategories(categories, container, id, nombre) {
   container.innerHTML = ""
@@ -476,7 +448,6 @@ export async function getTrendingHome(media) {
   const { data: movie } = await api("trending/" + media + "/day")
   const movies = movie.results.slice(0, 4)
   movies.sort((a, b) => b.vote_average - a.vote_average)
-  console.log(movies)
   createAfiches(movies, lastTrend, { type: media, lazyLoad: true, clean: true })
 }
 export async function getRankHome(media) {
@@ -663,13 +634,16 @@ export async function getSimilarById({ id, media }) {
   const similares = data.results
   createAfiches(similares, lastSimilar, { type: media, lazyLoad: true, clean: true })
 }
-export async function getInfoById({ id, media }) {
+export async function getInfoById({ id, media}) 
+  {   
   const { data: movie } = await api(`${media}/${id}?language=es-ES`)
   const { data: credit } = await api(`${media}/${id}/credits?language=en-US`)
   const { data: provider } = await api(`${media}/${id}/watch/providers`)
 
-  const column2 = document.querySelector(".column2")
-  const moviePage = document.querySelector(".moviePage")
+  const movieInfo = document.querySelector(".movieInfo")
+  const titles= document.querySelector(".titles")
+  const infoExtra = document.querySelector(".infoExtra")
+ 
   //titulo original y en español
   const movieTitleOriginal = document.querySelector(".title1")
   const movieTitleEs = document.querySelector(".title2")
@@ -689,6 +663,32 @@ export async function getInfoById({ id, media }) {
       movieTitleOriginal.textContent = movie.original_name
     }
   }
+  titles.appendChild(movieTitleOriginal)
+  titles.appendChild(movieTitleEs)
+
+  // createLogoProviderByid
+  const logos = document.querySelector(".logos")
+  logos.innerHTML = ""
+  const isoCou = Object.values(idCountry() || { iso_3166_1: "AR" })
+  const iso_3166_1 = isoCou[0].iso_3166_1 || Object.values({ iso_3166_1: "AR" })
+  console.log(iso_3166_1)
+  if (!provider.results[iso_3166_1] || !provider.results[iso_3166_1].flatrate && !provider.results[iso_3166_1].free) {
+    console.log("No esta")
+    logos.classList.add("logosMensaje")
+    logos.innerHTML="No disponible en: "+iso_3166_1
+    movieInfo.appendChild(logos)
+  } else {
+    const providerByCountry = provider.results[iso_3166_1].flatrate || provider.results[iso_3166_1].free || []    
+    logos.classList.add("logos")
+    movieInfo.appendChild(logos)
+    providerByCountry.forEach(id => {
+      const providerImg = document.createElement("img")
+      providerImg.classList.add("logoProvider")
+      providerImg.setAttribute("src", "https://image.tmdb.org/t/p/w300" + id.logo_path)
+      logos.appendChild(providerImg)
+      movieInfo.appendChild(logos)
+    })
+  }
   //manejo de info(año)
   const yearMovie = document.querySelector(".year")
   if (media === "movie") {
@@ -696,8 +696,12 @@ export async function getInfoById({ id, media }) {
   } else {
     yearMovie.innerHTML = "Estrenada: " + movie.first_air_date.split("-")[0]
   }
+  infoExtra.appendChild(yearMovie)
+  //manejo de score(IMDB)
   const movieScore = document.querySelector(".rating")
-  movieScore.innerHTML = "Calificación: " + movie.vote_average + " / 10"
+  movieScore.innerHTML = "Calificación en IMDB: " + movie.vote_average + " / 10"
+  infoExtra.appendChild(movieScore)
+
   //manejo de info(origen)
   const origenMovie = movie.production_countries
   const containerOrigen = document.querySelector(".origenCountry")
@@ -711,71 +715,22 @@ export async function getInfoById({ id, media }) {
       location.hash = "#category=" + o.iso_3166_1
     })
   })  
+  infoExtra.appendChild(containerOrigen)
+
   //manejo de info(generos)
-  const column1 = document.querySelector(".column1")
-  column1.innerHTML = ""
+  const genresContainer = document.querySelector(".genresContainer")
+  genresContainer.innerHTML = ""
   const tags = movie.genres
   tags.forEach(t => {
     const generos = document.createElement("span")
     generos.classList.add("tag")
     generos.textContent = t.name + " / "
-    column1.appendChild(generos)
+    genresContainer.appendChild(generos)
     generos.addEventListener("click", () => {
       location.hash = "#category=" + t.id
     })
   })
-
-
-   //manejo interacciones
-   const interaction =document.querySelector(".interaction")
-   //manejo corazoncito
-   const btnMovieLiked = document.createElement("img")
-   btnMovieLiked.id = "btnMovie-liked"
-   if(media==="movie"){
-   addMovieList(movie,btnMovieLiked)}else{
-   addTvList(movie,btnMovieLiked)}
-   //manejo de comentarios y rank
-   const commentInput = document.querySelector(".interaction input")
-   const rankInput = document.querySelector(".inputRank")
-   const btnRankMovie =document.querySelector("#btnRankMovie")
-   const commentText = document.createElement("p");
-   const rankText = document.createElement("p");
-   let interactionData={} 
-  //  if(interactionData==={}){
-  //   commentInput.value = ""   
-  //  }else{
-  //   commentText
-  //  }
-   const btnComment =document.createElement("button")   
-   btnComment.id="btnComment"
-   btnComment.addEventListener("click", async () => {
-     // Guardar el comentario antes de reemplazar el input
-     interactionData = {
-       comment: commentInput.value
-     };      
-     // Agregar la interacción (enviar el comentario al servidor)
-     const comentar = await addInteraction(media, movie, interactionData);       
-     console.log("Comentario agregado", comentar);
-     // Reemplazar el input con un texto fijo que muestre el comentario
-   commentText.textContent = commentInput.value;      
-   // Reemplazar el input por el nuevo elemento de texto
-   commentInput.replaceWith(commentText);   
-   }); 
-   btnRankMovie.addEventListener("click",async()=>{
-    interactionData={rank: rankInput.value}      
-    const rank = await addInteraction(media,movie,interactionData)
-    rankText.textContent = rankInput.value;      
-    // Reemplazar el input por el nuevo elemento de texto
-    rankInput.replaceWith(rankText);    
-    console.log("Puntuacion agregada", rank);
-   })  
-  //  interaction.appendChild(btnMovieLiked)
-  //  interaction.appendChild(btnRankMovie)
-  // interaction.appendChild(rankInput)
-  // interaction.appendChild(commentInput)
-  // interaction.appendChild(btnComment)
- 
-   
+  infoExtra.appendChild(genresContainer)
 
   //manejo de info(overview)
   const overview = document.querySelector(".overview")
@@ -784,32 +739,90 @@ export async function getInfoById({ id, media }) {
   } else {
     overview.innerHTML = movie.overview
   }
+  infoExtra.appendChild(overview)
 
-  column2.appendChild(overview)
-  moviePage.appendChild(column2)
+   //manejo interacciones
+   const interaction =document.querySelector(".interaction")
+   //manejo corazoncito
+   const btnMovieLiked = document.createElement("img")
+   btnMovieLiked.id = "btnMovie-liked"
+   if(media==="movie"){
+    addMovieList(movie,btnMovieLiked)}
+    else{
+      addTvList(movie,btnMovieLiked)}
 
-  // createLogoProviderByid
-  const logos = document.querySelector(".logos")
-  logos.innerHTML = ""
-  const isoCou = Object.values(idCountry() || { iso_3166_1: "AR" })
-  const iso_3166_1 = isoCou[0].iso_3166_1 || Object.values({ iso_3166_1: "AR" })
-  if (!provider.results[iso_3166_1] || !provider.results[iso_3166_1].flatrate && !provider.results[iso_3166_1].free) {
-    console.log("No esta")
-    moviePage.appendChild(logos)
+   //manejo de comentarios y rank
+   const btnComment =document.getElementById("btnComment")   
+   const btnRankMovie =document.getElementById("btnRankMovie")  
 
-  } else {
-    const providerByCountry = provider.results[iso_3166_1].flatrate || provider.results[iso_3166_1].free || []
-    
-    moviePage.appendChild(logos)
+   const commentContainer= document.querySelector(".commentContainer")
+   commentContainer.innerHTML=""
+  const interData= await getInteractionMovie(media,movie.id)
+ 
+    console.log(interData)
 
-    providerByCountry.forEach(id => {
-      const providerImg = document.createElement("img")
-      providerImg.classList.add("logoProvider")
-      providerImg.setAttribute("src", "https://image.tmdb.org/t/p/w300" + id.logo_path)
-      logos.appendChild(providerImg)
-      moviePage.appendChild(logos)
-    })
-  }
+  interData.forEach(comment=>{
+  const comentario = document.createElement("p")
+   comentario.classList.add("comentario")
+   const rankeo = document.createElement("p")
+   rankeo.classList.add("rankeo")
+   if(media==="movie"){
+   comentario.textContent=comment.userMovie[0].UserMovie.comment+" by " + comment.nick
+   rankeo.textContent=comment.userMovie[0].UserMovie.rank
+  }else{
+    comentario.textContent=comment.userTv[0].UserTv.comment+" by " + comment.nick
+    rankeo.textContent=comment.userTv[0].UserTv.rank
+   }
+   commentContainer.appendChild(comentario)
+   commentContainer.appendChild(rankeo)
+})
+interaction.appendChild(commentContainer)
+
+   const commentInput = document.querySelector(".inputComment")
+   const rankInput = document.querySelector(".inputRank")
+
+   let interactionData={
+    comment:null,
+    rank:null
+   }
+
+   btnComment.addEventListener("click", async () => {     
+     const commentValue = commentInput.value; // Variable local para evitar interferencias
+     interactionData = { comment: commentValue }; // Crear un nuevo objeto para cada interacción
+     await addInteraction(media, movie.id, interactionData); 
+     console.log("Comentario agregado", commentValue);
+     const comentario = document.createElement("p")
+     comentario.classList.add("comentario")
+     comentario.textContent=commentInput.value
+     commentInput.replaceWith(comentario)
+     btnComment.remove();
+        });  
+  btnRankMovie
+
+   btnRankMovie.addEventListener("click",async()=>{
+     const rankValue = rankInput.value; // Variable local para evitar interferencias
+     interactionData = { rank: rankValue }; // Crear un nuevo objeto para cada interacción
+          await addInteraction(media,movie.id,interactionData) 
+   console.log("Puntuacion agregada", rankValue);
+   const rankeo = document.createElement("p")
+   rankeo.classList.add("rankeo")
+   rankeo.textContent=rankInput.value
+   rankInput.replaceWith(rankeo)
+   btnRankMovie.remove();
+   })  
+   btnRankMovie  
+   
+   const heartContainer= document.querySelector(".heartContainer")
+   heartContainer.innerHTML=""
+
+   heartContainer.appendChild(btnMovieLiked)
+   interaction.appendChild(commentInput)   
+   interaction.appendChild(btnComment)
+   interaction.appendChild(rankInput)
+   interaction.appendChild(btnRankMovie)      
+   interaction.appendChild(heartContainer)
+  infoExtra.appendChild(interaction)
+  
   //manejo de info(cast)
   const acting = credit.cast.filter((casting) => casting.known_for_department === "Acting").slice(0, 10)
   acting.sort((a, b) => a.order - b.order)
@@ -838,15 +851,10 @@ export async function getInfoById({ id, media }) {
     })
     containerCast.appendChild(castName)
     containerCast.appendChild(castImg)
-    column2.appendChild(containerCast)
   })
 
-  //manejo de la refe para margin-top entre cast y video 
-
-  const refeCast = containerCast.getBoundingClientRect().bottom;
+  infoExtra.appendChild(containerCast)
+  movieInfo.appendChild(infoExtra)
   const footerMovie = document.querySelector(".footerMovie")
-  footerMovie.style.marginTop = refeCast+ "px"
-
-  moviePage.appendChild(footerMovie)
-
+  movieInfo.appendChild(footerMovie)
 } 

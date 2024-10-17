@@ -6,6 +6,7 @@ const routerApi = require('./routes/index.js');
 require('dotenv').config();
 const { checkApiKey } = require('./middlewares/authHandler.js');
 
+const cookieParser = require('cookie-parser');
 
 // Acceder a la arquitectura
 // Requiere los middlewares desde el archivo
@@ -16,6 +17,7 @@ const { logErrors,
 
 const app = express(); // Crear instancia de aplicacion de express
 const port = process.env.PORT || 3001;
+app.use(cookieParser());
 
 app.use(json())
 const whiteList=["http://localhost:8080"]
@@ -26,19 +28,21 @@ const options={
     }else{
       callback(new Error("No permitido"))
     }
-  }
+  },
+  credentials: true,
 }
+app.use(cors(options))
+
 app.get('/nueva-ruta', checkApiKey,(req, res) => {
   // Respuesta al cliente
      res.send('Hola , soy una nueva ruta');
    });
   
-app.use(cors(options))
+
 // const passport=
 require("./utils/auth")
 // app.use(passport.initialize());
 routerApi(app);
-
 app.use(logErrors)
 app.use(ormErrorHandler)
 app.use(boomErrorHandler)

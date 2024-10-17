@@ -26,12 +26,15 @@ router.get('/',
   }
 });
 
-router.get('/:listId/:type',
-  validatorHandler(getListaSchema, "params"),    
+router.get('/favoritos/:type',
+  passport.authenticate("jwt", {session:false}),
+  // validatorHandler(getListaSchema, "params"),    
   async (req, res, next) => {
   try {
-    const {listId,type}=req.params
-    res.json(await service.findOne(listId,type));
+    const {type}=req.params
+    const listaFavoritos = await service.findOne(req, type);
+    res.json(listaFavoritos);
+    
   } catch (error) {
     next(error);
   }
@@ -51,13 +54,14 @@ router.post('/',
   }
 );
 
-router.post('/:listId/:type/:id',
+router.post('/:type/:id',
   passport.authenticate("jwt", {session:false}),
-  checkRoles("admin","citizen"),
   validatorHandler(addMovieSchema, 'params'),
   async (req, res, next) => {
     try {
-      const {listId,type,id}=req.params
+      const listId = req.user.sub
+      const {type,id}=req.params
+
       res.status(201).json(await service.addMovieToList(listId,type,id));
     } catch (error) {
       next(error);
@@ -81,13 +85,13 @@ router.patch('/:id',
     }
   }
 );
-router.delete('/:listId/:type/:id',
+router.delete('/:type/:id',
   passport.authenticate("jwt", {session:false}),
-  checkRoles("admin","citizen"),
   validatorHandler(deleteMovieSchema, 'params'),
   async (req, res, next) => {
     try {     
-      const {listId,type,id} = req.params;
+      const {type,id}=req.params
+      const listId = req.user.sub
       res.status(201).json(await service.deleteMovie(listId,type,id));
     } catch (error) {
       next(error);

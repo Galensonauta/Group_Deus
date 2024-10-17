@@ -38,23 +38,21 @@ router.get('/:id',
     next(err)
   }
 })
-router.patch("/:userId/:type/:id",
+router.patch("/my-interaction-new/:type/:movieId",
   passport.authenticate("jwt", {session:false}),
-  checkRoles("admin","citizen"),
   validatorHandler(verificarInteraction, 'params'),
   validatorHandler(addInteractionMovie, 'body'),
   async (req, res, next) => {
     try {
-      const { userId,type, id}=req.params
+      const { type, movieId}=req.params
+      const userId = req.user.sub
       const body=req.body
-      const newMovie = await service.addInteraction(userId,type, id,body);
+      const newMovie = await service.addInteraction(userId,type, movieId,body);
       res.status(201).json(newMovie);
     } catch (error) {
       next(error);
     }
   }
 );
-
-
 
 module.exports= router;

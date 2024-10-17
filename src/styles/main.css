@@ -160,16 +160,7 @@ footer {
   left: 65%;
   top: 76%;
 }
-#btnMovie-liked {
-  cursor: pointer;
-  filter: none;
-  height: 30px;
-  left: 9em;
-  position: absolute;
-  top: -2.5em;
-  transform: rotate(0deg);
-  width: 30px;
-}
+
 #btnMovie-liked-Id{
 cursor: pointer;
 }
@@ -177,178 +168,173 @@ cursor: pointer;
 #btnMovie-liked:hover {
   transform: scale(1.5);
 }
-
-.moviePage {
-  font-family: 'Montserrat', Arial, sans-serif;
-  color: #ffffff;
-  padding: 5px;
-  position: relative;
-}
-
-.carousel {
-  justify-content: center;
-  align-items: center;
+.movieInfo{
+  font-family: 'Montserrat', Arial, sans-serif;  
   display: flex;
-  margin-top: 5px;
-  margin-left: 10px;
+  flex-direction: column; /* Coloca los elementos en una columna (uno debajo del otro) */
+  gap: 5px; /* Espacio entre cada elemento hijo */
 }
-
 .poster {
   width: auto;
   height: auto;
-  top: 90px;
-  position: absolute;
+  margin-top: 5em;
 }
-
 .imgPoster {
   object-fit: cover;
 }
-
-.nextBtn {
-  cursor: pointer;
-  position: absolute;
-  right: 20px;
-  top: 205px;
-}
-
-.prevBtn {
-  cursor: pointer;
-  position: absolute;
-  left: 20px;
-  top: 205px;
-}
-
-ol,
-li {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.logos {
-  position: relative;
-  top: 51em;
-  display: flex;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-  margin-right: 22px;
-}
-
-.logosMensaje {
-  font-family: 'Montserrat', Arial, sans-serif;
-  font-size: 20px;
-  line-height: 25px;
-  color: #d5d2f8;
-  width: 23%;
-}
-
-.logoProvider {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  padding-left: 11px;
-}
-
-.info-card {
-  overflow: hidden;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  position: absolute;
-  top: 65px;  
-  line-height: 1.3;
-}
-.infoExtra{
-  place-content: space-around;
-    position: absolute;
-    top: 506px;
-    display: inline-flex;
-    flex-direction: row;
-    align-items: baseline;
-    white-space: nowrap;  
-}
-.containerDetail {
-  position: absolute;
-  top: 45em;
-  z-index: 1;
-}
-
 .title1 {
   font-size: calc(3px + 2vw);
   font-weight: 700;
   color: #fff;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  text-shadow: 0 0 0.15em #522258;
-  user-select: none;
-  filter: blur(0.007em);
-  white-space: nowrap;
 }
-
 .title2 {
   color: #C7C1BA;
-  font-size: 23px;
-  font-weight: 300;
-  letter-spacing: 0.02em;
-  text-shadow: 0 0 0.15em #8C3061;
-  user-select: none;
-  white-space: nowrap;
-  filter: blur(0.007em);
+  font-weight: 300; 
 }
-
-.origenCountry {
-  /* position: absolute;
-  left: 3px;
-  top: 217px; */
+.logos { 
+  margin-top: -7em;
+  padding-left: 50em;
+  display: flex;
+}
+.logosMensaje {
+  font-family: 'Montserrat', Arial, sans-serif;
+  padding-left: 69em;
+  margin-top: -5em;
+  color: #d5d2f8;
+}
+.logoProvider {
+  border-radius: 50%;
+  height: 73px;
+  object-fit: cover;
+  padding: 6px;
+}
+.infoExtra{
+  margin-top: 1em;
+  color: #fff;
+}
+.origenCountry { 
   width: max-content;
 }
-
 .origen {
   cursor: pointer;
 }
-
 .origen:hover {
   background: #060302;
-  color: #522258
+  color: #892CDC
 }
 
-.column1 {
-  /* position: absolute;
-  left: 3px;
-  top: 245px; */
+.genresContainer { 
   width: max-content;
-
 }
-
 .tag {
   cursor: pointer;
 }
-
 .tag:hover {
   background: #060302;
   color: #8C3061
 }
-
-.column2 {
-  padding-left: 5px;
-  position: absolute;
-  top: 84em;
-  width: 95%;
-}
-
 .overview {
   font-size: 20px;
   line-height: 25px;
   color: #d5d2f8;
   width: 95%;
 }
-
+.interaction {
+  display: flex;
+  flex-direction: column; /* Alinea los elementos de interacción verticalmente */
+  margin-top: 15px; /* Espacio para separarlo del resto del contenido */
+}
+#btnMovie-liked {
+  cursor: pointer;
+  filter: none;
+  height: 30px;
+  transform: rotate(0deg);
+  width: 30px;
+  display: flex;
+  margin-left: 245px;
+  margin-top: -31px;
+}
+#btnComment{
+  background: #151515;
+  border-radius: 25px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.2em;
+  font-variant: small-caps;
+  width: 97%;
+  display: flex;
+  margin-top: 4px;
+  align-items: center; /* Centra verticalmente el contenido */
+  justify-content: center; /* Centra horizontalmente el contenido */
+}
+#btnRankMovie{  
+  align-items: center;
+  background: #151515;
+  border-radius: 25px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.2em;
+  font-variant: small-caps;
+  display: flex;
+  margin-top: -24px;
+  width: 106px;
+  margin-left: 123px;
+}
+.inputRank{
+  background-color: #151515;
+  border-radius: 80px;
+  color: #fff;
+  display: flex;
+  font-weight: 900;
+  margin-top: 14px;
+  width: 8%;   
+}
+.comentario{
+  color: #b473d7;
+  font-family: Montserrat, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  border-color: #720455;
+}
+.rankeo{
+  color: #B1B0AC;
+  font-family: Montserrat, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  border-style: #720455;
+}
+.inputComment {
+  background-color: #151515;
+  border-radius: 15px;
+  color: #fff;
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin: 0;
+  min-height: 50px;
+  outline: none;
+  padding: 10px;
+  transition: all .3s ease-in-out;
+  width: 95%;
+}
+.inputComment::placeholder {
+  font-family: "Montserrat", sans-serif;
+  color: #720455;
+  font-size: 15px;
+  letter-spacing: 3px;
+}
+.inputComment:focus {
+  font-family: "Montserrat", sans-serif;
+  border-radius: 10px;
+  background-color: #151515b2;
+  border-bottom: 1px solid #892CDC;
+}
 .castMovie {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   grid-auto-rows: 1fr;
   gap: 1px;
-  margin-top: -1px;
+  margin-top: 65px;
 }
 
 .movieImg {
@@ -357,7 +343,6 @@ li {
   border-radius: 50%;
   object-fit: cover;
 }
-
 .castName {
   font-size: 20px;
   color: #B1B0AC;
@@ -365,6 +350,32 @@ li {
   cursor: pointer;
 }
 
+.carousel {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+ 
+}
+.nextBtn {
+  cursor: pointer;
+  position: absolute;
+  top: 138em;
+  right: 20px;
+}
+
+.prevBtn {
+  cursor: pointer;
+  position: absolute;
+  top: 138em;
+  left: 20px;
+}
+
+ol,
+li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 img:hover {
   opacity: 0.8;
 }
@@ -374,16 +385,12 @@ a:hover {
 }
 
 #lastSimilar {
-  display: flex;
+display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  position: relative;
-  top: 90px;
+
 }
 
-.footerMovie {
-  position: absolute;
-}
 
 .cine {
   width: 86%;
@@ -541,7 +548,27 @@ a:hover {
   position: absolute;
   top: 130%;
 }
-
+#login{
+  position: absolute;
+  top: 160%;
+}
+/* .input-nick{
+  height: 25px;
+  width: 840px;
+  border-style: none;
+  padding: 5px;
+  font-size: 18px;
+  letter-spacing: 2px;
+  outline: none;
+  border-radius: 25px;
+  transition: all .5s ease-in-out;
+  background-color: #151515;
+  padding-right: 100px;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  position: absolute;
+  font-weight: 700;
+} */
 .input-search {
   height: 25px;
   width: 840px;
@@ -558,11 +585,12 @@ a:hover {
   font-family: "Montserrat", sans-serif;
   position: absolute;
   font-weight: 700;
+    left: 21px;
 }
 
 .input-search::placeholder {
   font-family: "Montserrat", sans-serif;
-  color: #ffffff17;
+  color: #892CDC;
   font-size: 15px;
   letter-spacing: 3px;
 }
@@ -638,71 +666,7 @@ select::after {
   background: rgb(243, 242, 242);
   color: #52057B;
 }
-.interaction {
-  position: absolute;
-  top: 200px;
-}
-#btnComment{
-  background: #151515;
-  color: #fff;
-  font-size: 1.2em;
-  font-variant: small-caps;
-  cursor: pointer;
-  position: absolute;
-  top: 5em;
-  left: 15em;
-  border-radius: 25px;
-}
-#btnRankMovie{  
-    background: #151515;
-    border-radius: 25px;
-    color: #fff;
-    cursor: pointer;
-    font-size: 1.2em;
-    font-variant: small-caps;
-    left: 15em;
-    position: absolute;
-    top: -2em;
-}
-.inputRank{
-  color: #fff;
-    background: aliceblue;
-    font-weight: 700;
-    position: absolute;
-    /* width: 10px; */
-    border-radius: 50px;
-    left: 232px;
-    bottom: 35px;
-}
-.inputComment{
-  background-color: #151515;
-  border-radius: 25px;
-  border-style: none;
-  color: #fff;
-  font-family: Montserrat, sans-serif;
-  font-size: 18px;
-  font-weight: 700;
-  height: 25px;
-  letter-spacing: 2px;
-  outline: none;
-  padding: 5px 100px 5px 5px;
-  position: absolute;
-  transition: all .5s ease-in-out;
-  width: 840px;
 
-}
-.inputComment::placeholder {
-  font-family: "Montserrat", sans-serif;
-  color: #ffffff17;
-  font-size: 15px;
-  letter-spacing: 3px;
-}
-.inputComment:focus {
-  font-family: "Montserrat", sans-serif;
-  border-radius: 10px;
-  background-color: #151515b2;
-  border-bottom: 1px solid #892CDC;
-}
 
 
 
@@ -969,9 +933,6 @@ select::after {
       top: 13em;
     }
 
-    .column1 {
-      top: 11em;
-    }
   }
   #btnMovie-liked-Id {
     height: 33px;
@@ -995,10 +956,6 @@ select::after {
   .poster {
     top: 27em;
     left: 6%;
-  }
-
-  .column2 {
-    top: 60em;
   }
 
   .castMovie {

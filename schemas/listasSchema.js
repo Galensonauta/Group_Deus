@@ -23,12 +23,10 @@ const queryListasSchema=Joi.object({
   rank_max: rank_max.greater(Joi.ref('rank_min'))
   })
 const addMovieSchema = Joi.object({
-  listId: listId.required(), 
   id: id.required(),
   type 
 });
 const deleteMovieSchema = Joi.object({
-  listId: listId.required(),
   id: id.required(),
   type
 })

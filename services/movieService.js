@@ -119,18 +119,20 @@ class MoviesService {
        }
        return tvData
     }       
-  async addInteraction(userId,type,id,body) {
-    const usersId = await models.User.findOne({where:{id:userId}});    
-    if (!usersId) {
+  async addInteraction(userId,type,movieId,body) {
+    const user = await models.User.findOne({where:{id:userId}});    
+    if (!user) {
       throw new Error('El usuario noe xiste');
     }    
     if(type==="movie"){
-      const movId = await this.getMovieId(id)
-      id=movId.id||movId.id
-      const interactionMovie= await models.UserMovie.findOne({where:{movieId:id}})      
-      const userMovie= await models.UserMovie.findOne({where:{userId}})
-      if(interactionMovie&&userMovie){
-        const updateInteraction=await userMovie.update({
+      const movie = await this.getMovieId(movieId)
+      movieId=movie.id
+      const userMovieInteraction = await models.UserMovie.findOne({ 
+        where: { userId, movieId } 
+      });
+
+      if(userMovieInteraction){
+        const updateInteraction=await userMovieInteraction.update({       
           comment: body.comment,
                 rank: body.rank,
                 tag: body.tag
@@ -139,19 +141,19 @@ class MoviesService {
           }else{
             const newUserInteraction = await models.UserMovie.create({
               userId,
-              movieId: id,
+              movieId,
               ...body
                         })
            return newUserInteraction
           }        
     }else{
-      const tvId = await this.getTvId(id)
-     id= tvId.id||tvId.id
-     const interactionTv= await models.UserTv.findOne({where:{tvId:id}})
-     const userTv= await models.UserTv.findOne({where:{userId}})
+      const tvId = await this.getTvId(movieId)
+      movieId= tvId.id
+      const userTvInteraction = await models.UserTv.findOne({ where: { userId, tvId: movieId } });
 
-     if(interactionTv&&userTv){
-     const updateInteractionTv= await userTv.update({
+
+     if(userTvInteraction){
+     const updateInteractionTv= await userTvInteraction.update({
       comment: body.comment,
             rank: body.rank,
             tag: body.tag
@@ -160,7 +162,7 @@ class MoviesService {
           }    else{
      const newUserInteraction = await models.UserTv.create({
       userId,
-      tvId: id,
+      tvId: movieId,
       ...body       
     })
     return newUserInteraction

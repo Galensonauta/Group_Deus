@@ -8,5 +8,11 @@ const { API_KEY } = process.env
   headers: {
     'Content-Type': 'application/json;charset=utf-8',
     "Authorization": API_KEY,
+
   }
+});
+export const axiosInstance = axios.create({
+   baseURL: 'http://localhost:3001/api/v1',  // Opcionalmente, establece una URL base para tus solicitudes
+  // Permite que todas las solicitudes de esta instancia usen cookies
+  withCredentials: true,
 });
