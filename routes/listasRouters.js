@@ -59,7 +59,7 @@ router.post('/:type/:id',
   validatorHandler(addMovieSchema, 'params'),
   async (req, res, next) => {
     try {
-      const listId = req.user.sub
+      const listId = req.user.id
       const {type,id}=req.params
 
       res.status(201).json(await service.addMovieToList(listId,type,id));
@@ -91,7 +91,7 @@ router.delete('/:type/:id',
   async (req, res, next) => {
     try {     
       const {type,id}=req.params
-      const listId = req.user.sub
+      const listId = req.user.id
       res.status(201).json(await service.deleteMovie(listId,type,id));
     } catch (error) {
       next(error);

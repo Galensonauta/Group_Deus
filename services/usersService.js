@@ -1,7 +1,10 @@
 const boom = require('@hapi/boom');
 const {models} = require("./../libs/sequelize");
 const bcrypt = require("bcrypt")
-const { Sequelize } = require('sequelize');
+const sequelize = require('./../libs/sequelize.js');
+
+const {UserMovie} = require('../db/model/userMovieModel.js');
+const {Movies}= require("../db/model/movieModel.js")
 
 const MoviesService = require('../services/movieService.js');
 const serviceMovie = new MoviesService();
@@ -107,18 +110,36 @@ if(type==="movie"){
     const userInter=await this.findInter(userId,type,movieId)
     return userInter         
   }
-  async findUserList(id,type){
-   const user=await this.findOne(id)
-    const userList =user.userList
-    if(type==="movie"){
-      const moviesList= userList[0].moviesList    
-      return moviesList;
-    }else{    
-    const tvsList= userList[0].tvsList
-    return tvsList
+  async findUserList(userId, type) {
+    try {
+      const user = await this.findOne(userId);
+      if (!user) {
+        console.log(`No se encontró el usuario con el ID: ${userId}`);
+        return []; // Devolver una lista vacía si el usuario no existe
+      }
+  console.log("el user",user)
+      const userList = user.userList || [];
+      console.log("la lista",userList)
+      if (userList.length === 0) {
+        console.log(`El usuario con el ID: ${userId} no tiene listas asociadas`);
+        return []; // Devolver una lista vacía si no hay listas asociadas al usuario
+      }
+  
+      if (type === "movie") {
+        const moviesList = userList[0].moviesList || [];
+        console.log(`Películas encontradas para el usuario con el ID: ${userId}:`, moviesList);
+        return moviesList;
+      } else {
+        const tvsList = userList[0].tvsList || [];
+        console.log(`Series encontradas para el usuario con el ID: ${userId}:`, tvsList);
+        return tvsList;
+      }
+    } catch (error) {
+      console.error('Error al obtener la lista de usuario:', error.message || error);
+      throw new Error('No se pudo obtener la lista de usuario');
+    }
   }
-  }
-  async findUser(nick){
+    async findUser(nick){
     const nickUser=await models.User.findOne({
       where: {nick}
     })
@@ -143,9 +164,54 @@ if(type==="movie"){
     await user.destroy(id)
     return {id}
   }
+  async  getTopRatedMovies() {
+    try {
+      // Usamos una consulta SQL cruda
+      const [results, metadata] = await sequelize.query(`
+        SELECT 
+          m.id,
+          m.title,
+          AVG(um.rank) AS averageRating,  -- Promedio de puntuaciones
+          COUNT(um."userId") AS numberOfRatings  -- Número de usuarios que puntuaron
+        FROM movies m
+        INNER JOIN user_movie um ON m.id = um."movieId"  -- Relacionar las tablas
+        GROUP BY m.id  -- Agrupar por película
+        HAVING COUNT(um."userId") > 0  -- Solo películas con al menos una puntuación
+        ORDER BY AVG(um.rank) DESC  -- Ordenar por el promedio de puntuaciones (descendente)
+        LIMIT 10;  -- Limitar a las 10 películas mejor puntuadas
+      `);
+  
+      return results;
+    } catch (error) {
+      console.error('Error al obtener las películas mejor puntuadas:', error);
+    }
+  }
+  // async getTopRatedMovies() {
+  //   try {
+  //     const topRatedMovies = await Movies.findAll({
+  //       attributes: [
+  //         'id',
+  //         'title',
+  //         [Sequelize.fn('AVG', Sequelize.col('userMovie.rank')), 'averageRating'],  // Calcular promedio de rank
+  //         [Sequelize.fn('COUNT', Sequelize.col('userMovie.userId')), 'numberOfRatings']  // Cantidad de puntuaciones
+  //       ],
+  //       include: [{
+  //          model: UserMovie,
+  //         as: 'userMovie',
+  //         attributes: []  // No necesitamos atributos específicos del UserMovie, solo los datos agregados
+  //       }],
+  //       group: ['Movie.id'],  // Agrupar por id de la película
+  //       order: [[Sequelize.fn('AVG', Sequelize.col('userMovie.rank')), 'DESC']],  // Ordenar por el promedio de puntuaciones (descendente)
+  //       having: Sequelize.literal('COUNT(userMovie.userId) > 0'),  // Solo películas con puntuaciones
+  //       limit: 10  // Por ejemplo, traer las 10 mejor puntuadas
+  //     });  
+  //     return topRatedMovies;
+  //   } catch (error) {
+  //     console.error('Error al obtener las películas mejor puntuadas:', error);
+  //   }
+  // }
 
-
-
+  
   async findTopRatedMoviesByInteraction(type) {
     let options;    
     if (type === "movie") {
@@ -161,7 +227,7 @@ if(type==="movie"){
             // where: { id: movieId }
           }
         ],
-        group: ['movieId', 'UserMovie.movieId'],  // Agrupa por movieId y userMovie.id para calcular el promedio
+        group: ['movieId', 'UserMovie.rank'],  // Agrupa por movieId y userMovie.id para calcular el promedio
         order: [[Sequelize.fn('AVG', Sequelize.col('userMovie[0].UserMovie.rank')), 'DESC']]  // Ordena por promedio descendente
       };
      }
@@ -182,7 +248,9 @@ if(type==="movie"){
     //     order: [[Sequelize.fn('AVG', Sequelize.col('userTv[0].UserTv.rank')), 'DESC']]
     //   };
     // }  
-    const result = await models.UserMovie.findAll(options);
+    console.log("ESTO QUIERO VER",options)
+
+    const result = await serviceMovie.find(options);
     return result;
   }
 
@@ -198,7 +266,7 @@ if(type==="movie"){
           'id',  // ID de la película
           'title',  // Título de la película
           'posterPath',  // Ruta del póster de la película (o cualquier otro atributo que tengas)
-          [Sequelize.fn('AVG', Sequelize.col('userMovie.rank')), 'averageRank']
+          [Sequelize.fn('AVG', Sequelize.col('userMovie[0].UserMovie.rank')), 'averageRank']
         ],
         include: [
           {
@@ -207,27 +275,29 @@ if(type==="movie"){
           }
         ],
         group: ['Movie.id'],  // Agrupamos por ID de la película para el promedio
-        order: [[Sequelize.fn('AVG', Sequelize.col('userMovie.rank')), 'DESC']]  // Ordenamos por calificación promedio descendente
-      };
-    } else {
-      options = {
-        attributes: [
-          'id',  // ID de la serie
-          'name',  // Nombre de la serie
-          'posterPath',  // Ruta del póster de la serie (o cualquier otro atributo que tengas)
-          [Sequelize.fn('AVG', Sequelize.col('userTv.rank')), 'averageRank']
-        ],
-        include: [
-          {
-            association: "userTv",
-            attributes: []  // No necesitamos duplicar atributos si ya están en el select principal
-          }
-        ],
-        group: ['Tv.id'],
-        order: [[Sequelize.fn('AVG', Sequelize.col('userTv.rank')), 'DESC']]
-      };
-    }
-  
+        order: [[Sequelize.fn('AVG', Sequelize.col('userMovie[0].UserMovie.rank')), 'DESC']]  // Ordena por promedio descendente
+        };
+     } 
+    //  else {
+    //   options = {
+    //     attributes: [
+    //       'id',  // ID de la serie
+    //       'name',  // Nombre de la serie
+    //       'posterPath',  // Ruta del póster de la serie (o cualquier otro atributo que tengas)
+    //       [Sequelize.fn('AVG', Sequelize.col('userTv.rank')), 'averageRank']
+    //     ],
+    //     include: [
+    //       {
+    //         association: "userTv",
+    //         attributes: []  // No necesitamos duplicar atributos si ya están en el select principal
+    //       }
+    //     ],
+    //     group: ['Tv.id'],
+    //     order: [[Sequelize.fn('AVG', Sequelize.col('userTv.rank')), 'DESC']]
+    //   };
+    // }
+    console.log("ESTO QUIERO VER",options)
+
     const result = await serviceMovie.find(options);  // Cambia a 'models.Tv' si es para series
     return result;
   }

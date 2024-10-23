@@ -10,13 +10,11 @@ const options={
     secretOrKey: config.jwtSecret
 }
 const JwtStrategy= new JwtEstrat(options,async (jwt_payload,done)=>{
-    try {
-        console.log(jwt_payload.sub)
-        console.log(jwt_payload)
+    try {   
 
         const user = await User.findByPk(jwt_payload.sub); // Verificar si el usuario existe en la base de datos
         if (user) {
-            console.log("lo encontro",user)
+            console.log("lo encontro",user.id)
           return done(null, user); // Usuario encontrado
         } else {
             console.log("no lo encontro pero ers valido el t",user)

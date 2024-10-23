@@ -1,5 +1,8 @@
 const boom = require("@hapi/boom")
 const {models} = require("../libs/sequelize")
+// const {Movies} = require('../db/model/movieModel.js');  // Ajusta según tu estructura
+
+// const {UserMovie} = require('../db/model/userMovieModel.js');  // Ajusta según tu estructura
 async function loadApi() {
   const api = await import('../src/tmdbApi.mjs'); // Cargar módulo ESM dinámicamente    
   return api; 
@@ -13,7 +16,11 @@ class MoviesService {
  // Retorna los productos almacenados
  async find(query) {
   const options={
-    include:["list","userMovie"]
+    include:[
+      "list",
+      "userMovie"],
+      association: "userMovie",
+      attributes:["title","id"]
   }
     const { offset,limit}=query
     if(offset&&limit){
@@ -175,6 +182,7 @@ class MoviesService {
     return {id}
   }
 }
+  
 
 module.exports= MoviesService
 

@@ -21,6 +21,10 @@ function setupModels(sequelize) {
   Movies.associate(sequelize.models)
   Tvs.associate(sequelize.models)
   Listas.associate(sequelize.models)
+  ListaMovie.associate(sequelize.models)
+  ListaTv.associate(sequelize.models)
+  UserMovie.associate(sequelize.models)
+  UserTv.associate(sequelize.models)
 }
 
 module.exports = setupModels;

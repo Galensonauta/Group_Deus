@@ -9,7 +9,6 @@ axiosInstance.interceptors.request.use(
     const token = getCookieValue("token"); // Asumiendo que el token se guarda en cookies
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
-      console.log('Token añadido a la solicitud:', config.headers.Authorization); // <-- Añadir este console.log
     }else{
   console.log('No se encontró el token en las cookies');
 }    
@@ -112,15 +111,12 @@ export async function loginUser(nick, password) {
     alert('Error al iniciar sesión. Verifica tus credenciales.');
   }
 }
-
 async function likedMoviesList(type) {
   try {
     const response = await axiosInstance.get(`/users/my-interaction-list/${type}`);    
     if (response.status === 200) {
       return response.data;  // Devuelve los datos para su uso posterior  
-    }else{
-      console.log("el usuario no tiene lista")
-    }    
+    }
   } catch (error) {
     console.log(error.response.data)
     console.error('Error al acceder a la lista del usuario:', error.message || 'Error de red');   
@@ -130,8 +126,8 @@ export async function getInteractionMovie(type,movie){
   try{
     const response = await axiosInstance(`/users/interactions-movies/${type}/${movie}`)  
 
-if (response.ok) {   
-  const interactionData = await response.json();
+if (response.status === 200) {   
+  const interactionData =  response.data
   console.log("todos los comment",interactionData)
   return interactionData
   }}
@@ -140,24 +136,25 @@ if (response.ok) {
   }
 }
 
-export async function addInteraction(type,movie,interactionData){
-  try{
-    const response = await axiosInstance.patch(`/movies/my-interaction-new/${type}/${movie}`,{
-      headers:{
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(interactionData),
-    })
-    const data= await response.json()
-    if (response.ok) {
-      console.log("interaccion agregada", data);
-    } else {
-      console.error("Error al agregar la interaccion", data);
+ async function addInteraction(type, movie, interactionData) {
+  try {
+    const response = await axiosInstance.patch(
+      `/movies/my-interaction-new/${type}/${movie}`,
+      interactionData,  // Pasar los datos directamente, no es necesario hacer JSON.stringify
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    const data = response.data;
+    if (response.status === 201) {  // Verificamos que la solicitud sea exitosa
+      console.log("Interacción agregada", data);
     }
   } catch (error) {
     console.error("Error al hacer la solicitud al servidor:", error);
   }
-  }
+}
 async function likeMovie(type,movie) {  
   try {
   const response = await axiosInstance.post(`/listas/${type}/${movie.id}`, {
@@ -179,8 +176,8 @@ async function likeMovie(type,movie) {
       headers: {
         'Content-Type': 'application/json',
       }});
-    const data = await response.json();
-    if (response.ok) {
+    const data = response.data
+    if (response.status === 201) {
       console.log("Película eliminada de la lista", data);
     } else {
       console.error("Error al eliminar la película", data);
@@ -741,89 +738,117 @@ export async function getInfoById({ id, media})
   }
   infoExtra.appendChild(overview)
 
-   //manejo interacciones
-   const interaction =document.querySelector(".interaction")
-   //manejo corazoncito
-   const btnMovieLiked = document.createElement("img")
-   btnMovieLiked.id = "btnMovie-liked"
-   if(media==="movie"){
-    addMovieList(movie,btnMovieLiked)}
-    else{
-      addTvList(movie,btnMovieLiked)}
-
-   //manejo de comentarios y rank
-   const btnComment =document.getElementById("btnComment")   
-   const btnRankMovie =document.getElementById("btnRankMovie")  
-
-   const commentContainer= document.querySelector(".commentContainer")
-   commentContainer.innerHTML=""
-  const interData= await getInteractionMovie(media,movie.id)
  
-    console.log(interData)
-
-  interData.forEach(comment=>{
-  const comentario = document.createElement("p")
-   comentario.classList.add("comentario")
-   const rankeo = document.createElement("p")
-   rankeo.classList.add("rankeo")
-   if(media==="movie"){
-   comentario.textContent=comment.userMovie[0].UserMovie.comment+" by " + comment.nick
-   rankeo.textContent=comment.userMovie[0].UserMovie.rank
-  }else{
-    comentario.textContent=comment.userTv[0].UserTv.comment+" by " + comment.nick
-    rankeo.textContent=comment.userTv[0].UserTv.rank
-   }
-   commentContainer.appendChild(comentario)
-   commentContainer.appendChild(rankeo)
-})
-interaction.appendChild(commentContainer)
-
-   const commentInput = document.querySelector(".inputComment")
-   const rankInput = document.querySelector(".inputRank")
-
-   let interactionData={
-    comment:null,
-    rank:null
-   }
-
-   btnComment.addEventListener("click", async () => {     
-     const commentValue = commentInput.value; // Variable local para evitar interferencias
-     interactionData = { comment: commentValue }; // Crear un nuevo objeto para cada interacción
-     await addInteraction(media, movie.id, interactionData); 
-     console.log("Comentario agregado", commentValue);
-     const comentario = document.createElement("p")
-     comentario.classList.add("comentario")
-     comentario.textContent=commentInput.value
-     commentInput.replaceWith(comentario)
-     btnComment.remove();
-        });  
-  btnRankMovie
-
-   btnRankMovie.addEventListener("click",async()=>{
-     const rankValue = rankInput.value; // Variable local para evitar interferencias
-     interactionData = { rank: rankValue }; // Crear un nuevo objeto para cada interacción
-          await addInteraction(media,movie.id,interactionData) 
-   console.log("Puntuacion agregada", rankValue);
-   const rankeo = document.createElement("p")
-   rankeo.classList.add("rankeo")
-   rankeo.textContent=rankInput.value
-   rankInput.replaceWith(rankeo)
-   btnRankMovie.remove();
-   })  
-   btnRankMovie  
-   
-   const heartContainer= document.querySelector(".heartContainer")
-   heartContainer.innerHTML=""
-
-   heartContainer.appendChild(btnMovieLiked)
-   interaction.appendChild(commentInput)   
-   interaction.appendChild(btnComment)
-   interaction.appendChild(rankInput)
-   interaction.appendChild(btnRankMovie)      
-   interaction.appendChild(heartContainer)
-  infoExtra.appendChild(interaction)
   
-  //manejo de info(cast)
+  //manejo interacciones
+  const interaction =document.querySelector(".interaction")
+
+  const commentContainer= document.querySelector(".commentContainer")
+
+  async function showComment(){
+
+    commentContainer.innerHTML=""
+ const interData= await getInteractionMovie(media,movie.id)
+ if(interData !==undefined){
+ interData.forEach(comment=>{
+ const comentario = document.createElement("p")
+  comentario.classList.add("comentario")
+  const rankeo = document.createElement("p")
+  rankeo.classList.add("rankeo")
+  if(media==="movie"){
+    if (comment.userMovie && comment.userMovie[0] && comment.userMovie[0].UserMovie) {    
+      comentario.textContent = comment.userMovie[0].UserMovie.comment + " by " + comment.nick;
+      rankeo.textContent = comment.userMovie[0].UserMovie.rank + " .- " + comment.nick +"´s";
+    }
+ }else{
+  if (comment.userTv && comment.userTv[0] && comment.userTv[0].UserTv) {   
+    comentario.textContent=comment.userTv[0].UserTv.comment+" by " + comment.nick
+    rankeo.textContent=comment.userTv[0].UserTv.rank + " .- " + comment.nick +"´s";
+  }  
+  }
+  commentContainer.appendChild(comentario)
+  commentContainer.appendChild(rankeo)
+})
+}}
+const commentContainerUser = document.querySelector(".commentContainerUser");
+
+//funcion que recarga boton e inputs
+function setupButton() {
+  const commentInput = document.querySelector(".inputComment");
+  const rankInput = document.querySelector(".inputRank");
+  const btnComment = document.getElementById("btnComment");
+  const btnRankMovie = document.getElementById("btnRankMovie");
+ 
+  const btnMovieLiked = document.createElement("img");
+  btnMovieLiked.id = "btnMovie-liked";
+  if (media === "movie") {
+    addMovieList(movie, btnMovieLiked);
+  } else {
+    addTvList(movie, btnMovieLiked);
+  }
+  const heartContainer = document.querySelector(".heartContainer");
+  if (heartContainer) {
+    heartContainer.innerHTML = "";
+    heartContainer.appendChild(btnMovieLiked);
+  }
+  // Manejo del botón de comentarios
+
+  const newBtnComment = btnComment.cloneNode(true);  // Clona el botón para eliminar eventos previos
+btnComment.replaceWith(newBtnComment);
+newBtnComment.addEventListener("click", async () => {
+      const commentValue = commentInput.value;
+      const interactionData = { comment: commentValue }; 
+      await addInteraction(media, movie.id, interactionData);
+            showComment()  
+            newBtnComment.textContent = "modificar";
+          });   
+  // Manejo del botón de ranking
+
+  const newBtnRankMovie = btnRankMovie.cloneNode(true);  // Clona el botón para eliminar eventos previos
+  btnRankMovie.replaceWith(newBtnRankMovie);
+
+  newBtnRankMovie.addEventListener("click", async () => {
+      const rankValue = rankInput.value; // Obtener el valor del input
+      const interactionData = { rank: rankValue }; // Crear un nuevo objeto para cada interacción
+      await addInteraction(media, movie.id, interactionData);
+      console.log("Puntuación agregada", rankValue);
+      showComment()
+      newBtnRankMovie.textContent="modificar";
+      rankInput.textContent=""
+    });
+
+    commentContainerUser.appendChild(commentInput);
+    commentContainerUser.appendChild(newBtnComment);
+
+    commentContainerUser.appendChild(rankInput);
+    commentContainerUser.appendChild(newBtnRankMovie);
+
+    commentContainerUser.appendChild(heartContainer);
+
+
+  interaction.appendChild(commentContainerUser);
+}
+isAuthenticated().then( (isAuth) => {
+  if (isAuth) {
+    console.log("Usuario autenticado y puede interactuar");
+    commentContainerUser.classList.remove("inactive");
+    setupButton();  
+  } else {
+    commentContainerUser.classList.add("inactive");
+    const comentario = document.createElement("p")
+    comentario.classList.add("comentario")
+    comentario.textContent="Para comentar o rankear debes estar autenticado"
+    commentContainer.appendChild(comentario)
+    interaction.appendChild(commentContainer)
+    console.log("Usuario no autenticado, no puede interactuar");
+  }
+});
+showComment()
+interaction.appendChild(commentContainer)
+infoExtra.appendChild(interaction);
+
+
+ //manejo de info(cast)
   const acting = credit.cast.filter((casting) => casting.known_for_department === "Acting").slice(0, 10)
   acting.sort((a, b) => a.order - b.order)
   const directing = media === "movie" ? credit.crew.filter((casting) => casting.known_for_department === "Directing").filter((cast) => cast.job === "Director")
@@ -854,7 +879,10 @@ interaction.appendChild(commentContainer)
   })
 
   infoExtra.appendChild(containerCast)
-  movieInfo.appendChild(infoExtra)
+
+movieInfo.appendChild(infoExtra)
+
+
   const footerMovie = document.querySelector(".footerMovie")
   movieInfo.appendChild(footerMovie)
 } 

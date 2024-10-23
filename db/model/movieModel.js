@@ -59,6 +59,7 @@ crew:{
 };
 class Movies extends Model {
     static associate(models) {
+        console.log('Associating Movies with UserMovie');  // Añade este console para depuración
         this.belongsToMany(models.User, {
             as: 'userMovie',
             through:  models.UserMovie,

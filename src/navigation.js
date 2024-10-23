@@ -167,6 +167,7 @@ function homePage() {
   }
   isAuthenticated().then(isAuth => {
     if (isAuth) {
+      console.log("el usuario esta autenticado")
       getLikedTv()
       getLikedMovie()
     } else {
@@ -394,10 +395,6 @@ async function movieDetailsPage() {
 
   const [_, movieId] = location.hash.split('=');
 
-  // const interaction=await getInteractionMovieId({type:"movie",movieId})
-  // const interobj=  Object.values(interaction)
-  // console.log(interaction)
-  // console.log(interobj)
   if (_ === "#media-tv") {
     getById({id:movieId,media:"tv"})
     getInfoById({id:movieId,media:"tv"})

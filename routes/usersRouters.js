@@ -29,18 +29,7 @@ async (req,res,next)=>{
   }
 }
 )
-router.get("/rank-movies/:type/",
-  async (req,res,next)=>{
-    try{
-      const{type}=req.params
-      const rank= await service.findTopRatedMoviesForCarousel(type)
-      console.log(rank)
-      res.json(rank)
-    }catch(error){
-      next(error)
-    }
-  }
-  )
+
 router.get('/my-interaction-detail/:type/:movieId',
   passport.authenticate("jwt", {session:false}),
   validatorHandler(getUserInteractionSchema, 'params'),
@@ -60,8 +49,8 @@ router.get('/my-interaction-list/:type',
   async (req, res, next) => {
     try {
       const { type } = req.params;
-      const user = req.user.sub
-      const interactionUser= await service.findUserList(user,type);
+      const userId = req.user.id
+      const interactionUser= await service.findUserList(userId,type);
       res.json(interactionUser);
     } catch (error) {
       next(error);
@@ -111,5 +100,15 @@ router.delete('/:id',
     }
   }
 );
-
+router.get("/rank",
+  async (req,res,next)=>{
+    try{
+      // const{type}=req.params
+      const rank= await service.getTopRatedMovies()
+      res.status(201).json(rank)
+    }catch(error){
+      next(error)
+    }
+  }
+  )
 module.exports= router;

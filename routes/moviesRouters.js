@@ -38,6 +38,17 @@ router.get('/:id',
     next(err)
   }
 })
+router.get("/rank",
+  async (req,res,next)=>{
+    try{
+      // const{type}=req.params
+      const rank= await service.getTopRatedMovies(req.query)
+      res.status(201).json(rank)
+    }catch(error){
+      next(error)
+    }
+  }
+  )
 router.patch("/my-interaction-new/:type/:movieId",
   passport.authenticate("jwt", {session:false}),
   validatorHandler(verificarInteraction, 'params'),
@@ -45,7 +56,7 @@ router.patch("/my-interaction-new/:type/:movieId",
   async (req, res, next) => {
     try {
       const { type, movieId}=req.params
-      const userId = req.user.sub
+      const userId = req.user.id
       const body=req.body
       const newMovie = await service.addInteraction(userId,type, movieId,body);
       res.status(201).json(newMovie);
