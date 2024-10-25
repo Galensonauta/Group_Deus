@@ -111,6 +111,17 @@ export async function loginUser(nick, password) {
     alert('Error al iniciar sesión. Verifica tus credenciales.');
   }
 }
+async function getRankGd(type){
+  try{
+    const response =await axiosInstance.get(`/users/rank/${type}`);
+    if(response.status===201){
+      return response.data
+    }
+  }catch(err){
+    console.log(err.response.data)
+    console.error('Error al acceder al ranking de usuarios:', err.message || 'Error de red');   
+  }
+}
 async function likedMoviesList(type) {
   try {
     const response = await axiosInstance.get(`/users/my-interaction-list/${type}`);    
@@ -135,7 +146,6 @@ if (response.status === 200) {
     console.error("Error al hacer la solicitud al servidor:", error);
   }
 }
-
  async function addInteraction(type, movie, interactionData) {
   try {
     const response = await axiosInstance.patch(
@@ -447,8 +457,15 @@ export async function getTrendingHome(media) {
   movies.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movies, lastTrend, { type: media, lazyLoad: true, clean: true })
 }
+export async function getRankHomeGd(media) {
+  const data  = await getRankGd(media)
+  console.log("pelicuals neustras",data)
+  data.slice(0, 4)
+  createAfiches(data, lastRank, { type: media, lazyLoad: true, clean: true })
+}
 export async function getRankHome(media) {
   const { data: movie } = await api(media + '/top_rated')
+  console.log("peliculas de tmdb",movie)
   const movies = movie.results.slice(0, 4)
   movies.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movies, lastRank, { type: media, lazyLoad: true, clean: true })

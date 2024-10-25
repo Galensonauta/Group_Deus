@@ -100,11 +100,11 @@ router.delete('/:id',
     }
   }
 );
-router.get("/rank",
+router.get("/rank/:type",
   async (req,res,next)=>{
     try{
-      // const{type}=req.params
-      const rank= await service.getTopRatedMovies()
+      const{type}=req.params
+      const rank= await service.getTopRatedMovies(type)
       res.status(201).json(rank)
     }catch(error){
       next(error)

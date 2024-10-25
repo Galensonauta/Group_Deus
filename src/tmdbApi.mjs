@@ -8,7 +8,6 @@ const { API_KEY } = process.env
   headers: {
     'Content-Type': 'application/json;charset=utf-8',
     "Authorization": API_KEY,
-
   }
 });
 export const axiosInstance = axios.create({

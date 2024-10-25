@@ -19,7 +19,8 @@ import {
   getRankPreview,
   getTrendingHome,
   getRankHome,
-  isAuthenticated
+  isAuthenticated,
+  getRankHomeGd
 } from '@src/main.mjs';
 import{base64GitHub}from "@imagesDefault"
 
@@ -154,16 +155,17 @@ function homePage() {
   portadaBlackMirror()
   if (location.hash==="#Series") {   
     getCategoriesPreview("tv")
-    getTrendingPreview("tv")
-    getRankPreview("tv")
+    // getTrendingPreview("tv")
+    // getRankPreview("tv")
     getTrendingHome("tv")
     getRankHome("tv")
   }else  if(location.hash==="#Cine") {
     getCategoriesPreview("movie")
-    getTrendingPreview("movie")
-     getRankPreview("movie")
+    // getTrendingPreview("movie")
+    //  getRankPreview("movie")
     getTrendingHome("movie")
-    getRankHome("movie")
+    // getRankHome("movie")
+    getRankHomeGd("movie")
   }
   isAuthenticated().then(isAuth => {
     if (isAuth) {
