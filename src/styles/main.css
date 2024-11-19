@@ -18,14 +18,16 @@ body {
 }
 
 #lastTrend,
-#lastRank,
+#lastRankImdb,
+#lastRankGd,
 #lastLiked,
-#lastLikedTv {
+#lastLikedTv,
+#lastGd {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   position: relative;
-  top: 50px;
+  top: 80px;
   justify-content: flex-start;
   margin-top: 30px;
 }
@@ -67,7 +69,7 @@ footer {
 }
 
 
-#last {
+#last,#lastGd {
   display: flex;
   flex-wrap: wrap;
   position: relative;
@@ -305,7 +307,6 @@ cursor: pointer;
   font-weight: 700;
   border-style: #720455;
   margin-left: 3px;
-
 }
 .inputComment {
   background-color: #151515;
@@ -424,8 +425,22 @@ display: flex;
   background-color: #000;
   overflow: hidden;
 }
-
-.titlePortadaH1 {
+.titleNick {
+  animation: shake 2.5s linear forwards;
+  color: #060302;
+  filter: blur(.007em);
+  font-family: Montserrat, Arial, sans-serif;
+  font-size: calc(23px);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  position: absolute;
+  left: 95%;
+  text-shadow: 0 0 .15em #910a67;
+  top: 118%;
+  user-select: none;
+  white-space: nowrap;
+}
+.titlePortadaH1{
   font-family: 'Montserrat', Arial, sans-serif;
   position: absolute;
   font-size: calc(26px + 3vw);
@@ -553,11 +568,21 @@ display: flex;
 }
 #login{
   position: absolute;
-  top: 160%;
+  top: 240%;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
 }
-/* .input-nick{
+#sign{
+  position: absolute;
+  top: 240%;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.inputNick,.inputNewNick{
   height: 25px;
-  width: 840px;
+  width: 120px;
   border-style: none;
   padding: 5px;
   font-size: 18px;
@@ -569,9 +594,24 @@ display: flex;
   padding-right: 100px;
   color: #ffffff;
   font-family: "Montserrat", sans-serif;
-  position: absolute;
   font-weight: 700;
-} */
+}
+.input-pass,.input-new-pass{
+  height: 25px;
+  width: 120px;
+  border-style: none;
+  padding: 5px;
+  font-size: 18px;
+  letter-spacing: 2px;
+  outline: none;
+  border-radius: 25px;
+  transition: all .5s ease-in-out;
+  background-color: #151515;
+  padding-right: 100px;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+}
 .input-search {
   height: 25px;
   width: 840px;
@@ -625,7 +665,15 @@ select::after {
   float: right;
   content: "+";
 }
-#btnUser{
+#btnEnter,#btnCreateUser{
+  background: #151515;
+  color: #fff;
+  font-size: 1.2em;
+  font-variant: small-caps;
+  cursor: pointer;
+  border-radius: 25px;
+}
+#btnUserLog,#btnUserLogOut{
   background: #151515;
   color: #fff;
   font-size: 1.2em;
@@ -633,7 +681,40 @@ select::after {
   cursor: pointer;
   position: absolute;
   top: 140%;
-  left: 102%;
+  left: 88%;
+  border-radius: 25px;
+}
+.in{
+  background: #66b14b;
+  color: #fff;
+  font-size: 1.2em;
+  font-variant: small-caps;
+  cursor: pointer;
+  position: absolute;
+  top: 140%;
+  left: 88%;
+  border-radius: 25px;
+}
+.out{
+  background: #b40c0c;
+  color: #fff;
+  font-size: 1.2em;
+  font-variant: small-caps;
+  cursor: pointer;
+  position: absolute;
+  top: 140%;
+  left: 88%;
+  border-radius: 25px;
+}
+#btnUserSign{
+  background: #151515;
+  color: #fff;
+  font-size: 1.2em;
+  font-variant: small-caps;
+  cursor: pointer;
+  position: absolute;
+  top: 140%;
+  left: 97%;
   border-radius: 25px;
 }
 #btnTrends {
@@ -643,8 +724,8 @@ select::after {
   font-variant: small-caps;
   cursor: pointer;
   position: absolute;
-  top: 140%;
-  left: 87%;
+  top: 1323%;
+  left: 2%;
   border-radius: 25px;
 }
 
@@ -653,18 +734,29 @@ select::after {
   color: #52057B;
 }
 
-#btnRank {
+#btnRankImdb {
   background: #151515;
   color: #fff;
   font-size: 1.2em;
   font-variant: small-caps;
   cursor: pointer;
   position: absolute;
-  top: 725%;
-  left: 87%;
+  top: 753%;
+  left: 2%;
   border-radius: 25px;
 }
 
+#btnRankGd {
+  background: #151515;
+  color: #fff;
+  font-size: 1.2em;
+  font-variant: small-caps;
+  cursor: pointer;
+  position: absolute;
+  top: 194%;
+  left: 2%;
+  border-radius: 25px;
+}
 #btnRank:hover {
   background: rgb(243, 242, 242);
   color: #52057B;
@@ -686,8 +778,8 @@ select::after {
   white-space: nowrap;
   filter: blur(0.007em);
   animation: shake 2.5s linear forwards infinite;
-  top: 105px;
-  left: 75%;
+  top: 153px;
+  left: 40%;
 }
 
 @keyframes shake {
@@ -820,8 +912,9 @@ select::after {
   #lastLiked,
   #lastLikedTv,
   #lastTrend,
-  #lastRank,
-  #last {
+  #lastRankImdbImdb,
+  #lastRankImdbGd,
+  #last,#lastGd {
     top: 7em;
     margin-top: 15%;
     flex-wrap: wrap;
@@ -1021,9 +1114,10 @@ select::after {
 
   #lastLiked,
   #lastLikedTv,
-  #lastRank,
+  #lastRankImdb,
+  #lastRankGd,
   #lastTrend,
-  #last {
+  #last,#lastGd {
     margin-top: 23%;
     top: 8em;
     left: 22px;

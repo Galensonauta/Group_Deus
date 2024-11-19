@@ -23,10 +23,10 @@ const verificarInteraction =Joi.object({
   movieId: movieId.required(),
   type:type.required(),
 })
-const addInteractionMovie=Joi.object({
+const addInteraction=Joi.object({
   comment,
   rank,
   tag
 })
 
-module.exports = { createMovieSchema, getMovieSchema ,queryParamsMovieSchema,addInteractionMovie,verificarInteraction}
+module.exports = { createMovieSchema, getMovieSchema ,queryParamsMovieSchema,addInteraction,verificarInteraction}

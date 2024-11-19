@@ -28,37 +28,55 @@
         <button id="btnSearch"><i class="fas fa-search"></i></button>
       </div>
       <div id="user">
-        <button id="btnUser">Inicio</button>          
+        <button id="btnUserLog">Inicio</button>          
+        <button id="btnUserLogOut">Salir</button>
+        <button id="btnUserSign">Crear</button>          
+
       </div>
       <div id="login" class="inactive">
-        <input type="text" class="input-nick" placeholder="Nick">
+        <input type="text" class="inputNick" placeholder="Nick">
       <input type="text" class="input-pass" placeholder="Password">
       <button id="btnEnter">Entre</button>
             </div>      
+            <div id="sign" class="inactive">
+              <input type="text" class="inputNewNick" placeholder="Nick">
+            <input type="text" class="input-new-pass" placeholder="Password">
+            <button id="btnCreateUser">Crear</button>
+                  </div>      
       <div id="trendRank" class="inactive">        
         <button id="btnTrends">Tendencias</button>
-        <button id="btnRank">Ranking</button> 
+        <button id="btnRankImdb">Ranking Imdb</button> 
+        <button id="btnRankGd">Ranking Grupo Deus</button> 
+
       </div>
       <select id="apiDropDownPaisProvider" class="dropDown">
         <option class="slide"></option>
       </select>
+      <h1 class="titleNick"></h1>
     </nav>
   </header>
   <div class="home">      
     <h1 class="titlePageH1" class="inactive"></h1>
-    <div id="containerLiked" class="inactive">      
+    <div id="containerLiked" class="inactive"> 
+      <div id="lastRankGd">
+        <div class="card">
+          <div class="descriptions">
+          </div>
+        </div>
+      </div>     
+      <div id="lastRankImdb">
+        <div class="card">
+          <div class="descriptions">
+          </div>
+        </div>
+      </div>     
       <div id="lastTrend">
         <div class="card">
           <div class="descriptions">
           </div>
         </div>
       </div>
-      <div id="lastRank">
-        <div class="card">
-          <div class="descriptions">
-          </div>
-        </div>
-      </div>
+     
       <h1 class="likedH1C">  Peliculas Favoritas ❤️</h1>         
       <div id="lastLiked">
         <div class="card">
@@ -71,6 +89,14 @@
         <div class="card">
           <div class="descriptions">            
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="containerLastRankGd" class="inactive">
+    <div id="lastGd">
+      <div class="card">
+        <div class="descriptions">
         </div>
       </div>
     </div>

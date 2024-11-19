@@ -8,7 +8,7 @@ const validatorHandler = require('./../middlewares/validatorHandler');
 const { 
   getMovieSchema,
   queryParamsMovieSchema,
-  addInteractionMovie,
+  addInteraction,
   verificarInteraction
  } = require("./../schemas/movieSchema");
 const { checkRoles } = require('../middlewares/authHandler.js');
@@ -52,7 +52,7 @@ router.get("/rank",
 router.patch("/my-interaction-new/:type/:movieId",
   passport.authenticate("jwt", {session:false}),
   validatorHandler(verificarInteraction, 'params'),
-  validatorHandler(addInteractionMovie, 'body'),
+  validatorHandler(addInteraction, 'body'),
   async (req, res, next) => {
     try {
       const { type, movieId}=req.params

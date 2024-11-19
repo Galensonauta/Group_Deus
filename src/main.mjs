@@ -104,13 +104,40 @@ export async function loginUser(nick, password) {
       nick,
       password,
     });
-    console.log('Usuario autenticado con éxito:', response.data.token);
+    console.log('Usuario autenticado con éxito:', response.data);
+    window.location.href = 'http://localhost:8080/#Cine';
+   
     return response.data;    
   } catch (error) {
     console.error('Error al iniciar sesión:', error.response ? error.response.data.message : error.message);
     alert('Error al iniciar sesión. Verifica tus credenciales.');
   }
 }
+export async function logoutUser() {
+  try {
+    const response = await axiosInstance.post('/auth/logout')
+    
+      console.log('Cierre de sesión exitoso',response); 
+      window.location.href = 'http://localhost:8080/#';   
+  } catch (error) {
+    console.error('Error de red:', error);
+  }
+}
+export async function createUser(nick, password) {
+  try {
+    const response = await axiosInstance.post('/users', {
+      nick,
+      password,
+    });
+    console.log('Usuario creado con éxito:', response.data);
+    loginUser(nick,password)
+    return response.data;    
+  } catch (error) {
+    console.error('Error al crear usuario', error.response ? error.response.data.message : error.message);
+    alert('Error al crear usuario. Verifica tus credenciales.');
+  }
+}
+
 async function getRankGd(type){
   try{
     const response =await axiosInstance.get(`/users/rank/${type}`);
@@ -244,7 +271,6 @@ getLikedTv()
 }
 }); 
 }
-
 function refreshHeart(isLiked, button){
   if(isLiked){    
     button.src=base64heartFill
@@ -256,11 +282,11 @@ export async function isAuthenticated() {
   const token = getCookieValue("token"); // Asumiendo que el token se guarda en cookies
   if (!token) {
     console.log("no hay token")
-
     return false; // No hay token en las cookies, por lo tanto, el usuario no está autenticado
   }
   try {
     const response = await axiosInstance.get('/auth/validate-token');
+    console.log("datos",response.data.user)
     return response.status === 200; // Si el servidor responde con un 200, el token es válido
   } catch (error) {
     console.error('Token inválido o expirado:', error.message || 'Error de red');
@@ -282,13 +308,15 @@ export async function createAfiches(afiche, container, {
     movieContainer.classList.add('card');
     movieContainer.addEventListener('click', async () => {
       try{   
+      const  movieGd  = await getRankGd(type)
       const { data: movieDetail } = await api(`${type}/${movie.id}?language=es-LA`)
       const { data: creditPreview } = await api(`${type}/${movie.id}/credits?language=es-LA`);
       const aficheDetail={
       ...movieDetail,
       ...creditPreview,
-      // movieDetailDbArrId           
-          }          
+          }     
+     const detailContainer = document.createElement("div")
+     detailContainer.classList.add("descriptions")
       const movieTitleText = document.createElement("h1")
       movieTitleText.classList.add("movieTitleText")
       movieTitleText.innerHTML = type === "movie" ? aficheDetail.original_title
@@ -298,15 +326,25 @@ export async function createAfiches(afiche, container, {
        const releaseDate = aficheDetail.release_date ? aficheDetail.release_date.split("-")[0] : "N/A";
        const firstAirDate = aficheDetail.first_air_date ? aficheDetail.first_air_date.split("-")[0] : "N/A";        
         // Asignar el año dependiendo del tipo
-        movieYearPreview.innerHTML = type === "movie" ? releaseDate : firstAirDate;        
-      const movieScorePreview = document.createElement("h2")
-      movieScorePreview.innerHTML = "valoración: " + aficheDetail.vote_average + "/10"
+        movieYearPreview.innerHTML = type === "movie" ? releaseDate : firstAirDate;
+        const rankIMDB = document.createElement("h2")
+        const rankGD = document.createElement("h2")
+         const idRank= movieGd.find(id=>id.id===movie.id)
+         if(idRank){
+          rankGD.innerHTML = "rank en GD: " + idRank.averagerating
+          rankIMDB.innerHTML = "rank en IMDB: " + aficheDetail.vote_average
+          detailContainer.appendChild(rankGD)
+          detailContainer.appendChild(rankIMDB)
+
+                 }else{
+                  rankIMDB.innerHTML = "rank en IMDB: " + aficheDetail.vote_average
+                  detailContainer.appendChild(rankIMDB)
+         }
 
       const movieDirectingPreview = document.createElement("h2")
       movieDirectingPreview.classList.add("movieDirectingPreview")
       const created = type === "movie" ? aficheDetail.crew.filter((casting) => casting.known_for_department === "Directing").slice(0, 1)
         : aficheDetail.created_by.slice(0, 1)
-
       created.forEach(dire => {
         movieDirectingPreview.innerHTML = dire.name
         movieDirectingPreview.addEventListener("click", () => {
@@ -338,13 +376,9 @@ export async function createAfiches(afiche, container, {
       btnMovieLiked.id = "btnMovie-liked-preview"
       if(type==="movie"){
       addMovieList(movie,btnMovieLiked)}else{
-        addTvList(movie,btnMovieLiked)}
-
-      const detailContainer = document.createElement("div")
-      detailContainer.classList.add("descriptions")
+      addTvList(movie,btnMovieLiked)}     
       detailContainer.appendChild(movieTitleText)
       detailContainer.appendChild(movieYearPreview)
-      detailContainer.appendChild(movieScorePreview)
       detailContainer.appendChild(movieDirectingPreview)
       detailContainer.appendChild(movieOrigenPreview)
       detailContainer.appendChild(btnMovieById)
@@ -354,8 +388,7 @@ export async function createAfiches(afiche, container, {
     }catch (error) {
       console.error('Error al obtener los detalles de la película:', error);
     }
-  });
-    
+  });    
     const movieImg = document.createElement('img');
     movieImg.classList.add('movie-img');
     movieImg.setAttribute('alt', movie.title);
@@ -378,7 +411,6 @@ export async function createAfiches(afiche, container, {
     container.appendChild(movieContainer);
   }
 }
-
 export async function getLikedMovie() {
    
       const movies = await likedMoviesList("movie")
@@ -458,23 +490,26 @@ export async function getTrendingHome(media) {
   createAfiches(movies, lastTrend, { type: media, lazyLoad: true, clean: true })
 }
 export async function getRankHomeGd(media) {
-  const data  = await getRankGd(media)
-  console.log("pelicuals neustras",data)
-  data.slice(0, 4)
-  createAfiches(data, lastRank, { type: media, lazyLoad: true, clean: true })
+  const data  = await getRankGd(media) 
+  const movies= data.slice(0,4) 
+  createAfiches(movies, lastRankGd, { type: media, lazyLoad: true, clean: true })
 }
-export async function getRankHome(media) {
-  const { data: movie } = await api(media + '/top_rated')
-  console.log("peliculas de tmdb",movie)
+export async function getRankHomeImdb(media) {
+  const  { data: movie } = await api(media + "/top_rated")
   const movies = movie.results.slice(0, 4)
   movies.sort((a, b) => b.vote_average - a.vote_average)
-  createAfiches(movies, lastRank, { type: media, lazyLoad: true, clean: true })
+  createAfiches(movies, lastRankImdb, { type: media, lazyLoad: true, clean: true })
 }
 export async function getTrendingPreview(media) {
   const { data } = await api("trending/" + media + "/day")
   const movies = data.results
   movies.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movies, last, { type: media, lazyLoad: true, clean: true })
+}
+export async function getRankGdPreview(media) {
+  const data  = await getRankGd(media)
+  // const movies= data.slice(0,2) 
+  createAfiches(data, lastGd, { type: media, lazyLoad: true, clean: true  })
 }
 export async function getRankPreview(media) {
   const { data } = await api(media + "/top_rated")
@@ -496,7 +531,9 @@ export async function getInfoByActByMovie(id) {
   const { data } = await api('person/' + id + "/tv_credits");
   const credits = data.cast;
   credits.sort((a, b) => b.vote_average - a.vote_average)
-  createAfiches(credits, last, { type: "tv", lazyLoad: true, clean: true })}
+  createAfiches(credits, last, { type: "tv", lazyLoad: true, clean: true })
+}
+
 // export async function getInfoByAct({ id, media }) {
 //   if (media === "movie") {
 //     const { data } = await api('discover/movie', {

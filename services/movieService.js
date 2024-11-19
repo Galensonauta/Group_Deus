@@ -125,64 +125,63 @@ class MoviesService {
          return newTv;  
        }
        return tvData
-    }       
-  async addInteraction(userId,type,movieId,body) {
-    const user = await models.User.findOne({where:{id:userId}});    
-    if (!user) {
-      throw new Error('El usuario noe xiste');
-    }    
-    if(type==="movie"){
-      const movie = await this.getMovieId(movieId)
-      movieId=movie.id
-      const userMovieInteraction = await models.UserMovie.findOne({ 
-        where: { userId, movieId } 
-      });
-
-      if(userMovieInteraction){
-        const updateInteraction=await userMovieInteraction.update({       
-          comment: body.comment,
-                rank: body.rank,
-                tag: body.tag
+    }
+    async addInteraction(userId,type,movieId,body) {
+      const user = await models.User.findOne({where:{id:userId}});    
+      if (!user) {
+        throw new Error('El usuario noe xiste');
+      }    
+      if(type==="movie"){
+        const movie = await this.getMovieId(movieId)
+        movieId=movie.id
+        const userMovieInteraction = await models.UserMovie.findOne({ 
+          where: { userId, movieId } 
+        });
+  
+        if(userMovieInteraction){
+          const updateInteraction=await userMovieInteraction.update({       
+            comment: body.comment,
+                  rank: body.rank,
+                  tag: body.tag
+          })
+             return updateInteraction
+            }else{
+              const newUserInteraction = await models.UserMovie.create({
+                userId,
+                movieId,
+                ...body
+                          })
+             return newUserInteraction
+            }        
+      }else{
+        const tvId = await this.getTvId(movieId)
+        movieId= tvId.id
+        const userTvInteraction = await models.UserTv.findOne({ where: { userId, tvId: movieId } });
+  
+  
+       if(userTvInteraction){
+       const updateInteractionTv= await userTvInteraction.update({
+        comment: body.comment,
+              rank: body.rank,
+              tag: body.tag
         })
-           return updateInteraction
-          }else{
-            const newUserInteraction = await models.UserMovie.create({
-              userId,
-              movieId,
-              ...body
-                        })
-           return newUserInteraction
-          }        
-    }else{
-      const tvId = await this.getTvId(movieId)
-      movieId= tvId.id
-      const userTvInteraction = await models.UserTv.findOne({ where: { userId, tvId: movieId } });
-
-
-     if(userTvInteraction){
-     const updateInteractionTv= await userTvInteraction.update({
-      comment: body.comment,
-            rank: body.rank,
-            tag: body.tag
+            return updateInteractionTv    
+            }    else{
+       const newUserInteraction = await models.UserTv.create({
+        userId,
+        tvId: movieId,
+        ...body       
       })
-          return updateInteractionTv    
-          }    else{
-     const newUserInteraction = await models.UserTv.create({
-      userId,
-      tvId: movieId,
-      ...body       
-    })
-    return newUserInteraction
-  }   
+      return newUserInteraction
+    }   
+    }
   }
-}
   async delete(id) {
     const movie = await this.findOne(id)
     await movie.destroy(id)
     return {id}
   }
-}
-  
+} 
 
 module.exports= MoviesService
 

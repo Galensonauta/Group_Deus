@@ -23,7 +23,7 @@ router.post('/login',
         httpOnly: false,        // Protege la cookie de ser accesible por JavaScript
        secure: false,
         sameSite: 'Lax',    // Protege contra ataques CSRF (Cross-Site Request Forgery)
-       maxAge: 24 * 60 * 60 * 1000 // Duración de 1 día para la cookie
+      //  maxAge: 24 * 60 * 60 * 1000 // Duración de 1 día para la cookie
       });
       console.log("el token",req.cookies); // Verifica todas las cookies recibidas
       console.log('Token JWT:', req.cookies.token); // Verifica específicamente la cookie del token
@@ -43,8 +43,19 @@ router.get('/validate-token',
     if (!user) {
       return res.status(401).json({ message: 'Token inválido: usuario no encontrado' });
     }
-    console.log("el usuario es:",req.user)
-  res.status(200).json({ message: 'Token válido' });
+    console.log("el usuario es:",req.user.dataValues.nick)
+  res.status(200).json({ message: 'Token válido'});  
+});
+router.post('/logout', (req, res) => {
+  // Configurar la cookie para que expire de inmediato
+  res.clearCookie('token', {
+    httpOnly: true,     // Mantiene la cookie protegida de accesos de JavaScript
+    secure: false,      // Asegúrate de configurarlo a 'true' si estás en producción con HTTPS
+    sameSite: 'Lax'     // Configura la política de SameSite
+  });
+
+  // Responder con un mensaje de éxito
+  res.json({ message: 'Cierre de sesión exitoso' });
 });
 
 module.exports=router
