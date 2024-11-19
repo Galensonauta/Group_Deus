@@ -27,30 +27,56 @@
         <input type="text" class="input-search" placeholder="   Busque peliculas o series por su titulo...">
         <button id="btnSearch"><i class="fas fa-search"></i></button>
       </div>
-      <div id="trendRank" class="inactive">
+      <div id="user">
+        <button id="btnUserLog">Inicio</button>          
+        <button id="btnUserLogOut">Salir</button>
+        <button id="btnUserSign">Crear</button>          
+
+      </div>
+      <div id="login" class="inactive">
+        <input type="text" class="inputNick" placeholder="Nick">
+      <input type="text" class="input-pass" placeholder="Password">
+      <button id="btnEnter">Entre</button>
+            </div>      
+            <div id="sign" class="inactive">
+              <input type="text" class="inputNewNick" placeholder="Nick">
+            <input type="text" class="input-new-pass" placeholder="Password">
+            <button id="btnCreateUser">Crear</button>
+                  </div>      
+      <div id="trendRank" class="inactive">        
         <button id="btnTrends">Tendencias</button>
-        <button id="btnRank">Ranking</button> 
+        <button id="btnRankImdb">Ranking Imdb</button> 
+        <button id="btnRankGd">Ranking Grupo Deus</button> 
+
       </div>
       <select id="apiDropDownPaisProvider" class="dropDown">
         <option class="slide"></option>
       </select>
+      <h1 class="titleNick"></h1>
     </nav>
   </header>
   <div class="home">      
     <h1 class="titlePageH1" class="inactive"></h1>
-    <div id="containerLiked" class="inactive">      
+    <div id="containerLiked" class="inactive"> 
+      <div id="lastRankGd">
+        <div class="card">
+          <div class="descriptions">
+          </div>
+        </div>
+      </div>     
+      <div id="lastRankImdb">
+        <div class="card">
+          <div class="descriptions">
+          </div>
+        </div>
+      </div>     
       <div id="lastTrend">
         <div class="card">
           <div class="descriptions">
           </div>
         </div>
       </div>
-      <div id="lastRank">
-        <div class="card">
-          <div class="descriptions">
-          </div>
-        </div>
-      </div>
+     
       <h1 class="likedH1C">  Peliculas Favoritas ❤️</h1>         
       <div id="lastLiked">
         <div class="card">
@@ -67,6 +93,14 @@
       </div>
     </div>
   </div>
+  <div id="containerLastRankGd" class="inactive">
+    <div id="lastGd">
+      <div class="card">
+        <div class="descriptions">
+        </div>
+      </div>
+    </div>
+  </div>
     <div id="containerLast" class="inactive">
     <div id="last">
       <div class="card">
@@ -75,37 +109,40 @@
       </div>
     </div>
   </div>
-  <div class="moviePage" class="inactive">
-      <div class="poster"></div>     
-      <div class="logos">
-      </div>
-    <div class="containerDetail">
-      <div id="background" class="info-card">
-        <div class="titles">
-          <h2 class="title1"></h2>
-          <h2 class="title2"></h2>         
-        </div>
-        <div class="infoExtra">
-          <span class="year"></span>
-        <span class="rating"></span>
-        </div>
-      </div>
-      <div class="origenCountry">
-        <span class="origen"></span>
-      </div>
-      <div class="column1">
-        <span class="tag">action</span>
-        <span class="tag">fantasy</span>
-        <span class="tag">adventuress</span>
-      </div>
-    </div>
-    <div class="column2">
+  <div id="moviePage" class="inactive"> 
+  <div class="movieInfo">
+    <div class="poster"></div>           
+    <div class="titles">
+      <div class="titles">
+        <h2 class="title1"></h2>
+        <h2 class="title2"></h2>         
+      </div>   
+  </div>     
+  <div class="logos"></div>    
+
+    <div class="infoExtra">
+      <p class="year"></p>
+    <p class="rating"></p>
+      <span class="origenCountry"></span>        
+    <div class="genresContainer">
+      <span class="tag">action</span>
+      <span class="tag">fantasy</span>
+      <span class="tag">adventuress</span>
+    </div>     
       <p class="overview"></p>
-      <div class="castMovie">
-      </div>    
-      
-      </div> 
-     
+      <div class="interaction">       
+        <div class="commentContainer"></div>
+        <div class="commentContainerUser"class="inactive">
+          <div class="heartContainer"></div>
+          <textarea class="inputComment" placeholder="Escribe tu comentario aquí..."></textarea>
+        <button id="btnComment">Comentar</button>
+      <input type="number" class="inputRank" placeholder="del 0 al 10">
+      <button id="btnRankMovie">Puntuar</button>
+        </div>        
+    </div>
+    <div class="castMovie">
+    </div> 
+    </div>     
       <div class="footerMovie">
         <section class="carousel">
           <ol class="afiche">
@@ -121,10 +158,10 @@
             </div>
           </div>
         </div>
-      </div>     
-   
-   
+      </div>   
   </div>
+  
+      </div>
 
   <div id="fin"></div>
   <footer>Grupo Deus es una creación de Galenso Serrano--></footer>
