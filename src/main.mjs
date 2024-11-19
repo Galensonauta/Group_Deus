@@ -286,7 +286,6 @@ export async function isAuthenticated() {
   }
   try {
     const response = await axiosInstance.get('/auth/validate-token');
-    console.log("datos",response.data.user)
     return response.status === 200; // Si el servidor responde con un 200, el token es válido
   } catch (error) {
     console.error('Token inválido o expirado:', error.message || 'Error de red');
@@ -633,6 +632,7 @@ export async function getById({ id, media }) {
   const headerSection = document.querySelector(".afiche")
   const containerVid = document.querySelector(".carousel__slide")
   const movieVideo = movie.videos.results
+  console.log(movieVideo)
   movieVideo.forEach(vid => {
     const video = document.createElement("iframe")
     video.classList.add("video")
