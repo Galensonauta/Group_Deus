@@ -22,6 +22,7 @@
         "pg-hstore": "^2.3.4",
         "process": "^0.11.10",
         "sequelize": "^6.37.3",
+        "sequelize-cli": "^6.6.2",
         "serverless-http": "^3.2.0",
         "stream-browserify": "^3.0.0",
         "stream-http": "^3.2.0",

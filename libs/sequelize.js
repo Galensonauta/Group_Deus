@@ -6,15 +6,14 @@ const options = {
     dialect: 'postgres',
     logging: config.isProd ? false : true,
   }
-  if(config.isProd){
-options.dialectModule=require("pg")
+  if (config.isProd) {
+    options.dialectOptions = {
+      ssl: {
+        rejectUnauthorized: false
+      }
+    }
   }
-// let URI=""
-// if(config.isProd){
-//   URI=config.dbUrlProd
-// }else{
-//     URI=config.dbUrl
-// }
+
   const sequelize = new Sequelize(config.dbUrl,options);
 setupModels(sequelize)
 module.exports=sequelize
