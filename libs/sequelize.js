@@ -13,6 +13,9 @@ const options = {
       }
     }
   }
+  if(config.isProd){
+    options.dialectModule=require("pg")
+  }
 
   const sequelize = new Sequelize(config.dbUrl,options);
 setupModels(sequelize)
