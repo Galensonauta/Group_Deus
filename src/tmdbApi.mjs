@@ -11,7 +11,7 @@ const { API_KEY } = process.env
   }
 });
 export const axiosInstance = axios.create({
-   baseURL: 'https://group-deus.vercel.app',  // Opcionalmente, establece una URL base para tus solicitudes
+   baseURL: 'https://group-deus.vercel.app/',  // Opcionalmente, establece una URL base para tus solicitudes
   // Permite que todas las solicitudes de esta instancia usen cookies
   withCredentials: true,
 });
