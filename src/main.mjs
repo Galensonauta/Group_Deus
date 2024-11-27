@@ -105,7 +105,7 @@ export async function loginUser(nick, password) {
       password,
     });
     console.log('Usuario autenticado con éxito:', response.data);
-    window.location.href = 'http://localhost:8080/#Cine';
+    window.location.href = 'https://group-deus-jgpzsz0ay-galensos-projects.vercel.app';
    
     return response.data;    
   } catch (error) {
