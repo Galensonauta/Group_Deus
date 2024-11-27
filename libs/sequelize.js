@@ -6,6 +6,9 @@ const options = {
     dialect: 'postgres',
     logging: config.isProd ? false : true,
   }
+  if(config.isProd){
+options.dialectModule=require("pg")
+  }
 // let URI=""
 // if(config.isProd){
 //   URI=config.dbUrlProd
