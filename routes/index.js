@@ -6,8 +6,7 @@ const listasRouters = require('./listasRouters');
 const authRouters = require('./authRouters');
 
 function routerApi(app){
-    const router = express.Router();
-    
+    const router = express.Router();    
     app.use( "/api/v1", router)
     router.use("/users",usersRouters)
     router.use("/listas",listasRouters)

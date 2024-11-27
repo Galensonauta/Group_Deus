@@ -138,3 +138,5 @@ db-volume
 
 #base de datos con persistencia de mysql
 mysql_data
+# Local Netlify folder
+.netlify

@@ -20,7 +20,7 @@ const port = process.env.PORT || 3001;
 app.use(cookieParser());
 
 app.use(json())
-const whiteList=["http://localhost:8080"]
+const whiteList=["http://localhost:8080","https://grupodeus.netlify.app"]
 const options={
   origin: (origin, callback)=>{
     if(whiteList.includes(origin)||!origin){
@@ -51,6 +51,7 @@ app.use(errorHandler)
 // Escuchar en que puerto se ejecutara el servidor
 app.listen(port, () => {
   console.log(`El servidor esta corriendo en el puerto ${port}`);
+  console.log(process.env.NODE_ENV)
 });
 
 // Enrutador de la aplicacion

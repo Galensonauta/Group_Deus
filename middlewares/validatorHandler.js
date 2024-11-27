@@ -21,10 +21,6 @@ function validatorHandler(schema, property) {
   };
 }
 
-<<<<<<< HEAD
 module.exports = validatorHandler;
 
 
-=======
-module.exports = validatorHandler;
->>>>>>> backend-node
