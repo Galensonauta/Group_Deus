@@ -1,4 +1,3 @@
-// const {config} = require('./../config/config')
 
 require("dotenv").config()
 
@@ -7,7 +6,8 @@ const config ={
   isProd: process.env.NODE_ENV === 'production',
   port: process.env.PORT||3001,
   dbUrl:process.env.DATABASE_DATABASE_URL,
-  dbUrlDev: process.env.DEVDB_URL
+  dbUrlDev: process.env.DEVDB_URL,
+  apiKey: process.env.API_KEY
 }
 module.exports = { config };
 // dbUser: process.env.PG_USER,

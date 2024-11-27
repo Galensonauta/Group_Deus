@@ -1,6 +1,8 @@
 const {Sequelize}=require ("sequelize")
 const { config } = require('../config/config');
 const setupModels=require ("../db/model")
+require("dotenv").config();
+
 
 const options = {
     dialect: 'postgres',
@@ -13,9 +15,7 @@ const options = {
       }
     }
   }
-  if(config.isProd){
-    options.dialectModule=require("pg")
-  }
+
 
   const sequelize = new Sequelize(config.dbUrl,options);
 setupModels(sequelize)
