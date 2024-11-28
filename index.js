@@ -20,19 +20,20 @@ const port = process.env.PORT || 3001;
 app.use(cookieParser());
 
 app.use(json())
-const whiteList=["http://localhost:8080","https://group-deus.vercel.app,'https://group-deus-8kbt2ahss-galensos-projects.vercel.app'"]
-const options={
-  origin: (origin, callback)=>{
-    if(whiteList.includes(origin)||!origin){
-      callback(null,true)
-    }else{
-      callback(new Error("No permitido"))
-    }
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PATCH', 'DELETE']
-}
-app.use(cors(options))
+// const whiteList=["http://localhost:8080","https://group-deus.vercel.app"]
+// const options={
+//   origin: (origin, callback)=>{
+//     if(whiteList.includes(origin)||!origin){
+//       callback(null,true)
+//     }else{
+//       callback(new Error("No permitido"))
+//     }
+//   },
+//   credentials: true,
+//   methods: ['GET', 'POST', 'PATCH', 'DELETE']
+// }
+// app.use(cors(options))
+app.use(cors());
 
 app.get('/nueva-ruta', checkApiKey,(req, res) => {
   // Respuesta al cliente
