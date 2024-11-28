@@ -20,7 +20,7 @@ const port = process.env.PORT || 3001;
 app.use(cookieParser());
 
 app.use(json())
-const whiteList=["http://localhost:8080","https://group-deus.vercel.app"]
+const whiteList=["http://localhost:8080","https://group-deus.vercel.app,'https://group-deus-8kbt2ahss-galensos-projects.vercel.app'"]
 const options={
   origin: (origin, callback)=>{
     if(whiteList.includes(origin)||!origin){
@@ -30,6 +30,7 @@ const options={
     }
   },
   credentials: true,
+  methods: ['GET', 'POST', 'PATCH', 'DELETE']
 }
 app.use(cors(options))
 
