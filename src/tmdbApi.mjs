@@ -1,4 +1,4 @@
-import { API_KEY } from "@src/apiKey.js";
+import { API_KEY } from "./apiKey.mjs";
 
 import axios from 'axios';
 // const { API_KEY } = process.env

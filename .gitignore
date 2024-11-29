@@ -89,7 +89,7 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-dist
+dist/
 
 # Gatsby files
 .cache/
@@ -130,7 +130,7 @@ dist
 .pnp.*
 
 # apiKey.js
-src/apiKey.js
+src/apiKey.mjs
 .env
 
 #base de datos con persistencia de Postgres
