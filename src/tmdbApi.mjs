@@ -1,14 +1,14 @@
-import { API_KEY } from "./apiKey.mjs";
+// import { API_KEY } from "./apiKey.mjs";
 
 import axios from 'axios';
-// const { API_KEY } = process.env
+const apiTMDB  = process.env.API_KEY
 
 // const {pass}  = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZjM3MjI4MjAyMDc4NTVlYTUxM2I3YjMyYjc5NmVhZiIsIm5iZiI6MTcyNDI3NzA0MC45MzAwMDIsInN1YiI6IjY0Mzk3OTNhZWVjNWI1MDEwMzYwY2ViZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.2QWh6M-QrZ4OBMjm-t6EYoxf40WTe9ziqxLgEmKazic"
  export const api = axios.create({
   baseURL: 'https://api.themoviedb.org/3/',
   headers: {
     'Content-Type': 'application/json;charset=utf-8',
-    "Authorization": API_KEY,
+    "Authorization": apiTMDB,
   }
 });
 export const axiosInstance = axios.create({
