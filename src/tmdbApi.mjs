@@ -1,5 +1,6 @@
 // import { API_KEY } from "./apiKey.mjs";
 
+require("dotenv").config()
 import axios from 'axios';
 const apiTMDB  = process.env.API_KEY
 
