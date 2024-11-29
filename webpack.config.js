@@ -157,7 +157,10 @@ module.exports = {
         }
       ]
     }),
-    new Dotenv({ path: './.env' }),
+    new  Dotenv({
+      path: './.env',
+      systemvars: true, // Incluye variables del sistema
+    }),
     new CleanWebpackPlugin(),
     new NodePolyfillPlugin()
   ],
