@@ -25,7 +25,6 @@ app.use(json())
 const whiteList=["http://localhost:8080","https://group-deus.vercel.app"]
 const options={
   origin: (origin, callback)=>{
-    console.log('Origen recibido:', origin);  // Verifica el origen de la solicitud
     if(whiteList.includes(origin)||!origin){
       callback(null,true)
     }else{

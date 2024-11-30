@@ -17,7 +17,7 @@ const options = {
   }
 
 
-  const sequelize = new Sequelize(process.env.DATABASE_URL,options);
+  const sequelize = new Sequelize(config.dbUrl,options);
   
   setupModels(sequelize)
 module.exports=sequelize
