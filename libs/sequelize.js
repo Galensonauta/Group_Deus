@@ -6,7 +6,7 @@ require("dotenv").config();
 
 const options = {
     dialect: 'postgres',
-    logging: true,
+    logging: config.isProd ? false : true,
   }
   if (config.isProd) {
     options.dialectOptions  = {
@@ -17,12 +17,12 @@ const options = {
   }
 
 
-  const sequelize = new Sequelize(config.dbUrl,options);
-setupModels(sequelize)
-sequelize.authenticate()
+  const sequelize = new Sequelize(process.env.DATABASE_URL,options);
+  sequelize.authenticate()
   .then(() => console.log('Conexión establecida con la base de datos'))
   .catch(err => console.error('Error al conectar con la base de datos:', err));
-
+  
+  setupModels(sequelize)
 module.exports=sequelize
 // const sequelize = new Sequelize(
 //   process.env.NILEDB_NAME, // Nombre de la base de datos

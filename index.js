@@ -39,9 +39,9 @@ const options={
   methods: ['GET', 'POST', 'PATCH', 'DELETE']
 }
 app.use(cors(options))
-app.options('*', cors(options));  // Permitir solicitudes preflight
+// app.options('*', cors(options));  // Permitir solicitudes preflight
 
-// app.use(cors());
+
 
 app.get('/nueva-ruta', checkApiKey,(req, res) => {
   // Respuesta al cliente
