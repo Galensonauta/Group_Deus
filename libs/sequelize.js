@@ -15,9 +15,6 @@ const options = {
       }
     }
   }
-  console.log('Configurando Sequelize con URL:', process.env.DATABASE_URL);
-  console.log('Configurando Sequelize con URL:', config.dbUrl);
-
 
   const sequelize = new Sequelize(process.env.DATABASE_URL||config.dbUrl, options);
 
