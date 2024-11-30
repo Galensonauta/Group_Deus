@@ -64,6 +64,9 @@ router.post('/',
       const body = req.body;
       const newCategory = await service.create(body);
       res.status(201).json(newCategory);
+      res.header('Access-Control-Allow-Origin', 'https://group-deus-guyhg1ly0-galensos-projects.vercel.app'); // Allow only your specific origin
+      res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Specify allowed methods
+      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Specify allowed headers
     } catch (error) {
       next(error);
     }
