@@ -7,7 +7,8 @@ const config ={
   port: process.env.PORT||3001,
   dbUrl:process.env.DATABASE_URL,
   dbUrlDev: process.env.DEVDB_URL,
-  apiKey: process.env.API_KEY
+  apiKey: process.env.API_KEY,
+  jwtSecret: process.env.JWT_SECRET,
 }
 module.exports = { config };
 // dbUser: process.env.PG_USER,
@@ -17,7 +18,6 @@ module.exports = { config };
 //   dbPort: process.env.PG_PORT,   
 //   dbUserMysql: process.env.MY_USER,
 //   apiKeyProd: process.env.API,
-//   jwtSecret: process.env.JWT_SECRET,
 //   dbPasswordMysql: process.env.MY_PASS,  
 //   dbUrl: process.env.DEVDB_URL, 
 //  dbUrlProd: process.env.NILEDB_URL
