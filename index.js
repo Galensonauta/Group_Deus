@@ -16,10 +16,7 @@ const { logErrors,
   ormErrorHandler } = require('./middlewares/errorHandler.js');
 
 const app = express(); // Crear instancia de aplicacion de express
-app.use((req, res, next) => {
-  console.log(`Solicitud recibida: ${req.method} ${req.url}`);
-  next();
-});
+
 
 const port = process.env.PORT || 3001;
 app.use(cookieParser());
@@ -39,7 +36,6 @@ const options={
   methods: ['GET', 'POST', 'PATCH', 'DELETE']
 }
 app.use(cors(options))
-// app.options('*', cors(options));  // Permitir solicitudes preflight
 
 
 

@@ -18,9 +18,6 @@ const options = {
 
 
   const sequelize = new Sequelize(process.env.DATABASE_URL,options);
-  sequelize.authenticate()
-  .then(() => console.log('Conexión establecida con la base de datos'))
-  .catch(err => console.error('Error al conectar con la base de datos:', err));
   
   setupModels(sequelize)
 module.exports=sequelize
