@@ -16,6 +16,11 @@ const { logErrors,
   ormErrorHandler } = require('./middlewares/errorHandler.js');
 
 const app = express(); // Crear instancia de aplicacion de express
+app.use((req, res, next) => {
+  console.log(`Solicitud recibida: ${req.method} ${req.url}`);
+  next();
+});
+
 const port = process.env.PORT || 3001;
 app.use(cookieParser());
 
@@ -23,6 +28,7 @@ app.use(json())
 const whiteList=["http://localhost:8080","https://group-deus.vercel.app"]
 const options={
   origin: (origin, callback)=>{
+    console.log('Origen recibido:', origin);  // Verifica el origen de la solicitud
     if(whiteList.includes(origin)||!origin){
       callback(null,true)
     }else{
@@ -33,6 +39,7 @@ const options={
   methods: ['GET', 'POST', 'PATCH', 'DELETE']
 }
 app.use(cors(options))
+app.options('*', cors(options));  // Permitir solicitudes preflight
 
 // app.use(cors());
 

@@ -9,7 +9,7 @@ const options = {
     logging: config.isProd ? false : true,
   }
   if (config.isProd) {
-    options.dialectOptions = {
+    options.dialectOptions  = {
       ssl: {
         rejectUnauthorized: false
       }
@@ -19,6 +19,10 @@ const options = {
 
   const sequelize = new Sequelize(config.dbUrl,options);
 setupModels(sequelize)
+sequelize.authenticate()
+  .then(() => console.log('Conexión establecida con la base de datos'))
+  .catch(err => console.error('Error al conectar con la base de datos:', err));
+
 module.exports=sequelize
 // const sequelize = new Sequelize(
 //   process.env.NILEDB_NAME, // Nombre de la base de datos

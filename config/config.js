@@ -5,7 +5,7 @@ const config ={
   env: process.env.NODE_ENV||"development",
   isProd: process.env.NODE_ENV === 'production',
   port: process.env.PORT||3001,
-  dbUrl:process.env.DATABASE_DATABASE_URL,
+  dbUrl:process.env.DATABASE_URL,
   dbUrlDev: process.env.DEVDB_URL,
   apiKey: process.env.API_KEY
 }

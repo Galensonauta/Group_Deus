@@ -118,7 +118,7 @@ export async function logoutUser() {
     const response = await axiosInstance.post('/auth/logout')
     
       console.log('Cierre de sesión exitoso',response); 
-      window.location.href = 'http://localhost:8080/#';   
+      window.location.href = 'https://group-deus-.vercel.app';   
   } catch (error) {
     console.error('Error de red:', error);
   }
@@ -185,7 +185,7 @@ if (response.status === 200) {
       }
     );
     const data = response.data;
-    if (response.status === 201) {  // Verificamos que la solicitud sea exitosa
+    if (response.status === 200) {  // Verificamos que la solicitud sea exitosa
       console.log("Interacción agregada", data);
     }
   } catch (error) {
@@ -326,19 +326,22 @@ export async function createAfiches(afiche, container, {
        const firstAirDate = aficheDetail.first_air_date ? aficheDetail.first_air_date.split("-")[0] : "N/A";        
         // Asignar el año dependiendo del tipo
         movieYearPreview.innerHTML = type === "movie" ? releaseDate : firstAirDate;
-        const rankIMDB = document.createElement("h2")
-        const rankGD = document.createElement("h2")
-         const idRank= movieGd.find(id=>id.id===movie.id)
-         if(idRank){
-          rankGD.innerHTML = "rank en GD: " + idRank.averagerating
-          rankIMDB.innerHTML = "rank en IMDB: " + aficheDetail.vote_average
-          detailContainer.appendChild(rankGD)
-          detailContainer.appendChild(rankIMDB)
-
-                 }else{
-                  rankIMDB.innerHTML = "rank en IMDB: " + aficheDetail.vote_average
-                  detailContainer.appendChild(rankIMDB)
-         }
+        if(movieGd){
+          const rankIMDB = document.createElement("h2")
+          const rankGD = document.createElement("h2")
+           const idRank= movieGd.find(id=>id.id===movie.id)
+           if(idRank){
+            rankGD.innerHTML = "rank en GD: " + idRank.averagerating
+            rankIMDB.innerHTML = "rank en IMDB: " + aficheDetail.vote_average
+            detailContainer.appendChild(rankGD)
+            detailContainer.appendChild(rankIMDB)
+  
+                   }else{
+                    rankIMDB.innerHTML = "rank en IMDB: " + aficheDetail.vote_average
+                    detailContainer.appendChild(rankIMDB)
+           }
+        }
+        
 
       const movieDirectingPreview = document.createElement("h2")
       movieDirectingPreview.classList.add("movieDirectingPreview")
