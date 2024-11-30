@@ -16,7 +16,7 @@ const options = {
     }
   }
 
-  const sequelize = new Sequelize("postgres://neondb_owner:vuNOFgijCH50@ep-quiet-lake-a4w2ydt0-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require", options);
+  const sequelize = new Sequelize(process.env.DATABASE_URL||config.dbUrl, options);
 
   setupModels(sequelize)
   console.log('Sequelize inicializado. Probando conexión...');

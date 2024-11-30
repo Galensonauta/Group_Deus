@@ -5,7 +5,7 @@ const cors = require('cors');
 const routerApi = require('./routes/index.js');
 require('dotenv').config();
 const { checkApiKey } = require('./middlewares/authHandler.js');
-
+const {sequelize}=require("./libs/sequelize.js")
 const cookieParser = require('cookie-parser');
 
 // Acceder a la arquitectura
@@ -36,7 +36,15 @@ const options={
 }
 app.use(cors(options))
 
-
+app.get('/test-db', async (req, res) => {
+  try {
+    const [results] = await sequelize.query('SELECT NOW()');
+    res.json({ success: true, dbTime: results[0] });
+  } catch (error) {
+    console.error('Error al probar la conexión:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
 
 
 app.get('/nueva-ruta', checkApiKey,(req, res) => {
