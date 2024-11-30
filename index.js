@@ -35,12 +35,12 @@ const options={
   methods: ['GET', 'POST', 'PATCH', 'DELETE']
 }
 app.use(cors(options))
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://group-deus-guyhg1ly0-galensos-projects.vercel.app'); // Allow only your specific origin
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Specify allowed methods
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Specify allowed headers
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', 'https://group-deus-guyhg1ly0-galensos-projects.vercel.app'); // Allow only your specific origin
+//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Specify allowed methods
+//   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Specify allowed headers
+//   next();
+// });
 
 
 

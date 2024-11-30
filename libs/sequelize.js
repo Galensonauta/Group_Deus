@@ -17,9 +17,13 @@ const options = {
   }
 
 
-  const sequelize = new Sequelize(config.dbUrl,options);
-  
+  const sequelize = new Sequelize(process.env.DATABASE_URL||config.dbUrl, options);
+
   setupModels(sequelize)
+sequelize.authenticate()
+  .then(() => console.log('Conexión exitosa con la base de datos'))
+  .catch(err => console.error('Error al conectar con la base de datos:', err));
+  
 module.exports=sequelize
 // const sequelize = new Sequelize(
 //   process.env.NILEDB_NAME, // Nombre de la base de datos
