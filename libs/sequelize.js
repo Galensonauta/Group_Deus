@@ -6,7 +6,7 @@ require("dotenv").config();
 
 const options = {
     dialect: 'postgres',
-    logging: config.isProd ? false : true,
+    logging: true,
   }
   if (config.isProd) {
     options.dialectOptions  = {
