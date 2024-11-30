@@ -110,7 +110,7 @@ router.get("/rank/:type",
       const rank= await service.getTopRatedMovies(type)
       res.status(200).json(rank)
      
-  res.header('Access-Control-Allow-Origin', 'https://group-deus-81xpu7zpa-galensos-projects.vercel.app'); // Allow only your specific origin
+  res.header('Access-Control-Allow-Origin', 'https://group-deus.vercel.app'); // Allow only your specific origin
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Specify allowed methods
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Specify allowed headers
  ;
