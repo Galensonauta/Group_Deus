@@ -20,8 +20,8 @@ router.post('/login',
     const token=jwt.sign(payload, config.jwtSecret)
       //Configurar la cookie con el token JWT
       res.cookie('token', token, {
-        httpOnly: false,        // Protege la cookie de ser accesible por JavaScript
-       secure: false,
+        httpOnly: true,        // Protege la cookie de ser accesible por JavaScript
+       secure: true,
         sameSite: 'Lax',    // Protege contra ataques CSRF (Cross-Site Request Forgery)
       //  maxAge: 24 * 60 * 60 * 1000 // Duración de 1 día para la cookie
       });

@@ -105,7 +105,7 @@ router.get("/rank/:type",
     try{
       const{type}=req.params
       const rank= await service.getTopRatedMovies(type)
-      res.status(201).json(rank)
+      res.status(200).json(rank)
     }catch(error){
       next(error)
     }

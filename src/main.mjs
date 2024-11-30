@@ -105,7 +105,7 @@ export async function loginUser(nick, password) {
       password,
     });
     console.log('Usuario autenticado con éxito:', response.data);
-    window.location.href = 'https://group-deus-jgpzsz0ay-galensos-projects.vercel.app';
+    window.location.href = 'https://group-deus-.vercel.app';
    
     return response.data;    
   } catch (error) {
@@ -141,7 +141,7 @@ export async function createUser(nick, password) {
 async function getRankGd(type){
   try{
     const response =await axiosInstance.get(`/users/rank/${type}`);
-    if(response.status===201){
+    if(response.status===200){
       return response.data
     }
   }catch(err){
