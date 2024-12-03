@@ -1,4 +1,5 @@
 {
+    "main":"index.js",
     "dependencies": {
         "@faker-js/faker": "^8.4.1",
         "@hapi/boom": "^9.1.4",
@@ -76,7 +77,7 @@
         "build": "webpack --config webpack.config.js",
         "dev": "webpack serve --config webpack.config.dev.js",
         "start": "webpack serve --config webpack.config.dev.js",
-        "startEx": "node server.js",
+        "startEx": "node index.js",
         "lint": "eslint",
         "devEx": "nodemon index.js",
         "migrations:generate": "sequelize-cli migration:generate --name",
