@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 const { config } = require('../config/config');
 
-const sequelize = new Sequelize(config.dbUrl, {
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: 'postgres',
   logging: console.log,
   dialectOptions: {
