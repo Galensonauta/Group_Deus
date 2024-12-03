@@ -7,6 +7,8 @@ require('dotenv').config();
 const { checkApiKey } = require('./middlewares/authHandler.js');
 const {sequelize}=require("./libs/sequelize.js")
 const cookieParser = require('cookie-parser');
+const path = require('path');
+
 
 // Acceder a la arquitectura
 // Requiere los middlewares desde el archivo
@@ -61,6 +63,13 @@ app.use(logErrors)
 app.use(ormErrorHandler)
 app.use(boomErrorHandler)
 app.use(errorHandler)
+// Middleware para servir archivos estáticos del frontend
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// Ruta para cualquier solicitud no manejada
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 
 // Escuchar en que puerto se ejecutara el servidor
 app.listen(port, () => {

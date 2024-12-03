@@ -85,17 +85,18 @@ const Dotenv = require('dotenv-webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
-module.exports = {
-  mode: 'production', // O 'development' si estás en modo de desarrollo
-  // resto de la configuración
-};
+// module.exports = {
+//   mode: 'production', // O 'development' si estás en modo de desarrollo
+//   // resto de la configuración
+// };
 
 module.exports = {
-  
+  mode: 'production', // O 'development' si estás en modo de desarrollo
   entry: "./src/navigation.js",
   output: {
     path: resolve(__dirname, "dist"),
     filename: "[name].[contenthash].js",
+    publicPath: '/',
   },
   resolve: {
     extensions: [".js",".mjs"],
