@@ -140,3 +140,4 @@ db-volume
 mysql_data
 # Local Netlify folder
 .netlify
+.vercel

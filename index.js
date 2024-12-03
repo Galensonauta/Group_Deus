@@ -54,7 +54,11 @@ app.get('/nueva-ruta', checkApiKey,(req, res) => {
      res.send('Hola , soy una nueva ruta');
    });
   
-
+   // Ruta para cualquier solicitud no manejada
+   app.get('*', (req, res) => {
+     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+   });
+   
 // const passport=
 require("./utils/auth")
 // app.use(passport.initialize());
@@ -66,10 +70,6 @@ app.use(errorHandler)
 // Middleware para servir archivos estáticos del frontend
 app.use(express.static(path.join(__dirname, 'dist')));
 
-// Ruta para cualquier solicitud no manejada
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
 
 // Escuchar en que puerto se ejecutara el servidor
 app.listen(port, () => {
