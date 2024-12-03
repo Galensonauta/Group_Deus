@@ -1,26 +1,31 @@
 const { Sequelize } = require('sequelize');
-const { config } = require('../config/config');
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  dialect: 'postgres',
-  logging: console.log,
-  dialectOptions: {
-    ssl: {
-      rejectUnauthorized: false,
+let sequelize;
+if (!sequelize) {
+  sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: 'postgres',
+    logging: console.log,
+    dialectOptions: {
+      ssl: {
+        rejectUnauthorized: false,
+      },
     },
-  },
-});
+  });
+}
 
 module.exports = async (req, res) => {
-  if (req.method === 'GET') {
-    try {
-      const [results] = await sequelize.query('SELECT NOW()');
-      res.status(200).json({ success: true, dbTime: results[0] });
-    } catch (error) {
-      console.error('Error al probar la conexión:', error);
-      res.status(500).json({ success: false, error: error.message });
-    }
-  } else {
-    res.status(405).json({ message: 'Método no permitido' });
+  try {
+    console.log('Recibida solicitud en /api/test-db');
+
+    const [results] = await sequelize.query('SELECT NOW()');
+    console.log('Resultados de la consulta:', results);
+
+    res.status(200).json({ success: true, dbTime: results[0] });
+  } catch (error) {
+    console.error('Error al procesar la solicitud:', error);
+
+    // Responde con el error para verlo en los logs
+    res.status(500).json({ success: false, error: error.message });
   }
 };
+
