@@ -137,7 +137,6 @@ export async function createUser(nick, password) {
     alert('Error al crear usuario. Verifica tus credenciales.');
   }
 }
-
 async function getRankGd(type){
   try{
     const response =await axiosInstance.get(`/users/rank/${type}`);

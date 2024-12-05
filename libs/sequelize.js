@@ -7,7 +7,6 @@ require("dotenv").config();
 const options = {
     dialect: 'postgres',
     dialectModule: require('pg'), // Especifica el cliente de PostgreSQL
-
     logging: console.log,
   }
   if (config.isProd) {
