@@ -1,4 +1,13 @@
-// const express = require('express');
-const app = require('../index.js'); // Importa tu app de Express desde el archivo principal
+const express = require('express');
+const app = express();
 
-module.exports = app; // Exporta la app completa
+// Middleware básico
+app.use(express.json());
+
+// Endpoint de prueba
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'API funcionando correctamente en Vercel' });
+});
+
+// Exporta la app
+module.exports = app;
