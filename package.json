@@ -1,5 +1,5 @@
 {
-    "main": "index.js",
+    "main": "api/index.js",
     "dependencies": {
         "@faker-js/faker": "^8.4.1",
         "@hapi/boom": "^9.1.4",
