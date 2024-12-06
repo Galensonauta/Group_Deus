@@ -94,10 +94,10 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // const webpack = require('webpack');
 
 
-// module.exports = {
-//   mode: 'development', // O 'development' si estás en modo de desarrollo
-//   // resto de la configuración
-// };
+module.exports = {
+  mode: 'development', // O 'development' si estás en modo de desarrollo
+  // resto de la configuración
+};
 
 module.exports = {
   entry: "./src/navigation.js",

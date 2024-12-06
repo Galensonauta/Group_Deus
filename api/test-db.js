@@ -1,4 +1,4 @@
-const sequelize = require("../db"); // Asegúrate de que apunta al archivo correcto
+const sequelize = require("../libs/sequelize"); // Asegúrate de que apunta al archivo correcto
 
 module.exports = async (req, res) => {
   try {

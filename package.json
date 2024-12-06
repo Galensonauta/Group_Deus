@@ -39,7 +39,6 @@
         "url": "^0.11.4",
         "webpack": "^5.93.0",
         "webpack-bundle-analyzer": "^4.10.2",
-        "webpack-cli": "^5.1.4",
         "webpack-dev-server": "^5.0.4"
     },
     "devDependencies": {
@@ -74,7 +73,7 @@
     },
     "scripts": {
         "build": "webpack --config webpack.config.js",
-        "dev": "webpack serve --config webpack.config.dev.js",
+        "dev": "webpack serve --config webpack.config.dev.js && nodemon index.js",
         "start": "npm run build && node api/index.js",
         "lint": "eslint",
         "devEx": "nodemon index.js",

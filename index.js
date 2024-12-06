@@ -1,3 +1,4 @@
+const sequelize = require('./db');
 
 const express = require('express'); // Requiere librería express
 const { json } = express; // Extrae 'json' del módulo 'express'
@@ -60,27 +61,16 @@ app.use(errorHandler)
 // Middleware para servir archivos estáticos del frontend
 app.use(express.static(path.join(__dirname, 'dist')));
 
-
-// Escuchar en que puerto se ejecutara el servidor
-// if (require.main === module){
-// const port = process.env.PORT || 3001;
-// app.listen(port, () => {
-//   console.log(`El servidor esta corriendo en el puerto ${port}`);
-//   console.log(process.env.NODE_ENV)
-// });}
-
-// Enrutador de la aplicacion
-/**
- * req : parametro que contiene toda lo necesario de la petición desde el cliente
- * res : parametro que contiene todo lo necesario para responder al cliente
- */
-// ...
-// Enrutamiento
-// app.get('/', (req, res) => {
-//     // Respuesta al cliente
-//     res.send('Hola mi server en express');
-//   });
-// 
+// Manejo de inicio en entorno local
+if (require.main === module) {
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => {
+    console.log(`Servidor corriendo en el puerto ${port}`);
+    sequelize.authenticate()
+      .then(() => console.log('Conexión a la base de datos exitosa'))
+      .catch(err => console.error('Error al conectar a la base de datos:', err));
+  });
+}
 
 
 
