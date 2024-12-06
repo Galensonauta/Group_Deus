@@ -21,7 +21,6 @@ const { logErrors,
 const app = express(); // Crear instancia de aplicacion de express
 
 
-const port = process.env.PORT || 3001;
 app.use(cookieParser());
 
 app.use(json())
@@ -63,10 +62,12 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 
 // Escuchar en que puerto se ejecutara el servidor
-app.listen(port, () => {
-  console.log(`El servidor esta corriendo en el puerto ${port}`);
-  console.log(process.env.NODE_ENV)
-});
+// if (require.main === module){
+// const port = process.env.PORT || 3001;
+// app.listen(port, () => {
+//   console.log(`El servidor esta corriendo en el puerto ${port}`);
+//   console.log(process.env.NODE_ENV)
+// });}
 
 // Enrutador de la aplicacion
 /**
