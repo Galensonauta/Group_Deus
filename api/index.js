@@ -1,5 +1,5 @@
 const express = require('express');
-const app = express();
+const app = require("../index");
 
 // Middleware básico
 app.use(express.json());

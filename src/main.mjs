@@ -100,7 +100,7 @@ const observador = new IntersectionObserver((imgs) => {
 //llamados a API del Grupo Deus
 export async function loginUser(nick, password) {
   try {
-    const response = await axiosInstance.post('/api/auth/login', {
+    const response = await axiosInstance.post('/auth/login', {
       nick,
       password,
     });
