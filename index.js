@@ -5,8 +5,7 @@ const cors = require('cors');
 const routerApi = require('./routes/index.js');
 require('dotenv').config();
 const { checkApiKey } = require('./middlewares/authHandler.js');
-// const {sequelize}=require("./libs/sequelize.js")
-// const sequelize = require("./db.js"); // Asegúrate de que apunta al archivo correcto
+
 
 const cookieParser = require('cookie-parser');
 const path = require('path');
