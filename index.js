@@ -73,5 +73,7 @@ if (require.main === module) {
 }
 
 
+module.exports = app; // Asegúrate de exportar la app aquí
+
 
 
