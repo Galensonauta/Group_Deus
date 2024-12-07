@@ -8,7 +8,7 @@ const options = {
     dialectModule: require('pg'), // Especifica el cliente de PostgreSQL
     logging: console.log,
     pool: {
-      max: 10, // Máximo de conexiones
+      max: 5, // Máximo de conexiones
       min: 0,  // Mínimo de conexiones
       acquire: 30000, // Tiempo máximo para intentar conexión
       idle: 10000, // Tiempo antes de liberar una conexión inactiva
@@ -17,6 +17,8 @@ const options = {
   if (config.isProd) {
     options.dialectOptions  = {
       ssl: {
+        require: true, // Habilitar SSL
+
         rejectUnauthorized: false
       }
     }
