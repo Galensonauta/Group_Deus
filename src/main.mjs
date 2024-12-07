@@ -130,7 +130,7 @@ export async function createUser(nick, password) {
       password,
     });
     console.log('Usuario creado con éxito:', response.data);
-    loginUser(nick,password)
+    // loginUser(nick,password)
     return response.data;    
   } catch (error) {
     console.error('Error al crear usuario', error.response ? error.response.data.message : error.message);
