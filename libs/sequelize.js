@@ -13,16 +13,21 @@ const options = {
       acquire: 30000, // Tiempo máximo para intentar conexión
       idle: 10000, // Tiempo antes de liberar una conexión inactiva
     },
-  }
-  if (config.isProd) {
-    options.dialectOptions  = {
+    dialectOptions  : {
       ssl: {
         require: true, // Habilitar SSL
-
         rejectUnauthorized: false
       }
     }
   }
+  // if (config.isProd) {
+  //   dialectOptions  = {
+  //     ssl: {
+  //       require: true, // Habilitar SSL
+  //       rejectUnauthorized: false
+  //     }
+  //   }
+  
   let sequelize;
   if (!sequelize) {  
   sequelize = new Sequelize(process.env.DATABASE_URL||config.dbUrl, options);}
