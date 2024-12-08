@@ -1,71 +1,69 @@
-const sequelize = require('./db');
-
-const express = require('express'); // Requiere librería express
-const { json } = express; // Extrae 'json' del módulo 'express'
+const sequelize = require('./libs/sequelize.js');
+const express = require('express');
 const cors = require('cors');
-const routerApi = require('./routes/index.js');
-require('dotenv').config();
-const { checkApiKey } = require('./middlewares/authHandler.js');
-
-
 const cookieParser = require('cookie-parser');
 const path = require('path');
+require('dotenv').config();
 
+const routerApi = require('./routes/index.js');
+const { checkApiKey } = require('./middlewares/authHandler.js');
+const { logErrors, errorHandler, boomErrorHandler, ormErrorHandler } = require('./middlewares/errorHandler.js');
+require("./utils/auth");
 
-// Acceder a la arquitectura
-// Requiere los middlewares desde el archivo
-const { logErrors, 
-  errorHandler, 
-  boomErrorHandler, 
-  ormErrorHandler } = require('./middlewares/errorHandler.js');
+const app = express(); // Crear instancia de aplicación de Express
 
-const app = express(); // Crear instancia de aplicacion de express
+// Logs iniciales
+console.log('Servidor Express inicializado');
 
+// Middlewares globales
+app.use(express.json()); // Parsear JSON
+app.use(cookieParser()); // Manejar cookies
 
-app.use(cookieParser());
-
-app.use(json())
-const whiteList=["http://localhost:8080","https://group-deus.vercel.app"]
-const options={
-  origin: (origin, callback)=>{
-    if(whiteList.includes(origin)||!origin){
-      callback(null,true)
-    }else{
-      callback(new Error("No permitido"))
+// Configuración de CORS
+const whiteList = ["http://localhost:8080", "https://group-deus.vercel.app"];
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (whiteList.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("No permitido por CORS"));
     }
   },
   credentials: true,
   methods: ['GET', 'POST', 'PATCH', 'DELETE']
-}
-app.use(cors(options))
+};
+app.use(cors(corsOptions));
 
-
-app.get('/nueva-ruta', checkApiKey,(req, res) => {
-  // Respuesta al cliente
-     res.send('Hola , soy una nueva ruta');
-   });
-  
-   // Ruta para cualquier solicitud no manejada
-   app.get('*', (req, res) => {
-     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-   });
-   
-// const passport=
-require("./utils/auth")
-// app.use(passport.initialize());
-routerApi(app);
-app.use(logErrors)
-app.use(ormErrorHandler)
-app.use(boomErrorHandler)
-app.use(errorHandler)
-// Middleware para servir archivos estáticos del frontend
-app.use(express.static(path.join(__dirname, 'dist')));
+// Registro de logs de rutas
 app.use((req, res, next) => {
   console.log(`Ruta llamada: ${req.method} ${req.url}`);
   next();
 });
 
-// Manejo de inicio en entorno local
+// Registro de rutas de API
+routerApi(app);
+console.log('Rutas inicializadas');
+
+// Rutas adicionales
+app.get('/nueva-ruta', checkApiKey, (req, res) => {
+  res.send('Hola, soy una nueva ruta');
+});
+
+// Middleware de manejo de archivos estáticos
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// Ruta global para cualquier solicitud no manejada
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+
+// Middlewares de manejo de errores
+app.use(logErrors);
+app.use(ormErrorHandler);
+app.use(boomErrorHandler);
+app.use(errorHandler);
+
+// Iniciar servidor solo en entorno local
 if (require.main === module) {
   const port = process.env.PORT || 3000;
   app.listen(port, () => {
@@ -76,8 +74,5 @@ if (require.main === module) {
   });
 }
 
-
-module.exports = app; // Asegúrate de exportar la app aquí
-
-
-
+// Exportar la aplicación para serverless o testing
+module.exports = app;

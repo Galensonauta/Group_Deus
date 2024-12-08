@@ -9,6 +9,9 @@ const validatorHandler = require('./../middlewares/validatorHandler');
 const { updateUserSchema, createUserSchema, getUserSchema,getUserInteractionSchema } = require('./../schemas/usersSchema');
 
 const service = new UserService();
+router.get('/test', (req, res) => {
+  res.status(200).json({ message: 'Rutas de usuarios funcionando correctamente' });
+});
 
 router.get('/', async (req, res, next) => {
   try {
