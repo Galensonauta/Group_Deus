@@ -60,6 +60,10 @@ app.use(boomErrorHandler)
 app.use(errorHandler)
 // Middleware para servir archivos estáticos del frontend
 app.use(express.static(path.join(__dirname, 'dist')));
+app.use((req, res, next) => {
+  console.log(`Ruta llamada: ${req.method} ${req.url}`);
+  next();
+});
 
 // Manejo de inicio en entorno local
 if (require.main === module) {
