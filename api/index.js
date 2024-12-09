@@ -1,2 +1,2 @@
-const app = require('../index'); // Importa tu archivo principal de Express
-module.exports = app; // Exporta la aplicación para que Vercel la ejecute
+import app from '../index'; // Importa tu archivo principal de Express
+export default app; // Exporta la aplicación para que Vercel la ejecute
