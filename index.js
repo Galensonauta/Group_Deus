@@ -11,6 +11,9 @@ const { logErrors, errorHandler, boomErrorHandler, ormErrorHandler } = require('
 require("./utils/auth");
 
 const app = express(); // Crear instancia de aplicación de Express
+// Registro de rutas de API
+routerApi(app);
+console.log('Rutas inicializadas');
 
 // Logs iniciales
 console.log('Servidor Express inicializado');
@@ -40,9 +43,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Registro de rutas de API
-routerApi(app);
-console.log('Rutas inicializadas');
 
 // Rutas adicionales
 app.get('/nueva-ruta', checkApiKey, (req, res) => {
