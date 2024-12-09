@@ -11,9 +11,6 @@ const { logErrors, errorHandler, boomErrorHandler, ormErrorHandler } = require('
 require("./utils/auth");
 
 const app = express(); // Crear instancia de aplicación de Express
-// Registro de rutas de API
-routerApi(app);
-console.log('Rutas inicializadas');
 
 // Logs iniciales
 console.log('Servidor Express inicializado');
@@ -36,6 +33,9 @@ const corsOptions = {
   methods: ['GET', 'POST', 'PATCH', 'DELETE']
 };
 app.use(cors(corsOptions));
+// Registro de rutas de API
+routerApi(app);
+console.log('Rutas inicializadas');
 
 // Registro de logs de rutas
 app.use((req, res, next) => {
