@@ -11,16 +11,19 @@ function validatorHandler(schema, property) {
     // Capturar datos dinamicamente
     const data = req[property];
     // validador del esquema
+    console.log(`Validando ${property}:`, req[property]); // Log de los datos a validar
+
     const { error } = schema.validate(data, { abortEarly: false });
     if (error) {
 			// enviar mensaje de error de boom de peticion incorrecta 
-      next(boom.badRequest(error));
-    }
+      console.error('Errores de validación:', error.details.map(err => err.message));
+      next(boom.badRequest(error.details.map(detail => detail.message).join(', ')));
+    }else{
     // continuar si no hay error
-    next();
+    next();}
   };
 }
-
 module.exports = validatorHandler;
+
 
 

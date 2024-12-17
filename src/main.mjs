@@ -104,10 +104,9 @@ export async function loginUser(nick, password) {
       nick,
       password,
     });
-    console.log('Usuario autenticado con éxito:', response.data);
-    window.location.href = 'https://group-deus-.vercel.app';
-   
-    return response.data;    
+    console.log('Usuario autenticado con éxito:', response);
+    // window.location.href = 'https://group-deus.vercel.app';   
+    return response;    
   } catch (error) {
     console.error('Error al iniciar sesión:', error.response ? error.response.data.message : error.message);
     alert('Error al iniciar sesión. Verifica tus credenciales.');
@@ -125,16 +124,16 @@ export async function logoutUser() {
 }
 export async function createUser(nick, password) {
   try {
-    const response = await axiosInstance.post('/users', {
+    const response = await axiosInstance.post('/users/new', {
       nick,
       password,
     });
     console.log('Usuario creado con éxito:', response.data);
-    // loginUser(nick,password)
+   loginUser(nick,password)
     return response.data;    
   } catch (error) {
-    console.error('Error al crear usuario', error.response ? error.response.data.message : error.message);
-    alert('Error al crear usuario. Verifica tus credenciales.');
+    console.error('Error al crear usuario:', error.response || error.message);
+        alert('Error al crear usuario. Verifica tus credenciales.');
   }
 }
 async function getRankGd(type){
@@ -222,6 +221,20 @@ async function likeMovie(type,movie) {
     console.error("Error al hacer la solicitud al servidor:", error);
   }
   }
+  export async function isAuthenticated() {
+    const token = getCookieValue("token"); // Asumiendo que el token se guarda en cookies
+    if (!token) {
+      console.log("no hay token")
+      return false; // No hay token en las cookies, por lo tanto, el usuario no está autenticado
+    }
+    try {
+      const response = await axiosInstance.get('/auth/validate-token');
+      return response.status === 200; // Si el servidor responde con un 200, el token es válido
+    } catch (error) {
+      console.error('Token inválido o expirado:', error.message || 'Error de red');
+      return false; // Si ocurre un error, asumimos que el token no es válido
+    }
+  }
 async function addMovieList(movie,button){
   isAuthenticated().then(async isAuth => {
     if (isAuth) {
@@ -277,20 +290,7 @@ function refreshHeart(isLiked, button){
     button.src=base64heartEmpty
   }
 }
-export async function isAuthenticated() {
-  const token = getCookieValue("token"); // Asumiendo que el token se guarda en cookies
-  if (!token) {
-    console.log("no hay token")
-    return false; // No hay token en las cookies, por lo tanto, el usuario no está autenticado
-  }
-  try {
-    const response = await axiosInstance.get('/auth/validate-token');
-    return response.status === 200; // Si el servidor responde con un 200, el token es válido
-  } catch (error) {
-    console.error('Token inválido o expirado:', error.message || 'Error de red');
-    return false; // Si ocurre un error, asumimos que el token no es válido
-  }
-}
+
 
 // llamados a API de The Movie DB
 export async function createAfiches(afiche, container, {

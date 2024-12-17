@@ -3,9 +3,9 @@ const Joi = require('joi');
 const id = Joi.number().integer();
 const type = Joi.string()
 const movieId = Joi.number().integer();
-const nick=Joi.string().max(16)
+const nick=Joi.string().max(10)
 const email = Joi.string().email();
-const password = Joi.string()
+const password = Joi.string().min(3)
 const role = Joi.string()
 
 const createUserSchema = Joi.object({
