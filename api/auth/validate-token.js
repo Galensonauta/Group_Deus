@@ -1,16 +1,16 @@
-const util = require('util');
-const passport=require("passport")
 const UserService = require('../../services/usersService');
 const service = new UserService();
+const { runMiddleware } = require('../../utils/middlewares');
+const passport=require("passport")
 require("../../utils/auth")
-const authenticate = util.promisify(passport.authenticate('jwt', { session: false }));
 
 module.exports=async(req,res)=>{
   try{
-    const user = await authenticate(req, res);
+    await runMiddleware(req, res, passport.authenticate('jwt', { session: false }));
+    const user = req.user.dataValues.id
   const userValidate=await service.find(user)
-  console.log('Resultado de user authen:', user);
-
+  console.log('Resultado del id user:', user);
+  console.log('Resultado de req user :', req.user);
           if (!userValidate) {
             return res.status(401).json({ message: 'Token inválido: usuario no encontrado' });
           }

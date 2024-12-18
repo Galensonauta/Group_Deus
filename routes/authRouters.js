@@ -53,7 +53,6 @@ router.post('/logout', (req, res) => {
     secure: false,      // Asegúrate de configurarlo a 'true' si estás en producción con HTTPS
     sameSite: 'Lax'     // Configura la política de SameSite
   });
-
   // Responder con un mensaje de éxito
   res.json({ message: 'Cierre de sesión exitoso' });
 });

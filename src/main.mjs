@@ -105,7 +105,7 @@ export async function loginUser(nick, password) {
       password,
     });
     console.log('Usuario autenticado con éxito:', response);
-    // window.location.href = 'https://group-deus.vercel.app';   
+    window.location.href = 'https://group-deus.vercel.app';   
     return response;    
   } catch (error) {
     console.error('Error al iniciar sesión:', error.response ? error.response.data.message : error.message);
@@ -114,11 +114,10 @@ export async function loginUser(nick, password) {
 }
 export async function logoutUser() {
   try {
-    const response = await axiosInstance.post('/auth/logout')
-    
+    const response = await axiosInstance.post('/auth/logout')    
       console.log('Cierre de sesión exitoso',response); 
-      window.location.href = 'https://group-deus-.vercel.app';   
-  } catch (error) {
+      window.location.href = 'https://group-deus.vercel.app';   
+    } catch (error) {
     console.error('Error de red:', error);
   }
 }
