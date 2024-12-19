@@ -8,7 +8,6 @@ const { updateUserSchema, createUserSchema, getUserSchema,getUserInteractionSche
 
 const service = new UserService();
 
-
 router.get("/interactions-movies/:type/:movieId",
 async (req,res,next)=>{
   try{
@@ -20,7 +19,6 @@ async (req,res,next)=>{
   }
 }
 )
-
 router.get('/my-interaction-detail/:type/:movieId',
   passport.authenticate("jwt", {session:false}),
   validatorHandler(getUserInteractionSchema, 'params'),
@@ -60,7 +58,6 @@ router.post('/',
     }
   }
 );
-
 router.patch('/:id',
   passport.authenticate("jwt", {session:false}),
   checkRoles("admin","citizen"),

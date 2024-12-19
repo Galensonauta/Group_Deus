@@ -1,11 +1,9 @@
 const express = require('express');
-// const validatorHandler = require('../../middlewares/validatorHandler');
-// const { createUserSchema } = require('../../schemas/usersSchema');
-const newUserRoute = require('./new');
-const testUserRoute = require ("./test")
+const usersRouter=require("./users")
+const router = express.Router();
 
-    const usersRouter = express.Router();    
-    usersRouter.post('/new' ,newUserRoute);
-    usersRouter.get("/test", testUserRoute)
+    router.post("/new", usersRouter)        
+    router.get("/my-interaction-list", usersRouter)
+    router.post("/rank", usersRouter)
 
-module.exports= usersRouter
+module.exports= router
