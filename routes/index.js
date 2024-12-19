@@ -7,7 +7,7 @@ const authRouters = require('./authRouters');
 
 function routerApi(app){
     const router = express.Router();    
-    app.use( "/api/v1", router)
+    app.use( "/api/", router)
     router.use("/users",usersRouters)
     router.use("/listas",listasRouters)
     router.use("/movies", moviesRouters)

@@ -123,7 +123,7 @@ export async function logoutUser() {
 }
 export async function createUser(nick, password) {
   try {
-    const response = await axiosInstance.post('/users/new', {
+    const response = await axiosInstance.post('/users', {
       nick,
       password,
     });
