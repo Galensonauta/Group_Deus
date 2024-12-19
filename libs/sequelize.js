@@ -26,7 +26,6 @@ require("dotenv").config();
   if (!sequelize) {  
   // sequelize = new Sequelize(process.env.DATABASE_URL||config.dbUrl, options)
    sequelize = new Sequelize(config.dbUrl||config.dbUrlDev, {
-   sequelize = new Sequelize(config.dbUrl||config.dbUrlDev, {
     dialect: 'postgres',
     dialectModule: require('pg'), // Especifica el cliente de PostgreSQL
     dialectOptions: {
