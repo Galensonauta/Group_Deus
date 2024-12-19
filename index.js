@@ -20,7 +20,7 @@ app.use(express.json()); // Parsear JSON
 app.use(cookieParser()); // Manejar cookies
 
 // Configuración de CORS
-const whiteList = ["http://localhost:8080", "https://group-deus.vercel.app"];
+const whiteList = ["http://localhost:8080", "https://group-deus.vercel.app","https://group-deus-backend-express.onrender.com"];
 const corsOptions = {
   origin: (origin, callback) => {
     if (whiteList.includes(origin) || !origin) {
