@@ -6,17 +6,13 @@ function getCookieValue(name) {
 // Agrega un interceptor para incluir el token en las solicitudes
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = getCookieValue("token"); // Asumiendo que el token se guarda en cookies
+    const token = getCookieValue('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
-    }else{
-  console.log('No se encontró el token en las cookies');
-}    
+    }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 import { base64, 
   base64Gr, 
@@ -105,7 +101,7 @@ export async function loginUser(nick, password) {
       password,
     });
     console.log('Usuario autenticado con éxito:', response);
-    // window.location.href = 'https://group-deus.vercel.app';   
+    window.location.href = 'https://group-deus.vercel.app';   
     return response;    
   } catch (error) {
     console.error('Error al iniciar sesión:', error.response ? error.response.data.message : error.message);

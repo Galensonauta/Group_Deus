@@ -26,8 +26,7 @@ router.post('/login',
         path: '/', // Hacer que la cookie sea accesible en todas las rutas
       maxAge: 24 * 60 * 60 * 1000 // Duración de 1 día para la cookie
       });
-      console.log("el token",req.cookies); // Verifica todas las cookies recibidas
-      console.log('Token JWT:', req.cookies.token); // Verifica específicamente la cookie del token
+      
       console.log('Token JWT(crudo):', token); 
   
     res.json({ message: 'Inicio de sesión exitoso' ,
@@ -40,6 +39,8 @@ router.post('/login',
 router.get('/validate-token', 
   passport.authenticate('jwt', { session: false }),
    async (req, res) => {
+    console.log('Cookies en esta solicitud:', req.cookies); // Deberías ver la cookie aquí
+
     const userId = req.user.id; // Esto asume que el middleware de passport agrega el usuario al request
     const user = await service.find(userId);
     if (!user) {
