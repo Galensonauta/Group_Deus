@@ -20,12 +20,16 @@ app.use(express.json()); // Parsear JSON
 app.use(cookieParser()); // Manejar cookies
 
 // Configuración de CORS
-const whiteList = ["http://localhost:8080", "https://group-deus.vercel.app","https://group-deus-backend-express.onrender.com"];
+const whiteList = ["https://group-deus.vercel.app","https://group-deus-backend-express.onrender.com"];
 const corsOptions = {
   origin: (origin, callback) => {
+    console.log('Solicitud desde origen:', origin);
+
     if (whiteList.includes(origin) || !origin) {
       callback(null, true);
     } else {
+      console.error('Origen no permitido por CORS:', origin);
+
       callback(new Error("No permitido por CORS"));
     }
   },
