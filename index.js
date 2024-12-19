@@ -9,7 +9,7 @@ const routerApi = require('./routes/index.js');
 const { checkApiKey } = require('./middlewares/authHandler.js');
 const { logErrors, errorHandler, boomErrorHandler, ormErrorHandler } = require('./middlewares/errorHandler.js');
 require("./utils/auth");
-
+const port = process.env.PORT || 3000;
 const app = express(); // Crear instancia de aplicación de Express
 
 // Logs iniciales
@@ -64,15 +64,10 @@ app.use(boomErrorHandler);
 app.use(errorHandler);
 
 // Iniciar servidor solo en entorno local
-if (require.main === module) {
-  const port = process.env.PORT || 3000;
+
   app.listen(port, () => {
     console.log(`Servidor corriendo en el puerto ${port}`);
-    sequelize.authenticate()
-      .then(() => console.log('Conexión a la base de datos exitosa'))
-      .catch(err => console.error('Error al conectar a la base de datos:', err));
-  });
-}
+})
 
 // Exportar la aplicación para serverless o testing
 module.exports = app;

@@ -5,10 +5,11 @@ const { createUserSchema } = require('../schemas/usersSchema');
 // const passport=require("passport")
 // require("../../utils/auth")
 
-module.exports = async (req, res) => {
+module.exports = async (req, res, next) => {
     try{
     const { method, url } = req;  
     console.log(`Método: ${req.method}, URL: ${req.url}`);
+    
     if (req.method === 'POST' && req.url ==='/api/users/new') {
         const {error,value}=createUserSchema.validate(req.body, { abortEarly: false })
                   if (error) {
@@ -17,6 +18,9 @@ module.exports = async (req, res) => {
                       message: 'Error de validación',
                       details: error.details.map(err => err.message) 
                     });
+                  }
+                  if (next) {
+                    return next();
                   }
               const newUser = await service.create(value);
               res.status(201).json(newUser);  
@@ -27,6 +31,9 @@ module.exports = async (req, res) => {
     res.status(404).json({ error: 'Ruta no encontrada' });}
     catch(err){
         console.error('Error al procesar la solicitud:', err);
+        if (next) {
+          return next(err); // Pasar el error al middleware de manejo de errores
+        }
         res.status(500).json({ success: false, error: err.message })
     }
   };

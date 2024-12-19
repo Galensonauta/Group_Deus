@@ -7,10 +7,10 @@ require('dotenv').config();
 const { logErrors, errorHandler, boomErrorHandler, ormErrorHandler } = require('../middlewares/errorHandler.js');
 
 require("../utils/auth");
+const app = express(); // Crear instancia de aplicación de Express
 const passport = require('passport');
 
 app.use(passport.initialize()); // Para inicializar Passport
-const app = express(); // Crear instancia de aplicación de Express
 // Logs iniciales
 console.log('Servidor Express inicializado');
 // Middlewares globales
