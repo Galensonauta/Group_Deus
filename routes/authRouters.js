@@ -20,9 +20,9 @@ router.post('/login',
     const token=jwt.sign(payload, config.jwtSecret)
       //Configurar la cookie con el token JWT
       res.cookie('token', token, {
-        httpOnly: true,        // Protege la cookie de ser accesible por JavaScript
+        httpOnly: false,        // Protege la cookie de ser accesible por JavaScript
        secure: true,
-        sameSite: 'Lax',    // Protege contra ataques CSRF (Cross-Site Request Forgery)
+        sameSite: 'strict',    // Protege contra ataques CSRF (Cross-Site Request Forgery)
       //  maxAge: 24 * 60 * 60 * 1000 // Duración de 1 día para la cookie
       });
       console.log("el token",req.cookies); // Verifica todas las cookies recibidas
@@ -49,9 +49,9 @@ router.get('/validate-token',
 router.post('/logout', (req, res) => {
   // Configurar la cookie para que expire de inmediato
   res.clearCookie('token', {
-    httpOnly: true,     // Mantiene la cookie protegida de accesos de JavaScript
-    secure: false,      // Asegúrate de configurarlo a 'true' si estás en producción con HTTPS
-    sameSite: 'Lax'     // Configura la política de SameSite
+    httpOnly: false,     // Mantiene la cookie protegida de accesos de JavaScript
+    secure: true,      // Asegúrate de configurarlo a 'true' si estás en producción con HTTPS
+    sameSite:'strict'     // Configura la política de SameSite
   });
   // Responder con un mensaje de éxito
   res.json({ message: 'Cierre de sesión exitoso' });
