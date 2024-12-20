@@ -34,6 +34,7 @@ const corsOptions = {
   credentials: true,
   methods: ['GET', 'POST', 'PATCH', 'DELETE']
 };
+
 app.use(cors(corsOptions));
 // Registro de rutas de API
 routerApi(app);

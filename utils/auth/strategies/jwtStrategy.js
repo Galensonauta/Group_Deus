@@ -1,4 +1,5 @@
-const JwtEstrat = require('passport-jwt').Strategy;
+const JwtStrategy = require('passport-jwt').Strategy;
+
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const{User}=require("./../../../db/model/userModel")
 const {config}=require("../../../config/config")
@@ -8,12 +9,12 @@ const options={
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: config.jwtSecret
 }
-const JwtStrategy= new JwtEstrat(options,async (payload,done)=>{
+const JwtStrategy= new JwtEstrat(options,async (jwt_payload,done)=>{
     try {   
-        const user = await User.findByPk(payload.sub); // Verificar si el usuario existe en la base de datos
+        const user = await User.findByPk(jwt_payload.sub); // Verificar si el usuario existe en la base de datos
         if (user) {
             console.log("lo encontro",user.id)
-            console.log('Token recibido en el servidor:', payload);  
+            console.log('Token recibido en el servidor:', jwt_payload);  
             // Verifica que el token se reciba correctamente
           return done(null, user); // Usuario encontrado
         } else {

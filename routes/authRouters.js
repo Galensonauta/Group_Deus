@@ -23,7 +23,7 @@ router.post('/login',  (req, res, next) => {
     const token=jwt.sign(payload, config.jwtSecret,{expiresIn: '1d' })
       //Configurar la cookie con el token JWT
       res.cookie('token', token, {
-        httpOnly: true,        // Protege la cookie de ser accesible por JavaScript
+        httpOnly: false,        // Protege la cookie de ser accesible por JavaScript
        secure: true,
         sameSite: 'none',    // Protege contra ataques CSRF (Cross-Site Request Forgery)
         path: '/', // Hacer que la cookie sea accesible en todas las rutas
@@ -39,30 +39,37 @@ router.post('/login',  (req, res, next) => {
     next(error);
   }
 });
-router.get('/validate-token', (req, res, next) => {
+router.get('/validate-token', 
+  (req, res, next) => {
   console.log('Cuerpo de la solicitud en validate token:', req.body);
+  console.log('Cookies recibidas:', req.cookies);
   next();
 },
   passport.authenticate('jwt', { session: false }),
-   async (req, res) => {
-    console.log('Cookies en esta solicitud:', req.cookies); // Deberías ver la cookie aquí
-
+   async (req, res,next) => {
+    console.log('req.user:', req.user); // Verificar si req.user está presente
+    try{
     const userId = req.user.id; // Esto asume que el middleware de passport agrega el usuario al request
     const user = await service.find(userId);
     if (!user) {
       return res.status(401).json({ message: 'Token inválido: usuario no encontrado' });
     }
     console.log("el usuario es:",req.user.dataValues.nick)
-  res.status(200).json({ message: 'Token válido'});  
+  res.status(200).json({ message: 'Token válido'});  }
+  catch(err){
+    console.error('Error al validar el token:', err.message || err);
+    next(err); // Pasar el error al middleware de manejo de errores
+  }
 });
 router.post('/logout', (req, res) => {
   // Configurar la cookie para que expire de inmediato
   res.clearCookie('token', {
-    httpOnly: true,     // Mantiene la cookie protegida de accesos de JavaScript
-    secure: true,      // Asegúrate de configurarlo a 'true' si estás en producción con HTTPS
+    httpOnly: false,     // Mantiene la cookie protegida de accesos de JavaScript
+    secure: true,
     sameSite:"none"     // Configura la política de SameSite
   });
   // Responder con un mensaje de éxito
+  console.log('Cookie de token eliminada');
   res.json({ message: 'Cierre de sesión exitoso' });
 });
 

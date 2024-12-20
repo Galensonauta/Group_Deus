@@ -1,21 +1,41 @@
 const passport=require("passport")
-
 const LocalStartegy=require("./strategies/localStrategy")
-const JwtStrategy=require("./strategies/jwtStrategy")
+// const JwtStrategy=require("./strategies/jwtStrategy")
 
 passport.use("local",LocalStartegy)
-passport.use("jwt",JwtStrategy)
+// passport.use("jwt",JwtStrategy)
 
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+const {User}=require("../../db/model/userModel")
+const {config}=require("../../config/config")
+
+ const options={
+                jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+                secretOrKey: config.jwtSecret
+            }
+passport.use(
+    new JwtStrategy(options,async (jwt_payload,done)=>{
+        try {       
+            const user = await User.findByPk(jwt_payload.sub); // Verificar si el usuario existe en la base de datos
+            if (user) {
+                console.log("lo encontro",user)
+              return done(null, user); // Usuario encontrado
+            } else {
+                console.log("no lo encontro pero ers valido el t",user)
+    
+              return done(null, false); // Usuario no encontrado, token inválido
+            }
+          } catch (error) {
+            return done(error, false); // Error en la búsqueda del usuario
+          }
+    })    
+)
 
 // const LocalStrategy=require("passport-local").Strategy
-// const { Strategy, ExtractJwt } = require('passport-jwt');
-// const {User}=require("../../db/model/userModel")
 // const UserService = require("../../services/usersService")
 // const bcrypt = require("bcrypt")
 // const boom = require('@hapi/boom');
-// const passport = require('passport');
-// const {config}=require("../../config/config")
-
 // const service = new UserService()
 // passport.use(
 //     new LocalStrategy(
@@ -40,26 +60,4 @@ passport.use("jwt",JwtStrategy)
 //             done(error, false)
 //         }
 //     })
-// )
-//  const options={
-//                 jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-//                 secretOrKey: config.jwtSecret
-//             }
-
-// passport.use(
-//     new Strategy(options,async (jwt_payload,done)=>{
-//         try {       
-//             const user = await User.findByPk(jwt_payload.sub); // Verificar si el usuario existe en la base de datos
-//             if (user) {
-//                 console.log("lo encontro",user.id)
-//               return done(null, user); // Usuario encontrado
-//             } else {
-//                 console.log("no lo encontro pero ers valido el t",user)
-    
-//               return done(null, false); // Usuario no encontrado, token inválido
-//             }
-//           } catch (error) {
-//             return done(error, false); // Error en la búsqueda del usuario
-//           }
-//     })    
 // )
