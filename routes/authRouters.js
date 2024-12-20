@@ -8,8 +8,11 @@ const UserService = require('./../services/usersService');
 
 const service = new UserService();
 
-router.post('/login', 
-    passport.authenticate("local", {session:false}),
+router.post('/login',  (req, res, next) => {
+  console.log('Cuerpo de la solicitud:', req.body);
+  next();
+},
+    passport.authenticate("local",{session:false}),
     async (req, res, next) => {
   try {
     const user=req.user
@@ -22,7 +25,7 @@ router.post('/login',
       res.cookie('token', token, {
         httpOnly: true,        // Protege la cookie de ser accesible por JavaScript
        secure: true,
-        sameSite: 'lax',    // Protege contra ataques CSRF (Cross-Site Request Forgery)
+        sameSite: 'none',    // Protege contra ataques CSRF (Cross-Site Request Forgery)
         path: '/', // Hacer que la cookie sea accesible en todas las rutas
       maxAge: 24 * 60 * 60 * 1000 // Duración de 1 día para la cookie
       });
@@ -36,7 +39,10 @@ router.post('/login',
     next(error);
   }
 });
-router.get('/validate-token', 
+router.get('/validate-token', (req, res, next) => {
+  console.log('Cuerpo de la solicitud en validate token:', req.body);
+  next();
+},
   passport.authenticate('jwt', { session: false }),
    async (req, res) => {
     console.log('Cookies en esta solicitud:', req.cookies); // Deberías ver la cookie aquí
@@ -54,7 +60,7 @@ router.post('/logout', (req, res) => {
   res.clearCookie('token', {
     httpOnly: true,     // Mantiene la cookie protegida de accesos de JavaScript
     secure: true,      // Asegúrate de configurarlo a 'true' si estás en producción con HTTPS
-    sameSite:'lax'     // Configura la política de SameSite
+    sameSite:"none"     // Configura la política de SameSite
   });
   // Responder con un mensaje de éxito
   res.json({ message: 'Cierre de sesión exitoso' });

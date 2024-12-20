@@ -11,7 +11,10 @@ const LocalStartegy= new Strategy(
     },
     async(nick,password,done)=>{
     try {
+        console.log('Nick recibido:', nick);
        const user= await service.findUser(nick)
+       console.log('Usuario devuelto por findUser:', user);
+
        if(!user){
         done(boom.unauthorized(),false)
        }

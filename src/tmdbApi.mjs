@@ -13,6 +13,5 @@ const apiTMDB  = process.env.API_KEY
 });
 export const axiosInstance = axios.create({
    baseURL: 'https://group-deus-backend-express.onrender.com/api',  // Opcionalmente, establece una URL base para tus solicitudes
-  // Permite que todas las solicitudes de esta instancia usen cookies
-  withCredentials: true,
+   withCredentials: true,
 });

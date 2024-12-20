@@ -3,8 +3,8 @@ const passport=require("passport")
 const LocalStartegy=require("./strategies/localStrategy")
 const JwtStrategy=require("./strategies/jwtStrategy")
 
-passport.use(LocalStartegy)
-passport.use(JwtStrategy)
+passport.use("local",LocalStartegy)
+passport.use("jwt",JwtStrategy)
 
 
 // const LocalStrategy=require("passport-local").Strategy

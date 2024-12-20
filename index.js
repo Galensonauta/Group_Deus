@@ -24,11 +24,10 @@ const whiteList = ["https://group-deus.vercel.app","https://group-deus-backend-e
 const corsOptions = {
   origin: (origin, callback) => {
     console.log('Solicitud desde origen:', origin);
-
     if (whiteList.includes(origin) || !origin) {
       callback(null, true);
-    } else {      console.error('Origen no permitido por CORS:', origin);
-
+    } else {      
+      console.error('Origen no permitido por CORS:', origin);
       callback(new Error("No permitido por CORS"));
     }
   },
