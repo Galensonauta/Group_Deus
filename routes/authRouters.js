@@ -20,7 +20,7 @@ router.post('/login',  (req, res, next) => {
         sub:user.id,
         role: user.role        
     }
-    const token=jwt.sign(payload, config.jwtSecret)
+    const token=jwt.sign(payload, config.jwtSecret,{expiresIn: '1d' })
       //Configurar la cookie con el token JWT
       res.cookie('token', token, {
         httpOnly: true,        // Protege la cookie de ser accesible por JavaScript

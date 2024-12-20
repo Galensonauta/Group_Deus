@@ -2,7 +2,6 @@ const JwtEstrat = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const{User}=require("./../../../db/model/userModel")
 const {config}=require("../../../config/config")
-const jwtStrategy = require("./strategies/jwt"); // Archivo donde defines tu estrategia JWT
 
 
 const options={
