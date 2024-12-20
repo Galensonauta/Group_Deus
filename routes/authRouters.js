@@ -43,28 +43,48 @@ router.post('/login',  (req, res, next) => {
     next(error);
   }
 });
-router.get('/validate-token', 
-  (req, res, next) => {
-  console.log('Cookies recibidas:', req.cookies);
-  next();
-},
-  passport.authenticate('jwt', { session: false }),
-   async (req, res,next) => {
-    console.log('req.user:', req.user); // Verificar si req.user está presente
-    try{
-    const userId = req.user.id; // Esto asume que el middleware de passport agrega el usuario al request
-    const user = await service.find(userId);
+// router.get('/validate-token', 
+//   (req, res, next) => {
+//   console.log('Cookies recibidas:', req.cookies);
+//   next();
+// },
+//   passport.authenticate('jwt', { session: false }),
+//    async (req, res,next) => {
+//     console.log('req.user:', req.user); // Verificar si req.user está presente
+//     try{
+//     const userId = req.user.id; // Esto asume que el middleware de passport agrega el usuario al request
+//     const user = await service.find(userId);
+//     if (!user) {
+//       return res.status(401).json({ message: 'Token inválido: usuario no encontrado' });
+//     }
+//     console.log("el usuario es:",req.user.dataValues.nick)
+//   res.status(200).json({ message: 'Token válido'});  }
+//   catch(err){
+//     console.error('Error al validar el token:', err.message || err);
+//     next(err); // Pasar el error al middleware de manejo de errores
+//   }
+// });
+router.get('/validate-token', async (req, res) => {
+  const token = req.cookies.token; // Leer el token desde la cookie
+  if (!token) {
+    return res.status(401).json({ message: 'Token no encontrado' });
+  }
+
+  try {
+    const payload = jwt.verify(token, config.jwtSecret); // Decodificar el token
+    console.log('Payload decodificado:', payload);
+
+    const user = await service.find(payload.sub); // Buscar el usuario en la base de datos
     if (!user) {
       return res.status(401).json({ message: 'Token inválido: usuario no encontrado' });
     }
-    console.log("el usuario es:",req.user.dataValues.nick)
-  res.status(200).json({ message: 'Token válido'});  }
-  catch(err){
-    console.error('Error al validar el token:', err.message || err);
-    next(err); // Pasar el error al middleware de manejo de errores
+
+    res.status(200).json({ message: 'Token válido', user });
+  } catch (err) {
+    console.error('Error al verificar el token:', err);
+    res.status(401).json({ message: 'Token inválido o expirado' });
   }
 });
-
 router.post('/logout', (req, res) => {
   // Configurar la cookie para que expire de inmediato
   Cookies.remove('token');
