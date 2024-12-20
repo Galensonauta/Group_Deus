@@ -1,14 +1,17 @@
 import {api,axiosInstance} from "./tmdbApi.mjs"
-function getCookieValue(name) {
+import Cookie from "js-cookie"
+function getCookieValue() {
   console.log('Document cookies:', document.cookie); // Para depurar todas las cookies visibles
-  const match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
-  return match ? decodeURIComponent(match[3]) : null;
+  // const match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+  // return match ? decodeURIComponent(match[3]) : null;
+  const token = Cookie.get('token');
+  console.log('Token encontrado:', token);
+  return token;
 }
 // Agrega un interceptor para incluir el token en las solicitudes
-axiosInstance.interceptors.request.use(  
+axiosInstance.interceptors.request.use(
   (config) => {
-    console.log('Token encontrado en cookies:', getCookieValue('token'))
-    const token = getCookieValue('token'); // Extraer el token de las cookies
+    const token = Cookie.get('token'); // Asegúrate de que js-cookie esté configurado correctamente
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     } else {
@@ -16,11 +19,10 @@ axiosInstance.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
-    console.error('Error en el interceptor de solicitudes:', error);
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
+axiosInstance.defaults.withCredentials = true;
+
 import { base64, 
   base64Gr, 
   base64Cast, 
@@ -108,7 +110,7 @@ export async function loginUser(nick, password) {
       password,
     });
     console.log('Usuario autenticado con éxito:', response);
-     window.location.href = 'https://group-deus.vercel.app';   
+    //  window.location.href = 'https://group-deus.vercel.app';   
     return response;    
   } catch (error) {
     console.error('Error al iniciar sesión:', error.response ? error.response.data.message : error.message);
@@ -224,14 +226,14 @@ async function likeMovie(type,movie) {
   }
   }
   export async function isAuthenticated() {
-    const token = getCookieValue("token"); // Asumiendo que el token se guarda en cookies
+    // const token = getCookieValue("token"); // Asumiendo que el token se guarda en cookies
+    const token = Cookie.get('token') // Extraer el token de las cookies
     console.log('Comprobando autenticación...');
     console.log('Token encontrado:', token);
-      console.log('Document cookies:', document.cookie); // Para depurar todas las cookies visibles
-    if (!token) {
-      console.log("no hay token")
-      return false; // No hay token en las cookies, por lo tanto, el usuario no está autenticado
-    }
+    // if (!token) {
+    //   console.log("no hay token")
+    //   return false; // No hay token en las cookies, por lo tanto, el usuario no está autenticado
+    // }
     try {
       const response = await axiosInstance.get('/auth/validate-token');
       return response.status === 200; // Si el servidor responde con un 200, el token es válido

@@ -1,23 +1,23 @@
-const sequelize = require('./libs/sequelize.js');
 const express = require('express');
 const cors = require('cors');
-const cookieParser = require('cookie-parser');
 const path = require('path');
 require('dotenv').config();
 
 const routerApi = require('./routes/index.js');
 const { checkApiKey } = require('./middlewares/authHandler.js');
 const { logErrors, errorHandler, boomErrorHandler, ormErrorHandler } = require('./middlewares/errorHandler.js');
-require("./utils/auth");
+const passport = require('passport');
+require('./utils/auth'); // Asegúrate de importar las estrategias
+
 const port = process.env.PORT || 3000;
 const app = express(); // Crear instancia de aplicación de Express
+app.use(passport.initialize());
 
 // Logs iniciales
 console.log('Servidor Express inicializado');
 
 // Middlewares globales
 app.use(express.json()); // Parsear JSON
-app.use(cookieParser()); // Manejar cookies
 
 // Configuración de CORS
 const whiteList = ["https://group-deus.vercel.app","https://group-deus-backend-express.onrender.com"];

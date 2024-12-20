@@ -1,6 +1,8 @@
 const express = require('express');
 const jwt = require("jsonwebtoken")
 const {config}=require("../config/config")
+const Cookies =require( 'js-cookie');
+
 
 const passport=require("passport")
 const router = express.Router();
@@ -22,7 +24,7 @@ router.post('/login',  (req, res, next) => {
     }
     const token=jwt.sign(payload, config.jwtSecret,{expiresIn: '1d' })
       //Configurar la cookie con el token JWT
-      res.cookie('token', token, {
+      Cookies.set('token', token, {
         httpOnly: false,        // Protege la cookie de ser accesible por JavaScript
        secure: true,
         sameSite: 'none',    // Protege contra ataques CSRF (Cross-Site Request Forgery)
@@ -31,6 +33,8 @@ router.post('/login',  (req, res, next) => {
       });
       
       console.log('Token JWT(crudo):', token); 
+      console.log('Configuración de la cookie:', res.getHeader('Set-Cookie'));
+
   
     res.json({ message: 'Inicio de sesión exitoso' ,
         user,token
@@ -41,7 +45,6 @@ router.post('/login',  (req, res, next) => {
 });
 router.get('/validate-token', 
   (req, res, next) => {
-  console.log('Cuerpo de la solicitud en validate token:', req.body);
   console.log('Cookies recibidas:', req.cookies);
   next();
 },
@@ -61,16 +64,21 @@ router.get('/validate-token',
     next(err); // Pasar el error al middleware de manejo de errores
   }
 });
+
 router.post('/logout', (req, res) => {
   // Configurar la cookie para que expire de inmediato
-  res.clearCookie('token', {
-    httpOnly: false,     // Mantiene la cookie protegida de accesos de JavaScript
-    secure: true,
-    sameSite:"none"     // Configura la política de SameSite
-  });
-  // Responder con un mensaje de éxito
-  console.log('Cookie de token eliminada');
-  res.json({ message: 'Cierre de sesión exitoso' });
+  Cookies.remove('token');
+  console.log('Sesión cerrada');
+ res.json({ message: 'Cierre de sesión exitoso' });
+
+  // res.clearCookie('token', {
+  //   httpOnly: false,     // Mantiene la cookie protegida de accesos de JavaScript
+  //   secure: true,
+  //   sameSite:"none"     // Configura la política de SameSite
+  // });
+  // // Responder con un mensaje de éxito
+  // console.log('Cookie de token eliminada');
+  // res.json({ message: 'Cierre de sesión exitoso' });
 });
 
 module.exports=router
