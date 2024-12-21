@@ -12,6 +12,7 @@ function getCookieValue() {
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = Cookie.get('token'); // Asegúrate de que js-cookie esté configurado correctamente
+    console.log(token)
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     } else {

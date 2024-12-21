@@ -43,7 +43,6 @@ router.post('/login',  (req, res, next) => {
 router.get('/validate-token', 
   (req, res, next) => {
   console.log('Cookies recibidas:', req.cookies);
-  console.log('Cookies token:', req.cookies.token);
   next();
 },
   passport.authenticate('jwt', { session: false }),
