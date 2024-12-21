@@ -22,7 +22,7 @@ router.post('/login',  (req, res, next) => {
     const token=jwt.sign(payload, config.jwtSecret,{expiresIn: '1d' })
       //Configurar la cookie con el token JWT
       Cookies.set('token', token, {
-        httpOnly: false,        // Protege la cookie de ser accesible por JavaScript
+        httpOnly: true,        // Protege la cookie de ser accesible por JavaScript
        secure: true,
         sameSite: 'none',    // Protege contra ataques CSRF (Cross-Site Request Forgery)
         path: '/', // Hacer que la cookie sea accesible en todas las rutas
@@ -30,9 +30,7 @@ router.post('/login',  (req, res, next) => {
       });
       
       console.log('Token JWT(crudo):', token); 
-      console.log('Configuración de la cookie:', res.getHeader('Set-Cookie'));
-
-  
+      console.log('Configuración de la cookie:', res.getHeader('Set-Cookie'));  
     res.json({ message: 'Inicio de sesión exitoso' ,
         user,token
           });
