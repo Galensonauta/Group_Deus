@@ -7,25 +7,19 @@ passport.use("local",LocalStartegy)
 
 const Strategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-// const {User}=require("../../db/model/userModel")
-const userService = require ("../../services/usersService")
+const {User}=require("../../db/model/userModel")
+// const userService = require ("../../services/usersService")
 const {config}=require("../../config/config")
-const service = new userService
-const cookieExtractor = (req) => {
-  let token = null;
-  if (req && req.cookies) {
-    token = req.cookies.token; // Leer el token desde la cookie
-  }
-  return token;
-};
+// const service = new userService
+
 const options = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken([cookieExtractor]), // Extraer token del encabezado Authorization
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // Extraer token del encabezado Authorization
   secretOrKey: config.jwtSecret,
 };
 
 const jwtStrategy = new Strategy(options, async (payload, done) => {
   try {
-    const user = await service.find(payload.sub); // Buscar usuario por ID (payload.sub)
+    const user = await User.findByPk(payload.sub); // Buscar usuario por ID (payload.sub)
     if (!user) {
       return done(null, false); // Usuario no encontrado
     }
