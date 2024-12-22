@@ -1,5 +1,5 @@
 import {api,axiosInstance} from "./tmdbApi.mjs"
-const Cookies =require('universal-cookie');
+import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 // function getCookieValue() {
