@@ -1,16 +1,13 @@
 const express = require('express');
 const jwt = require("jsonwebtoken")
 const {config}=require("../config/config")
-const Cookies =require( 'js-cookie');
 const passport=require("passport")
 const router = express.Router();
 const UserService = require('./../services/usersService');
 const service = new UserService();
+const Cookies =require('universal-cookie');
+const cookies = new Cookies();
 
-function setCookie(name, value, days) {
-  const expires = new Date(Date.now() + days * 864e5).toUTCString();
-  document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=Lax; Secure`;
-}
 
 router.post('/login',  (req, res, next) => {
   console.log('Cuerpo de la solicitud:', req.body);
@@ -27,14 +24,13 @@ router.post('/login',  (req, res, next) => {
     const token=jwt.sign(payload, config.jwtSecret,{expiresIn: '1d' })
     console.log('Encabezado Set-Cookie:', res.getHeader('Set-Cookie'));
       //Configurar la cookie con el token JWT
-      // Cookies.set('token', token, {
-      //   httpOnly: true,        // Protege la cookie de ser accesible por JavaScript
-      //  secure: true,
-      //   sameSite: 'none',    // Protege contra ataques CSRF (Cross-Site Request Forgery)
-      //   path: '/', // Hacer que la cookie sea accesible en todas las rutas
-      // maxAge: 24 * 60 * 60 * 1000 // Duración de 1 día para la cookie
-      // });
-      setCookie("token", token, 1)
+      cookies('token', token, {
+        // httpOnly: true,        // Protege la cookie de ser accesible por JavaScript
+       secure: true,
+        sameSite: 'none',    // Protege contra ataques CSRF (Cross-Site Request Forgery)
+        path: '/', // Hacer que la cookie sea accesible en todas las rutas
+      maxAge: 24 * 60 * 60 * 1000 // Duración de 1 día para la cookie
+      });
       console.log('Token JWT(crudo):', token); 
       console.log('Configuración de la cookie:', res.getHeader('Set-Cookie'));  
     res.json({ message: 'Inicio de sesión exitoso' ,

@@ -1,21 +1,21 @@
 import {api,axiosInstance} from "./tmdbApi.mjs"
-import Cookie from "js-cookie"
-function getCookieValue() {
-  console.log('Document cookies:', document.cookie); // Para depurar todas las cookies visibles
-  // const match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
-  // return match ? decodeURIComponent(match[3]) : null;
-  const token = Cookie.get('token');
-  console.log('Token encontrado:', token);
-  return token;
-}
-function getCookie(name) {
-  const match = document.cookie.match(new RegExp('(^|;\\s*)' + name + '=([^;]*)'));
-  return match ? decodeURIComponent(match[2]) : null;
-}
+const Cookies =require('universal-cookie');
+const cookies = new Cookies();
+
+// function getCookieValue() {
+//   console.log('Document cookies:', document.cookie); // Para depurar todas las cookies visibles
+//   // const match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+//   // return match ? decodeURIComponent(match[3]) : null;
+//   const token = Cookie.get('token');
+//   console.log('Token encontrado:', token);
+//   return token;
+// }
 // Agrega un interceptor para incluir el token en las solicitudes
+
+
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = getCookie('token'); // Asegúrate de que js-cookie esté configurado correctamente
+    const token = cookies.get('token');
     console.log('Token obtenido:', token);
 
     if (token) {
@@ -236,8 +236,8 @@ async function likeMovie(type,movie) {
     // const token = Cookie.get('token') // Extraer el token de las cookies
     // console.log('Comprobando autenticación...');
     // console.log('Token encontrado:', token);
-    const token = getCookie('token');
-    console.log('Token obtenido:', token);
+    const token = cookies.get('token');
+    console.log('Token obtenido en isAuth:', token);
 
     // if (!token) {
     //   console.log("no hay token")
