@@ -24,7 +24,7 @@ router.post('/login',  (req, res, next) => {
     const token=jwt.sign(payload, config.jwtSecret,{expiresIn: '1d' })
     console.log('Encabezado Set-Cookie:', res.getHeader('Set-Cookie'));
       //Configurar la cookie con el token JWT
-      cookies('token', token, {
+      cookies.set('token', token, {
         // httpOnly: true,        // Protege la cookie de ser accesible por JavaScript
        secure: true,
         sameSite: 'none',    // Protege contra ataques CSRF (Cross-Site Request Forgery)
