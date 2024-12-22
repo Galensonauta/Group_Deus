@@ -230,6 +230,8 @@ async function likeMovie(type,movie) {
     const token = Cookie.get('token') // Extraer el token de las cookies
     console.log('Comprobando autenticación...');
     console.log('Token encontrado:', token);
+
+
     // if (!token) {
     //   console.log("no hay token")
     //   return false; // No hay token en las cookies, por lo tanto, el usuario no está autenticado
