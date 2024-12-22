@@ -18,16 +18,16 @@ axiosInstance.interceptors.request.use(
     const token = cookies.get('token');
     console.log('Token obtenido:', token);
 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    } else {
+    // if (token) {
+    //   config.headers.Authorization = `Bearer ${token}`;
+    // } 
+    if(!token) {
       console.warn('No se encontró el token en las cookies');
     }
     return config;
   },
   (error) => Promise.reject(error)
 );
-axiosInstance.defaults.withCredentials = true;
 
 import { base64, 
   base64Gr, 
@@ -116,6 +116,8 @@ export async function loginUser(nick, password) {
       password,
     });
     console.log('Usuario autenticado con éxito:', response);
+    console.log('Token en las cookies después de login:', document.cookie);
+
     //  window.location.href = 'https://group-deus.vercel.app';   
     return response;    
   } catch (error) {

@@ -11,9 +11,15 @@ const {User}=require("../../db/model/userModel")
 // const userService = require ("../../services/usersService")
 const {config}=require("../../config/config")
 // const service = new userService
-
+const cookieExtractor = (req) => {
+  let token = null;
+  if (req && req.cookies) {
+    token = req.cookies.token; // Asume que la cookie se llama 'token'
+  }
+  return token;
+};
 const options = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // Extraer token del encabezado Authorization
+  jwtFromRequest: cookieExtractor, // Extraer token del encabezado Authorization
   secretOrKey: config.jwtSecret,
 };
 
