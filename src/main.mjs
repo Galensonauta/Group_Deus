@@ -111,9 +111,8 @@ export async function loginUser(nick, password) {
       password,
     });
     console.log('Usuario autenticado con éxito:', response);
-    console.log('Token en las cookies después de login:', document.cookie);
-
-    //  window.location.href = 'https://group-deus.vercel.app';   
+    console.log('Token, en front, en las cookies después de login:', document.cookie);
+     window.location.href = 'https://group-deus.vercel.app';   
     return response;    
   } catch (error) {
     console.error('Error al iniciar sesión:', error.response ? error.response.data.message : error.message);

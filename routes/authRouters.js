@@ -72,20 +72,15 @@ router.get('/validate-token',
     next(err); // Pasar el error al middleware de manejo de errores
   }
 });
-router.post('/logout', (req, res) => {
-  // Configurar la cookie para que expire de inmediato
-  Cookies.remove('token');
-  console.log('Sesión cerrada');
- res.json({ message: 'Cierre de sesión exitoso' });
-
-  // res.clearCookie('token', {
-  //   httpOnly: false,     // Mantiene la cookie protegida de accesos de JavaScript
-  //   secure: true,
-  //   sameSite:"none"     // Configura la política de SameSite
-  // });
-  // // Responder con un mensaje de éxito
-  // console.log('Cookie de token eliminada');
-  // res.json({ message: 'Cierre de sesión exitoso' });
+router.post('/logout', (req, res) => { 
+  res.clearCookie('token', {
+    httpOnly: false,     // Mantiene la cookie protegida de accesos de JavaScript
+    secure: true,
+    sameSite:"none"     // Configura la política de SameSite
+  });
+  // Responder con un mensaje de éxito
+  console.log('Cookie de token eliminada');
+  res.json({ message: 'Cierre de sesión exitoso' });
 });
 
 module.exports=router
