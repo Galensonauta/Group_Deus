@@ -1,20 +1,17 @@
 import {api,axiosInstance} from "./tmdbApi.mjs"
-import Cookies from 'universal-cookie';
-const cookies = new Cookies();
+// import Cookies from 'universal-cookie';
+// const cookies = new Cookies();
 
-// function getCookieValue() {
-//   console.log('Document cookies:', document.cookie); // Para depurar todas las cookies visibles
-//   // const match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
-//   // return match ? decodeURIComponent(match[3]) : null;
-//   const token = Cookie.get('token');
-//   console.log('Token encontrado:', token);
-//   return token;
-// }
+function getCookieValue(name) {
+  console.log('Document cookies:', document.cookie); // Para depurar todas las cookies visibles
+  const match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+  return match ? decodeURIComponent(match[3]) : null;
+}
 // Agrega un interceptor para incluir el token en las solicitudes
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = cookies.get('token');
+    const token =  getCookieValue(token);
     console.log('Token obtenido:', token);
     // if (token) {
     //   config.headers.Authorization = `Bearer ${token}`;
@@ -232,9 +229,8 @@ async function likeMovie(type,movie) {
   }
   }
   export async function isAuthenticated() {
-       const token = cookies.get('token');
+       const token = getCookieValue(token)
     console.log('Token obtenido en isAuth:', token);
-
     // if (!token) {
     //   console.log("no hay token")
     //   return false; // No hay token en las cookies, por lo tanto, el usuario no está autenticado

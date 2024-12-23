@@ -9,14 +9,18 @@ const { logErrors, errorHandler, boomErrorHandler, ormErrorHandler } = require('
 const passport = require('passport');
 require('./utils/auth'); // Asegúrate de importar las estrategias
 
+const cookieParser = require('cookie-parser');
+
+
 const port = process.env.PORT || 3000;
 const app = express(); // Crear instancia de aplicación de Express
-app.use(passport.initialize());
 
 // Logs iniciales
 console.log('Servidor Express inicializado');
 
 // Middlewares globales
+app.use(passport.initialize());
+app.use(cookieParser());
 app.use(express.json()); // Parsear JSON
 
 // Configuración de CORS

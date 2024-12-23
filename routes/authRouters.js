@@ -5,43 +5,51 @@ const passport=require("passport")
 const router = express.Router();
 const UserService = require('./../services/usersService');
 const service = new UserService();
-const Cookies =require('universal-cookie');
-const cookies = new Cookies();
+// const Cookies =require('universal-cookie');
+// const cookies = new Cookies();
 
 
-router.post('/login',  (req, res, next) => {
-  console.log('Cuerpo de la solicitud:', req.body);
-  next();
-},
-    passport.authenticate("local",{session:false}),
-    async (req, res, next) => {
-  try {
-    const user=req.user
-    const payload={
-        sub:user.id,
-        role: user.role        
-    }
-    const token=jwt.sign(payload, config.jwtSecret,{expiresIn: '1d' })
-    console.log('Encabezado Set-Cookie:', cookies.get(token));
-      //Configurar la cookie con el token JWT
-      cookies.set('token', token, {
-        httpOnly: true,        // Protege la cookie de ser accesible por JavaScript
-       secure: true,
-        sameSite: 'none',    // Protege contra ataques CSRF (Cross-Site Request Forgery)
-        path: '/', // Hacer que la cookie sea accesible en todas las rutas
-      // maxAge: 24 * 60 * 60 * 1000 // Duración de 1 día para la cookie
-      });      
-      console.log('Token JWT(crudo):', token);
-      console.log('Encabezado Set-Cookie:', cookies.get(token)); 
+router.post(
+  '/login',
+  (req, res, next) => {
+    console.log('Cuerpo de la solicitud:', req.body);
+    next();
+  },
+  passport.authenticate('local', { session: false }),
+  async (req, res, next) => {
+    try {
+      const user = req.user;
+      const payload = {
+        sub: user.id,
+        role: user.role,
+      };
+
+      // Generar el token JWT
+      const token = jwt.sign(payload, config.jwtSecret, { expiresIn: '1d' });
+      console.log('Token JWT (crudo):', token);
+
+      // Configurar la cookie con `res.cookie`
+      res.cookie('token', token, {
+        httpOnly: true,
+        secure: true, // Cambiar a `false` para pruebas locales
+        sameSite: 'none', // Cambiar según el flujo deseado
+        path: '/',
+        maxAge: 24 * 60 * 60 * 1000, // Duración de 1 día
+      });
+
       console.log('Cookies generadas en login:', req.cookies);
-      
-      res.json({ message: 'Inicio de sesión exitoso' ,
-        user,token
-          });
-  } catch (error) {
-    next(error);
+
+      res.json({
+        message: 'Inicio de sesión exitoso',
+        user,
+        token,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
+
 router.get('/validate-token', 
   (req, res, next) => {
   console.log('Cookies recibidas en validate:', req.cookies);
