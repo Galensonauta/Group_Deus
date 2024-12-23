@@ -12,12 +12,10 @@ const cookies = new Cookies();
 // }
 // Agrega un interceptor para incluir el token en las solicitudes
 
-
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = cookies.get('token');
     console.log('Token obtenido:', token);
-
     // if (token) {
     //   config.headers.Authorization = `Bearer ${token}`;
     // } 
@@ -234,11 +232,7 @@ async function likeMovie(type,movie) {
   }
   }
   export async function isAuthenticated() {
-    // const token = getCookieValue("token"); // Asumiendo que el token se guarda en cookies
-    // const token = Cookie.get('token') // Extraer el token de las cookies
-    // console.log('Comprobando autenticación...');
-    // console.log('Token encontrado:', token);
-    const token = cookies.get('token');
+       const token = cookies.get('token');
     console.log('Token obtenido en isAuth:', token);
 
     // if (!token) {

@@ -22,18 +22,20 @@ router.post('/login',  (req, res, next) => {
         role: user.role        
     }
     const token=jwt.sign(payload, config.jwtSecret,{expiresIn: '1d' })
-    console.log('Encabezado Set-Cookie:', res.getHeader('Set-Cookie'));
+    console.log('Encabezado Set-Cookie:', cookies.get(token));
       //Configurar la cookie con el token JWT
       cookies.set('token', token, {
         httpOnly: true,        // Protege la cookie de ser accesible por JavaScript
        secure: true,
         sameSite: 'none',    // Protege contra ataques CSRF (Cross-Site Request Forgery)
         path: '/', // Hacer que la cookie sea accesible en todas las rutas
-      maxAge: 24 * 60 * 60 * 1000 // Duración de 1 día para la cookie
-      });
-      console.log('Token JWT(crudo):', token); 
-      console.log('Configuración de la cookie:', res.getHeader('Set-Cookie'));  
-    res.json({ message: 'Inicio de sesión exitoso' ,
+      // maxAge: 24 * 60 * 60 * 1000 // Duración de 1 día para la cookie
+      });      
+      console.log('Token JWT(crudo):', token);
+      console.log('Encabezado Set-Cookie:', cookies.get(token)); 
+      console.log('Cookies generadas en login:', req.cookies);
+      
+      res.json({ message: 'Inicio de sesión exitoso' ,
         user,token
           });
   } catch (error) {
@@ -42,12 +44,12 @@ router.post('/login',  (req, res, next) => {
 });
 router.get('/validate-token', 
   (req, res, next) => {
-  console.log('Cookies recibidas:', req.cookies);
+  console.log('Cookies recibidas en validate:', req.cookies);
   next();
 },
   passport.authenticate('jwt', { session: false }),
    async (req, res,next) => {
-    console.log('req.user:', req.user); // Verificar si req.user está presente
+    console.log('el usuario es:', req.user); // Verificar si req.user está presente
     try{
     const userId = req.user.id; // Esto asume que el middleware de passport agrega el usuario al request
     const user = await service.find(userId);

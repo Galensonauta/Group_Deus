@@ -6,7 +6,6 @@ passport.use("local",LocalStartegy)
 // passport.use("jwt",JwtStrategy)
 
 const Strategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
 const {User}=require("../../db/model/userModel")
 // const userService = require ("../../services/usersService")
 const {config}=require("../../config/config")
