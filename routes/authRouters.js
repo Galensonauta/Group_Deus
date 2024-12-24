@@ -74,7 +74,7 @@ router.get('/validate-token',
 });
 router.post('/logout', (req, res) => { 
   res.clearCookie('token', {
-    httpOnly: false,     // Mantiene la cookie protegida de accesos de JavaScript
+    httpOnly: true,     // Mantiene la cookie protegida de accesos de JavaScript
     secure: true,
     sameSite:"none"     // Configura la política de SameSite
   });

@@ -13,9 +13,6 @@ axiosInstance.interceptors.request.use(
   (config) => {
     const token =  getCookieValue(token);
     console.log('Token obtenido:', token);
-    // if (token) {
-    //   config.headers.Authorization = `Bearer ${token}`;
-    // } 
     if(!token) {
       console.warn('No se encontró el token en las cookies');
     }
@@ -230,10 +227,10 @@ async function likeMovie(type,movie) {
   export async function isAuthenticated() {
        const token = getCookieValue(token)
     console.log('Token obtenido en isAuth:', token);
-    // if (!token) {
-    //   console.log("no hay token")
-    //   return false; // No hay token en las cookies, por lo tanto, el usuario no está autenticado
-    // }
+    if (!token) {
+      console.log("no hay token")
+      return false; // No hay token en las cookies, por lo tanto, el usuario no está autenticado
+    }
     try {
       const response = await axiosInstance.get('/auth/validate-token');
       return response.status === 200; // Si el servidor responde con un 200, el token es válido
