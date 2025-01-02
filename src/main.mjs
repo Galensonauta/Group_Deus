@@ -13,9 +13,9 @@ axiosInstance.interceptors.request.use(
   (config) => {
     const token =  getCookieValue(token);
     console.log('Token obtenido:', token);
-    // if(!token) {
-    //   console.warn('No se encontró el token en las cookies');
-    // }
+    if(!token) {
+      console.warn('No se encontró el token en las cookies');
+    }
     return config;
   },
   (error) => Promise.reject(error)

@@ -30,7 +30,7 @@ router.post(
 
       // Configurar la cookie con `res.cookie`
       res.cookie('token', token, {
-        httpOnly: true,
+        httpOnly: false,
         secure: true, // Cambiar a `false` para pruebas locales
         sameSite: 'none', // Cambiar según el flujo deseado
         path: '/',
