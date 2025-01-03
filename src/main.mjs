@@ -110,8 +110,7 @@ export async function loginUser(nick, password) {
     });
     console.log('Usuario autenticado con éxito:', response);
     const token = Cookies.get('token'); // Verificar si el token está en las cookies
-    // console.log('Token, en front, en las cookies después de login:', document.cookie);
-    console.log('Token almacenado en cookies:', token);
+  console.log('Token almacenado en cookies:', token);
 
     //  window.location.href = 'https://group-deus.vercel.app';   
     // return response;    

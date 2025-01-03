@@ -29,7 +29,7 @@ router.post(
       // Configurar la cookie con `res.cookie`
       res.cookie('token', token, {
         httpOnly: true,
-        secure: true, // Cambiar a `false` para pruebas locales
+        secure: process.env.NODE_ENV === 'production', // Cambiar a `false` para pruebas locales
         sameSite: 'none', // Cambiar según el flujo deseado
         path: '/',
         maxAge: 24 * 60 * 60 * 1000, // Duración de 1 día
