@@ -20,8 +20,8 @@ console.log('Servidor Express inicializado');
 
 // Middlewares globales
 app.use(cookieParser());
-app.use(passport.initialize());
 app.use(express.json()); // Parsear JSON
+app.use(passport.initialize());
 
 // Configuración de CORS
 const whiteList = ["https://group-deus.vercel.app","https://group-deus-backend-express.onrender.com"];
