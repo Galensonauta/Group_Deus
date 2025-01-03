@@ -30,7 +30,7 @@ router.post(
 
       // Configurar la cookie con `res.cookie`
       res.cookie('token', token, {
-        httpOnly: false,
+        httpOnly: true,
         secure: true, // Cambiar a `false` para pruebas locales
         sameSite: 'none', // Cambiar según el flujo deseado
         path: '/',
@@ -38,6 +38,8 @@ router.post(
       });
 
       console.log('Cookies generadas en login:', req.cookies);
+      console.log('Token generadas en login:', token);
+
 
       res.json({
         message: 'Inicio de sesión exitoso',
@@ -74,7 +76,7 @@ router.get('/validate-token',
 });
 router.post('/logout', (req, res) => { 
   res.clearCookie('token', {
-    httpOnly: false,     // Mantiene la cookie protegida de accesos de JavaScript
+    httpOnly: true,     // Mantiene la cookie protegida de accesos de JavaScript
     secure: true,
     sameSite:"none"     // Configura la política de SameSite
   });

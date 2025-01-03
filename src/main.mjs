@@ -11,11 +11,11 @@ function getCookieValue(name) {
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token =  getCookieValue(token);
+    const token =  getCookieValue("token");
     console.log('Token obtenido:', token);
-    if(!token) {
-      console.warn('No se encontró el token en las cookies');
-    }
+    // if(!token) {
+    //   console.warn('No se encontró el token en las cookies');
+    // }
     return config;
   },
   (error) => Promise.reject(error)
@@ -109,7 +109,7 @@ export async function loginUser(nick, password) {
     });
     console.log('Usuario autenticado con éxito:', response);
     console.log('Token, en front, en las cookies después de login:', document.cookie);
-     window.location.href = 'https://group-deus.vercel.app';   
+    //  window.location.href = 'https://group-deus.vercel.app';   
     return response;    
   } catch (error) {
     console.error('Error al iniciar sesión:', error.response ? error.response.data.message : error.message);
