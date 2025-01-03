@@ -10,17 +10,17 @@ import Cookies from "js-cookie"
 // }
 // // Agrega un interceptor para incluir el token en las solicitudes
 
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = Cookies.get('token'); // Leer el token desde las cookies usando js-cookie
-    console.log('Token obtenido:', token);
-    // if(!token) {
-    //   console.warn('No se encontró el token en las cookies');
-    // }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+// axiosInstance.interceptors.request.use(
+//   (config) => {
+//     const token = Cookies.get('token');
+//     console.log(token) // Leer el token desde las cookies usando js-cookie
+//     // if(!token) {
+//     //   console.warn('No se encontró el token en las cookies');
+//     // }
+//     return config;
+//   },
+//   (error) => Promise.reject(error)
+// );
 
 import { base64, 
   base64Gr, 
@@ -109,11 +109,9 @@ export async function loginUser(nick, password) {
       password,
     });
     console.log('Usuario autenticado con éxito:', response);
-    const token = Cookies.get('token'); // Verificar si el token está en las cookies
-  console.log('Token almacenado en cookies:', token);
-
-    //  window.location.href = 'https://group-deus.vercel.app';   
-    // return response;    
+    // const token = Cookies.get('token'); // Verificar si el token está en las cookies
+    window.location.href = 'https://group-deus.vercel.app';   
+    return response;    
   } catch (error) {
     console.error('Error al iniciar sesión:', error.response ? error.response.data.message : error.message);
     alert('Error al iniciar sesión. Verifica tus credenciales.');
@@ -228,12 +226,6 @@ async function likeMovie(type,movie) {
   }
   }
   export async function isAuthenticated() {
-    const token = Cookies.get('token'); // Leer el token desde las cookies usando js-cookie
-    console.log('Token obtenido en isAuth:', token);
-    // if (!token) {
-    //   console.log("no hay token")
-    //   return false; // No hay token en las cookies, por lo tanto, el usuario no está autenticado
-    // }
     try {
       const response = await axiosInstance.get('/auth/validate-token');
       return response.status === 200; // Si el servidor responde con un 200, el token es válido
