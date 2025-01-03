@@ -55,18 +55,15 @@ router.get('/validate-token',
    async (req, res,next) => {   
     console.log('el usuario es:', req.user); // Verificar si req.user está presente
     try{
-      const userId = req.user.id
-      res.status(200).json({ message: 'Token válido', userId });
-
-    }
-  //   const userId = req.user.id; // Esto asume que el middleware de passport agrega el usuario al request
-  //   const user = await service.find(userId);
-  //   console.log('Encabezado Set-Cookie:', res.getHeader('Set-Cookie'));
-  //   if (!user) {
-  //     return res.status(401).json({ message: 'Token inválido: usuario no encontrado' });
-  //   }
-  //   console.log("el usuario es:",req.user.dataValues.nick)
-  // res.status(200).json({ message: 'Token válido'});  }
+      const userId = req.user.id; // Esto asume que el middleware de passport agrega el usuario al request
+      const user = await service.find(userId);
+      console.log('Encabezado Set-Cookie:', res.getHeader('Set-Cookie'));
+      if (!user) {
+        return res.status(401).json({ message: 'Token inválido: usuario no encontrado' });
+      }
+      console.log("el usuario es:",req.user.dataValues.nick)
+    res.status(200).json({ message: 'Token válido'});      
+    }  
   catch(err){
     console.error('Error al validar el token:', err.message || err);
     next(err); // Pasar el error al middleware de manejo de errores

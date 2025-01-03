@@ -24,7 +24,7 @@ const options = {
 
 const jwtStrategy = new Strategy(options, async (payload, done) => {
   try {
-    const user = await User.findByPk(payload.sub.id); // Buscar usuario por ID (payload.sub)
+    const user = await User.findByPk(payload.sub); // Buscar usuario por ID (payload.sub)
     if (!user) {
       return done(null, false); // Usuario no encontrado
     }
