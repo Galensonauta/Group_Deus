@@ -30,7 +30,7 @@ router.post(
       res.cookie('token', token, {
         httpOnly: true,
         secure: true, // Cambiar a `false` para pruebas locales
-        sameSite: 'lax', // Cambiar según el flujo deseado
+        sameSite: 'none', // Cambiar según el flujo deseado
         path: '/',
         maxAge: 24 * 60 * 60 * 1000, // Duración de 1 día
       });
