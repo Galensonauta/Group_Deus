@@ -5,16 +5,14 @@ const passport=require("passport")
 const router = express.Router();
 const UserService = require('./../services/usersService');
 const service = new UserService();
+
+
 // const Cookies =require('universal-cookie');
 // const cookies = new Cookies();
 
 
 router.post(
   '/login',
-  (req, res, next) => {
-    console.log('Cuerpo de la solicitud:', req.body);
-    next();
-  },
   passport.authenticate('local', { session: false }),
   async (req, res, next) => {
     try {
@@ -37,7 +35,7 @@ router.post(
         maxAge: 24 * 60 * 60 * 1000, // Duración de 1 día
       });
 
-      console.log('Cookies generadas en login:', req.cookies);
+      console.log('Cookies generadas en login:', req.cookies.token);
       console.log('Token generadas en login:', token);
 
 
@@ -52,11 +50,7 @@ router.post(
   }
 );
 
-router.get('/validate-token', 
-  (req, res, next) => {
-  console.log('Cookies recibidas en validate:', req.cookies);
-  next();
-},
+router.get('/validate-token',
   passport.authenticate('jwt', { session: false }),
    async (req, res,next) => {
     console.log('el usuario es:', req.user); // Verificar si req.user está presente

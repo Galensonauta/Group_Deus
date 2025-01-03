@@ -19,8 +19,8 @@ const app = express(); // Crear instancia de aplicación de Express
 console.log('Servidor Express inicializado');
 
 // Middlewares globales
-app.use(passport.initialize());
 app.use(cookieParser());
+app.use(passport.initialize());
 app.use(express.json()); // Parsear JSON
 
 // Configuración de CORS
