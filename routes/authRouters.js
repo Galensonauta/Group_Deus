@@ -55,7 +55,7 @@ router.get('/validate-token',
    async (req, res,next) => {   
     console.log('el usuario es:', req.user); // Verificar si req.user está presente
     try{
-      const userId = req.user
+      const userId = req.user.id
       res.status(200).json({ message: 'Token válido', userId });
 
     }
