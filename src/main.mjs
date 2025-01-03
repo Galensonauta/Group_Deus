@@ -1,25 +1,26 @@
 import {api,axiosInstance} from "./tmdbApi.mjs"
 // import Cookies from 'universal-cookie';
 // const cookies = new Cookies();
+import Cookies from "js-cookie"
 
-function getCookieValue(name) {
-  console.log('Document cookies:', document.cookie); // Para depurar todas las cookies visibles
-  const match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
-  return match ? decodeURIComponent(match[3]) : null;
-}
-// Agrega un interceptor para incluir el token en las solicitudes
+// function getCookieValue(name) {
+//   console.log('Document cookies:', document.cookie); // Para depurar todas las cookies visibles
+//   const match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+//   return match ? decodeURIComponent(match[3]) : null;
+// }
+// // Agrega un interceptor para incluir el token en las solicitudes
 
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const token =  getCookieValue("token");
-    console.log('Token obtenido:', token);
-    // if(!token) {
-    //   console.warn('No se encontró el token en las cookies');
-    // }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+// axiosInstance.interceptors.request.use(
+//   (config) => {
+//     const token = Cookies.get('token'); // Leer el token desde las cookies usando js-cookie
+//     console.log('Token obtenido:', token);
+//     // if(!token) {
+//     //   console.warn('No se encontró el token en las cookies');
+//     // }
+//     return config;
+//   },
+//   (error) => Promise.reject(error)
+// );
 
 import { base64, 
   base64Gr, 
@@ -109,8 +110,11 @@ export async function loginUser(nick, password) {
     });
     console.log('Usuario autenticado con éxito:', response);
     console.log('Token, en front, en las cookies después de login:', document.cookie);
+    const token = Cookies.get('token'); // Verificar si el token está en las cookies
+    console.log('Token almacenado en cookies:', token);
+
     //  window.location.href = 'https://group-deus.vercel.app';   
-    return response;    
+    // return response;    
   } catch (error) {
     console.error('Error al iniciar sesión:', error.response ? error.response.data.message : error.message);
     alert('Error al iniciar sesión. Verifica tus credenciales.');
@@ -225,7 +229,7 @@ async function likeMovie(type,movie) {
   }
   }
   export async function isAuthenticated() {
-       const token = getCookieValue(token)
+    const token = Cookies.get('token'); // Leer el token desde las cookies usando js-cookie
     console.log('Token obtenido en isAuth:', token);
     if (!token) {
       console.log("no hay token")
