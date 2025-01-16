@@ -73,7 +73,7 @@ footer {
   display: flex;
   flex-wrap: wrap;
   position: relative;
-  top: 90px;
+  top: 10em;
   justify-content: flex-start;
 }
 
@@ -263,7 +263,8 @@ cursor: pointer;
   cursor: pointer;
   font-size: 1.2em;
   font-variant: small-caps;
-  width: 97%;
+  width: 35%;
+  margin-left: 26%;
   display: flex;
   margin-top: 4px;
   align-items: center; /* Centra verticalmente el contenido */
@@ -319,7 +320,7 @@ cursor: pointer;
   outline: none;
   padding: 10px;
   transition: all .3s ease-in-out;
-  width: 95%;
+  width: 90%;
 }
 .inputComment::placeholder {
   font-family: "Montserrat", sans-serif;
@@ -363,15 +364,15 @@ cursor: pointer;
 .nextBtn {
   cursor: pointer;
   position: absolute;
-  top: 138em;
-  right: 20px;
+  margin-top: 23%;
+  margin-left: 88%;
 }
 
 .prevBtn {
   cursor: pointer;
   position: absolute;
-  top: 138em;
-  left: 20px;
+  margin-top: 23%;
+  margin-left: -2em;
 }
 
 ol,
@@ -849,7 +850,7 @@ select::after {
   }
 }
 
-@media(width <=768px) {
+/* @media(width <=768px) {
 
   .card {
     flex: 0 0 150px;
@@ -905,35 +906,35 @@ select::after {
   .descriptions {
     font-size: .45em;
   }
-}
+} */
 
-@media(width <=500px) {
+@media(width <=760px) {
 
-  #lastLiked,
-  #lastLikedTv,
-  #lastTrend,
-  #lastRankImdbImdb,
-  #lastRankImdbGd,
-  #last,#lastGd {
+  .cine,
+  .series {
+    left: 0cqmin;
+    width: 96vw;
+  }
+  #lastGd, #lastLiked, #lastLikedTv, #lastRankGd, #lastRankImdb, #lastTrend{
     top: 7em;
-    margin-top: 15%;
+    margin-top: 6em;
     flex-wrap: wrap;
   }
 
   .likedH1C {
-    margin-top: 6em;
+    margin-top: 7em;
     left: 3cqmin;
   }
 
   .likedH1S {
-    margin-top: 5.4em;
+    margin-top: 6.5em;
     left: 3cqmin;
   }
 
   .card {
-    flex: 0 0 160px;
-    margin: 10px;
-    margin-right: 15px;
+    flex: 0 0 10em;
+    margin: 1em 0.4em 1em 1em;
+   
   }
 
   .card.clicked {
@@ -945,11 +946,6 @@ select::after {
     padding: 11.5px;
     bottom: 1em;
   }
-
-  /* .cine, .series{
-      width: 90vw;
-      left: 2cqmin;
-    } */
   .titlePortadaH1 {
     font-size: calc(24px + 4vw);
     right: 57%;
@@ -963,39 +959,66 @@ select::after {
   }
 
   #apiDropDownPaisProvider {
-    top: 118%;
+    top: 156%;
     left: 0cqmin;
-    width: 115px;
+    width: 6em;
+  }
+
+  #btnUserLog{
+    top: 115%;
+    left: 20%;
+  }
+  #btnUserLogOut{
+    top: 115%;
+    left: 40%;
+  }
+  #btnUserSign{
+    top: 115%;
+    left: 60%;
   }
 
   #apiDropdownPais {
-    top: 118%;
+    top: 156%;
     left: 34cqmin;
-    width: 105px;
+    width: 5em;
   }
 
   #apiDropdown {
-    top: 118%;
+    top: 156%;
     left: 68cqmin;
-    width: 110px;
+    width: 5em;
   }
 
   .search-box {
-    top: 196%;
+    top: 209%;
+    left: 0cqmin;
   }
 
   .input-search {
-    height: 29px;
-    width: 265px;
+    height: 2em;
+    width: 14em;
     font-size: 1em;
   }
 
   #btnSearch {
-    left: 330px;
+    left: 15em;
   }
+  #login, #sign {
+    top: 303%;
+    left: 5em;
+  }
+#btnRankGd{
+  top : 297%;
+  left: 0cqmin;
 
+}
+#btnRankImdb{
+margin-top: 64%;
+left: 0cqmin;
+
+}
   #btnTrends {
-    top: 270%;
+    top: 79em;
     left: 0cqmin;
   }
 
@@ -1009,10 +1032,6 @@ select::after {
     left: 5.5cqmin;
     font-size: 25px;
   }
-
-  .containerDetail {
-    top: 4em;
-
     .title1 {
       font-size: 21px;
     }
@@ -1028,15 +1047,22 @@ select::after {
     .origenCountry {
       top: 13em;
     }
-
+    .inputRank {
+      width: 22%;
+  }
+    #btnRankMovie {
+      margin-left: 130px;
+      margin-top: -24px;
+      width: 99px;
   }
   #btnMovie-liked-Id {
     height: 33px;
   }
 
   .logos {
-    top: 18em;
-    left: 0cqmin;
+    margin-top: 1em;
+    margin-left: 1em;
+    padding-left: 0em;
     display: block;
   }
 
@@ -1050,56 +1076,54 @@ select::after {
   }
 
   .poster {
-    top: 27em;
-    left: 6%;
+    margin-top: 10em;
+    margin-left: 1em;
   }
 
   .castMovie {
-    grid-template-columns: repeat(auto-fill, minmax(95px, 0fr));
+    grid-template-columns: repeat(auto-fill, minmax(10em, 8em));
+    margin-top: 1em;
+    margin-left: 1.3em;
   }
 
   .castName {
-    font-size: .9em;
-    width: 50%;
+    font-size: 1.4em;
+    margin-left: 4%;
   }
 
   .movieImg {
-    width: 75px;
-    height: 75px;
+    width: 9em;
+    height: 9em;
   }
 
   .footerMovie {
-    left: -4cqmin;
+    margin-top: 7cqmin;
   }
 
   .video {
-    width: 385px;
-    height: 250px;
+    margin-left: -2%;
   }
 
-  .nextBtn {
-    right: 3px;
-    top: 110.4px;
-  }
+  /* .nextBtn {
+    right: 0em;
+    margin-top: 76em;  }
 
   .prevBtn {
-    left: 3px;
-    top: 110.4px;
-  }
-  
+    left: 0.1em;
+    margin-top: 76em;  }  */
 
   #lastSimilar {
-    margin-top: -10%;
+    margin-top: 2%;
   }
 }
 
-@media(width<=374px) {
+/* @media(width<=374px) {
   .cine,
   .series {
     left: 0cqmin;
-    width: 112vw;
+    width: 108vw;
   }
-
+ 
   #apiDropdown {
     left: 81cqmin;
     top: 118%;
@@ -1142,4 +1166,4 @@ select::after {
 #btnMovie-liked-Id {
   height: 33px;
 }
-}
+} */

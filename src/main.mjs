@@ -645,7 +645,6 @@ export async function getById({ id, media }) {
   let contIndex = 0
   function showCarrousel(index) {
     containerVid.innerHTML = ""
-
     containerVid.appendChild(carrousel[index])
   }
   function next() {
