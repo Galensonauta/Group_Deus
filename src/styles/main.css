@@ -736,8 +736,8 @@ select::after {
   font-variant: small-caps;
   cursor: pointer;
   position: absolute;
-  top: 57.3em;
   left: 2%;
+  top: 753%;
   border-radius: 25px;
 }
 
@@ -753,7 +753,7 @@ select::after {
   font-variant: small-caps;
   cursor: pointer;
   position: absolute;
-  top: 753%;
+  top: 57.3em;
   left: 2%;
   border-radius: 25px;
 }
@@ -968,13 +968,12 @@ select::after {
 
 }
 #btnRankImdb{
-margin-top: 64%;
-left: 0cqmin;
-
+  top: 79em;
+  left: 0cqmin;
 }
   #btnTrends {
-    top: 79em;
-    left: 0cqmin;
+    top: 45em;
+left: 0cqmin;
   }
 
   #btnRank {
