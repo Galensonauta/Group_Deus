@@ -109,7 +109,8 @@ export async function loginUser(nick, password) {
       password,
     });
     console.log('Usuario autenticado con éxito:', response);
-    // const token = Cookies.get('token'); // Verificar si el token está en las cookies
+    
+
     window.location.href = 'https://group-deus.vercel.app';   
     return response;    
   } catch (error) {
@@ -228,6 +229,13 @@ async function likeMovie(type,movie) {
   export async function isAuthenticated() {
     try {
       const response = await axiosInstance.get('/auth/validate-token');
+      console.log(response)
+//       const portada = document.getElementById("portada");
+//     const titleNick= document.createElement("h1")
+// titleNick.classList.add("titleNick")
+// const nickName=response
+// titleNick.textContent=nickName
+// portada.appendChild(titleNick)
       return response.status === 200; // Si el servidor responde con un 200, el token es válido
     } catch (error) {
       console.error('Token inválido o expirado:', error.message || 'Error de red');
@@ -798,9 +806,8 @@ export async function getInfoById({ id, media})
   const interaction =document.querySelector(".interaction")
 
   const commentContainer= document.querySelector(".commentContainer")
-
+  
   async function showComment(){
-
     commentContainer.innerHTML=""
  const interData= await getInteractionMovie(media,movie.id)
  if(interData !==undefined){
@@ -811,15 +818,15 @@ export async function getInfoById({ id, media})
   rankeo.classList.add("rankeo")
   if(media==="movie"){
     if (comment.userMovie && comment.userMovie[0] && comment.userMovie[0].UserMovie) {    
-      comentario.textContent = comment.userMovie[0].UserMovie.comment + " by " + comment.nick;
-      rankeo.textContent = comment.userMovie[0].UserMovie.rank + " .- " + comment.nick +"´s";
+      comentario.textContent = comment.nick+": "+comment.userMovie[0].UserMovie.comment;
+      rankeo.textContent = comment.userMovie[0].UserMovie.rank + "/10" + " puntos según: "+comment.nick;
     }
  }else{
   if (comment.userTv && comment.userTv[0] && comment.userTv[0].UserTv) {   
-    comentario.textContent=comment.userTv[0].UserTv.comment+" by " + comment.nick
-    rankeo.textContent=comment.userTv[0].UserTv.rank + " .- " + comment.nick +"´s";
+    comentario.textContent=comment.nick+": "+comment.userTv[0].UserTv.comment;
+    rankeo.textContent=comment.userTv[0].UserTv.rank +  "/10" + " puntos según: "+ comment.nick;
   }  
-  }
+  }  
   commentContainer.appendChild(comentario)
   commentContainer.appendChild(rankeo)
 })
@@ -853,8 +860,8 @@ newBtnComment.addEventListener("click", async () => {
       const commentValue = commentInput.value;
       const interactionData = { comment: commentValue }; 
       await addInteraction(media, movie.id, interactionData);
-            showComment()  
-            newBtnComment.textContent = "modificar";
+            showComment()
+            commentInput.innerHTML="Escribe tu comentario aquí..."
           });   
   // Manejo del botón de ranking
 
@@ -867,8 +874,7 @@ newBtnComment.addEventListener("click", async () => {
       await addInteraction(media, movie.id, interactionData);
       console.log("Puntuación agregada", rankValue);
       showComment()
-      newBtnRankMovie.textContent="modificar";
-      rankInput.textContent=""
+      rankInput.innerHTML="del 0 1 al 10"
     });
 
     commentContainerUser.appendChild(commentInput);

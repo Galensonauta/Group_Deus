@@ -27,7 +27,7 @@ body {
   flex-wrap: wrap;
   justify-content: space-between;
   position: relative;
-  top: 80px;
+  top: 4.5em;
   justify-content: flex-start;
   margin-top: 30px;
 }
@@ -73,7 +73,7 @@ footer {
   display: flex;
   flex-wrap: wrap;
   position: relative;
-  top: 10em;
+  top: 8em;
   justify-content: flex-start;
 }
 
@@ -725,7 +725,7 @@ select::after {
   font-variant: small-caps;
   cursor: pointer;
   position: absolute;
-  top: 1323%;
+  top: 57.3em;
   left: 2%;
   border-radius: 25px;
 }
@@ -849,65 +849,6 @@ select::after {
     transform: translate(-49%, -53%);
   }
 }
-
-/* @media(width <=768px) {
-
-  .card {
-    flex: 0 0 150px;
-  }
-
-  .cine,
-  .series {
-    left: 0cqmin;
-    width: 96vw;
-  }
-
-  .titlePortadaH1 {
-    font-size: 59px;
-  }
-
-  #modeH1 {
-    font-size: 52px;
-  }
-
-  .input-search {
-    width: 75vw;
-  }
-
-  #btnSearch {
-    left: 84vw;
-  }
-
-  #btnTrends {
-    left: 100%;
-  }
-
-  #btnRank {
-    left: 100%;
-    top: 520%
-  }
-
-  .descriptions {
-    font-size: .46em;
-  }
-
-  .logos {
-    display: flex;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-  }
-
-  .titlePageH1 {
-    top: 117px;
-    left: 92%;
-    font-size: 17px;
-  }
-
-  .descriptions {
-    font-size: .45em;
-  }
-} */
-
 @media(width <=760px) {
 
   .cine,
@@ -916,7 +857,7 @@ select::after {
     width: 96vw;
   }
   #lastGd, #lastLiked, #lastLikedTv, #lastRankGd, #lastRankImdb, #lastTrend{
-    top: 7em;
+    top: 6.5em;
     margin-top: 6em;
     flex-wrap: wrap;
   }
@@ -1104,66 +1045,7 @@ left: 0cqmin;
     margin-left: -2%;
   }
 
-  /* .nextBtn {
-    right: 0em;
-    margin-top: 76em;  }
-
-  .prevBtn {
-    left: 0.1em;
-    margin-top: 76em;  }  */
-
   #lastSimilar {
     margin-top: 2%;
   }
 }
-
-/* @media(width<=374px) {
-  .cine,
-  .series {
-    left: 0cqmin;
-    width: 108vw;
-  }
- 
-  #apiDropdown {
-    left: 81cqmin;
-    top: 118%;
-    width: 101px;
-  }
-
-  #apiDropdownPais {
-    left: 41cqmin;
-    top: 118%;
-    width: 113px;
-  }
-
-  #lastLiked,
-  #lastLikedTv,
-  #lastRankImdb,
-  #lastRankGd,
-  #lastTrend,
-  #last,#lastGd {
-    margin-top: 23%;
-    top: 8em;
-    left: 22px;
-  }
-
-  .card {
-    flex: 0 0 147px;
-    margin: 9px 3px 6px 7px;
-  }
-
-  .carousel {
-    margin-left: 57px;
-  }
-  .nextBtn {
-    left: 359px;
-    top: 75.4px;
-}
-.prevBtn {
-  left: 16px;
-  top: 75.4px;
-}
-#btnMovie-liked-Id {
-  height: 33px;
-}
-} */

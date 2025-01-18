@@ -48,12 +48,9 @@ const portada = document.getElementById("portada");
 const btnEnter=document.querySelector("#btnEnter")
 const nickInput = document.querySelector(".inputNick")
 const passInput = document.querySelector(".input-pass")
-const titleNick= document.querySelector(".titleNick")
-titleNick.classList.add("titleNick")
+
 btnEnter.addEventListener("click",()=>{
   loginUser(nickInput.value,passInput.value)
-const nickName=nickInput.value
-  titleNick.innerHTML=nickName
 })
 
 const btnCreateUser=document.querySelector("#btnCreateUser")
@@ -116,12 +113,14 @@ async function portadaBlackMirror() {
       btnSign.classList.add("inactive")
       btnInicio.classList.add("inactive")
       btnSalir.classList.remove("inactive")
-      titleNick.classList.remove("inactive")
+     
+
+      // titleNick.classList.remove("inactive")
     }else{
       btnSign.classList.remove("inactive")
       btnInicio.classList.remove("inactive")
       btnSalir.classList.add("inactive")
-      titleNick.classList.add("inactive")
+      // titleNick.classList.add("inactive")
       console.log('Usuario no autenticado. No se cargarán las listas de favoritos.');
     } 
   })
@@ -214,8 +213,8 @@ function homePage() {
   containerLastRankGd.classList.add("inactive")
   const movieDetails = document.getElementById("moviePage");
   movieDetails.classList.add("inactive")
-  const titlePageH1 = document.querySelector(".titlePageH1")
-  titlePageH1.classList.add("inactive")
+
+  
       const lastLiked = document.getElementById("lastLiked");
       lastLiked.innerHTML=""
       const lastLikedTv = document.getElementById("lastLikedTv");
@@ -271,8 +270,7 @@ function signPage(){
   containerLastRankGd.classList.add("inactive")
     const movieDetails = document.getElementById("moviePage");
     movieDetails.classList.add("inactive")
-    const titlePageH1 = document.querySelector(".titlePageH1")
-    titlePageH1.classList.remove("inactive")
+   
     portadaBlackMirror()
   }
  function loginPage(){
@@ -293,8 +291,7 @@ console.log("login")
   containerLastRankGd.classList.add("inactive")
   const movieDetails = document.getElementById("moviePage");
   movieDetails.classList.add("inactive")
-  const titlePageH1 = document.querySelector(".titlePageH1")
-  titlePageH1.classList.remove("inactive")
+
   portadaBlackMirror()
 }
 function trendPage() {
@@ -315,18 +312,15 @@ function trendPage() {
   containerLastRankGd.classList.add("inactive")
   const movieDetails = document.getElementById("moviePage");
   movieDetails.classList.add("inactive")
-  const titlePageH1 = document.querySelector(".titlePageH1")
-  titlePageH1.classList.remove("inactive")
+
 
   if (mode) {
     getTrendingPreview("tv")
     getCategoriesPreview("tv")
-    titlePageH1.innerHTML = "Estrenos Series"
     setscrollInfinitParam({ url: "trending/tv/day", query: null, searchBy: "#trend=", type: "tv" })
   } else {
     getTrendingPreview("movie")
     getCategoriesPreview("movie")
-    titlePageH1.innerHTML = "Estrenos Cine"
     setscrollInfinitParam({ url: "trending/movie/day", query: null, searchBy: "#trend=", type: "movie" })
   }
   portadaBlackMirror()
@@ -353,18 +347,15 @@ function rankPage() {
   containerLastRankGd.classList.add("inactive")
   const movieDetails = document.getElementById("moviePage");
   movieDetails.classList.add("inactive")
-  const titlePageH1 = document.querySelector(".titlePageH1")
-  titlePageH1.classList.remove("inactive")
+
 
   if (mode) {
     getRankPreview("tv")
     getCategoriesPreview("tv")
-    titlePageH1.innerHTML = "Mejores Series "
     setscrollInfinitParam({ url: "tv/top_rated", query: null, searchBy: "#rank=", type: "tv" })
   } else {
     getRankPreview("movie")
     getCategoriesPreview("movie")
-    titlePageH1.innerHTML = "Mejores Peliculas"
     setscrollInfinitParam({ url: "movie/top_rated", query: null, searchBy: "#rank=", type: "movie" })
   }
   portadaBlackMirror()
@@ -391,18 +382,15 @@ function rankPageGd() {
   containerLastRankGd.classList.remove("inactive")
   const movieDetails = document.getElementById("moviePage");
   movieDetails.classList.add("inactive")
-  const titlePageH1 = document.querySelector(".titlePageH1")
-  titlePageH1.classList.remove("inactive")
 
   if (mode) {
     getRankGdPreview("tv")
     getCategoriesPreview("tv")   
-    // titlePageH1.innerHTML = "Mejores Series del grupo"
 
   } else {
     getRankGdPreview("movie")
     getCategoriesPreview("movie")
-    //  titlePageH1.innerHTML = "Mejores Peliculas del grupo"
+  
   }
   portadaBlackMirror()
   getProvider()
@@ -432,9 +420,7 @@ function searchPage() {
   getProvider()
 
   const [_, query] = location.hash.split('=');
-  const titlePageH1 = document.querySelector(".titlePageH1")
-  titlePageH1.classList.remove("inactive")
-  titlePageH1.innerHTML = query
+
   if (mode) {
     getCategoriesPreview("tv")
     getBySearch({query:query,media:"tv"});
@@ -470,8 +456,7 @@ function categoryPageAct() {
 
   const [_, categoryData] = location.hash.split('=');
   const [categoryId, categoryName] = categoryData.split('-');
-  // const titlePageH1 = document.querySelector(".titlePageH1")
-  // titlePageH1.innerHTML = categoryName.replace("%20", " ")
+
   if (mode) {
     getInfoByActByTv({id:categoryId})
     getCategoriesPreview("tv")
@@ -508,9 +493,7 @@ function categoryPage() {
 
   const [_, categoryData] = location.hash.split('=');
   const [categoryId, categoryName] = categoryData.split('-');
-  const titlePageH1 = document.querySelector(".titlePageH1")
-  titlePageH1.classList.add("inactive")
-  titlePageH1.innerHTML = categoryName
+ 
   
   if (mode) {
     if (!isNaN(categoryId)) {
@@ -557,8 +540,7 @@ async function movieDetailsPage() {
   containerLastRankGd.classList.add("inactive")
   const movieDetails = document.getElementById("moviePage");
   movieDetails.classList.remove("inactive")
-  const titlePageH1 = document.querySelector(".titlePageH1")
-  titlePageH1.classList.add("inactive")
+
 
   portadaBlackMirror()
   getProvider()

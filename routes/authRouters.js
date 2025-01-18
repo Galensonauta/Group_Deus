@@ -61,8 +61,9 @@ router.get('/validate-token',
       if (!user) {
         return res.status(401).json({ message: 'Token inválido: usuario no encontrado' });
       }
+      const loginUser=req.user.dataValues.nick
       console.log("el usuario es:",req.user.dataValues.nick)
-    res.status(200).json({ message: 'Token válido'});      
+    res.status(200).json({ message: 'Token válido',loginUser});      
     }  
   catch(err){
     console.error('Error al validar el token:', err.message || err);
