@@ -34,7 +34,7 @@ class User extends Model {
     static associate(models) {
         this.hasMany(models.Listas, {
           as: 'userList',
-          foreignKey: 'userId'
+          foreignKey: 'id'
         });
         this.belongsToMany(models.Movies, {
             as: 'userMovie',
@@ -61,7 +61,7 @@ class User extends Model {
                     // Crear una lista de películas favoritas por defecto al crear un usuario
                     await Listas.create({
                         name: 'Favoritos',   // Nombre de la lista por defecto
-                        userId: user.id      // Asignar la lista al usuario recién creado
+                        id: user.id      // Asignar la lista al usuario recién creado
                     });
                 }
             }

@@ -5,28 +5,32 @@ const { USER_TABLE } = require('./userModel')
 const LISTAS_TABLE = "listas"
 
 const ListasSchema ={ 
-    name: {
-      allowNull: false,
-      type: DataTypes.STRING,
+  id: {
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    primaryKey: true, // El id será la clave primaria
+    references: {
+      model: USER_TABLE, // Hace referencia al id de la tabla users
+      key: "id",
     },
-    id: {
-      allowNull: false,
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-
-    },
-    userId: {
-        field: 'user_id',
-        allowNull: false,
-        type: DataTypes.INTEGER,
-        references: {
-          model: USER_TABLE,
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-      }, 
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+  },
+  name: {
+    allowNull: false,
+    type: DataTypes.STRING,
+  },
+    // userId: {
+    //     field: 'user_id',
+    //     allowNull: false,
+    //     type: DataTypes.INTEGER,
+    //     references: {
+    //       model: USER_TABLE,
+    //       key: 'id'
+    //     },
+    //     onUpdate: 'CASCADE',
+    //     onDelete: 'CASCADE'
+    //   }, 
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
@@ -37,7 +41,7 @@ const ListasSchema ={
 class Listas extends Model {
     static associate(models) {
       this.belongsTo(models.User,{ 
-        foreignKey: 'userId',
+        foreignKey: 'id',
         as:"userList"
       });
       this.belongsToMany(models.Movies,{
