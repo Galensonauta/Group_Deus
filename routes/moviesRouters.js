@@ -1,7 +1,4 @@
 const express = require('express');
-// const jwt = require("jsonwebtoken")
-// const {config}=require("../config/config")
-
 const passport=require("passport")
 const MoviesService = require('../services/movieService.js');
 const validatorHandler = require('./../middlewares/validatorHandler');
@@ -11,8 +8,8 @@ const {
   addInteraction,
   verificarInteraction
  } = require("./../schemas/movieSchema");
-const { checkRoles } = require('../middlewares/authHandler.js');
 
+const { checkRoles } = require('../middlewares/authHandler.js');
 // Instanciar servicio de peliculas
 const router = express.Router();
 const service = new MoviesService();

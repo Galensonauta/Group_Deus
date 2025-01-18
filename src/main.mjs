@@ -1,26 +1,7 @@
 import {api,axiosInstance} from "./tmdbApi.mjs"
 // import Cookies from 'universal-cookie';
 // const cookies = new Cookies();
-import Cookies from "js-cookie"
 
-// function getCookieValue(name) {
-//   console.log('Document cookies:', document.cookie); // Para depurar todas las cookies visibles
-//   const match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
-//   return match ? decodeURIComponent(match[3]) : null;
-// }
-// // Agrega un interceptor para incluir el token en las solicitudes
-
-// axiosInstance.interceptors.request.use(
-//   (config) => {
-//     const token = Cookies.get('token');
-//     console.log(token) // Leer el token desde las cookies usando js-cookie
-//     // if(!token) {
-//     //   console.warn('No se encontró el token en las cookies');
-//     // }
-//     return config;
-//   },
-//   (error) => Promise.reject(error)
-// );
 
 import { base64, 
   base64Gr, 
@@ -919,7 +900,7 @@ infoExtra.appendChild(interaction);
     const castName = document.createElement("h1")
     castName.classList.add("castName")
     if (act.known_for_department === "Directing") {
-      castName.innerHTML = `<h1 style="color: red; font-size: 21px;">Director :</h1> ${act.name}   `
+      castName.innerHTML = `<h1 style="color: red; font-size: 21px;">${act.name}</h1>`
     } else {
       castName.innerHTML = act.name
     }

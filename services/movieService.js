@@ -1,21 +1,37 @@
 const boom = require("@hapi/boom")
 const {models} = require("../libs/sequelize")
-// const {Movies} = require('../db/model/movieModel.js');  // Ajusta según tu estructura
 
-// const {UserMovie} = require('../db/model/userMovieModel.js');  // Ajusta según tu estructura
-async function loadApi() {
-  const api = await import('../src/tmdbApi.mjs'); // Cargar módulo ESM dinámicamente    
-  return api; 
-}
+
+import axios from 'axios';
+const apiTMDB  = process.env.API_KEY
+
+//  export const api = axios.create({
+//   baseURL: 'https://api.themoviedb.org/3/',
+//   headers: {
+//     'Content-Type': 'application/json;charset=utf-8',
+//     "Authorization": apiTMDB,
+//   }
+// });
 //"Lo importante es hacer el bien, sin importar que para eso se requiera la ayuda del mal"
 //"A veces en el camino infinito del mal y del bien, necesitan interactuar para seguir adelante con sus inexorables cometidos"
 
 
+async function loadApi() {
+  const api = axios.create({
+    baseURL: 'https://api.themoviedb.org/3/',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      "Authorization": apiTMDB,
+    }
+  });
+  return api
+}
 class MoviesService {
   constructor() {}
- // Retorna los productos almacenados
+  // Retorna los productos almacenados
+  
  async find(query) {
-  const options={
+   const options={
     include:[
       "list",
       "userMovie"],
@@ -50,7 +66,7 @@ class MoviesService {
       } 
   async getMovieId(id){
     // Obtener la película desde la API de TMDb    
-    const load = await loadApi()
+    const load =  await loadApi()
     const api = load.api
     const response =await api(`movie/${id}?language=es-LA`)
     const responseCredits = await api(`movie/${id}/credits?language=es-LA`); 
@@ -183,5 +199,5 @@ class MoviesService {
   }
 } 
 
-module.exports= MoviesService
+module.exports= {MoviesService,loadApi}
 
