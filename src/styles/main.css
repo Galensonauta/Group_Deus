@@ -435,7 +435,7 @@ display: flex;
   font-weight: 700;
   letter-spacing: 0.02em;
   position: absolute;
-  left: 95%;
+  left: 88%;
   text-shadow: 0 0 .15em #910a67;
   top: 118%;
   user-select: none;
@@ -674,7 +674,7 @@ select::after {
   cursor: pointer;
   border-radius: 25px;
 }
-#btnUserLog,#btnUserLogOut{
+#btnUserLog{
   background: #151515;
   color: #fff;
   font-size: 1.2em;
@@ -683,6 +683,17 @@ select::after {
   position: absolute;
   top: 140%;
   left: 88%;
+  border-radius: 25px;
+}
+#btnUserLogOut{
+  background: #151515;
+  color: #fff;
+  font-size: 1.2em;
+  font-variant: small-caps;
+  cursor: pointer;
+  position: absolute;
+  top: 140%;
+  left: 103%;
   border-radius: 25px;
 }
 .in{
@@ -861,7 +872,10 @@ select::after {
     margin-top: 6em;
     flex-wrap: wrap;
   }
-
+  .titleNick { 
+    left: 2%;
+    top: 89%;
+}
   .likedH1C {
     margin-top: 7em;
     left: 3cqmin;
@@ -911,7 +925,7 @@ select::after {
   }
   #btnUserLogOut{
     top: 115%;
-    left: 40%;
+    left: 71%;
   }
   #btnUserSign{
     top: 115%;

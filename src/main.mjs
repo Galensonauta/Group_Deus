@@ -229,13 +229,12 @@ async function likeMovie(type,movie) {
   export async function isAuthenticated() {
     try {
       const response = await axiosInstance.get('/auth/validate-token');
-      console.log(response)
-//       const portada = document.getElementById("portada");
-//     const titleNick= document.createElement("h1")
-// titleNick.classList.add("titleNick")
-// const nickName=response
-// titleNick.textContent=nickName
-// portada.appendChild(titleNick)
+      const portada = document.getElementById("portada");
+    const titleNick= document.createElement("h1")
+titleNick.classList.add("titleNick")
+const nickName=response.data.loginUser
+titleNick.textContent=nickName
+portada.appendChild(titleNick)
       return response.status === 200; // Si el servidor responde con un 200, el token es válido
     } catch (error) {
       console.error('Token inválido o expirado:', error.message || 'Error de red');

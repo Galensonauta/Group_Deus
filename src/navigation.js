@@ -113,14 +113,10 @@ async function portadaBlackMirror() {
       btnSign.classList.add("inactive")
       btnInicio.classList.add("inactive")
       btnSalir.classList.remove("inactive")
-     
-
-      // titleNick.classList.remove("inactive")
-    }else{
+        }else{
       btnSign.classList.remove("inactive")
       btnInicio.classList.remove("inactive")
       btnSalir.classList.add("inactive")
-      // titleNick.classList.add("inactive")
       console.log('Usuario no autenticado. No se cargarán las listas de favoritos.');
     } 
   })

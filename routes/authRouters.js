@@ -63,7 +63,7 @@ router.get('/validate-token',
       }
       const loginUser=req.user.dataValues.nick
       console.log("el usuario es:",req.user.dataValues.nick)
-    res.status(200).json({ message: 'Token válido',loginUser});      
+    res.status(200).json({ message: 'Token válido+',loginUser});      
     }  
   catch(err){
     console.error('Error al validar el token:', err.message || err);

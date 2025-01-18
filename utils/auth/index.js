@@ -1,15 +1,11 @@
 const passport=require("passport")
 const LocalStartegy=require("./strategies/localStrategy")
-// const JwtStrategy=require("./strategies/jwtStrategy")
 
 passport.use("local",LocalStartegy)
-// passport.use("jwt",JwtStrategy)
 
 const Strategy = require('passport-jwt').Strategy;
 const {User}=require("../../db/model/userModel")
-// const userService = require ("../../services/usersService")
 const {config}=require("../../config/config")
-// const service = new userService
 const cookieExtractor = (req) => {
   let token = null;
   if (req && req.cookies) {
