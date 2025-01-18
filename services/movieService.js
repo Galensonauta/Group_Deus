@@ -1,33 +1,22 @@
-const boom = require("@hapi/boom")
-const {models} = require("../libs/sequelize")
 
-
-import axios from 'axios';
-const apiTMDB  = process.env.API_KEY
-
-//  export const api = axios.create({
-//   baseURL: 'https://api.themoviedb.org/3/',
-//   headers: {
-//     'Content-Type': 'application/json;charset=utf-8',
-//     "Authorization": apiTMDB,
-//   }
-// });
 //"Lo importante es hacer el bien, sin importar que para eso se requiera la ayuda del mal"
 //"A veces en el camino infinito del mal y del bien, necesitan interactuar para seguir adelante con sus inexorables cometidos"
+const boom = require("@hapi/boom")
+const {models} = require("../libs/sequelize")
+const axios = require('axios');
+const apiTMDB  = process.env.API_KEY
 
-
-async function loadApi() {
-  const api = axios.create({
-    baseURL: 'https://api.themoviedb.org/3/',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-      "Authorization": apiTMDB,
-    }
-  });
-  return api
-}
 class MoviesService {
-  constructor() {}
+  constructor() 
+    {
+      this.api = axios.create({
+        baseURL: 'https://api.themoviedb.org/3/',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          Authorization: apiTMDB,
+        },
+      })    
+  }  
   // Retorna los productos almacenados
   
  async find(query) {
@@ -66,10 +55,9 @@ class MoviesService {
       } 
   async getMovieId(id){
     // Obtener la película desde la API de TMDb    
-    const load =  await loadApi()
-    const api = load.api
-    const response =await api(`movie/${id}?language=es-LA`)
-    const responseCredits = await api(`movie/${id}/credits?language=es-LA`); 
+
+    const response =await this.api.get(`movie/${id}?language=es-LA`)
+    const responseCredits = await this.api.get(`movie/${id}/credits?language=es-LA`); 
 
       const movieData = response.data
       const movieCredits = responseCredits.data
@@ -105,10 +93,9 @@ class MoviesService {
     }
     async getTvId(id){
       // Obtener la película desde la API de TMDb    
-    const load = await loadApi()
-    const api = load.api
-    const response =await api(`tv/${id}?language=es-LA`) 
-    const responseCredits = await api(`tv/${id}/credits?language=es-LA`);
+        
+    const response =await this.api.get (`tv/${id}?language=es-LA`) 
+    const responseCredits = await  this.api.get(`tv/${id}/credits?language=es-LA`);
 
       const tvData = response.data
       const tvCredits=responseCredits.data
@@ -199,5 +186,5 @@ class MoviesService {
   }
 } 
 
-module.exports= {MoviesService,loadApi}
+module.exports= MoviesService
 

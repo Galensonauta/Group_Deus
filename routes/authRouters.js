@@ -24,8 +24,6 @@ router.post(
 
       // Generar el token JWT
       const token = jwt.sign(payload, config.jwtSecret, { expiresIn: '1d' });
-      console.log('Token JWT (crudo):', token);
-
       // Configurar la cookie con `res.cookie`
       res.cookie('token', token, {
         httpOnly: true,
@@ -34,11 +32,6 @@ router.post(
         path: '/',
         maxAge: 24 * 60 * 60 * 1000, // Duración de 1 día
       });
-
-      console.log('Cookies generadas en login:', req.cookies.token);
-      console.log('Token generadas en login:', token);
-
-
       res.json({
         message: 'Inicio de sesión exitoso',
         user,
@@ -53,16 +46,14 @@ router.post(
 router.get('/validate-token',
   passport.authenticate('jwt', { session: false }),
    async (req, res,next) => {   
-    console.log('el usuario es:', req.user); // Verificar si req.user está presente
     try{
       const userId = req.user.id; // Esto asume que el middleware de passport agrega el usuario al request
       const user = await service.find(userId);
-      console.log('Encabezado Set-Cookie:', res.getHeader('Set-Cookie'));
       if (!user) {
         return res.status(401).json({ message: 'Token inválido: usuario no encontrado' });
       }
       const loginUser=req.user.dataValues.nick
-      console.log("el usuario es:",req.user.dataValues.nick)
+     
     res.status(200).json({ message: 'Token válido+',loginUser});      
     }  
   catch(err){
