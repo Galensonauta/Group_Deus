@@ -1,5 +1,5 @@
 const { Model, DataTypes, Sequelize } = require("sequelize")
-const { USER_TABLE } = require('./userModel')
+const { LISTAS_TABLE } = require('./listaModel')
 const { TV_TABLE } = require("./tvModel")
 
 
@@ -12,12 +12,12 @@ const ListaTvSchema = {
     type: DataTypes.INTEGER,
     primaryKey: true,
   },
-  userId: {
-    field: 'user_id',
+  listId: {
+    field: 'list_id',
     allowNull: false,
     type: DataTypes.INTEGER,
     references: {
-      model: USER_TABLE,
+      model: LISTAS_TABLE,
       key: 'id'
     },
     onUpdate: 'CASCADE',

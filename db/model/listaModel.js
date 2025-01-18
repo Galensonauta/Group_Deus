@@ -8,7 +8,13 @@ const ListasSchema ={
     name: {
       allowNull: false,
       type: DataTypes.STRING,
-      defaultValue: "Favoritos",
+    },
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+
     },
     userId: {
         field: 'user_id',
@@ -37,13 +43,13 @@ class Listas extends Model {
       this.belongsToMany(models.Movies,{
         as: "moviesList",
         through: models.ListaMovie,
-        foreignKey: 'userId',
+        foreignKey: 'listId',
         otherKey: 'movieId'
       })
       this.belongsToMany(models.Tvs,{
         as: "tvsList",
         through: models.ListaTv,
-        foreignKey: 'userId',
+        foreignKey: 'listId',
         otherKey: 'tvId'
       })
     }
