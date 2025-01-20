@@ -1,21 +1,9 @@
 const express = require('express');
 const axios = require('axios');
 const router = express.Router();
-// const { config } = require('../config/config');
 
-//  this.api = axios.create({
-//         baseURL: 'https://api.themoviedb.org/3/',
-//         headers: {
-//           'Content-Type': 'application/json;charset=utf-8',
-//           Authorization: apiTMDB,
-//         },
-//       })    
-    //   const baseUrl = "https://api.themoviedb.org/3"
       const apiTMDB  = process.env.API_KEY
 
-
-    //   '/watch/providers/movie',
-// Proxy para obtener proveedores de películas
 router.get('/providers', async (req, res, next) => {
   try {
     const response = await axios.get("https://api.themoviedb.org/3/watch/providers/regions?language=en-US",
@@ -32,9 +20,9 @@ router.get('/providers', async (req, res, next) => {
     next(error); // Manejar errores
   }
 });
-router.get('genre/:media/list', async (req, res, next) => {
+router.get('/genre/:media/list', async (req, res, next) => {
     try {
-      const{media}=req.params
+      const media=req.params
       const response = await axios.get(`https://api.themoviedb.org/3/genre/${media}/list`,
         {
           headers: {
@@ -64,7 +52,7 @@ router.get('genre/:media/list', async (req, res, next) => {
       next(error); // Manejar errores
     }
   });            
-  router.get('trending/:media/day', async (req, res, next) => {
+  router.get('/trending/:media/day', async (req, res, next) => {
     try {
         const media= req.params
       const response = await axios.get(`https://api.themoviedb.org/3/trending/${media}/day`,
@@ -81,7 +69,7 @@ router.get('genre/:media/list', async (req, res, next) => {
       next(error); // Manejar errores
     }
   });
-  router.get(':media/top_rated', async (req, res, next) => {
+  router.get('/:media/top_rated', async (req, res, next) => {
     try {
         const media= req.params
       const response = await axios.get(`https://api.themoviedb.org/3/${media}/top_rated`,
