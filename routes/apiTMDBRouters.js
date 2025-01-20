@@ -58,16 +58,11 @@ const api=axios.create({
         }
       });
     
-        router.get('discover/movie/:id', async (req, res, next) => {
-            try {
-                const id = req.params
-           //conectar id de cast con la ruta del back     
-              const response = await axios.get(`https://api.themoviedb.org/3/discover/movie`,
-                {
-                  headers: {
-                      'Content-Type': 'application/json;charset=utf-8',
-                      Authorization: apiTMDB,
-                    },
+        router.get('/discover/:movie/:id', async (req, res, next) => {
+          const {media,id} = req.params
+            try {          
+              const response = await api(`/discover/${media}`,
+                {                  
                     params:{                    
                         with_cast: id
                     }

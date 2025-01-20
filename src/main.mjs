@@ -538,7 +538,7 @@ export async function getInfoByActByMovie(id) {
 //   }
 // }
 export async function getByCountry({ id, media }) {
-  const { data } = await api("discover/" + media, { params: { with_origin_country: id } })
+  const { data } = await api("/discover/" + media, { params: { with_origin_country: id } })
   const movie = data.results;
   movie.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movie, last, { type: media, lazyLoad: true, clean: true })
