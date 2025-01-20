@@ -1,67 +1,46 @@
 const express = require('express');
 const axios = require('axios');
 const router = express.Router();
-
-      const apiTMDB  = process.env.API_KEY
+const apiTMDB  = process.env.API_KEY
+const api=axios.create({
+        baseURL: 'https://api.themoviedb.org/3',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          Authorization: apiTMDB,
+        },
+      })  
       router.get('/providers', async (req, res, next) => {
         try {
-          const response = await axios.get("https://api.themoviedb.org/3/watch/providers/regions?language=en-US",
-            {
-              headers: {
-                  'Content-Type': 'application/json;charset=utf-8',
-                  Authorization: apiTMDB,
-                },
-            }
-          );
+          const response = await api("/providers/regions?language=en-US");
           res.json(response.data); // Enviar los datos al frontend
         } catch (error) {
           console.error('Error al obtener proveedores:', error.message);
           next(error); // Manejar errores
         }
       });
-      router.get('genre/:media/list', async (req, res, next) => {
+      router.get('/genre/:media/list', async (req, res, next) => {
+        const{media}=req.params
         try {
-          const{media}=req.params
-          const response = await axios.get(`https://api.themoviedb.org/3/genre/${media}/list`,
-            {
-              headers: {
-                  'Content-Type': 'application/json;charset=utf-8',
-                  Authorization: apiTMDB,
-                },
-            }
-          );
+          const response = await api(`/genre/${media}/list`);
           res.json(response.data); // Enviar los datos al frontend
         } catch (error) {
           console.error('Error al obtener proveedores:', error.message);
           next(error); // Manejar errores
         }
       });  
-      router.get('configuration/countries?language=es-LA', async (req, res, next) => {
+      router.get('/configuration/countries', async (req, res, next) => {
         try {
-          const response = await axios.get(`https://api.themoviedb.org/3/configuration/countries?language=es-LA`,
-            {
-              headers: {
-                  'Content-Type': 'application/json;charset=utf-8',
-                  Authorization: apiTMDB,
-                },
-            }
-          );res.json(response.data); // Enviar los datos al frontend
+          const response = await api(`/configuration/countries?language=es-LA`)
+          res.json(response.data); // Enviar los datos al frontend
         } catch (error) {
           console.error('Error al obtener proveedores:', error.message);
           next(error); // Manejar errores
         }
       });            
       router.get('trending/:media/day', async (req, res, next) => {
+        const media= req.params
         try {
-            const media= req.params
-          const response = await axios.get(`https://api.themoviedb.org/3/trending/${media}/day`,
-            {
-              headers: {
-                  'Content-Type': 'application/json;charset=utf-8',
-                  Authorization: apiTMDB,
-                },
-            }
-          );
+          const response = await api(`/trending/${media}/day`);
           res.json(response.data); // Enviar los datos al frontend
         } catch (error) {
           console.error('Error al obtener proveedores:', error.message);
@@ -69,16 +48,9 @@ const router = express.Router();
         }
       });
       router.get(':media/top_rated', async (req, res, next) => {
+        const media= req.params
         try {
-            const media= req.params
-          const response = await axios.get(`https://api.themoviedb.org/3/${media}/top_rated`,
-            {
-              headers: {
-                  'Content-Type': 'application/json;charset=utf-8',
-                  Authorization: apiTMDB,
-                },
-            }
-          );
+          const response = await api(`${media}/top_rated`);
           res.json(response.data); // Enviar los datos al frontend
         } catch (error) {
           console.error('Error al obtener proveedores:', error.message);

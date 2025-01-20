@@ -445,7 +445,7 @@ export async function getCategoriesPreview(media) {
   const apiDropDown = document.getElementById("apiDropdown");
   const apiDropDownPais = document.getElementById("apiDropdownPais");
   const { data: genero } = await api("genre/" + media + "/list");
-  const { data: country } = await api('configuration/countries?language=es-LA');
+  const { data: country } = await api('configuration/countries');
   const countrys = country
   const generos = genero.genres;
   createCategories(generos, apiDropDown, "id", "name");
