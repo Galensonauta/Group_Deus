@@ -36,7 +36,7 @@ function idCountrySelect(idC) {
 }
 export async function getProvider() {
   const apiDropDownPaisProvider = document.getElementById("apiDropDownPaisProvider");
-  const { data: provider } = await api(`/providers`)
+  const { data: provider } = await axiosInstance(`/providers`)
   const forCountry = provider.results
   createCategoriesProvider(forCountry, apiDropDownPaisProvider, "iso_3166_1", "native_name")
 }

@@ -10,7 +10,7 @@ const router = express.Router();
 //           Authorization: apiTMDB,
 //         },
 //       })    
-      const baseUrl = "https://api.themoviedb.org/3"
+    //   const baseUrl = "https://api.themoviedb.org/3"
       const apiTMDB  = process.env.API_KEY
 
 
@@ -18,8 +18,7 @@ const router = express.Router();
 // Proxy para obtener proveedores de películas
 router.get('/providers', async (req, res, next) => {
   try {
-    const response = await axios.get(baseUrl+
-        "watch/providers/regions?language=en-US",
+    const response = await axios.get("https://api.themoviedb.org/3/watch/providers/regions?language=en-US",
       {
         headers: {
             'Content-Type': 'application/json;charset=utf-8',
