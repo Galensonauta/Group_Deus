@@ -1,6 +1,4 @@
 import {api,axiosInstance} from "./tmdbApi.mjs"
-// import Cookies from 'universal-cookie';
-// const cookies = new Cookies();
 
 
 import { base64, 
