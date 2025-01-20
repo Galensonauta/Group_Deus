@@ -3,7 +3,22 @@ const axios = require('axios');
 const router = express.Router();
 
       const apiTMDB  = process.env.API_KEY
-
+      router.get('/providers', async (req, res, next) => {
+        try {
+          const response = await axios.get("https://api.themoviedb.org/3/watch/providers/regions?language=en-US",
+            {
+              headers: {
+                  'Content-Type': 'application/json;charset=utf-8',
+                  Authorization: apiTMDB,
+                },
+            }
+          );
+          res.json(response.data); // Enviar los datos al frontend
+        } catch (error) {
+          console.error('Error al obtener proveedores:', error.message);
+          next(error); // Manejar errores
+        }
+      });
       router.get('genre/:media/list', async (req, res, next) => {
         try {
           const{media}=req.params
@@ -132,4 +147,3 @@ const router = express.Router();
         }
       });
     module.exports = router;
-module.exports = router;
