@@ -36,7 +36,7 @@ function idCountrySelect(idC) {
 }
 export async function getProvider() {
   const apiDropDownPaisProvider = document.getElementById("apiDropDownPaisProvider");
-  const { data: provider } = await api(`watch/providers/regions?language=en-US`)
+  const { data: provider } = await api(`/providers`)
   const forCountry = provider.results
   createCategoriesProvider(forCountry, apiDropDownPaisProvider, "iso_3166_1", "native_name")
 }

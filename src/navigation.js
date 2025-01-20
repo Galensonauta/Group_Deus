@@ -236,16 +236,11 @@ function homePage() {
   
   isAuthenticated().then(isAuth => {
     if (isAuth) {
-      // console.log("el usuario esta autenticado")   
-      // btnSign.classList.add("inactive")
-      // btnInicio.classList.add("inactive")
-      // btnSalir.classList.remove("inactive")
       getLikedTv()
       getLikedMovie()
     } 
   });
     getProvider()
-
 }
 
 function signPage(){

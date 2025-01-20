@@ -56,8 +56,8 @@ class MoviesService {
   async getMovieId(id){
     // Obtener la película desde la API de TMDb    
 
-    const response =await this.api.get(`movie/${id}?language=es-LA`)
-    const responseCredits = await this.api.get(`movie/${id}/credits?language=es-LA`); 
+    const response =await this.api(`movie/${id}?language=es-LA`)
+    const responseCredits = await this.api(`movie/${id}/credits?language=es-LA`); 
 
       const movieData = response.data
       const movieCredits = responseCredits.data
@@ -94,8 +94,8 @@ class MoviesService {
     async getTvId(id){
       // Obtener la película desde la API de TMDb    
         
-    const response =await this.api.get (`tv/${id}?language=es-LA`) 
-    const responseCredits = await  this.api.get(`tv/${id}/credits?language=es-LA`);
+    const response =await this.api (`tv/${id}?language=es-LA`) 
+    const responseCredits = await  this.api(`tv/${id}/credits?language=es-LA`);
 
       const tvData = response.data
       const tvCredits=responseCredits.data
