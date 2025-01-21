@@ -308,11 +308,11 @@ function trendPage() {
   if (mode) {
     getTrendingPreview("tv")
     getCategoriesPreview("tv")
-    setscrollInfinitParam({ url: "trending/tv/day", query: null, searchBy: "#trend=", type: "tv" })
+    setscrollInfinitParam({ url: "/trending/tv/day", query: null, searchBy: "#trend=", type: "tv" })
   } else {
     getTrendingPreview("movie")
     getCategoriesPreview("movie")
-    setscrollInfinitParam({ url: "trending/movie/day", query: null, searchBy: "#trend=", type: "movie" })
+    setscrollInfinitParam({ url: "/trending/movie/day", query: null, searchBy: "#trend=", type: "movie" })
   }
   portadaBlackMirror()
   getProvider()

@@ -292,8 +292,8 @@ export async function createAfiches(afiche, container, {
     movieContainer.addEventListener('click', async () => {
       try{   
       const  movieGd  = await getRankGd(type)
-      const { data: movieDetail } = await api(`${type}/${movie.id}?language=es-LA`)
-      const { data: creditPreview } = await api(`${type}/${movie.id}/credits?language=es-LA`);
+      const { data: movieDetail } = await api(`/${type}/${movie.id}`)
+      const { data: creditPreview } = await api(`/${type}/${movie.id}/credits?language=es-LA`);
       const aficheDetail={
       ...movieDetail,
       ...creditPreview,
@@ -444,8 +444,8 @@ export function createCategories(categories, container, id, nombre) {
 export async function getCategoriesPreview(media) {
   const apiDropDown = document.getElementById("apiDropdown");
   const apiDropDownPais = document.getElementById("apiDropdownPais");
-  const { data: genero } = await api("genre/" + media + "/list");
-  const { data: country } = await api('configuration/countries');
+  const { data: genero } = await api(`/genre/${media}/list`);  
+  const { data: country } = await api('/configuration/countries');
   const countrys = country
   const generos = genero.genres;
   createCategories(generos, apiDropDown, "id", "name");
@@ -470,7 +470,7 @@ export function getScrollInfinite({ url, query = undefined, searchBy = undefined
   }
 }
 export async function getTrendingHome(media) {
-  const { data: movie } = await api("trending/" + media + "/day")
+  const { data: movie } = await api(`/trending/${media}/day`)
   const movies = movie.results.slice(0, 4)
   movies.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movies, lastTrend, { type: media, lazyLoad: true, clean: true })
@@ -487,7 +487,7 @@ export async function getRankHomeImdb(media) {
   createAfiches(movies, lastRankImdb, { type: media, lazyLoad: true, clean: true })
 }
 export async function getTrendingPreview(media) {
-  const { data } = await api("trending/" + media + "/day")
+  const { data } = await api(`/trending/${media}/day`)
   const movies = data.results
   movies.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movies, last, { type: media, lazyLoad: true, clean: true })
@@ -504,68 +504,37 @@ export async function getRankPreview(media) {
   createAfiches(movie, last, { type: media, lazyLoad: true, clean: true })
 }
 export async function getInfoByActByMovie(id) {  
-    const { data } = await api('discover/movie', {
-      params: {
-        with_cast: id
-      }
-    });
+    const { data } = await api(`discover/movie/${id}`);
     const movies = data.results;
     movies.sort((a, b) => b.vote_average - a.vote_average)
     createAfiches(movies, last, { type: "movie", lazyLoad: true, clean: true })
   }
   export async function getInfoByActByTv (id){
-  const { data } = await api('person/' + id + "/tv_credits");
+  const { data } = await api(`/person/${id}/tv_credits`);
   const credits = data.cast;
   credits.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(credits, last, { type: "tv", lazyLoad: true, clean: true })
 }
-
-// export async function getInfoByAct({ id, media }) {
-//   if (media === "movie") {
-//     const { data } = await api('discover/movie', {
-//       params: {
-//         with_cast: id
-//       }
-//     });
-//     const movies = data.results;
-//     movies.sort((a, b) => b.vote_average - a.vote_average)
-//     createAfiches(movies, last, { type: "movie", lazyLoad: true, clean: true })
-//   } else {
-//     const { data } = await api('person/' + id + "/tv_credits");
-//     const credits = data.cast;
-//     credits.sort((a, b) => b.vote_average - a.vote_average)
-//     createAfiches(credits, last, { type: "tv", lazyLoad: true, clean: true })
-//   }
-// }
 export async function getByCountry({ id, media }) {
-  const { data } = await api("/discover/" + media, { params: { with_origin_country: id } })
+  const { data } = await api(`/discover/${media}/${id}`)
   const movie = data.results;
   movie.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movie, last, { type: media, lazyLoad: true, clean: true })
 }
 export async function getByGenres({ id, media }) {
-  const { data } = await api('discover/' + media, {
-    params: {
-      with_genres: id,
-      page
-    }
-  });
+  const { data } = await api(`/discover/${media}/${id}`);
   // maxPage = data.total_pages
   const movies = data.results;
   movies.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movies, last, { type: media, lazyLoad: true, clean: true })
 }
 export async function getBySearch({ query, media }) {
-  const { data } = await api("search/" + media, {
-    params: {
-      query,
-    },
-  });
+  const { data } = await api(`/search/${media}/${query}`);
   const movie = data.results;
   createAfiches(movie, last, { type: media, lazyLoad: true, clean: true })
 }
 export async function getById({ id, media }) {
-  const { data: movie } = await api(`${media}/${id}?append_to_response=videos,images`);
+  const { data: movie } = await api(`/${media}/${id}`);
   const poster = document.querySelector(".poster")
   poster.innerHTML = ""
   const imgPoster = document.createElement('img');
@@ -667,13 +636,13 @@ export async function getById({ id, media }) {
   carrouselVideos()
 }
 export async function getSimilarById({ id, media }) {
-  const { data } = await api(`${media}/${id}/similar?language=es-ES`)
+  const { data } = await api(`/${media}/${id}/similar`)
   const similares = data.results
   createAfiches(similares, lastSimilar, { type: media, lazyLoad: true, clean: true })
 }
 export async function getInfoById({ id, media}) 
   {   
-  const { data: movie } = await api(`${media}/${id}?language=es-ES`)
+  const { data: movie } = await api(`${media}/${id}?language=es-LA`)
   const { data: credit } = await api(`${media}/${id}/credits?language=en-US`)
   const { data: provider } = await api(`${media}/${id}/watch/providers`)
 
