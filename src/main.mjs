@@ -293,7 +293,7 @@ export async function createAfiches(afiche, container, {
       try{   
       const  movieGd  = await getRankGd(type)
       const { data: movieDetail } = await api(`/${type}/${movie.id}`)
-      const { data: creditPreview } = await api(`/${type}/${movie.id}/credits?language=es-LA`);
+      const { data: creditPreview } = await api(`/${type}/${movie.id}/credits`);
       const aficheDetail={
       ...movieDetail,
       ...creditPreview,
@@ -534,7 +534,7 @@ export async function getBySearch({ query, media }) {
   createAfiches(movie, last, { type: media, lazyLoad: true, clean: true })
 }
 export async function getById({ id, media }) {
-  const { data: movie } = await api(`/${media}/${id}`);
+  const { data: movie } = await api(`/${media}/${id}/video`);
   const poster = document.querySelector(".poster")
   poster.innerHTML = ""
   const imgPoster = document.createElement('img');
@@ -642,9 +642,9 @@ export async function getSimilarById({ id, media }) {
 }
 export async function getInfoById({ id, media}) 
   {   
-  const { data: movie } = await api(`${media}/${id}?language=es-LA`)
-  const { data: credit } = await api(`${media}/${id}/credits?language=en-US`)
-  const { data: provider } = await api(`${media}/${id}/watch/providers`)
+  const { data: movie } = await api(`/${media}/${id}`)
+  const { data: credit } = await api(`/${media}/${id}/credits`)
+  const { data: provider } = await api(`/${media}/${id}/watch/providers`)
 
   const movieInfo = document.querySelector(".movieInfo")
   const titles= document.querySelector(".titles")
