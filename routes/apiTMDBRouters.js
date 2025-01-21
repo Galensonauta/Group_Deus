@@ -38,7 +38,22 @@ const api=axios.create({
           console.error('Error al obtener proveedores:', error.message);
           next(error); // Manejar errores
         }
-      });            
+      });
+      router.get('/:url', async (req, res, next) => {
+        try {
+      const {url} = req.params            
+      const parameter = { page }
+       //conectar id de cast con la ruta del back     
+          const response = await api.get(`/${url}`,{
+            params: parameter
+          }
+          );
+          res.json(response.data); // Enviar los datos al frontend
+        } catch (error) {
+          console.error('Error al obtener proveedores:', error.message);
+          next(error); // Manejar errores
+        }
+      });                  
       router.get('/trending/:media/day', async (req, res, next) => {
         const {media}= req.params
         try {

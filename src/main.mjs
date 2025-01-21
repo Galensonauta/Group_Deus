@@ -462,9 +462,7 @@ export function getScrollInfinite({ url, query = undefined, searchBy = undefined
     if (searchBy === "#categoryByAct=") { parameter.with_cast = query }
     if (searchBy === "#categoryByAct=") { parameter.query = query }
     if (searchBy === "#categoryByCountry=") { parameter.with_origin_country = query }
-    const { data } = await api(url, {
-      params: parameter
-    })
+    const { data } = await api(url)
     const movies = data.results
     createAfiches(movies, last, { type, lazyLoad: true, clean: false })
   }
