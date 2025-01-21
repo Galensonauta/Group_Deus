@@ -2,13 +2,13 @@ const express = require('express');
 const axios = require('axios');
 const router = express.Router();
 const apiTMDB  = process.env.API_KEY
-// const api=axios.create({
-//         baseURL: 'https://api.themoviedb.org/3',
-//         headers: {
-//           'Content-Type': 'application/json;charset=utf-8',
-//           Authorization: apiTMDB,
-//         },
-//       })  
+const api=axios.create({
+        baseURL: 'https://api.themoviedb.org/3',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          Authorization: apiTMDB,
+        },
+      })  
       // router.get('/providers', async (req, res, next) => {
       //   try {
       //     const response = await api("/providers/regions?language=en-US");
@@ -18,16 +18,16 @@ const apiTMDB  = process.env.API_KEY
       //     next(error); // Manejar errores
       //   }
       // });
-      // router.get('/genre/:media/list', async (req, res, next) => {
-      //   const{media}=req.params
-      //   try {
-      //     const response = await api(`/genre/${media}/list`);
-      //     res.json(response.data); // Enviar los datos al frontend
-      //   } catch (error) {
-      //     console.error('Error al obtener proveedores:', error.message);
-      //     next(error); // Manejar errores
-      //   }
-      // });  
+      router.get('/genre/:media/list', async (req, res, next) => {
+        const{media}=req.params
+        try {
+          const response = await api.get(`/genre/${media}/list`);
+          res.json(response.data); // Enviar los datos al frontend
+        } catch (error) {
+          console.error('Error al obtener proveedores:', error.message);
+          next(error); // Manejar errores
+        }
+      });  
       // router.get('/configuration/countries', async (req, res, next) => {
       //   try {
       //     const response = await api(`/configuration/countries?language=es-LA`)
