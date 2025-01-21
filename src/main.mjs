@@ -504,7 +504,7 @@ export async function getRankPreview(media) {
   createAfiches(movie, last, { type: media, lazyLoad: true, clean: true })
 }
 export async function getInfoByActByMovie(id) {  
-    const { data } = await api(`discover/movie/${id}`);
+    const { data } = await api(`discoverAct/movie/${id}`);
     const movies = data.results;
     movies.sort((a, b) => b.vote_average - a.vote_average)
     createAfiches(movies, last, { type: "movie", lazyLoad: true, clean: true })
@@ -516,13 +516,13 @@ export async function getInfoByActByMovie(id) {
   createAfiches(credits, last, { type: "tv", lazyLoad: true, clean: true })
 }
 export async function getByCountry({ id, media }) {
-  const { data } = await api(`/discover/${media}/${id}`)
+  const { data } = await api(`/discoverCountry/${media}/${id}`)
   const movie = data.results;
   movie.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movie, last, { type: media, lazyLoad: true, clean: true })
 }
 export async function getByGenres({ id, media }) {
-  const { data } = await api(`/discover/${media}/${id}`);
+  const { data } = await api(`/discoverGenre/${media}/${id}`);
   // maxPage = data.total_pages
   const movies = data.results;
   movies.sort((a, b) => b.vote_average - a.vote_average)
