@@ -38,14 +38,13 @@ const apiTMDB  = process.env.API_KEY
       //   }
       // });            
       router.get('/trending/:media/day', async (req, res, next) => {
-        const media= req.params
+        const {media}= req.params
         try {
-          const response = await axios.get(`https://api.themoviedb.org/3/trending/${media}/day`,
-            {
-              headers: {
-'Content-Type': 'application/json;charset=utf-8',
-          Authorization: apiTMDB
-                    }}
+          const response = await axios.get(`https://api.themoviedb.org/3/trending/${media}/day`, {
+            params: {
+              api_key: apiTMDB, // Pasar la API Key como parámetro
+            },
+          }
           );
           res.json(response.data); // Enviar los datos al frontend
           console.log(response)
