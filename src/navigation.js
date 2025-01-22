@@ -477,15 +477,12 @@ function categoryPage() {
   containerLastRankGd.classList.add("inactive")
   const movieDetails = document.getElementById("moviePage");
   movieDetails.classList.add("inactive")
-  //     // ['#category', 'id-name']
-
   portadaBlackMirror()
   getProvider()
 
   const [_, categoryData] = location.hash.split('=');
   const [categoryId, categoryName] = categoryData.split('-');
- 
-  
+   
   if (mode) {
     if (!isNaN(categoryId)) {
       getByGenres({id:categoryId,media:"tv"})

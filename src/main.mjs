@@ -521,7 +521,6 @@ export async function getByCountry({ id, media }) {
 }
 export async function getByGenres({ id, media }) {
   const { data } = await api(`/discoverGenre/${media}/${id}`);
-  // maxPage = data.total_pages
   const movies = data.results;
   movies.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movies, last, { type: media, lazyLoad: true, clean: true })
