@@ -141,7 +141,7 @@ const api=axios.create({
               next(error); // Manejar errores
             }
           });
-          router.get('/discoverGenre/:media}', async (req, res, next) => {
+          router.get('/discoverGenre/:media', async (req, res, next) => {
             try {
                 const {media} = req.params
                 const {id}= req.query
