@@ -451,8 +451,6 @@ export async function getCategoriesPreview(media) {
   createCategories(generos, apiDropDown, "id", "name");
   createCategories(countrys, apiDropDownPais, "iso_3166_1", "native_name");
 }
-// let maxPage;
-// let page = 1;
 export function getScrollInfinite({ url, query = undefined, searchBy = undefined, type = "movie" }) {
   return async function () {   
     const { data } = await api(url, {
@@ -521,7 +519,9 @@ export async function getByGenres({ id, media }) {
   createAfiches(movies, last, { type: media, lazyLoad: true, clean: true })
 }
 export async function getBySearch({ query, media }) {
-  const { data } = await api(`/search/${media}/${query}`);
+  const { data } = await api(`/search/${media}`,{
+    params: query
+  });
   const movie = data.results;
   createAfiches(movie, last, { type: media, lazyLoad: true, clean: true })
 }

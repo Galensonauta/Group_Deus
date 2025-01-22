@@ -485,19 +485,19 @@ function categoryPage() {
   if (mode) {
     if (!isNaN(categoryId)) {
       getByGenres({id:categoryId,media:"tv"})
-      setscrollInfinitParam({ url: "discover/tv", query: categoryId, searchBy: "#categoryByGenre=", type: "tv" })
+      setscrollInfinitParam({ url: "/discover/tv", query: categoryId, searchBy: "#categoryByGenre=", type: "tv" })
     } else {
       getByCountry({id:categoryId,media:"tv"})
-      setscrollInfinitParam({ url: "discover/tv", query: categoryId, searchBy: "#categoryByCountry=", type: "tv" })
+      setscrollInfinitParam({ url: "/discover/tv", query: categoryId, searchBy: "#categoryByCountry=", type: "tv" })
     }
     getCategoriesPreview("tv")
   } else {
     if (!isNaN(categoryId)) {
       getByGenres({id:categoryId,media:"movie"})
-      setscrollInfinitParam({ url: "discover/movie", query: categoryId, searchBy: "#categoryByGenre=", type: "movie" })
+      setscrollInfinitParam({ url: "/discover/movie", query: categoryId, searchBy:"#categoryByGenre=", type:"movie" })
     } else {
       getByCountry({id:categoryId,media:"movie"})
-      setscrollInfinitParam({ url: "discover/movie", query: categoryId, searchBy: "#categoryByCountry=", type: "movie" })
+      setscrollInfinitParam({ url: "/discover/movie", query: categoryId, searchBy:"#categoryByCountry=", type:"movie" })
     }
     getCategoriesPreview("movie")
   }
