@@ -39,16 +39,28 @@ const api=axios.create({
           next(error); // Manejar errores
         }
       });
-      router.get('/:url/:query/:searchBy', async (req, res, next) => {
+      router.get('/:url', async (req, res, next) => {
         try {
-          const {url,query,searchBy} = req.params  
+          const {url} = req.params  
+          const {query,searchBy}= req.query
           page++
           const parameter = { page }          
-              if (searchBy === '#categoryByGenre=') { parameter.with_genres = query }
-              if (searchBy === 'search') { parameter.query = query }
-              if (searchBy === "#categoryByAct=") { parameter.with_cast = query }
-              if (searchBy === "#categoryByAct=") { parameter.query = query }
-              if (searchBy === "#categoryByCountry=") { parameter.with_origin_country = query }
+          switch (searchBy) {
+            case '#categoryByGenre=':
+              parameter.with_genres = query;
+              break;
+            case 'search':
+              parameter.query = query;
+              break;
+            case '#categoryByAct=':
+              parameter.with_cast = query;
+              break;
+            case '#categoryByCountry=':
+              parameter.with_origin_country = query;
+              break;
+            default:
+              return res.status(400).json({ message: 'Parámetro searchBy no válido' });
+          }
           const response = await api.get(`/${url}`,{
             params: parameter
           }
@@ -87,7 +99,6 @@ const api=axios.create({
             {
                 params:{                    
                     with_cast: id,
-                    page
                 }
             }
           );
@@ -104,7 +115,6 @@ const api=axios.create({
                 {                  
                     params:{                    
                         with_cast: id,
-                        page
                     }
                 }
               );
@@ -122,7 +132,6 @@ const api=axios.create({
               const response = await api.get(`/discover/${media}`, 
                 {
                   params: { with_origin_country: id,
-                    page
                    } 
                 }
               );
@@ -138,7 +147,6 @@ const api=axios.create({
               const response = await api.get(`/discover/${media}`, {
                 params: {
                   with_genres: id,
-                  page
                 }
               })
               res.json(response.data); // Enviar los datos al frontend
@@ -153,7 +161,6 @@ const api=axios.create({
               const response = await api.get(`/search/${media}`, {
                 params: {
                   query,
-                  page
                 }
               })
               res.json(response.data); // Enviar los datos al frontend

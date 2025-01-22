@@ -454,10 +454,11 @@ export async function getCategoriesPreview(media) {
 // let maxPage;
 // let page = 1;
 export function getScrollInfinite({ url, query = undefined, searchBy = undefined, type = "movie" }) {
-  return async function () {
-   
-    const { data } = await api(url,query,searchBy)
-    const movies = data.results
+  return async function () {   
+    const { data } = await api(url, {
+      params: { query, searchBy },
+    });
+        const movies = data.results
     createAfiches(movies, last, { type, lazyLoad: true, clean: false })
   }
 }
