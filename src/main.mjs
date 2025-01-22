@@ -520,7 +520,7 @@ export async function getByGenres({ id, media }) {
 }
 export async function getBySearch({ query, media }) {
   const { data } = await api(`/search/${media}`,{
-    params: query
+    params: {query}
   });
   const movie = data.results;
   createAfiches(movie, last, { type: media, lazyLoad: true, clean: true })
