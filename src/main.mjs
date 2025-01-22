@@ -514,7 +514,7 @@ export async function getByCountry({ id, media }) {
 }
 export async function getByGenres({ id, media }) {
   const { data } = await api(`/discoverGenre/${media}`,{
-    params: {with_genres: id}
+    params: id
   });
   const movies = data.results;
   movies.sort((a, b) => b.vote_average - a.vote_average)
