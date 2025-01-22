@@ -452,17 +452,11 @@ export async function getCategoriesPreview(media) {
   createCategories(countrys, apiDropDownPais, "iso_3166_1", "native_name");
 }
 // let maxPage;
-let page = 1;
+// let page = 1;
 export function getScrollInfinite({ url, query = undefined, searchBy = undefined, type = "movie" }) {
   return async function () {
-    page++;
-    const parameter = { page }
-    if (searchBy === '#categoryByGenre=') { parameter.with_genres = query }
-    if (searchBy === 'search') { parameter.query = query }
-    if (searchBy === "#categoryByAct=") { parameter.with_cast = query }
-    if (searchBy === "#categoryByAct=") { parameter.query = query }
-    if (searchBy === "#categoryByCountry=") { parameter.with_origin_country = query }
-    const { data } = await api(url)
+   
+    const { data } = await api(url,query,searchBy)
     const movies = data.results
     createAfiches(movies, last, { type, lazyLoad: true, clean: false })
   }

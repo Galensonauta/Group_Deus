@@ -68,7 +68,6 @@ router.post('/logout', (req, res) => {
     sameSite:"none"     // Configura la política de SameSite
   });
   // Responder con un mensaje de éxito
-  console.log('Cookie de token eliminada');
   res.json({ message: 'Cierre de sesión exitoso' });
 });
 

@@ -108,23 +108,17 @@ if(type==="movie"){
     try {
       const user = await this.findOne(userId);
       if (!user) {
-        console.log(`No se encontró el usuario con el ID: ${userId}`);
         return []; // Devolver una lista vacía si el usuario no existe
       }
-  console.log("el user",user)
       const userList = user.userList || [];
-      console.log("la lista",userList)
       if (userList.length === 0) {
-        console.log(`El usuario con el ID: ${userId} no tiene listas asociadas`);
         return []; // Devolver una lista vacía si no hay listas asociadas al usuario
       }  
       if (type === "movie") {
         const moviesList = userList[0].moviesList || [];
-        console.log(`Películas encontradas para el usuario con el ID: ${userId}:`, moviesList);
         return moviesList;
       } else {
         const tvsList = userList[0].tvsList || [];
-        console.log(`Series encontradas para el usuario con el ID: ${userId}:`, tvsList);
         return tvsList;
       }
     } catch (error) {

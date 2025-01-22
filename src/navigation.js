@@ -441,7 +441,6 @@ function categoryPageAct() {
   containerLastRankGd.classList.add("inactive")
   const movieDetails = document.getElementById("moviePage");
   movieDetails.classList.add("inactive")
-  //     // ['#category', 'id-name']
   portadaBlackMirror()
   getProvider()
 
@@ -451,11 +450,11 @@ function categoryPageAct() {
   if (mode) {
     getInfoByActByTv({id:categoryId})
     getCategoriesPreview("tv")
-    setscrollInfinitParam({ url: "person/" + categoryId + "/tv_credits", query: categoryId, searchBy: "#categoryByAct=", type: "tv" })
+    setscrollInfinitParam({ url: "/person/" + categoryId + "/tv_credits", query: categoryId, searchBy: "#categoryByAct=", type: "tv" })
   } else {
     getInfoByActByMovie({id:categoryId})
     getCategoriesPreview("movie")
-    setscrollInfinitParam({ url: "'discover/movie'", query: categoryId, searchBy: "#categoryByAct=", type: "movie" })
+    setscrollInfinitParam({ url: "/discover/movie", query: categoryId, searchBy: "#categoryByAct=", type: "movie" })
   }
   observer.observe(document.getElementById("fin"))
 }

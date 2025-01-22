@@ -39,11 +39,16 @@ const api=axios.create({
           next(error); // Manejar errores
         }
       });
-      router.get('/:url', async (req, res, next) => {
+      router.get('/:url/:query/:searchBy', async (req, res, next) => {
         try {
-      const {url} = req.params            
-      const parameter = { page }
-       //conectar id de cast con la ruta del back     
+          const {url,query,searchBy} = req.params  
+          page++
+          const parameter = { page }          
+              if (searchBy === '#categoryByGenre=') { parameter.with_genres = query }
+              if (searchBy === 'search') { parameter.query = query }
+              if (searchBy === "#categoryByAct=") { parameter.with_cast = query }
+              if (searchBy === "#categoryByAct=") { parameter.query = query }
+              if (searchBy === "#categoryByCountry=") { parameter.with_origin_country = query }
           const response = await api.get(`/${url}`,{
             params: parameter
           }
@@ -59,7 +64,6 @@ const api=axios.create({
         try {
           const response = await api.get(`/trending/${media}/day`);
           res.json(response.data); // Enviar los datos al frontend
-          console.log(response)
         } catch (error) {
           console.error('Error al obtener proveedores:', error.message);
           next(error); // Manejar errores

@@ -42,53 +42,7 @@ class ListasService {
     }
     return lista
   }
-  // async findOne(req,type) {
-  //   const id = req.user.sub;
-  //   console.log(id)  // Obtener el ID del usuario autenticado desde el token JWT
-  //   if(type==="movie"){
-  //   const lista = await models.Listas.findByPk(id,{
-     
-  //     include: [
-  //       {
-  //         association: "userList",
-  //         attributes: ["nick"],
-  //         required: true  // Solo devolver si existe la relación con userList
-  //       },
-  //       {
-  //         association: "moviesList",
-  //         required: true  // Solo devolver si existe la relación con moviesList
-  //       }
-  //     ]
-  //   })
-  //   if (!lista) {
-  //     throw boom.notFound("No existe")
-  //   }
-  //   return lista;
-  // }else{
-  //   const lista = await models.Listas.findOne({
-  //     where: {
-  //       userId: userId,      // Buscar por el ID del usuario autenticado
-  //       name: 'Favoritos'    // Buscar la lista con el nombre "Favoritos"
-  //     },
-  //     include: [
-  //       {
-  //         association: "userList",
-  //         attributes: ["nick"],
-  //         required: true  // Solo devolver si existe la relación con userList
-  //       },
-  //       {
-  //         association: "tvsList",
-  //         required: true  // Solo devolver si existe la relación con moviesList
-  //       }
-  //     ],
-  //     logging: console.log  // Mostrar la consulta generada por Sequelize
-  //   })
-  //   if (!lista) {
-  //     throw boom.notFound("No existe")
-  //   }
-  //   return lista;
-  // }    
-  // }
+  
   async createLista(data) {   
     const newListas = await models.Listas.create(data)
     return newListas;
