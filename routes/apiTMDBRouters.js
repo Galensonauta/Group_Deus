@@ -39,11 +39,11 @@ const api=axios.create({
           next(error); // Manejar errores
         }
       });
-      router.get('/:url/:type', async (req, res, next) => {
+      router.get('/:url', async (req, res, next) => {
         try {
-          const {url,type} = req.params  
-          const {query,searchBy}= req.query
           page++
+          const {url} = req.params  
+          const {query,searchBy}= req.query
           const parameter = { page }          
           switch (searchBy) {
             case '#categoryByGenre=':
@@ -61,7 +61,7 @@ const api=axios.create({
             default:
               return res.status(400).json({ message: 'Parámetro searchBy no válido' });
           }
-          const response = await api.get(`/${url}/${type}`,{
+          const response = await api.get(`/${url}`,{
             params: parameter
           }
           );

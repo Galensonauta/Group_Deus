@@ -453,7 +453,7 @@ export async function getCategoriesPreview(media) {
 }
 export function getScrollInfinite({ url, query = undefined, searchBy = undefined, type = "movie" }) {
   return async function () {   
-    const { data } = await api(`/${url}/${type}`, {
+    const { data } = await api(`/${url}`, {
       params: { query, searchBy },
     });
         const movies = data.results
