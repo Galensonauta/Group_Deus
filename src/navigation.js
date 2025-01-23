@@ -179,6 +179,7 @@ function navigator() {
 let scrollInfinitParam = {
   url: "",
   query: undefined,
+
 }
 function setscrollInfinitParam(params) {
   scrollInfinitParam = { ...scrollInfinitParam, ...params }

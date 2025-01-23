@@ -452,17 +452,23 @@ export async function getCategoriesPreview(media) {
   createCategories(countrys, apiDropDownPais, "iso_3166_1", "native_name");
 }
 export function getScrollInfinite({ url, query = undefined, type = "movie" }) {
+let nroPage = 1
   return async function () {   
-    const {data}  = await api(`/${url}`, {
-      params: { query },
-    });
-    if (!data || !data.results) {
-      console.error('Los datos no son la postxxx:', data);
-      return;
+    try{
+      const {data}  = await api(`/${url}`, {
+        params: { query, page: nroPage },
+      });
+      if (!data || !data.results) {
+        console.error('Los datos no son la postxxx:', data);
+        return;
+      }
+      console.log("la",data)
+          const movies = data.results
+      createAfiches(movies, last, { type, lazyLoad: true, clean: false })
+      nroPage++
+    }catch(error){
+    console.error(error.message||error)
     }
-    console.log("la",data)
-        const movies = data.results
-    createAfiches(movies, last, { type, lazyLoad: true, clean: false })
   }
 }
 export async function getTrendingHome(media) {

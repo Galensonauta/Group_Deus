@@ -39,12 +39,14 @@ const api=axios.create({
           next(error); // Manejar errores
         }
       });
+      const paginacion = {}          
       router.get('/:url', async (req, res, next) => {
         try {
-          page++
           const {url} = req.params  
           const {query}= req.query
-          const parameter = {page}          
+
+          if(!paginacion[url]){paginacion[url]=1}
+          else paginacion[url]++
           // switch (searchBy) {
           //   case '#categoryByGenre=':
           //     parameter.with_genres = query;
@@ -60,7 +62,8 @@ const api=axios.create({
           //     break;
           //   default:
           //     return res.status(400).json({ message: 'Parámetro searchBy no válido' });
-          // }       
+          // }
+          const parameter = {page : paginacion[url]}       
           if(url==="discover/movie"){
             parameter.with_origin_country = query;
           }   
@@ -69,6 +72,7 @@ const api=axios.create({
           }
         );
         console.log('Respuesta de TMDB:', response.data); // Verifica los datos devueltos
+        console.log("Estos son los parametros",parameter)
           res.json(response.data); // Enviar los datos al frontend
         } catch (error) {
           console.error('Error al obtener proveedores:', error.message);
