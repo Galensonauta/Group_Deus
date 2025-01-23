@@ -39,10 +39,10 @@ const api=axios.create({
           next(error); // Manejar errores
         }
       });
-      router.get('/:url', async (req, res, next) => {
+      router.get('/paginacion', async (req, res, next) => {
         try {
           page++
-          const {url} = req.params  
+          // const {url} = req.params  
           const {query,searchBy}= req.query
           const parameter = { page }          
           switch (searchBy) {
@@ -61,7 +61,7 @@ const api=axios.create({
             default:
               return res.status(400).json({ message: 'Parámetro searchBy no válido' });
           }
-          const response = await api.get(`/${url}`,{
+          const response = await api.get(`/paginacion`,{
             params: parameter
           }
           );
