@@ -27,7 +27,6 @@ app.use(passport.initialize());
 const whiteList = ["https://group-deus.vercel.app","https://group-deus-backend-express.onrender.com"];
 const corsOptions = {
   origin: (origin, callback) => {
-    console.log('Solicitud desde origen:', origin);
     if (whiteList.includes(origin) || !origin) {
       callback(null, true);
     } else {      

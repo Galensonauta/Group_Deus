@@ -455,9 +455,13 @@ export function getScrollInfinite({ url, query = undefined, type = "movie" }) {
 let nroPage = 1
   return async function () {   
     try{
-      const {data}  = await api(`/${url}`, {
-        params: { query, page: nroPage },
-      });
+      console.log(`Solicitando página ${nroPage} para URL: ${url}`); // Debugging
+
+      const {data}  = await api(`/${url}/${query}`
+      //   , {
+      //   params: { query, page: nroPage },
+      // }
+    );
       if (!data || !data.results) {
         console.error('Los datos no son la postxxx:', data);
         return;
@@ -466,6 +470,8 @@ let nroPage = 1
           const movies = data.results
       createAfiches(movies, last, { type, lazyLoad: true, clean: false })
       nroPage++
+      console.log(`Solicitando página luego de render de pelis ${nroPage} para URL: ${url}`); // Debugging
+
     }catch(error){
     console.error(error.message||error)
     }

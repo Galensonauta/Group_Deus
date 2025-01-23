@@ -2,7 +2,6 @@ const express = require('express');
 const axios = require('axios');
 const router = express.Router();
 const apiTMDB  = process.env.API_KEY
-let page = 1;
 
 const api=axios.create({
         baseURL: 'https://api.themoviedb.org/3',
@@ -40,10 +39,10 @@ const api=axios.create({
         }
       });
       const paginacion = {}          
-      router.get('/:url', async (req, res, next) => {
+      router.get('/:url/:query', async (req, res, next) => {
         try {
-          const {url} = req.params  
-          const {query}= req.query
+          const {url,query} = req.params  
+          // const {query}= req.query
 
           if(!paginacion[url]){paginacion[url]=1}
           else paginacion[url]++
