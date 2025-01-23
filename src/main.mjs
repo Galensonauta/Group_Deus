@@ -453,11 +453,15 @@ export async function getCategoriesPreview(media) {
 }
 export function getScrollInfinite({ url, query = undefined, searchBy = undefined, type = "movie" }) {
   return async function () {   
-    const data  = await api("/paginacion"+url, {
+    const {data:page}  = await api(`/paginacion/${url}`, {
       params: { query, searchBy },
     });
-        const movies = data.results
-    createAfiches(movies, last, { type, lazyLoad: true, clean: false })
+    if (!page || !page.results) {
+      console.error('Los datos no son válidos:', page);
+      return;
+    }
+        const pages = page.results
+    createAfiches(pages, last, { type, lazyLoad: true, clean: false })
   }
 }
 export async function getTrendingHome(media) {

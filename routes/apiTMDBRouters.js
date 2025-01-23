@@ -39,10 +39,10 @@ const api=axios.create({
           next(error); // Manejar errores
         }
       });
-      router.get('/paginacion', async (req, res, next) => {
+      router.get('/paginacion/:url', async (req, res, next) => {
         try {
           page++
-          // const {url} = req.params  
+          const {url} = req.params  
           const {query,searchBy}= req.query
           const parameter = { page }          
           switch (searchBy) {
@@ -61,10 +61,12 @@ const api=axios.create({
             default:
               return res.status(400).json({ message: 'Parámetro searchBy no válido' });
           }
-          const response = await api.get(`/paginacion`,{
+          
+          const response = await api.get(`/paginacion/${url}`,{
             params: parameter
           }
-          );
+        );
+        console.log('Respuesta de TMDB:', response.data); // Verifica los datos devueltos
           res.json(response.data); // Enviar los datos al frontend
         } catch (error) {
           console.error('Error al obtener proveedores:', error.message);
