@@ -451,17 +451,17 @@ export async function getCategoriesPreview(media) {
   createCategories(generos, apiDropDown, "id", "name");
   createCategories(countrys, apiDropDownPais, "iso_3166_1", "native_name");
 }
-export function getScrollInfinite({ url, query = undefined, searchBy = undefined, type = "movie" }) {
+export function getScrollInfinite({ url, query = undefined, type = "movie" }) {
   return async function () {   
-    const {data:page}  = await api(`/paginacion/${url}`, {
-      params: { query, searchBy },
+    const {data}  = await api(`/paginacion/${url}`, {
+      params: { query },
     });
-    if (!page || !page.results) {
-      console.error('Los datos no son válidos:', page);
+    if (!data || !data.results) {
+      console.error('Los datos no son la posta:', data);
       return;
     }
-        const pages = page.results
-    createAfiches(pages, last, { type, lazyLoad: true, clean: false })
+        const movies = data.results
+    createAfiches(movies, last, { type, lazyLoad: true, clean: false })
   }
 }
 export async function getTrendingHome(media) {

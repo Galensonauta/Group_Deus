@@ -43,25 +43,27 @@ const api=axios.create({
         try {
           page++
           const {url} = req.params  
-          const {query,searchBy}= req.query
+          const {query}= req.query
           const parameter = { page }          
-          switch (searchBy) {
-            case '#categoryByGenre=':
-              parameter.with_genres = query;
-              break;
-            case 'search':
-              parameter.query = query;
-              break;
-            case '#categoryByAct=':
-              parameter.with_cast = query;
-              break;
-            case '#categoryByCountry=':
-              parameter.with_origin_country = query;
-              break;
-            default:
-              return res.status(400).json({ message: 'Parámetro searchBy no válido' });
-          }
-          
+          // switch (searchBy) {
+          //   case '#categoryByGenre=':
+          //     parameter.with_genres = query;
+          //     break;
+          //   case 'search':
+          //     parameter.query = query;
+          //     break;
+          //   case '#categoryByAct=':
+          //     parameter.with_cast = query;
+          //     break;
+          //   case '#categoryByCountry=':
+          //     parameter.with_origin_country = query;
+          //     break;
+          //   default:
+          //     return res.status(400).json({ message: 'Parámetro searchBy no válido' });
+          // }       
+          if(url==="/discover/movie"){
+            parameter.with_origin_country = query;
+          }   
           const response = await api.get(`/paginacion/${url}`,{
             params: parameter
           }
