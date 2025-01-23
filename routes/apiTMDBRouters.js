@@ -61,7 +61,7 @@ const api=axios.create({
           //   default:
           //     return res.status(400).json({ message: 'Parámetro searchBy no válido' });
           // }       
-          if(url==="/discover/movie"){
+          if(url==="discover/movie"){
             parameter.with_origin_country = query;
           }   
           const response = await api.get(`/${url}`,{
