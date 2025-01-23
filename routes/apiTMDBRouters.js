@@ -39,12 +39,12 @@ const api=axios.create({
           next(error); // Manejar errores
         }
       });
-      router.get('/:url/:query', async (req, res, next) => {
+      router.get('/:url', async (req, res, next) => {
         try {
           page++
-          const {url,query} = req.params  
-          // const {query}= req.query
-          const parameter = {}          
+          const {url} = req.params  
+          const {query}= req.query
+          const parameter = {page}          
           // switch (searchBy) {
           //   case '#categoryByGenre=':
           //     parameter.with_genres = query;
@@ -65,7 +65,7 @@ const api=axios.create({
             parameter.with_origin_country = query;
           }   
           const response = await api.get(`/${url}`,{
-            params: {parameter,page}
+            params: parameter
           }
         );
         console.log('Respuesta de TMDB:', response.data); // Verifica los datos devueltos

@@ -453,16 +453,14 @@ export async function getCategoriesPreview(media) {
 }
 export function getScrollInfinite({ url, query = undefined, type = "movie" }) {
   return async function () {   
-    const {data}  = await api(`/${url}/${query}`
-    //   , {
-    //   params: { query },
-    // }
-  );
+    const {data}  = await api(`/${url}`, {
+      params: { query },
+    });
     if (!data || !data.results) {
       console.error('Los datos no son la postxxx:', data);
       return;
     }
-    console.log("la paginacion dasterlocura:",data)
+    console.log("la",data)
         const movies = data.results
     createAfiches(movies, last, { type, lazyLoad: true, clean: false })
   }
