@@ -453,11 +453,11 @@ export async function getCategoriesPreview(media) {
 }
 export function getScrollInfinite({ url, query = undefined, type = "movie" }) {
   return async function () {   
-    const {data}  = await api(`/paginacion/${url}`, {
+    const {data}  = await api(`/${url}`, {
       params: { query },
     });
     if (!data || !data.results) {
-      console.error('Los datos no son la posta:', data);
+      console.error('Los datos no son la postxxx:', data);
       return;
     }
         const movies = data.results
