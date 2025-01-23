@@ -64,7 +64,7 @@ const api=axios.create({
           if(url==="/discover/movie"){
             parameter.with_origin_country = query;
           }   
-          const response = await api.get(`/paginacion/${url}`,{
+          const response = await api.get(`/${url}`,{
             params: parameter
           }
         );
