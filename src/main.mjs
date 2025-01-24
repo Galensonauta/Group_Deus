@@ -451,27 +451,25 @@ export async function getCategoriesPreview(media) {
   createCategories(generos, apiDropDown, "id", "name");
   createCategories(countrys, apiDropDownPais, "iso_3166_1", "native_name");
 }
-export function getScrollInfinite({ url, query = undefined, type = "movie" }) {
+export function getScrollInfinite({ url, query = undefined,searchBy=undefined, type = "movie" }) {
 let nroPage = 1
   return async function () {   
     try{
       console.log(`Solicitando página ${nroPage} para URL: ${url}`); // Debugging
-
-      const {data}  = await api(`/${url}/${query}`
-      //   , {
-      //   params: { query, page: nroPage },
-      // }
+      const {data}  = await api(`/${url}/:${searchBy}`,
+         {
+        params: { query, page: nroPage },
+      }
     );
       if (!data || !data.results) {
         console.error('Los datos no son la postxxx:', data);
         return;
       }
       console.log("la",data)
-          const movies = data.results
-      createAfiches(movies, last, { type, lazyLoad: true, clean: false })
+      const movies = data.results
       nroPage++
+      createAfiches(movies, last, { type, lazyLoad: true, clean: false })
       console.log(`Solicitando página luego de render de pelis ${nroPage} para URL: ${url}`); // Debugging
-
     }catch(error){
     console.error(error.message||error)
     }

@@ -179,7 +179,8 @@ function navigator() {
 let scrollInfinitParam = {
   url: "",
   query: undefined,
-
+searchBy: undefined,
+type: ""
 }
 function setscrollInfinitParam(params) {
   scrollInfinitParam = { ...scrollInfinitParam, ...params }
@@ -497,7 +498,7 @@ function categoryPage() {
       setscrollInfinitParam({ url: "/discover/movie", query: categoryId, searchBy:"#categoryByGenre=", type:"movie" })
     } else {
       getByCountry({id:categoryId,media:"movie"})
-      setscrollInfinitParam({ url: "discover/movie", query: categoryId})
+      setscrollInfinitParam({ url: "discover/movie",searchBy:"#categoryByCountry=", query: categoryId, type :"movie"})
     }
     getCategoriesPreview("movie")
   }

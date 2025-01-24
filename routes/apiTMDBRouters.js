@@ -37,35 +37,31 @@ const api=axios.create({
           console.error('Error al obtener proveedores:', error.message);
           next(error); // Manejar errores
         }
-      });
-      const paginacion = {}          
-      router.get('/:url/:query', async (req, res, next) => {
+      });        
+      
+      router.get('/:url/:searchBy', async (req, res, next) => {
         try {
-          const {url,query} = req.params  
-          // const {query}= req.query
-
-          if(!paginacion[url]){paginacion[url]=1}
-          else paginacion[url]++
-          // switch (searchBy) {
-          //   case '#categoryByGenre=':
-          //     parameter.with_genres = query;
-          //     break;
-          //   case 'search':
-          //     parameter.query = query;
-          //     break;
-          //   case '#categoryByAct=':
-          //     parameter.with_cast = query;
-          //     break;
-          //   case '#categoryByCountry=':
-          //     parameter.with_origin_country = query;
-          //     break;
-          //   default:
-          //     return res.status(400).json({ message: 'Parámetro searchBy no válido' });
-          // }
-          const parameter = {page : paginacion[url]}       
-          if(url==="discover/movie"){
-            parameter.with_origin_country = query;
-          }   
+          const {url,searchBy} = req.params  
+          const {query,page}= req.query
+          const parameter = {page}
+          // if(!page[url]){page[url]=1}
+          // else page[url]++
+          switch (searchBy) {
+            case '#categoryByGenre':
+              parameter.with_genres = query;
+              break;
+            case '#search':
+              parameter.query = query;
+              break;
+            case '#categoryByAct=':
+              parameter.with_cast = query;
+              break;
+            case '#categoryByCountry':
+              parameter.with_origin_country = query;
+              break;
+            default:
+              return res.status(400).json({ message: 'Parámetro searchBy no válido' });
+          }          
           const response = await api.get(`/${url}`,{
             params: parameter
           }
