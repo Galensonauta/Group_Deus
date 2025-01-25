@@ -180,7 +180,6 @@ let scrollInfinitParam = {
   url: "",
   query: undefined,
 searchBy: undefined,
-type: ""
 }
 function setscrollInfinitParam(params) {
   scrollInfinitParam = { ...scrollInfinitParam, ...params }
@@ -209,14 +208,11 @@ function homePage() {
     const containerLastRankGd= document.getElementById("containerLastRankGd")
   containerLastRankGd.classList.add("inactive")
   const movieDetails = document.getElementById("moviePage");
-  movieDetails.classList.add("inactive")
-
-  
+  movieDetails.classList.add("inactive")  
       const lastLiked = document.getElementById("lastLiked");
       lastLiked.innerHTML=""
       const lastLikedTv = document.getElementById("lastLikedTv");
       lastLikedTv.innerHTML=""
-
 
   portadaBlackMirror()
   if (location.hash==="#Series") {   
