@@ -59,13 +59,14 @@ const api=axios.create({
               break;
             case '#categoryByCountry=':
               // parameter.with_origin_country = query;
-              response = await api.get(`/${url}`, 
-                {
-                  params: { 
-                    with_origin_country: query,
-                    page: nroPage
-                   } 
-                }
+              response = await api.get(`/${url}?with_origin_country=${query}&page=${nroPage}`
+                // , 
+                // {
+                //   params: { 
+                //     with_origin_country: query,
+                //     page: nroPage
+                //    } 
+                // }
               );
               break;
               case "#trend":
