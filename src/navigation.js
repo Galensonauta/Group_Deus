@@ -412,11 +412,11 @@ function searchPage() {
   if (mode) {
     getCategoriesPreview("tv")
     getBySearch({query:query,media:"tv"});
-    setscrollInfinitParam({ url: "search/tv", query: query, searchBy: "search", type: "tv" })
+    setscrollInfinitParam({ url: "search/tv", query: query, searchBy: "#search", type: "tv" })
   } else {
     getBySearch({query:query,media:"movie"});
     getCategoriesPreview("movie")
-    setscrollInfinitParam({ url: "search/movie", query: query, searchBy: "search", type: "movie" })
+    setscrollInfinitParam({ url: "search/movie", query: query, searchBy: "#search", type: "movie" })
   }
   observer.observe(document.getElementById("fin"))
 }
@@ -494,7 +494,7 @@ function categoryPage() {
       setscrollInfinitParam({ url: "/discover/movie", query: categoryId, searchBy:"#categoryByGenre=", type:"movie" })
     } else {
       getByCountry({id:categoryId,media:"movie"})
-      setscrollInfinitParam({ url: "discover/movie",searchBy:"#categoryByCountry=", query: categoryId, type :"movie"})
+      setscrollInfinitParam({ url: "discover/movie", query: categoryId,searchBy:"#categoryByCountry=", type :"movie"})
     }
     getCategoriesPreview("movie")
   }

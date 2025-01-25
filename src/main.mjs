@@ -458,7 +458,7 @@ let nroPage = 1
       console.log(`Solicitando página ${nroPage} para URL: ${url}`); // Debugging
       const {data}  = await api(`/${url}/${searchBy}`,
          {
-        params: { query, page: nroPage },
+        params: { query,searchBy, page: nroPage },
       }
     );
       if (!data || !data.results) {

@@ -47,7 +47,7 @@ const api=axios.create({
           // if(!page[url]){page[url]=1}
           // else page[url]++
           switch (searchBy) {
-            case '#categoryByGenre':
+            case '#categoryByGenre=':
               parameter.with_genres = query;
               break;
             case '#search':
@@ -56,9 +56,12 @@ const api=axios.create({
             case '#categoryByAct=':
               parameter.with_cast = query;
               break;
-            case '#categoryByCountry':
+            case '#categoryByCountry=':
               parameter.with_origin_country = query;
               break;
+              case "#trend"||"#rank=":
+                parameter.query = query;
+                break;
             default:
               return res.status(400).json({ message: 'Parámetro searchBy no válido' });
           }          
