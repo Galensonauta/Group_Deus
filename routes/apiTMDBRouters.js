@@ -44,46 +44,48 @@ const api=axios.create({
           const {url,searchBy,query,nroPage} = req.params  
           // const {query,page=1}= req.query
           const parameter = {page:nroPage}
-          let response
+          if(searchBy==='#categoryByCountry='){
+              const  response = await api.get(`/${url}?with_origin_country=${query}&page=${nroPage}`)
+              console.log('Respuesta de TMDB:', response.data); // Verifica los datos devueltos
+              console.log("Estos son los parametros",parameter)
+                res.json(response.data); // Enviar los datos al frontend
+          }
           // if(!page[url]){page[url]=1}
           // else page[url]++
-          switch (searchBy) {
-            case '#categoryByGenre=':
-              parameter.with_genres = query;
-              break;
-            case '#search':
-              parameter.query = query;
-              break;
-            case '#categoryByAct=':
-              parameter.with_cast = query;
-              break;
-            case '#categoryByCountry=':
-              // parameter.with_origin_country = query;
-              response = await api.get(`/${url}?with_origin_country=${query}&page=${nroPage}`
-                // , 
-                // {
-                //   params: { 
-                //     with_origin_country: query,
-                //     page: nroPage
-                //    } 
-                // }
-              );
-              break;
-              case "#trend":
-              case"#rank=":
-                parameter.query = query;
-                break;
-            default:
-              return res.status(400).json({ message: 'Parámetro searchBy no válido' });
-          }          
+          // switch (searchBy) {
+          //   case '#categoryByGenre=':
+          //     parameter.with_genres = query;
+          //     break;
+          //   case '#search':
+          //     parameter.query = query;
+          //     break;
+          //   case '#categoryByAct=':
+          //     parameter.with_cast = query;
+          //     break;
+          //   case '#categoryByCountry=':
+          //     // parameter.with_origin_country = query;
+          //     response = await api.get(`/${url}?with_origin_country=${query}&page=${nroPage}`
+          //       // , 
+          //       // {
+          //       //   params: { 
+          //       //     with_origin_country: query,
+          //       //     page: nroPage
+          //       //    } 
+          //       // }
+          //     );
+          //     break;
+          //     case "#trend":
+          //     case"#rank=":
+          //       parameter.query = query;
+          //       break;
+          //   default:
+          //     return res.status(400).json({ message: 'Parámetro searchBy no válido' });
+          // }          
         //   const response = await api.get(`/${url}`,{
         //     params: parameter
         //   }
         // );
-        console.log('Respuesta de TMDB:', response.data); // Verifica los datos devueltos
-        console.log("Estos son los parametros",parameter)
-          res.json(response.data); // Enviar los datos al frontend
-        } catch (error) {
+               } catch (error) {
           console.error('Error al obtener proveedores:', error.message);
           next(error); // Manejar errores
         }
