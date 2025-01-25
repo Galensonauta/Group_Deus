@@ -491,7 +491,7 @@ export async function getRankHomeGd(media) {
   createAfiches(movies, lastRankGd, { type: media, lazyLoad: true, clean: true })
 }
 export async function getRankHomeImdb(media) {
-  const  { data: movie } = await api(media + "/top_rated")
+  const  { data: movie } = await api(`/${media}/top_rated`)
   const movies = movie.results.slice(0, 4)
   movies.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movies, lastRankImdb, { type: media, lazyLoad: true, clean: true })
@@ -508,7 +508,7 @@ export async function getRankGdPreview(media) {
   createAfiches(data, lastGd, { type: media, lazyLoad: true, clean: true  })
 }
 export async function getRankPreview(media) {
-  const { data } = await api(media + "/top_rated")
+  const { data } = await api(`/${media}/top_rated`)
   const movie = data.results
   movie.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movie, last, { type: media, lazyLoad: true, clean: true })
@@ -532,9 +532,7 @@ export async function getByCountry({ id, media }) {
   createAfiches(movie, last, { type: media, lazyLoad: true, clean: true })
 }
 export async function getByGenres({ id, media }) {
-  const { data } = await api(`/discoverGenre/${media}`,{
-    params: {id}
-  });
+  const { data } = await api(`/discoverGenre/${media}/${id}`);
   const movies = data.results;
   movies.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movies, last, { type: media, lazyLoad: true, clean: true })
