@@ -45,7 +45,7 @@ const api=axios.create({
           // const {query,page=1}= req.query
           const parameter = {page:nroPage}
           if(searchBy==='#categoryByCountry='){
-              const  response = await api.get(`/${url}?with_origin_country=${query}&page=${nroPage}`)
+              const  response = await api.get(`${url}?with_origin_country=${query}&page=${nroPage}`)
               console.log('Respuesta de TMDB:', response.data); // Verifica los datos devueltos
               console.log("Estos son los parametros",parameter)
                 res.json(response.data); // Enviar los datos al frontend
