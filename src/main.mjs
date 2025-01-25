@@ -458,10 +458,10 @@ let totalPages = Infinity;
   return async function () { 
     try{
       console.log(`Solicitando página ${nroPage} para URL: ${url}`); // Debugging
-      const {data}  = await api(`/${url}/${searchBy}`,
-         {
-        params: { query,searchBy, page: nroPage },
-      }
+      const {data}  = await api(`/${url}/${searchBy}/:${query}/${nroPage}`
+      //   ,{
+      //   params: { query,searchBy, page: nroPage },
+      // }
     );
       if (!data || !data.results) {
         console.error('Los datos no son la postxxx:', data);
@@ -538,9 +538,7 @@ export async function getByGenres({ id, media }) {
   createAfiches(movies, last, { type: media, lazyLoad: true, clean: true })
 }
 export async function getBySearch({ query, media }) {
-  const { data } = await api(`/search/${media}`,{
-    params: {query}
-  });
+  const { data } = await api(`/search/${media}/${query}`);
   const movie = data.results;
   createAfiches(movie, last, { type: media, lazyLoad: true, clean: true })
 }

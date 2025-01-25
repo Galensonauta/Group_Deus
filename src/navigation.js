@@ -187,12 +187,13 @@ function setscrollInfinitParam(params) {
 const observer = new IntersectionObserver((entries,observer) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting){
-      getScrollInfinite(scrollInfinitParam)().then((hasMoreData)=>{
-      if(!hasMoreData){
-        console.log("no hay mas datos para cargar")
-        observer.disconnect()
-      }
-      })
+      getScrollInfinite(scrollInfinitParam)()
+      // .then((hasMoreData)=>{
+      // if(!hasMoreData){
+      //   console.log("no hay mas datos para cargar")
+      //   observer.disconnect()
+      // }
+      // })
     }
     })
   })

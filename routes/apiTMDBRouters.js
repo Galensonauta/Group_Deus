@@ -39,11 +39,11 @@ const api=axios.create({
         }
       });        
       
-      router.get('/:url/:searchBy', async (req, res, next) => {
+      router.get('/:url/:searchBy/:query/:nroPage', async (req, res, next) => {
         try {
-          const {url,searchBy} = req.params  
-          const {query,page=1}= req.query
-          const parameter = {page}
+          const {url,searchBy,query,nroPage} = req.params  
+          // const {query,page=1}= req.query
+          const parameter = {page:nroPage}
           // if(!page[url]){page[url]=1}
           // else page[url]++
           switch (searchBy) {
@@ -163,10 +163,10 @@ const api=axios.create({
               next(error); // Manejar errores
             }
           });
-          router.get(`/search/:media`, async (req, res, next) => {
+          router.get(`/search/:media/:query`, async (req, res, next) => {
             try {
-                const {media} = req.params
-                const {query} = req.query
+                const {media,query} = req.params
+                // const {query} = req.query
                 
               const response = await api.get(`/search/${media}`, {
                 params: {
