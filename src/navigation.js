@@ -184,13 +184,20 @@ searchBy: undefined,
 function setscrollInfinitParam(params) {
   scrollInfinitParam = { ...scrollInfinitParam, ...params }
 }
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      getScrollInfinite(scrollInfinitParam)()
+const observer = new IntersectionObserver((entries,observer) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting){
+      getScrollInfinite(scrollInfinitParam)().then((hasMoreData)=>{
+      if(!hasMoreData){
+        console.log("no hay mas datos para cargar")
+        observer.disconnect()
+      }
+      })
     }
+    })
   })
-})
+  
+
 function homePage() {
   console.log("home") 
   const portada = document.getElementById("portada");

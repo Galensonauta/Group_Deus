@@ -453,6 +453,8 @@ export async function getCategoriesPreview(media) {
 }
 export function getScrollInfinite({ url, query = undefined,searchBy=undefined, type = "movie" }) {
 let nroPage = 1
+let totalPages = Infinity;
+
   return async function () { 
     try{
       console.log(`Solicitando página ${nroPage} para URL: ${url}`); // Debugging
@@ -463,9 +465,11 @@ let nroPage = 1
     );
       if (!data || !data.results) {
         console.error('Los datos no son la postxxx:', data);
-        return;
+        return false;
       }
-      console.log("la",data)
+      totalPages = data.total_pages; // Actualizar el total de páginas
+      console.log(`Total de páginas: ${totalPages}`);
+      console.log(`Datos de la página ${nroPage}:`, data.results);
       const movies = data.results
       nroPage++
       createAfiches(movies, last, { type, lazyLoad: true, clean: false })

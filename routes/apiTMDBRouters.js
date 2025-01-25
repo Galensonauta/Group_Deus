@@ -42,7 +42,7 @@ const api=axios.create({
       router.get('/:url/:searchBy', async (req, res, next) => {
         try {
           const {url,searchBy} = req.params  
-          const {query,page}= req.query
+          const {query,page=1}= req.query
           const parameter = {page}
           // if(!page[url]){page[url]=1}
           // else page[url]++
@@ -59,7 +59,8 @@ const api=axios.create({
             case '#categoryByCountry=':
               parameter.with_origin_country = query;
               break;
-              case "#trend"||"#rank=":
+              case "#trend":
+              case"#rank=":
                 parameter.query = query;
                 break;
             default:
