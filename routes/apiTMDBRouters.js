@@ -39,17 +39,13 @@ const api=axios.create({
         }
       });        
       
-      router.get('/:url/:searchBy/:query/:nroPage', async (req, res, next) => {
+      router.get('/:url/:query/:nroPage', async (req, res, next) => {
         try {
-          const {url,searchBy,query,nroPage} = req.params  
+          const {url,query,nroPage} = req.params  
           // const {query,page=1}= req.query
-          const parameter = {page:nroPage}
-          if(searchBy==='#categoryByCountry='){
-              const  response = await api.get(`${url}?with_origin_country=${query}&page=${nroPage}`)
+          const  response = await api.get(`${url}?with_origin_country=${query}&page=${nroPage}`)
               console.log('Respuesta de TMDB:', response.data); // Verifica los datos devueltos
-              console.log("Estos son los parametros",parameter)
                 res.json(response.data); // Enviar los datos al frontend
-          }
           // if(!page[url]){page[url]=1}
           // else page[url]++
           // switch (searchBy) {

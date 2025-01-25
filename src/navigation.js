@@ -502,7 +502,7 @@ function categoryPage() {
       setscrollInfinitParam({ url: "/discover/movie", query: categoryId, searchBy:"#categoryByGenre=", type:"movie" })
     } else {
       getByCountry({id:categoryId,media:"movie"})
-      setscrollInfinitParam({ url: "/discover/movie", query: categoryId,searchBy:"#categoryByCountry=", type :"movie"})
+      setscrollInfinitParam({ url: "/discover/movie", query: categoryId, type :"movie"})
     }
     getCategoriesPreview("movie")
   }

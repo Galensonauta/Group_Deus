@@ -451,13 +451,13 @@ export async function getCategoriesPreview(media) {
   createCategories(generos, apiDropDown, "id", "name");
   createCategories(countrys, apiDropDownPais, "iso_3166_1", "native_name");
 }
-export function getScrollInfinite({ url, query = undefined,searchBy=undefined, type = "movie" }) {
+export function getScrollInfinite({ url, query = undefined, type = "movie" }) {
 let nroPage = 1
 let totalPages = Infinity;
   return async function () { 
     try{
       console.log(`Solicitando página ${nroPage} para URL: ${url}`); // Debugging
-      const {data}  = await api(`/${url}/${searchBy}/${query}/${nroPage}`
+      const {data}  = await api(`/${url}/${query}/${nroPage}`
       //   ,{
       //   params: { query,searchBy, page: nroPage },
       // }
