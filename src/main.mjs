@@ -454,11 +454,10 @@ export async function getCategoriesPreview(media) {
 export function getScrollInfinite({ url, query = undefined,searchBy=undefined, type = "movie" }) {
 let nroPage = 1
 let totalPages = Infinity;
-
   return async function () { 
     try{
       console.log(`Solicitando página ${nroPage} para URL: ${url}`); // Debugging
-      const {data}  = await api(`/${url}/${searchBy}/:${query}/${nroPage}`
+      const {data}  = await api(`/${url}/${searchBy}/${query}/${nroPage}`
       //   ,{
       //   params: { query,searchBy, page: nroPage },
       // }

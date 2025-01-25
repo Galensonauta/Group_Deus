@@ -44,6 +44,7 @@ const api=axios.create({
           const {url,searchBy,query,nroPage} = req.params  
           // const {query,page=1}= req.query
           const parameter = {page:nroPage}
+          let response
           // if(!page[url]){page[url]=1}
           // else page[url]++
           switch (searchBy) {
@@ -57,7 +58,15 @@ const api=axios.create({
               parameter.with_cast = query;
               break;
             case '#categoryByCountry=':
-              parameter.with_origin_country = query;
+              // parameter.with_origin_country = query;
+              response = await api.get(`/${url}`, 
+                {
+                  params: { 
+                    with_origin_country: query,
+                    page: nroPage
+                   } 
+                }
+              );
               break;
               case "#trend":
               case"#rank=":
@@ -66,10 +75,10 @@ const api=axios.create({
             default:
               return res.status(400).json({ message: 'Parámetro searchBy no válido' });
           }          
-          const response = await api.get(`/${url}`,{
-            params: parameter
-          }
-        );
+        //   const response = await api.get(`/${url}`,{
+        //     params: parameter
+        //   }
+        // );
         console.log('Respuesta de TMDB:', response.data); // Verifica los datos devueltos
         console.log("Estos son los parametros",parameter)
           res.json(response.data); // Enviar los datos al frontend
