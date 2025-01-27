@@ -466,7 +466,7 @@ export async function getRankHomeImdb(media,nroPage) {
   const  { data: movie } = await api(`/${media}/top_rated/${nroPage}`)
   const movies = movie.results.slice(0, 4)
   movies.sort((a, b) => b.vote_average - a.vote_average)
-  createAfiches(movies, lastRankImdb, { type: media, lazyLoad: true, clean: true })
+  createAfiches(movies, lastRankImdb, { type: media, lazyLoad: true,clean: nroPage===1 })
 }
 export async function getTrendingPreview(media) {
   const { data } = await api(`/trending/${media}/day`)
@@ -485,7 +485,7 @@ export async function getRankPreview(media,nroPage) {
   createAfiches(movie, last, { type: media, lazyLoad: true, clean: nroPage===1 })
 }
 export async function getInfoByActByMovie(id,nroPage) {  
-    const { data } = await api(`discoverAct/movie/${id}/${nroPage}`);
+    const { data } = await api(`/discoverAct/movie/${id}/${nroPage}`);
     const movies = data.results;
     movies.sort((a, b) => b.vote_average - a.vote_average)
     createAfiches(movies, last, { type: "movie", lazyLoad: true, clean: nroPage===1  })
