@@ -495,52 +495,51 @@ export async function getRankHomeImdb(media) {
   movies.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movies, lastRankImdb, { type: media, lazyLoad: true, clean: true })
 }
-// let nroPage
 export async function getTrendingPreview(media,nroPage) {
   const { data } = await api(`/trending/${media}/day/${nroPage}`)
   const movies = data.results
   movies.sort((a, b) => b.vote_average - a.vote_average)
-  createAfiches(movies, last, { type: media, lazyLoad: true, clean: true })
+  createAfiches(movies, last, { type: media, lazyLoad: true, clean: nroPage===1 })
 }
 export async function getRankGdPreview(media) {
-  const data  = await getRankGd(media)
+  const data  = await getRankGd(media,nroPage)
   // const movies= data.slice(0,2) 
-  createAfiches(data, lastGd, { type: media, lazyLoad: true, clean: true  })
+  createAfiches(data, lastGd, { type: media, lazyLoad: true,  clean: true})
 }
 export async function getRankPreview(media,nroPage) {
   const { data } = await api(`/${media}/top_rated/${nroPage}`)
   const movie = data.results
   movie.sort((a, b) => b.vote_average - a.vote_average)
-  createAfiches(movie, last, { type: media, lazyLoad: true, clean: true })
+  createAfiches(movie, last, { type: media, lazyLoad: true, clean: nroPage===1 })
 }
-export async function getInfoByActByMovie(id) {  
-    const { data } = await api(`discoverAct/movie/${id}`);
+export async function getInfoByActByMovie(id,nroPage) {  
+    const { data } = await api(`discoverAct/movie/${id}/${nroPage}`);
     const movies = data.results;
     movies.sort((a, b) => b.vote_average - a.vote_average)
-    createAfiches(movies, last, { type: "movie", lazyLoad: true, clean: true })
+    createAfiches(movies, last, { type: "movie", lazyLoad: true, clean: nroPage===1  })
   }
-  export async function getInfoByActByTv (id){
-  const { data } = await api(`/person/${id}/tv_credits`);
+  export async function getInfoByActByTv (id,nroPage){
+  const { data } = await api(`/person/${id}/tv_credits/${nroPage}`);
   const credits = data.cast;
   credits.sort((a, b) => b.vote_average - a.vote_average)
-  createAfiches(credits, last, { type: "tv", lazyLoad: true, clean: true })
+  createAfiches(credits, last, { type: "tv", lazyLoad: true, clean: nroPage===1 })
 }
-export async function getByCountry({ id, media }) {
-  const { data } = await api(`/discoverCountry/${media}/${id}`)
+export async function getByCountry({ id, media,nroPage }) {
+  const { data } = await api(`/discoverCountry/${media}/${id}/${nroPage}`)
   const movie = data.results;
   movie.sort((a, b) => b.vote_average - a.vote_average)
-  createAfiches(movie, last, { type: media, lazyLoad: true, clean: true })
+  createAfiches(movie, last, { type: media, lazyLoad: true, clean: nroPage===1  })
 }
-export async function getByGenres({ id, media }) {
-  const { data } = await api(`/discoverGenre/${media}/${id}`);
+export async function getByGenres({ id, media,nroPage }) {
+  const { data } = await api(`/discoverGenre/${media}/${id}/${nroPage}`);
   const movies = data.results;
   movies.sort((a, b) => b.vote_average - a.vote_average)
-  createAfiches(movies, last, { type: media, lazyLoad: true, clean: true })
+  createAfiches(movies, last, { type: media, lazyLoad: true, clean: nroPage===1  })
 }
-export async function getBySearch({ query, media }) {
-  const { data } = await api(`/search/${media}/${query}`);
+export async function getBySearch({ query, media,nroPage }) {
+  const { data } = await api(`/search/${media}/${query}/${nroPage}`);
   const movie = data.results;
-  createAfiches(movie, last, { type: media, lazyLoad: true, clean: true })
+  createAfiches(movie, last, { type: media, lazyLoad: true, clean: nroPage===1  })
 }
 export async function getById({ id, media }) {
   const { data: movie } = await api(`/${media}/${id}/video`);

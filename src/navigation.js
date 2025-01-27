@@ -176,21 +176,59 @@ function navigator() {
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
 }
-// let scrollInfinitParam = {
-//   url: "",
-//   query: undefined,
-// searchBy: undefined,
-// }
-// function setscrollInfinitParam(params) {
-//   scrollInfinitParam = { ...scrollInfinitParam, ...params }
-// }
+
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting){
-      // getScrollInfinite(scrollInfinitParam)()     
       console.log("llego al final")
-      console.log(nroPage)
-      nroPage++
+      nroPage++      
+      console.log("la pagina nro:",nroPage)
+      if(location.hash.startsWith('#search=')){
+        const [_, query] = location.hash.split('=');
+if(mode){
+  getBySearch({query:query,media:"tv",nroPage});
+}else{
+  getBySearch({query:query,media:"movie",nroPage});
+}
+      }
+      else if(location.hash.startsWith('#trend=')){
+if(mode){
+  getTrendingPreview("tv",nroPage)
+}else{
+  getTrendingPreview("movie",nroPage)
+}
+      }
+      else if(location.hash.startsWith('#rank=')){
+        if(mode){
+          getRankPreview("tv",nroPage)
+        }else{
+        getRankPreview("movie",nroPage)}
+       }       
+       else if (location.hash.startsWith("#category")) {
+        const [_, categoryData] = location.hash.split('=');
+        const [categoryId, categoryName] = categoryData.split('-');
+         if (location.hash.startsWith("#categoryByAct")) {
+          if(mode){
+            getInfoByActByTv({id:categoryId,nroPage})
+          }else{
+            getInfoByActByMovie({id:categoryId,nroPage})
+          }
+         } else {
+  if (mode) {
+    if (!isNaN(categoryId)) {
+      getByGenres({id:categoryId,media:"tv",nroPage})
+    } else {
+      getByCountry({id:categoryId,media:"tv",nroPage})
+    }   
+  } else {
+    if (!isNaN(categoryId)) {
+      getByGenres({id:categoryId,media:"movie",nroPage})
+    } else {
+      getByCountry({id:categoryId,media:"movie",nroPage})
+    }   
+  }
+         }
+       }
     }
     })
   })
@@ -287,9 +325,9 @@ console.log("login")
 
   portadaBlackMirror()
 }
-
 function trendPage() {
   console.log("trend")
+  nroPage=1
   const portada = document.getElementById("portada");
   portada.classList.remove("inactive")
   const login =document.getElementById("login")
@@ -305,28 +343,23 @@ function trendPage() {
   const containerLastRankGd= document.getElementById("containerLastRankGd")
   containerLastRankGd.classList.add("inactive")
   const movieDetails = document.getElementById("moviePage");
-  movieDetails.classList.add("inactive")
-  
+  movieDetails.classList.add("inactive")  
   const fin = document.getElementById("fin")
   
   if (mode) {
-    getTrendingPreview("tv")
+    getTrendingPreview("tv",nroPage)
     getCategoriesPreview("tv")
-    // setscrollInfinitParam({ url: "/trending/tv/day", query: null, searchBy: "#trend=", type: "tv" })
   } else {
     getTrendingPreview("movie",nroPage)
     getCategoriesPreview("movie")
-    // setscrollInfinitParam({ url: "/trending/movie/day", query: null, searchBy: "#trend=", type: "movie" })
   }
   portadaBlackMirror()
   getProvider()  
   observer.observe(fin)
-  if(nroPage!==1){
-    getTrendingPreview("movie",nroPage)
-  }
 }
 function rankPage() {
   console.log("rank")
+  nroPage=1
   const portada = document.getElementById("portada");
   portada.classList.remove("inactive")
   const login =document.getElementById("login")
@@ -344,13 +377,11 @@ function rankPage() {
   const movieDetails = document.getElementById("moviePage");
   movieDetails.classList.add("inactive")
   if (mode) {
-    getRankPreview("tv")
+    getRankPreview("tv",nroPage)
     getCategoriesPreview("tv")
-    // setscrollInfinitParam({ url: "tv/top_rated", query: null, searchBy: "#rank=", type: "tv" })
   } else {
     getRankPreview("movie",nroPage)
     getCategoriesPreview("movie")
-    // setscrollInfinitParam({ url: "movie/top_rated", query: null, searchBy: "#rank=", type: "movie" })
   }
   portadaBlackMirror()
   getProvider()
@@ -360,6 +391,7 @@ function rankPage() {
 }
 function rankPageGd() {
   console.log("rankGd")
+  nroPage=1
   const portada = document.getElementById("portada");
   portada.classList.remove("inactive")
   const login =document.getElementById("login")
@@ -388,10 +420,10 @@ function rankPageGd() {
   }
   portadaBlackMirror()
   getProvider()
-
 }
 function searchPage() {
   console.log("busqueda")
+  nroPage=1
   const portada = document.getElementById("portada");
   portada.classList.remove("inactive")
   const login =document.getElementById("login")
@@ -417,17 +449,16 @@ function searchPage() {
 
   if (mode) {
     getCategoriesPreview("tv")
-    getBySearch({query:query,media:"tv"});
-    setscrollInfinitParam({ url: "search/tv", query: query, searchBy: "#search", type: "tv" })
-  } else {
-    getBySearch({query:query,media:"movie"});
-    getCategoriesPreview("movie")
-    setscrollInfinitParam({ url: "search/movie", query: query, searchBy: "#search", type: "movie" })
+    getBySearch({query:query,media:"tv",nroPage});
+    } else {
+    getBySearch({query:query,media:"movie",nroPage});
+    getCategoriesPreview("movie")    
   }
   observer.observe(document.getElementById("fin"))
 }
 function categoryPageAct() {
   console.log("categorias por actor")
+  nroPage=1
   const portada = document.getElementById("portada");
   portada.classList.remove("inactive")
   const login =document.getElementById("login")
@@ -451,17 +482,16 @@ function categoryPageAct() {
   const [categoryId, categoryName] = categoryData.split('-');
 
   if (mode) {
-    getInfoByActByTv({id:categoryId})
+    getInfoByActByTv({id:categoryId,nroPage})
     getCategoriesPreview("tv")
-    setscrollInfinitParam({ url: "/person/" + categoryId + "/tv_credits", query: categoryId, searchBy: "#categoryByAct=", type: "tv" })
   } else {
-    getInfoByActByMovie({id:categoryId})
+    getInfoByActByMovie({id:categoryId,nroPage})
     getCategoriesPreview("movie")
-    setscrollInfinitParam({ url: "/discover/movie", query: categoryId, searchBy: "#categoryByAct=", type: "movie" })
   }
   observer.observe(document.getElementById("fin"))
 }
 function categoryPage() {
+  nroPage=1
   console.log("categorias")
   const portada = document.getElementById("portada");
   portada.classList.remove("inactive")
@@ -487,30 +517,22 @@ function categoryPage() {
    
   if (mode) {
     if (!isNaN(categoryId)) {
-      getByGenres({id:categoryId,media:"tv"})
-      setscrollInfinitParam({ url: "/discover/tv", query: categoryId, searchBy: "#categoryByGenre=", type: "tv" })
+      getByGenres({id:categoryId,media:"tv",nroPage})
     } else {
-      getByCountry({id:categoryId,media:"tv"})
-      setscrollInfinitParam({ url: "/discover/tv", query: categoryId, searchBy: "#categoryByCountry=", type: "tv" })
+      getByCountry({id:categoryId,media:"tv",nroPage})
     }
     getCategoriesPreview("tv")
   } else {
     if (!isNaN(categoryId)) {
-      getByGenres({id:categoryId,media:"movie"})
-      setscrollInfinitParam({ url: "/discover/movie", query: categoryId, searchBy:"#categoryByGenre=", type:"movie" })
+      getByGenres({id:categoryId,media:"movie",nroPage})
     } else {
-      getByCountry({id:categoryId,media:"movie"})
-      setscrollInfinitParam({ url: "/discover/movie", query: categoryId, type :"movie"})
+      getByCountry({id:categoryId,media:"movie",nroPage})
     }
     getCategoriesPreview("movie")
   }
 
-  const fin = document.getElementById("fin")
-  if (fin) {
-    observer.observe(fin)
-  } else {
-    console.error("fin no funca")
-  }
+  const fin = document.getElementById("fin")  
+    observer.observe(fin)  
 }
 async function movieDetailsPage() {
   console.log("detalles peli")

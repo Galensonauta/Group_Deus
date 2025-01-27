@@ -37,55 +37,7 @@ const api=axios.create({
           console.error('Error al obtener proveedores:', error.message);
           next(error); // Manejar errores
         }
-      });        
-      
-      // router.get('/:url/:query/:nroPage', async (req, res, next) => {
-      //   try {
-      //     const {url,query,nroPage} = req.params  
-      //     // const {query,page=1}= req.query
-      //     const  response = await api.get(`${url}?with_origin_country=${query}&page=${nroPage}`)
-      //         console.log('Respuesta de TMDB:', response.data); // Verifica los datos devueltos
-      //           res.json(response.data); // Enviar los datos al frontend
-      //     // if(!page[url]){page[url]=1}
-      //     // else page[url]++
-      //     // switch (searchBy) {
-      //     //   case '#categoryByGenre=':
-      //     //     parameter.with_genres = query;
-      //     //     break;
-      //     //   case '#search':
-      //     //     parameter.query = query;
-      //     //     break;
-      //     //   case '#categoryByAct=':
-      //     //     parameter.with_cast = query;
-      //     //     break;
-      //     //   case '#categoryByCountry=':
-      //     //     // parameter.with_origin_country = query;
-      //     //     response = await api.get(`/${url}?with_origin_country=${query}&page=${nroPage}`
-      //     //       // , 
-      //     //       // {
-      //     //       //   params: { 
-      //     //       //     with_origin_country: query,
-      //     //       //     page: nroPage
-      //     //       //    } 
-      //     //       // }
-      //     //     );
-      //     //     break;
-      //     //     case "#trend":
-      //     //     case"#rank=":
-      //     //       parameter.query = query;
-      //     //       break;
-      //     //   default:
-      //     //     return res.status(400).json({ message: 'Parámetro searchBy no válido' });
-      //     // }          
-      //   //   const response = await api.get(`/${url}`,{
-      //   //     params: parameter
-      //   //   }
-      //   // );
-      //          } catch (error) {
-      //     console.error('Error al obtener proveedores:', error.message);
-      //     next(error); // Manejar errores
-      //   }
-      // });                  
+      });
       router.get('/trending/:media/day/:nroPage', async (req, res, next) => {
         const {media,nroPage}= req.params
         try {
@@ -114,14 +66,15 @@ const api=axios.create({
           next(error); // Manejar errores
         }
       });    
-      router.get('/person/:id/tv_credits', async (req, res, next) => {
+      router.get('/person/:id/tv_credits/:nroPage', async (req, res, next) => {
         try {
-            const {id} = req.params
+            const {id,nroPage} = req.params
        //conectar id de cast con la ruta del back     
           const response = await api.get(`/person/${id}/tv_credits`, 
             {
                 params:{                    
                     with_cast: id,
+                    page: nroPage
                 }
             }
           );
@@ -131,13 +84,14 @@ const api=axios.create({
           next(error); // Manejar errores
         }
       });
-        router.get('/discoverAct/:movie/:id', async (req, res, next) => {
-          const {media,id} = req.params
+        router.get('/discoverAct/movie/:id/:nroPage', async (req, res, next) => {
+          const {id,nroPage} = req.params
             try {          
-              const response = await api.get(`/discover/${media}`,
+              const response = await api.get(`/discover/movie`,
                 {                  
                     params:{                    
                         with_cast: id,
+                        page:nroPage
                     }
                 }
               );
@@ -148,13 +102,15 @@ const api=axios.create({
             }
           });    
         
-          router.get('/discoverCountry/:media/:id', async (req, res, next) => {
+          router.get('/discoverCountry/:media/:id/:nroPage', async (req, res, next) => {
             try {
-                const {media,id} = req.params
+                const {media,id,nroPage} = req.params
            //conectar id de cast con la ruta del back     
               const response = await api.get(`/discover/${media}`, 
                 {
-                  params: { with_origin_country: id,
+                  params: { 
+                    with_origin_country: id,
+                    page:nroPage
                    } 
                 }
               );
@@ -164,13 +120,13 @@ const api=axios.create({
               next(error); // Manejar errores
             }
           });
-          router.get('/discoverGenre/:media/:id', async (req, res, next) => {
+          router.get('/discoverGenre/:media/:id,/:nroPage', async (req, res, next) => {
             try {
-                const {media,id} = req.params
-                // const {id}= req.query
+                const {media,id,nroPage} = req.params
               const response = await api.get(`/discover/${media}`, {
                 params: {
                   with_genres: id,
+                  page:nroPage
                 }
               })
               res.json(response.data); // Enviar los datos al frontend
@@ -179,14 +135,15 @@ const api=axios.create({
               next(error); // Manejar errores
             }
           });
-          router.get(`/search/:media/:query`, async (req, res, next) => {
+          router.get(`/search/:media/:query/:nroPage`, async (req, res, next) => {
             try {
-                const {media,query} = req.params
+                const {media,query,nroPage} = req.params
                 // const {query} = req.query
                 
               const response = await api.get(`/search/${media}`, {
                 params: {
                   query,
+                  page:nroPage
                 }
               })
               res.json(response.data); // Enviar los datos al frontend
