@@ -39,57 +39,61 @@ const api=axios.create({
         }
       });        
       
-      router.get('/:url/:query/:nroPage', async (req, res, next) => {
+      // router.get('/:url/:query/:nroPage', async (req, res, next) => {
+      //   try {
+      //     const {url,query,nroPage} = req.params  
+      //     // const {query,page=1}= req.query
+      //     const  response = await api.get(`${url}?with_origin_country=${query}&page=${nroPage}`)
+      //         console.log('Respuesta de TMDB:', response.data); // Verifica los datos devueltos
+      //           res.json(response.data); // Enviar los datos al frontend
+      //     // if(!page[url]){page[url]=1}
+      //     // else page[url]++
+      //     // switch (searchBy) {
+      //     //   case '#categoryByGenre=':
+      //     //     parameter.with_genres = query;
+      //     //     break;
+      //     //   case '#search':
+      //     //     parameter.query = query;
+      //     //     break;
+      //     //   case '#categoryByAct=':
+      //     //     parameter.with_cast = query;
+      //     //     break;
+      //     //   case '#categoryByCountry=':
+      //     //     // parameter.with_origin_country = query;
+      //     //     response = await api.get(`/${url}?with_origin_country=${query}&page=${nroPage}`
+      //     //       // , 
+      //     //       // {
+      //     //       //   params: { 
+      //     //       //     with_origin_country: query,
+      //     //       //     page: nroPage
+      //     //       //    } 
+      //     //       // }
+      //     //     );
+      //     //     break;
+      //     //     case "#trend":
+      //     //     case"#rank=":
+      //     //       parameter.query = query;
+      //     //       break;
+      //     //   default:
+      //     //     return res.status(400).json({ message: 'Parámetro searchBy no válido' });
+      //     // }          
+      //   //   const response = await api.get(`/${url}`,{
+      //   //     params: parameter
+      //   //   }
+      //   // );
+      //          } catch (error) {
+      //     console.error('Error al obtener proveedores:', error.message);
+      //     next(error); // Manejar errores
+      //   }
+      // });                  
+      router.get('/trending/:media/day/:nroPage', async (req, res, next) => {
+        const {media,nroPage}= req.params
         try {
-          const {url,query,nroPage} = req.params  
-          // const {query,page=1}= req.query
-          const  response = await api.get(`${url}?with_origin_country=${query}&page=${nroPage}`)
-              console.log('Respuesta de TMDB:', response.data); // Verifica los datos devueltos
-                res.json(response.data); // Enviar los datos al frontend
-          // if(!page[url]){page[url]=1}
-          // else page[url]++
-          // switch (searchBy) {
-          //   case '#categoryByGenre=':
-          //     parameter.with_genres = query;
-          //     break;
-          //   case '#search':
-          //     parameter.query = query;
-          //     break;
-          //   case '#categoryByAct=':
-          //     parameter.with_cast = query;
-          //     break;
-          //   case '#categoryByCountry=':
-          //     // parameter.with_origin_country = query;
-          //     response = await api.get(`/${url}?with_origin_country=${query}&page=${nroPage}`
-          //       // , 
-          //       // {
-          //       //   params: { 
-          //       //     with_origin_country: query,
-          //       //     page: nroPage
-          //       //    } 
-          //       // }
-          //     );
-          //     break;
-          //     case "#trend":
-          //     case"#rank=":
-          //       parameter.query = query;
-          //       break;
-          //   default:
-          //     return res.status(400).json({ message: 'Parámetro searchBy no válido' });
-          // }          
-        //   const response = await api.get(`/${url}`,{
-        //     params: parameter
-        //   }
-        // );
-               } catch (error) {
-          console.error('Error al obtener proveedores:', error.message);
-          next(error); // Manejar errores
-        }
-      });                  
-      router.get('/trending/:media/day', async (req, res, next) => {
-        const {media}= req.params
-        try {
-          const response = await api.get(`/trending/${media}/day`);
+          const response = await api.get(`/trending/${media}/day`,{
+            params:{
+              page: nroPage
+            }
+          });
           res.json(response.data); // Enviar los datos al frontend
         } catch (error) {
           console.error('Error al obtener proveedores:', error.message);

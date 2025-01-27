@@ -28,7 +28,7 @@ import {
 import{base64GitHub}from "@imagesDefault"
 
 let mode = false
-   
+let nroPage = 1   
 const btnInicio = document.querySelector("#btnUserLog") 
     btnInicio.addEventListener("click",()=>{ 
       location.hash="#login="
@@ -176,24 +176,20 @@ function navigator() {
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
 }
-let scrollInfinitParam = {
-  url: "",
-  query: undefined,
-searchBy: undefined,
-}
-function setscrollInfinitParam(params) {
-  scrollInfinitParam = { ...scrollInfinitParam, ...params }
-}
-const observer = new IntersectionObserver((entries,observer) => {
+// let scrollInfinitParam = {
+//   url: "",
+//   query: undefined,
+// searchBy: undefined,
+// }
+// function setscrollInfinitParam(params) {
+//   scrollInfinitParam = { ...scrollInfinitParam, ...params }
+// }
+const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting){
-      getScrollInfinite(scrollInfinitParam)()
-      // .then((hasMoreData)=>{
-      // if(!hasMoreData){
-      //   console.log("no hay mas datos para cargar")
-      //   observer.disconnect()
-      // }
-      // })
+      // getScrollInfinite(scrollInfinitParam)()     
+      console.log("llego al final")
+      nroPage++
     }
     })
   })
@@ -290,6 +286,7 @@ console.log("login")
 
   portadaBlackMirror()
 }
+
 function trendPage() {
   console.log("trend")
   const portada = document.getElementById("portada");
@@ -313,16 +310,17 @@ function trendPage() {
   if (mode) {
     getTrendingPreview("tv")
     getCategoriesPreview("tv")
-    setscrollInfinitParam({ url: "/trending/tv/day", query: null, searchBy: "#trend=", type: "tv" })
+    // setscrollInfinitParam({ url: "/trending/tv/day", query: null, searchBy: "#trend=", type: "tv" })
   } else {
-    getTrendingPreview("movie")
+    getTrendingPreview("movie",nroPage)
     getCategoriesPreview("movie")
-    setscrollInfinitParam({ url: "/trending/movie/day", query: null, searchBy: "#trend=", type: "movie" })
+    // setscrollInfinitParam({ url: "/trending/movie/day", query: null, searchBy: "#trend=", type: "movie" })
   }
   portadaBlackMirror()
   getProvider()
 
   const fin = document.getElementById("fin")
+
   observer.observe(fin)
 }
 function rankPage() {

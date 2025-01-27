@@ -451,33 +451,33 @@ export async function getCategoriesPreview(media) {
   createCategories(generos, apiDropDown, "id", "name");
   createCategories(countrys, apiDropDownPais, "iso_3166_1", "native_name");
 }
-export function getScrollInfinite({ url, query = undefined, type = "movie" }) {
-let nroPage = 1
-let totalPages = Infinity;
-  return async function () { 
-    try{
-      console.log(`Solicitando página ${nroPage} para URL: ${url}`); // Debugging
-      const {data}  = await api(`/${url}/${query}/${nroPage}`
-      //   ,{
-      //   params: { query,searchBy, page: nroPage },
-      // }
-    );
-      if (!data || !data.results) {
-        console.error('Los datos no son la postxxx:', data);
-        return false;
-      }
-      totalPages = data.total_pages; // Actualizar el total de páginas
-      console.log(`Total de páginas: ${totalPages}`);
-      console.log(`Datos de la página ${nroPage}:`, data.results);
-      const movies = data.results
-      nroPage++
-      createAfiches(movies, last, { type, lazyLoad: true, clean: false })
-      console.log(`Solicitando página luego de render de pelis ${nroPage} para URL: ${url}`); // Debugging
-    }catch(error){
-    console.error(error.message||error)
-    }
-  }
-}
+// export function getScrollInfinite({ url, query = undefined, type = "movie" }) {
+// let nroPage = 1
+// let totalPages = Infinity;
+//   return async function () { 
+//     try{
+//       console.log(`Solicitando página ${nroPage} para URL: ${url}`); // Debugging
+//       const {data}  = await api(`/${url}/${query}/${nroPage}`
+//       //   ,{
+//       //   params: { query,searchBy, page: nroPage },
+//       // }
+//     );
+//       if (!data || !data.results) {
+//         console.error('Los datos no son la postxxx:', data);
+//         return false;
+//       }
+//       totalPages = data.total_pages; // Actualizar el total de páginas
+//       console.log(`Total de páginas: ${totalPages}`);
+//       console.log(`Datos de la página ${nroPage}:`, data.results);
+//       const movies = data.results
+//       nroPage++
+//       createAfiches(movies, last, { type, lazyLoad: true, clean: false })
+//       console.log(`Solicitando página luego de render de pelis ${nroPage} para URL: ${url}`); // Debugging
+//     }catch(error){
+//     console.error(error.message||error)
+//     }
+//   }
+// }
 export async function getTrendingHome(media) {
   const { data: movie } = await api(`/trending/${media}/day`)
   const movies = movie.results.slice(0, 4)
@@ -495,8 +495,9 @@ export async function getRankHomeImdb(media) {
   movies.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movies, lastRankImdb, { type: media, lazyLoad: true, clean: true })
 }
-export async function getTrendingPreview(media) {
-  const { data } = await api(`/trending/${media}/day`)
+// let nroPage
+export async function getTrendingPreview(media,nroPage) {
+  const { data } = await api(`/trending/${media}/day/${nroPage}`)
   const movies = data.results
   movies.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movies, last, { type: media, lazyLoad: true, clean: true })
