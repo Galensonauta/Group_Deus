@@ -190,12 +190,12 @@ if(mode){
 }else{
   getBySearch({query:query,media:"movie",nroPage});
 }
-      }
+   }
       else if(location.hash.startsWith('#trend=')){
 if(mode){
-  getTrendingPreview("tv",nroPage)
+  getTrendingPreview("tv")
 }else{
-  getTrendingPreview("movie",nroPage)
+  getTrendingPreview("movie")
 }
       }
       else if(location.hash.startsWith('#rank=')){
@@ -347,10 +347,10 @@ function trendPage() {
   const fin = document.getElementById("fin")
   
   if (mode) {
-    getTrendingPreview("tv",nroPage)
+    getTrendingPreview("tv")
     getCategoriesPreview("tv")
   } else {
-    getTrendingPreview("movie",nroPage)
+    getTrendingPreview("movie")
     getCategoriesPreview("movie")
   }
   portadaBlackMirror()

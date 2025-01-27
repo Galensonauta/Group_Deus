@@ -38,12 +38,12 @@ const api=axios.create({
           next(error); // Manejar errores
         }
       });
-      router.get('/trending/:media/day/:nroPage', async (req, res, next) => {
-        const {media,nroPage}= req.params
+      router.get('/trending/:media/day', async (req, res, next) => {
+        const {media}= req.params
         try {
           const response = await api.get(`/trending/${media}/day`,{
             params:{
-              page: nroPage
+              language: "es-LA"
             }
           });
           res.json(response.data); // Enviar los datos al frontend
@@ -120,7 +120,7 @@ const api=axios.create({
               next(error); // Manejar errores
             }
           });
-          router.get('/discoverGenre/:media/:id,/:nroPage', async (req, res, next) => {
+          router.get('/discoverGenre/:media/:id/:nroPage', async (req, res, next) => {
             try {
                 const {media,id,nroPage} = req.params
               const response = await api.get(`/discover/${media}`, {

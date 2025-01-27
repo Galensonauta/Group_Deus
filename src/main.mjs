@@ -495,15 +495,14 @@ export async function getRankHomeImdb(media) {
   movies.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movies, lastRankImdb, { type: media, lazyLoad: true, clean: true })
 }
-export async function getTrendingPreview(media,nroPage) {
-  const { data } = await api(`/trending/${media}/day/${nroPage}`)
+export async function getTrendingPreview(media) {
+  const { data } = await api(`/trending/${media}/day`)
   const movies = data.results
   movies.sort((a, b) => b.vote_average - a.vote_average)
-  createAfiches(movies, last, { type: media, lazyLoad: true, clean: nroPage===1 })
+  createAfiches(movies, last, { type: media, lazyLoad: true, clean: true })
 }
 export async function getRankGdPreview(media) {
-  const data  = await getRankGd(media,nroPage)
-  // const movies= data.slice(0,2) 
+  const data  = await getRankGd(media)
   createAfiches(data, lastGd, { type: media, lazyLoad: true,  clean: true})
 }
 export async function getRankPreview(media,nroPage) {
