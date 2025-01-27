@@ -86,9 +86,10 @@ const api=axios.create({
         router.get('/discoverAct/movie/:id/:nroPage', async (req, res, next) => {
           const {id,nroPage} = req.params
             try {          
-              const response = await api.get(`/discover/movie?with_cast=${id}`,
+              const response = await api.get(`/discover/movie`,
                 {                  
                     params:{                    
+                      with_cast:id,
                         page:nroPage
                     }
                 }

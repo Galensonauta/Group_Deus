@@ -159,7 +159,7 @@ function navigator() {
     rankPageGd()
    }
   else if (location.hash.startsWith("#category")) {
-    if (location.hash.startsWith("#categoryByAct")) {
+    if (location.hash.startsWith("#categoryByAct=")) {
       categoryPageAct()
     } else {
       categoryPage()
@@ -199,7 +199,7 @@ if(mode){
        else if (location.hash.startsWith("#category")) {
         const [_, categoryData] = location.hash.split('=');
         const [categoryId, categoryName] = categoryData.split('-');
-         if (location.hash.startsWith("#categoryByAct")) {
+         if (location.hash.startsWith("#categoryByAct=")) {
           if(mode){
             getInfoByActByTv({id:categoryId,nroPage})
           }else{
@@ -335,9 +335,7 @@ function trendPage() {
   const containerLastRankGd= document.getElementById("containerLastRankGd")
   containerLastRankGd.classList.add("inactive")
   const movieDetails = document.getElementById("moviePage");
-  movieDetails.classList.add("inactive")  
-  const fin = document.getElementById("fin")
-  
+  movieDetails.classList.add("inactive")    
   if (mode) {
     getTrendingPreview("tv")
     getCategoriesPreview("tv")
@@ -430,9 +428,7 @@ function searchPage() {
   const containerLastRankGd= document.getElementById("containerLastRankGd")
   containerLastRankGd.classList.add("inactive")
   const movieDetails = document.getElementById("moviePage");
-  movieDetails.classList.add("inactive")
-
-  // ['#search', 'platzi']
+  movieDetails.classList.add("inactive")  
   portadaBlackMirror()
   getProvider()
 
@@ -444,8 +440,9 @@ function searchPage() {
     } else {
     getBySearch({query:query,media:"movie",nroPage});
     getCategoriesPreview("movie")    
-  }
-  observer.observe(document.getElementById("fin"))
+  }  
+  const fin = document.getElementById("fin")  
+    observer.observe(fin) 
 }
 function categoryPageAct() {
   console.log("categorias por actor")
@@ -468,18 +465,18 @@ function categoryPageAct() {
   movieDetails.classList.add("inactive")
   portadaBlackMirror()
   getProvider()
-
-  const [_, categoryData] = location.hash.split('=');
-  const [categoryId, categoryName] = categoryData.split('-');
+  const [_, query] = location.hash.split('=');
 
   if (mode) {
-    getInfoByActByTv({id:categoryId,nroPage})
+    getInfoByActByTv({id:query,nroPage})
     getCategoriesPreview("tv")
   } else {
-    getInfoByActByMovie({id:categoryId,nroPage})
+    getInfoByActByMovie({id:query,nroPage})
     getCategoriesPreview("movie")
   }
-  observer.observe(document.getElementById("fin"))
+  
+  const fin = document.getElementById("fin")  
+    observer.observe(fin) 
 }
 function categoryPage() {
   nroPage=1
