@@ -69,7 +69,6 @@ const api=axios.create({
       router.get('/person/:id/tv_credits/:nroPage', async (req, res, next) => {
         try {
             const {id,nroPage} = req.params
-       //conectar id de cast con la ruta del back     
           const response = await api.get(`/person/${id}/tv_credits`, 
             {
                 params:{                    
@@ -87,10 +86,9 @@ const api=axios.create({
         router.get('/discoverAct/movie/:id/:nroPage', async (req, res, next) => {
           const {id,nroPage} = req.params
             try {          
-              const response = await api.get(`/discover/movie`,
+              const response = await api.get(`/discover/movie?with_cast=${id}`,
                 {                  
                     params:{                    
-                        with_cast: id,
                         page:nroPage
                     }
                 }

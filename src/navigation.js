@@ -14,7 +14,6 @@ import {
   getByGenres,
   getInfoByActByMovie,
   getInfoByActByTv,
-  getScrollInfinite,
   getLikedMovie,
   getProvider,
   getLikedTv,
@@ -191,13 +190,6 @@ if(mode){
   getBySearch({query:query,media:"movie",nroPage});
 }
    }
-      else if(location.hash.startsWith('#trend=')){
-if(mode){
-  getTrendingPreview("tv")
-}else{
-  getTrendingPreview("movie")
-}
-      }
       else if(location.hash.startsWith('#rank=')){
         if(mode){
           getRankPreview("tv",nroPage)
@@ -355,7 +347,6 @@ function trendPage() {
   }
   portadaBlackMirror()
   getProvider()  
-  observer.observe(fin)
 }
 function rankPage() {
   console.log("rank")
