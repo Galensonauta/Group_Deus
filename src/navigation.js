@@ -189,6 +189,7 @@ const observer = new IntersectionObserver((entries) => {
     if (entry.isIntersecting){
       // getScrollInfinite(scrollInfinitParam)()     
       console.log("llego al final")
+      console.log(nroPage)
       nroPage++
     }
     })
@@ -305,8 +306,9 @@ function trendPage() {
   containerLastRankGd.classList.add("inactive")
   const movieDetails = document.getElementById("moviePage");
   movieDetails.classList.add("inactive")
-
-
+  
+  const fin = document.getElementById("fin")
+  
   if (mode) {
     getTrendingPreview("tv")
     getCategoriesPreview("tv")
@@ -317,10 +319,7 @@ function trendPage() {
     // setscrollInfinitParam({ url: "/trending/movie/day", query: null, searchBy: "#trend=", type: "movie" })
   }
   portadaBlackMirror()
-  getProvider()
-
-  const fin = document.getElementById("fin")
-
+  getProvider()  
   observer.observe(fin)
 }
 function rankPage() {
