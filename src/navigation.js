@@ -343,15 +343,13 @@ function rankPage() {
   containerLastRankGd.classList.add("inactive")
   const movieDetails = document.getElementById("moviePage");
   movieDetails.classList.add("inactive")
-
-
   if (mode) {
     getRankPreview("tv")
     getCategoriesPreview("tv")
     // setscrollInfinitParam({ url: "tv/top_rated", query: null, searchBy: "#rank=", type: "tv" })
   } else {
-    getRankPreview("movie")
-    getCategoriesPreview("movie",nroPage)
+    getRankPreview("movie",nroPage)
+    getCategoriesPreview("movie")
     // setscrollInfinitParam({ url: "movie/top_rated", query: null, searchBy: "#rank=", type: "movie" })
   }
   portadaBlackMirror()
