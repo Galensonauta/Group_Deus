@@ -507,8 +507,8 @@ export async function getRankGdPreview(media) {
   // const movies= data.slice(0,2) 
   createAfiches(data, lastGd, { type: media, lazyLoad: true, clean: true  })
 }
-export async function getRankPreview(media) {
-  const { data } = await api(`/${media}/top_rated`)
+export async function getRankPreview(media,nroPage) {
+  const { data } = await api(`/${media}/top_rated/${nroPage}`)
   const movie = data.results
   movie.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movie, last, { type: media, lazyLoad: true, clean: true })

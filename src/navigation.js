@@ -321,6 +321,9 @@ function trendPage() {
   portadaBlackMirror()
   getProvider()  
   observer.observe(fin)
+  if(nroPage!==1){
+    getTrendingPreview("movie",nroPage)
+  }
 }
 function rankPage() {
   console.log("rank")
@@ -345,11 +348,11 @@ function rankPage() {
   if (mode) {
     getRankPreview("tv")
     getCategoriesPreview("tv")
-    setscrollInfinitParam({ url: "tv/top_rated", query: null, searchBy: "#rank=", type: "tv" })
+    // setscrollInfinitParam({ url: "tv/top_rated", query: null, searchBy: "#rank=", type: "tv" })
   } else {
     getRankPreview("movie")
-    getCategoriesPreview("movie")
-    setscrollInfinitParam({ url: "movie/top_rated", query: null, searchBy: "#rank=", type: "movie" })
+    getCategoriesPreview("movie",nroPage)
+    // setscrollInfinitParam({ url: "movie/top_rated", query: null, searchBy: "#rank=", type: "movie" })
   }
   portadaBlackMirror()
   getProvider()

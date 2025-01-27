@@ -100,10 +100,14 @@ const api=axios.create({
           next(error); // Manejar errores
         }
       });
-      router.get('/:media/top_rated', async (req, res, next) => {
-        const {media}= req.params
+      router.get('/:media/top_rated/:nroPage', async (req, res, next) => {
+        const {media,nroPage}= req.params
         try {
-          const response = await api.get(`/${media}/top_rated`);
+          const response = await api.get(`/${media}/top_rated`,{
+            params:{
+              page: nroPage
+            }
+          });
           res.json(response.data); // Enviar los datos al frontend
         } catch (error) {
           console.error('Error al obtener proveedores:', error.message);
