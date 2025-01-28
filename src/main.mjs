@@ -462,7 +462,7 @@ export async function getRankHomeGd(media) {
   const movies= data.slice(0,4) 
   createAfiches(movies, lastRankGd, { type: media, lazyLoad: true, clean: true })
 }
-export async function getRankHomeImdb(media,nroPage) {
+export async function getRankHomeImdb({media,nroPage}) {
   const  { data: movie } = await api(`/${media}/top_rated/${nroPage}`)
   const movies = movie.results.slice(0, 4)
   movies.sort((a, b) => b.vote_average - a.vote_average)
@@ -478,19 +478,19 @@ export async function getRankGdPreview(media) {
   const data  = await getRankGd(media)
   createAfiches(data, lastGd, { type: media, lazyLoad: true,  clean: true})
 }
-export async function getRankPreview(media,nroPage) {
+export async function getRankPreview({media,nroPage}) {
   const { data } = await api(`/${media}/top_rated/${nroPage}`)
   const movie = data.results
   movie.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movie, last, { type: media, lazyLoad: true, clean: nroPage===1 })
 }
-export async function getInfoByActByMovie(id,nroPage) {  
+export async function getInfoByActByMovie({id,nroPage}) {  
     const { data } = await api(`/discoverAct/movie/${id}/${nroPage}`);
     const movies = data.results;
     movies.sort((a, b) => b.vote_average - a.vote_average)
     createAfiches(movies, last, { type: "movie", lazyLoad: true, clean: nroPage===1  })
   }
-  export async function getInfoByActByTv (id,nroPage){
+  export async function getInfoByActByTv ({id,nroPage}){
   const { data } = await api(`/person/${id}/tv_credits/${nroPage}`);
   const credits = data.cast;
   credits.sort((a, b) => b.vote_average - a.vote_average)
