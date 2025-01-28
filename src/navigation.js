@@ -192,9 +192,9 @@ if(mode){
    }
       else if(location.hash.startsWith('#rank=')){
         if(mode){
-          getRankPreview("tv",nroPage)
+          getRankPreview({media:"tv",nroPage})
         }else{
-        getRankPreview("movie",nroPage)}
+        getRankPreview({media:"movie",nroPage})}
        }       
        else if (location.hash.startsWith("#category")) {
         const [_, categoryData] = location.hash.split('=');
@@ -251,12 +251,12 @@ function homePage() {
   if (location.hash==="#Series") {   
     getCategoriesPreview("tv")
     getTrendingHome("tv")
-    getRankHomeImdb("tv",nroPage)
+    getRankHomeImdb({media:"tv",nroPage})
     getRankHomeGd("tv")
   }else  if(location.hash==="#Cine") {
     getCategoriesPreview("movie")    
     getTrendingHome("movie")
-    getRankHomeImdb("movie",nroPage)
+    getRankHomeImdb({media:"movie",nroPage})
     getRankHomeGd("movie")
   }  
   isAuthenticated().then(isAuth => {
@@ -359,10 +359,10 @@ function rankPage() {
   const movieDetails = document.getElementById("moviePage");
   movieDetails.classList.add("inactive")
   if (mode) {
-    getRankPreview("tv",nroPage)
+    getRankPreview({media:"tv",nroPage})
     getCategoriesPreview("tv")
   } else {
-    getRankPreview("movie",nroPage)
+    getRankPreview({media:"movie",nroPage})
     getCategoriesPreview("movie")
   }
   portadaBlackMirror()
