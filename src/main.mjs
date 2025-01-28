@@ -470,6 +470,10 @@ export async function getRankHomeImdb({media,nroPage}) {
 }
 export async function getTrendingPreview(media) {
   const { data } = await api(`/trending/${media}/day`)
+  if (!data || !data.results) {
+    console.error("No se encontraron datos:", data);
+    return;
+  }
   const movies = data.results
   movies.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movies, last, { type: media, lazyLoad: true, clean: true })
@@ -480,38 +484,62 @@ export async function getRankGdPreview(media) {
 }
 export async function getRankPreview({media,nroPage}) {
   const { data } = await api(`/${media}/top_rated/${nroPage}`)
+  if (!data || !data.results) {
+    console.error("No se encontraron datos:", data);
+    return;
+  }
   const movie = data.results
   movie.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movie, last, { type: media, lazyLoad: true, clean: nroPage===1 })
 }
 export async function getInfoByActByMovie({id,nroPage}) {  
     const { data } = await api(`/discoverAct/movie/${id}/${nroPage}`);
+    if (!data || !data.results) {
+      console.error("No se encontraron datos:", data);
+      return;
+    }
     const movies = data.results;
     movies.sort((a, b) => b.vote_average - a.vote_average)
     createAfiches(movies, last, { type: "movie", lazyLoad: true, clean: nroPage===1  })
   }
   export async function getInfoByActByTv ({id,nroPage}){
   const { data } = await api(`/person/${id}/tv_credits/${nroPage}`);
+  if (!data || !data.cast) {
+    console.error("No se encontraron datos:", data);
+    return;
+  }
   const credits = data.cast;
   credits.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(credits, last, { type: "tv", lazyLoad: true, clean: nroPage===1 })
 }
 export async function getByCountry({ id, media,nroPage }) {
   const { data } = await api(`/discoverCountry/${media}/${id}/${nroPage}`)
+  if (!data || !data.results) {
+    console.error("No se encontraron datos:", data);
+    return;
+  }
   const movie = data.results;
   movie.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movie, last, { type: media, lazyLoad: true, clean: nroPage===1  })
 }
 export async function getByGenres({ id, media,nroPage }) {
   const { data } = await api(`/discoverGenre/${media}/${id}/${nroPage}`);
+  if (!data || !data.results) {
+    console.error("No se encontraron datos:", data);
+    return;
+  }
   const movies = data.results;
   movies.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movies, last, { type: media, lazyLoad: true, clean: nroPage===1  })
 }
 export async function getBySearch({ query, media,nroPage }) {
   const { data } = await api(`/search/${media}/${query}/${nroPage}`);
+  if (!data || !data.results) {
+    console.error("No se encontraron datos:", data);
+    return;
+  }
   const movie = data.results;
-  createAfiches(movie, last, { type: media, lazyLoad: true, clean: nroPage===1  })
+  createAfiches(movie, last, { type: media, lazyLoad: true, clean: nroPage===1 })
 }
 export async function getById({ id, media }) {
   const { data: movie } = await api(`/${media}/${id}/video`);

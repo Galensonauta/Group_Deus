@@ -223,8 +223,7 @@ if(mode){
        }
     }
     })
-  })
-  
+  }) 
 
 function homePage() {
   console.log("home") 
@@ -248,24 +247,18 @@ function homePage() {
       lastLiked.innerHTML=""
       const lastLikedTv = document.getElementById("lastLikedTv");
       lastLikedTv.innerHTML=""
-
   portadaBlackMirror()
   if (location.hash==="#Series") {   
     getCategoriesPreview("tv")
-    getTrendingPreview("tv")
-    getRankPreview("tv")
     getTrendingHome("tv")
-    getRankHomeImdb("tv")
+    getRankHomeImdb("tv",nroPage)
     getRankHomeGd("tv")
   }else  if(location.hash==="#Cine") {
-    getCategoriesPreview("movie")
-    getTrendingPreview("movie")
-     getRankPreview("movie")
+    getCategoriesPreview("movie")    
     getTrendingHome("movie")
-    getRankHomeImdb("movie")
+    getRankHomeImdb("movie",nroPage)
     getRankHomeGd("movie")
-  }
-  
+  }  
   isAuthenticated().then(isAuth => {
     if (isAuth) {
       getLikedTv()

@@ -99,8 +99,7 @@ const api=axios.create({
               console.error('Error al obtener proveedores:', error.message);
               next(error); // Manejar errores
             }
-          });    
-        
+          });          
           router.get('/discoverCountry/:media/:id/:nroPage', async (req, res, next) => {
             try {
                 const {media,id,nroPage} = req.params
