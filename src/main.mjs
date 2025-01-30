@@ -788,14 +788,15 @@ export async function getInfoById({ id, media})
     if(comment.userTv[0].UserTv.comment === null){
       comentario.textContent= "Sin comentarios de: "+ comment.nick    
     }   
-  } else{
+   else{
     comentario.textContent=comment.nick+": "+comment.userTv[0].UserTv.comment;
   }
   if(comment.userTv[0].UserTv.rank===null){
     rankeo.textContent = comment.nick+" no calificó la pelicula"
   } else{
     rankeo.textContent=comment.userTv[0].UserTv.rank +  "/10" + " puntos según: "+ comment.nick;
-  }  
+  }
+}  
   }  
   commentContainer.appendChild(comentario)
   commentContainer.appendChild(rankeo)

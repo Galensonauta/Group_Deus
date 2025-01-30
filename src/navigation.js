@@ -178,11 +178,11 @@ function navigator() {
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
-    if (entry.isIntersecting){
-      console.log("llego al final")
+    if (entry.isIntersecting){      
+      if(location.hash.startsWith('#search=')){
+        console.log("llego al final")
       nroPage++      
       console.log("la pagina nro:",nroPage)
-      if(location.hash.startsWith('#search=')){
         const [_, query] = location.hash.split('=');
 if(mode){
   getBySearch({query:query,media:"tv",nroPage});
@@ -191,12 +191,18 @@ if(mode){
 }
    }
       else if(location.hash.startsWith('#rank=')){
+        console.log("llego al final")
+      nroPage++      
+      console.log("la pagina nro:",nroPage)
         if(mode){
           getRankPreview({media:"tv",nroPage})
         }else{
         getRankPreview({media:"movie",nroPage})}
        }       
        else if (location.hash.startsWith("#category")) {
+        console.log("llego al final",categoryName)
+      nroPage++      
+      console.log("la pagina nro:",nroPage)
         const [_, categoryData] = location.hash.split('=');
         const [categoryId, categoryName] = categoryData.split('-');
          if (location.hash.startsWith("#categoryByAct=")) {
@@ -227,6 +233,7 @@ if(mode){
 
 function homePage() {
   console.log("home") 
+  nroPage=1
   const portada = document.getElementById("portada");
   portada.classList.remove("inactive") 
   const login =document.getElementById("login")
@@ -312,7 +319,6 @@ console.log("login")
 }
 function trendPage() {
   console.log("trend")
-  nroPage=1
   const portada = document.getElementById("portada");
   portada.classList.remove("inactive")
   const login =document.getElementById("login")
