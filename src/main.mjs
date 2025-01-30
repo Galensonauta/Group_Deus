@@ -773,7 +773,7 @@ export async function getInfoById({ id, media})
   if(media==="movie"){
     if (comment.userMovie && comment.userMovie[0] && comment.userMovie[0].UserMovie) {
       if(comment.userMovie[0].UserMovie.comment === null){
-        comentario.textContent= "Sin comentarios de: "+ comment.nick    
+        comentario.textContent= "Sin comentarios de "+ comment.nick    
       } else{
         comentario.textContent = comment.nick+": "+comment.userMovie[0].UserMovie.comment;
       }
