@@ -463,7 +463,7 @@ export async function getRankHomeGd(media) {
   createAfiches(movies, lastRankGd, { type: media, lazyLoad: true, clean: true })
 }
 export async function getRankHomeImdb({media,nroPage}) {
-  const  { data: movie } = await getRankPreview(media,nroPage)
+  const  { data: movie } = await api(`/${media}/top_rated/${nroPage}`)
   const movies = movie.results.slice(0, 4)
   movies.sort((a, b) => b.vote_average - a.vote_average)
   createAfiches(movies, lastRankImdb, { type: media, lazyLoad: true,clean: nroPage===1 })
@@ -759,7 +759,6 @@ export async function getInfoById({ id, media})
   
   //manejo interacciones
   const interaction =document.querySelector(".interaction")
-
   const commentContainer= document.querySelector(".commentContainer")
   
   async function showComment(){
@@ -772,13 +771,29 @@ export async function getInfoById({ id, media})
   const rankeo = document.createElement("p")
   rankeo.classList.add("rankeo")
   if(media==="movie"){
-    if (comment.userMovie && comment.userMovie[0] && comment.userMovie[0].UserMovie) {    
-      comentario.textContent = comment.nick+": "+comment.userMovie[0].UserMovie.comment;
-      rankeo.textContent = comment.userMovie[0].UserMovie.rank + "/10" + " puntos según: "+comment.nick;
+    if (comment.userMovie && comment.userMovie[0] && comment.userMovie[0].UserMovie) {
+      if(comment.userMovie[0].UserMovie.comment === null){
+        comentario.textContent= "Sin comentarios de: "+ comment.nick    
+      } else{
+        comentario.textContent = comment.nick+": "+comment.userMovie[0].UserMovie.comment;
+      }
+      if(comment.userMovie[0].UserMovie.rank===null){
+        rankeo.textContent = comment.nick+" no calificó la pelicula"
+      } else{
+        rankeo.textContent = comment.userMovie[0].UserMovie.rank + "/10" + " puntos según: "+comment.nick;
+      }  
     }
  }else{
   if (comment.userTv && comment.userTv[0] && comment.userTv[0].UserTv) {   
+    if(comment.userTv[0].UserTv.comment === null){
+      comentario.textContent= "Sin comentarios de: "+ comment.nick    
+    }   
+  } else{
     comentario.textContent=comment.nick+": "+comment.userTv[0].UserTv.comment;
+  }
+  if(comment.userTv[0].UserTv.rank===null){
+    rankeo.textContent = comment.nick+" no calificó la pelicula"
+  } else{
     rankeo.textContent=comment.userTv[0].UserTv.rank +  "/10" + " puntos según: "+ comment.nick;
   }  
   }  
