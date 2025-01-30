@@ -35,7 +35,7 @@ const UserMovieSchema = {
   },
   rank: {
     allowNull: true,
-    type: DataTypes.INTEGER,
+    type: DataTypes.DECIMAL(2,1),  // Permite números como 4.5, 9.8, 10.0
   },
   tag: {
     allowNull: true,

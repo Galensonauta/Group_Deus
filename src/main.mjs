@@ -783,7 +783,7 @@ export async function getInfoById({ id, media})
         rankeo.textContent = comment.userMovie[0].UserMovie.rank + "/10" + " puntos según: "+comment.nick;
       }  
     }
- }else{
+ }else if(media==="tv"){
   if (comment.userTv && comment.userTv[0] && comment.userTv[0].UserTv) {   
     if(comment.userTv[0].UserTv.comment === null){
       comentario.textContent= "Sin comentarios de: "+ comment.nick    
@@ -830,9 +830,9 @@ btnComment.replaceWith(newBtnComment);
 newBtnComment.addEventListener("click", async () => {
       const commentValue = commentInput.value;
       const interactionData = { comment: commentValue }; 
+      commentInput.innerHTML="Escribe tu comentario aquí..."
       await addInteraction(media, movie.id, interactionData);
             showComment()
-            commentInput.innerHTML="Escribe tu comentario aquí..."
           });   
   // Manejo del botón de ranking
 
@@ -842,10 +842,10 @@ newBtnComment.addEventListener("click", async () => {
   newBtnRankMovie.addEventListener("click", async () => {
       const rankValue = rankInput.value; // Obtener el valor del input
       const interactionData = { rank: rankValue }; // Crear un nuevo objeto para cada interacción
+      rankInput.innerHTML="del 0 1 al 10"
       await addInteraction(media, movie.id, interactionData);
       console.log("Puntuación agregada", rankValue);
       showComment()
-      rankInput.innerHTML="del 0 1 al 10"
     });
 
     commentContainerUser.appendChild(commentInput);
