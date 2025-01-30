@@ -31,11 +31,11 @@ const UserMovieSchema = {
   },
   comment: {
     allowNull: true,
-    type: DataTypes.TEXT,
+    type: DataTypes.STRING(5000),
   },
   rank: {
     allowNull: true,
-    type: DataTypes.DECIMAL(2,1),  // Permite números como 4.5, 9.8, 10.0
+    type: DataTypes.DECIMAL(4,1),  // Permite números como 4.5, 9.8, 10.0
   },
   tag: {
     allowNull: true,

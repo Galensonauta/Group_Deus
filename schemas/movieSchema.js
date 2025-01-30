@@ -4,7 +4,7 @@ const movieId = Joi.number().integer();
 const type = Joi.string()
 
 const comment = Joi.string()
-const rank = Joi.number().integer().min(0).max(10);
+const rank = Joi.number().decimal(4,1).min(0).max(10);
 const tag = Joi.string()
 
 const limit=Joi.number().integer();
