@@ -485,7 +485,8 @@ export async function getRankHomeGd(media) {
   try {
     const { data } = await getRankGd(media);
     sessionStorage.setItem(cacheKey, JSON.stringify(data));
-    createAfiches(data, lastRankGd, { type: media, lazyLoad: true, clean: true });
+    const movies = data.slice(0, 4).sort((a, b) => b.vote_average - a.vote_average);
+    createAfiches(movies, lastRankGd, { type: media, lazyLoad: true, clean: true });
   } catch (error) {
     console.error('Error al obtener ranking GrupoDeus:', error);
   }
@@ -504,7 +505,8 @@ export async function getRankHomeImdb({media,nroPage}) {
   try {
     const { data } = api(`/${media}/top_rated/${nroPage}`)
     sessionStorage.setItem(cacheKey, JSON.stringify(data));
-    createAfiches(data, lastRankImdb, { type: media, lazyLoad: true, clean: true });
+    const movies = data.slice(0, 4).sort((a, b) => b.vote_average - a.vote_average);
+    createAfiches(movies, lastRankImdb, { type: media, lazyLoad: true, clean: true });
   } catch (error) {
     console.error('Error al obtener ranking IMDb:', error);
   }
