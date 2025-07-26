@@ -1,0 +1,239 @@
+[33mcommit 20123c3692e669f3f8a798c3071d756378f1fa00[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Fri Jul 25 22:17:57 2025 -0300
+
+    mejora en Perfomance: aplicar requestIdleCallback en getTrendingHome, hetRankHomeImdb,getRankHomeGd.00
+
+[33mcommit 4279cc2f13d7f189cb7924eb35449aad3861d86d[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Thu Jan 30 21:37:27 2025 -0300
+
+    Completed: base a cero previo carga definitiva4
+
+[33mcommit 234f2ae37b9a1ba228b227a532496ae6578971e3[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Thu Jan 30 19:13:42 2025 -0300
+
+    Completed: base a cero previo carga definitiva3
+
+[33mcommit fcd94de062b5fc1c14a0855f1abbfe4fb7992432[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Thu Jan 30 18:50:09 2025 -0300
+
+    Completed: base a cero previo carga definitiva2
+
+[33mcommit efa121d24b3b6be6ff4fc513a0a1e1e9bff3efed[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Thu Jan 30 17:44:03 2025 -0300
+
+    Completed: base a cero previo carga definitivaw
+
+[33mcommit ce90949eca96951dfa4f2c60298b4236c44b1223[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Thu Jan 30 17:24:14 2025 -0300
+
+    Completed: base a cero previo carga definitiva1
+
+[33mcommit bc020f14df5bcbcd9485924a7f56c4efd9f10b6d[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Thu Jan 30 15:51:57 2025 -0300
+
+    Completed: base a cero previo carga definitiva0
+
+[33mcommit 5dd895634ade013e6f1d940f4115313d2a9c3711[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Thu Jan 30 12:25:39 2025 -0300
+
+    Completed: base a cero previo carga definitiva
+
+[33mcommit 2cce8fffee96786ce218d2ea41f90f8cbb2d76b1[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Thu Jan 30 11:51:07 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-27
+
+[33mcommit 5f14a3e6507c227c476a5836bf8500069962e6f8[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Tue Jan 28 00:09:04 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-26
+
+[33mcommit d7d52f51be981cc56103500212a584e29cfebcf7[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Mon Jan 27 23:17:08 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-25
+
+[33mcommit 75e99c53ec1177dadee4563bfbf7b6c0bbb3b117[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Mon Jan 27 22:42:49 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-24-12(prueba quitando getScroll)
+
+[33mcommit 59b2da694494336fd7eb06a286ec994b4204730e[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Mon Jan 27 20:55:44 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-24-11(prueba quitando getScroll)
+
+[33mcommit f945187544a788c5b91da773ec0e9ce97ace91ff[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Mon Jan 27 20:22:06 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-24-10(prueba quitando getScroll)
+
+[33mcommit 384e31b0076285d3eb9cfcd3b921562d9f198ed1[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Mon Jan 27 20:03:44 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-24-9(prueba quitando getScroll)
+
+[33mcommit 8f254b89e23b3d07669500cff1c35a25b3871da2[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Mon Jan 27 19:24:38 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-24-8(prueba quitando getScroll)
+
+[33mcommit 6b08b48db0319326034df3c3eec2a8b14aeaa124[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Mon Jan 27 18:55:44 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-24-7(prueba quitando getScroll)
+
+[33mcommit 0bce7cbffc3731ce4eefd7b863ea5fe0343f2fdd[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Mon Jan 27 14:46:21 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-24-6(prueba quitando getScroll)
+
+[33mcommit 3da4ab4f2a426e9e272b54187f4cc943680791af[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Mon Jan 27 14:45:12 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-24-5(prueba quitando getScroll)
+
+[33mcommit 212a19e1d91fb143cdf51784bc4a6380c9fa7162[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Mon Jan 27 14:30:53 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-24-4(prueba quitando getScroll)
+
+[33mcommit 7b638fc582204c2504edb7148cfdfc00ac94ab59[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Mon Jan 27 14:06:36 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-24-3(prueba quitando getScroll)
+
+[33mcommit d831845ebed54ff351da6272b5c09e78e3d4a244[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Sat Jan 25 03:35:12 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-24-2
+
+[33mcommit 2840688d6d699dcfeb37232eec7716941ac4558b[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Sat Jan 25 03:28:01 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-24-1
+
+[33mcommit cd7230fc4d8712aff131be1fb2bdc7038862a551[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Sat Jan 25 03:23:13 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-24
+
+[33mcommit a202f0149a61a90bb0847a3b7230bee4e9bf6bea[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Sat Jan 25 03:15:51 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-22
+
+[33mcommit 55a57bd96820c336e2d789f5021d0b0a90da8060[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Sat Jan 25 02:59:30 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-22
+
+[33mcommit d8e6047aad03327ceb6c08265f4358cdef8f94b7[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Sat Jan 25 02:23:13 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-21
+
+[33mcommit 7d696af30e6ce6e610b5386a1bc7ace9a956d76e[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Sat Jan 25 01:58:00 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-120
+
+[33mcommit 38ffbffaf02c2429db3286e2287f41cdac5531b9[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Sat Jan 25 01:46:56 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-19
+
+[33mcommit de8b4c3177b5b7ef2470210ee24e98d0ce4c2c9c[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Fri Jan 24 21:24:00 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-17
+
+[33mcommit 37bdd3061c8d4f8a54dbf0a1f17729206aeac965[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Fri Jan 24 21:05:21 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-16
+
+[33mcommit 18b3f2e5144cb4f0f054ace82f29309c59665ea8[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Fri Jan 24 20:40:06 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-15
+
+[33mcommit c21192e4dc3debb9d091fa9cdf6e03cc14ba47d3[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Fri Jan 24 20:28:16 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-14
+
+[33mcommit f2870382530c8dbeb7e3c0fe63afcc6d21bf5587[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Thu Jan 23 16:57:54 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-13
+
+[33mcommit 1c0d41c63df9e2707134c19fbac42bf4b295e1d4[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Thu Jan 23 16:19:21 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-12
+
+[33mcommit 1195708b1858da03d29c13c70ba5ebdbd170eac6[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Thu Jan 23 15:39:32 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-11
+
+[33mcommit 79dfca09b524eb963ab738d0ff8012fcf9f8866d[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Thu Jan 23 04:24:20 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-10
+
+[33mcommit 0f240971f89dd9db7215c08de4cb446616c9fb5c[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Thu Jan 23 03:43:01 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-9
+
+[33mcommit 560707a7711867d814eeca0fdcc988d52bcc866e[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Thu Jan 23 03:19:51 2025 -0300
+
+    prueba con rutas en back con la api tmdb-12-8
+
+[33mcommit c46fb6219fc32d5edf7b9fef919aa3abc9a60874[m
+Author: Galenso Serrano <galensoserrano1.com>
+Date:   Thu Jan 23 03:13:08 2025 -0300
+
+    prueba con rutas en back co
