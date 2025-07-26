@@ -232,7 +232,7 @@ if(mode){
   }) 
 
 function homePage() {
-  console.log("home") 
+  console.log("home con callback") 
   nroPage=1
   const portada = document.getElementById("portada");
   portada.classList.remove("inactive") 
@@ -257,14 +257,18 @@ function homePage() {
   portadaBlackMirror()
   if (location.hash==="#Series") {   
     getCategoriesPreview("tv")
-    getTrendingHome("tv")
-    getRankHomeImdb({media:"tv",nroPage})
-    getRankHomeGd("tv")
+    requestIdleCallback(() => {
+    getTrendingHome("tv");
+    getRankHomeImdb({ media: "tv", nroPage });
+    getRankHomeGd("tv");
+  });
   }else  if(location.hash==="#Cine") {
     getCategoriesPreview("movie")    
-    getTrendingHome("movie")
-    getRankHomeImdb({media:"movie",nroPage})
-    getRankHomeGd("movie")
+   requestIdleCallback(() => {
+    getTrendingHome("movie");
+    getRankHomeImdb({ media: "movie", nroPage });
+    getRankHomeGd("movie");
+  });
   }  
   isAuthenticated().then(isAuth => {
     if (isAuth) {
