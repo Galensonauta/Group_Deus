@@ -452,7 +452,7 @@ export async function getCategoriesPreview(media) {
   createCategories(countrys, apiDropDownPais, "iso_3166_1", "native_name");
 }
 export async function getTrendingHome(media) {
-  const cacheKey = `trending_${media}`;
+  const cacheKey = `trending_${media}_day`;
   const cachedData = sessionStorage.getItem(cacheKey);
 
   if (cachedData) {
@@ -463,7 +463,7 @@ export async function getTrendingHome(media) {
   }
 
   try {
-    const { data: movie } = await api(`/trending/${media}/day`);
+    const { data: movie } = await getTrendingPreview(media);
     sessionStorage.setItem(cacheKey, JSON.stringify(movie));
     const movies = movie.results.slice(0, 4).sort((a, b) => b.vote_average - a.vote_average);
     createAfiches(movies, lastTrend, { type: media, lazyLoad: true, clean: true });
@@ -473,7 +473,7 @@ export async function getTrendingHome(media) {
 }
 
 export async function getRankHomeGd(media) {
-  const cacheKey = `rank_gd_${media}`;
+  const cacheKey = `/users/rank/${media}`
   const cachedData = sessionStorage.getItem(cacheKey);
 
   if (cachedData) {
@@ -483,7 +483,7 @@ export async function getRankHomeGd(media) {
   }
 
   try {
-    const { data } = await api(`/rank/gd?media=${media}`);
+    const { data } = await getRankGd(media);
     sessionStorage.setItem(cacheKey, JSON.stringify(data));
     createAfiches(data, lastRankGd, { type: media, lazyLoad: true, clean: true });
   } catch (error) {
@@ -491,8 +491,8 @@ export async function getRankHomeGd(media) {
   }
 }
 
-export async function getRankHomeImdb(media) {
-  const cacheKey = `rank_imdb_${media}`;
+export async function getRankHomeImdb({media,nroPage}) {
+  const cacheKey = `/${media}/top_rated/${nroPage}`;
   const cachedData = sessionStorage.getItem(cacheKey);
 
   if (cachedData) {
@@ -502,7 +502,7 @@ export async function getRankHomeImdb(media) {
   }
 
   try {
-    const { data } = await api(`/rank/imdb?media=${media}`);
+    const { data } = api(`/${media}/top_rated/${nroPage}`)
     sessionStorage.setItem(cacheKey, JSON.stringify(data));
     createAfiches(data, lastRankImdb, { type: media, lazyLoad: true, clean: true });
   } catch (error) {
