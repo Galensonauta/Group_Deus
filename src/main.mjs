@@ -463,7 +463,7 @@ export async function getTrendingHome(media) {
   }
 
   try {
-    const { data: movie } = await getTrendingPreview(media);
+    const { data: movie } =  await api(`/trending/${media}/day`)
     sessionStorage.setItem(cacheKey, JSON.stringify(movie));
     const movies = movie.results.slice(0, 4).sort((a, b) => b.vote_average - a.vote_average);
     createAfiches(movies, lastTrend, { type: media, lazyLoad: true, clean: true });
