@@ -452,7 +452,7 @@ export async function getCategoriesPreview(media) {
   createCategories(countrys, apiDropDownPais, "iso_3166_1", "native_name");
 }
 export async function getTrendingHome(media) {
-  const cacheKey = `trending_${media}_day`;
+  const cacheKey = `trending_${media}`;
   const cachedData = sessionStorage.getItem(cacheKey);
 
   if (cachedData) {
@@ -463,7 +463,7 @@ export async function getTrendingHome(media) {
   }
 
   try {
-    const { data: movie } =  await api(`/trending/${media}/day`)
+    const { data: movie } = await api(`/trending/${media}/day`);
     sessionStorage.setItem(cacheKey, JSON.stringify(movie));
     const movies = movie.results.slice(0, 4).sort((a, b) => b.vote_average - a.vote_average);
     createAfiches(movies, lastTrend, { type: media, lazyLoad: true, clean: true });
@@ -472,44 +472,18 @@ export async function getTrendingHome(media) {
   }
 }
 
+
 export async function getRankHomeGd(media) {
-  const cacheKey = `/users/rank/${media}`
-  const cachedData = sessionStorage.getItem(cacheKey);
-
-  if (cachedData) {
-    const data = JSON.parse(cachedData);
-    createAfiches(data, lastRankGd, { type: media, lazyLoad: true, clean: true });
-    return;
-  }
-
-  try {
-    const { data } = await getRankGd(media);
-    sessionStorage.setItem(cacheKey, JSON.stringify(data));
-    const movies = data.slice(0, 4).sort((a, b) => b.vote_average - a.vote_average);
-    createAfiches(movies, lastRankGd, { type: media, lazyLoad: true, clean: true });
-  } catch (error) {
-    console.error('Error al obtener ranking GrupoDeus:', error);
-  }
+  const data  = await getRankGd(media) 
+  const movies= data.slice(0,4) 
+  createAfiches(movies, lastRankGd, { type: media, lazyLoad: true, clean: true })
 }
 
 export async function getRankHomeImdb({media,nroPage}) {
-  const cacheKey = `/${media}/top_rated/${nroPage}`;
-  const cachedData = sessionStorage.getItem(cacheKey);
-
-  if (cachedData) {
-    const data = JSON.parse(cachedData);
-    createAfiches(data, lastRankImdb, { type: media, lazyLoad: true, clean: true });
-    return;
-  }
-
-  try {
-    const { data } = api(`/${media}/top_rated/${nroPage}`)
-    sessionStorage.setItem(cacheKey, JSON.stringify(data));
-    const movies = data.slice(0, 4).sort((a, b) => b.vote_average - a.vote_average);
-    createAfiches(movies, lastRankImdb, { type: media, lazyLoad: true, clean: true });
-  } catch (error) {
-    console.error('Error al obtener ranking IMDb:', error);
-  }
+  const  { data: movie } = await api(`/${media}/top_rated/${nroPage}`)
+  const movies = movie.results.slice(0, 4)
+  movies.sort((a, b) => b.vote_average - a.vote_average)
+  createAfiches(movies, lastRankImdb, { type: media, lazyLoad: true,clean: nroPage===1 })
 }
 
 export async function getTrendingPreview(media) {
