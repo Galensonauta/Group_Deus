@@ -1,4 +1,5 @@
 import {api,axiosInstance} from "./tmdbApi.mjs"
+import { createAfiches } from "./afiches.mjs";
 
 
 import { base64, 
