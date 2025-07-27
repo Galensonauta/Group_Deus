@@ -19,12 +19,18 @@ import {
   getLikedTv,
   getRankPreview,
   getRankGdPreview,
-  getTrendingHome,
+  // getTrendingHome,
   getRankHomeImdb,
   isAuthenticated,
   getRankHomeGd
 } from '@src/main.mjs';
 import{base64GitHub}from "@imagesDefault"
+if (location.hash === "" || location.hash.startsWith("#home")) {
+  import("./ranking.mjs").then(({ getTrendingHome }) => {
+    getTrendingHome("movie");
+  });
+}
+
 
 let mode = false
 let nroPage = 1   
