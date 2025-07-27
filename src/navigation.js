@@ -20,9 +20,9 @@ import {
   getRankPreview,
   getRankGdPreview,
   // getTrendingHome,
-  getRankHomeImdb,
+  // getRankHomeImdb,
   isAuthenticated,
-  getRankHomeGd
+  // getRankHomeGd
 } from '@src/main.mjs';
 import{base64GitHub}from "@imagesDefault"
 if (location.hash === "" || location.hash.startsWith("#home")) {
@@ -261,20 +261,23 @@ function homePage() {
       const lastLikedTv = document.getElementById("lastLikedTv");
       lastLikedTv.innerHTML=""
   portadaBlackMirror()
-  if (location.hash==="#Series") {   
-    getCategoriesPreview("tv")
-    requestIdleCallback(() => {
+  if (location.hash === "#Series") {
+  getCategoriesPreview("tv");
+  requestIdleCallback(async () => {
+    const { getTrendingHome, getRankHomeGd, getRankHomeImdb } = await import("./ranking.mjs");
     getTrendingHome("tv");
     getRankHomeImdb({ media: "tv", nroPage });
     getRankHomeGd("tv");
   });
-  }else  if(location.hash==="#Cine") {
-    getCategoriesPreview("movie")    
-   requestIdleCallback(() => {
+if (location.hash === "#Cine") {
+  getCategoriesPreview("movie");
+  requestIdleCallback(async () => {
+    const { getTrendingHome, getRankHomeGd, getRankHomeImdb } = await import("./ranking.mjs");
     getTrendingHome("movie");
     getRankHomeImdb({ media: "movie", nroPage });
     getRankHomeGd("movie");
   });
+}
   }  
   isAuthenticated().then(isAuth => {
     if (isAuth) {
