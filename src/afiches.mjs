@@ -1,8 +1,8 @@
 // src/afiches.mjs
-import { base64, base64heartEmpty, base64heartFill, base64LupaBtn } from "@imagesDefault";
+import { base64, base64LupaBtn } from "@imagesDefault";
 import { getRankGd } from "./main.mjs"; // temporal
 import { api } from "./tmdbApi.mjs";
-
+import {addMovieList,addTvList} from "./liked.mjs"
 let options = {
   root: null,
   rootMargin: "0px",
