@@ -2,7 +2,6 @@
 
 import { axiosInstance } from './tmdbApi.mjs';
 import { isAuthenticated } from './auth.mjs'; // Si mueves isAuthenticated a un módulo separado
-import { getLikedMovie, getLikedTv } from './main.mjs'; // Solo si no los movemos también
 import { base64heartFill, base64heartEmpty } from "@imagesDefault";
 
 export async function likeMovie(type, movie) {
@@ -92,3 +91,43 @@ export async function likedMoviesList(type) {
     console.error("Error al acceder a la lista del usuario:", error.message || 'Error de red');
   }
 }
+export async function getLikedMovie() {
+  try {
+    const lista = await likedMoviesList("movie");
+    const container = document.getElementById("lastLiked");
+    container.innerHTML = "";
+
+    lista.forEach(movie => {
+      const div = document.createElement("div");
+      div.classList.add("card");
+      div.innerHTML = `
+        <h2 class="movieTitleText">${movie.title}</h2>
+        <p class="movieOverview">${movie.overview || "Sin descripción"}</p>
+      `;
+      container.appendChild(div);
+    });
+  } catch (error) {
+    console.error("Error al cargar películas guardadas:", error);
+  }
+}
+
+export async function getLikedTv() {
+  try {
+    const lista = await likedMoviesList("tv");
+    const container = document.getElementById("lastLikedTv");
+    container.innerHTML = "";
+
+    lista.forEach(tv => {
+      const div = document.createElement("div");
+      div.classList.add("card");
+      div.innerHTML = `
+        <h2 class="movieTitleText">${tv.name}</h2>
+        <p class="movieOverview">${tv.overview || "Sin descripción"}</p>
+      `;
+      container.appendChild(div);
+    });
+  } catch (error) {
+    console.error("Error al cargar series guardadas:", error);
+  }
+}
+

@@ -1,4 +1,6 @@
 // src/video.mjs
+import { base64NextBtn, base64PrevBtn } from "@imagesDefault";
+
 export function renderVideoCarousel(videos, container, header) {
   const carrousel = [];
   let contIndex = 0;

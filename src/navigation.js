@@ -1,14 +1,10 @@
 // ========== IMPORTS ==========
 import "@styles/main.css";
-
-import {
-  loginUser,  logoutUser,  createUser,  isAuthenticated,
-  getProvider,  getByGenres,  getByCountry,
-  getInfoByActByMovie,  getInfoByActByTv,
-  getCategoriesPreview,  getTrendingPreview  
-} from "@src/main.mjs";
+import {  loginUser,  logoutUser,  createUser,  isAuthenticated,} from './auth.mjs';
+import { getProvider } from './provider.mjs';
+import {getCategoriesPreview} from "./genresCountry.mjs"
+import {getByGenres,  getByCountry,getTrendingPreview,getInfoByActByMovie,  getInfoByActByTv}from "./categoryBy.mjs"
 import { observer, setPaginationMode, resetPagination } from './paginationObserver.mjs';
-
 import { base64GitHub } from "@imagesDefault";
 
 // ========== VARIABLES ==========

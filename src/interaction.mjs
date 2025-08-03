@@ -1,38 +1,4 @@
-// import { axiosInstance } from "./tmdbApi.mjs";
-// import { addMovieList, addTvList } from "./liked.mjs";
 
-// export async function getInteractionMovie(type,movie){
-//   try{
-//     const response = await axiosInstance(`/users/interactions-movies/${type}/${movie}`)  
-
-// if (response.status === 200) {   
-//   const interactionData =  response.data
-//   console.log("todos los comment",interactionData)
-//   return interactionData
-//   }}
-//   catch(error){
-//     console.error("Error al hacer la solicitud al servidor:", error);
-//   }
-// }
-//  async function addInteraction(type, movie, interactionData) {
-//   try {
-//     const response = await axiosInstance.patch(
-//       `/movies/my-interaction-new/${type}/${movie}`,
-//       interactionData,  // Pasar los datos directamente, no es necesario hacer JSON.stringify
-//       {
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//       }
-//     );
-//     const data = response.data;
-//     if (response.status === 200) {  // Verificamos que la solicitud sea exitosa
-//       console.log("Interacción agregada", data);
-//     }
-//   } catch (error) {
-//     console.error("Error al hacer la solicitud al servidor:", error);
-//   }
-// }
 import { axiosInstance } from "./tmdbApi.mjs";
 import { addMovieList, addTvList } from "./liked.mjs";
 

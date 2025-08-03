@@ -1,6 +1,6 @@
 // src/afiches.mjs
 import { base64, base64LupaBtn } from "@imagesDefault";
-import { getRankGd } from "./main.mjs"; // temporal
+import { getRankGd } from "./ranking.mjs"; // temporal
 import { api } from "./tmdbApi.mjs";
 import {addMovieList,addTvList} from "./liked.mjs"
 let options = {
