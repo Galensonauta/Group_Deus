@@ -16,6 +16,11 @@ export async function getRankHomeImdb({ media, nroPage }) {
   const movies = movie.results.slice(0, 4).sort((a, b) => b.vote_average - a.vote_average);
   createAfiches(movies, lastRankImdb, { type: media, lazyLoad: true, clean: nroPage === 1 });
 }
+export async function getTrendingHome({ media, nroPage }) {
+  const { data:movie } = await api(`/trending/${media}/day`)
+  const movies = movie.results.slice(0, 4).sort((a, b) => b.vote_average - a.vote_average);
+  createAfiches(movies, lastRankImdb, { type: media, lazyLoad: true, clean: nroPage === 1 });
+}
 
 // 🧠 Función auxiliar usada por Group Deus
 export async function getRankGd(type) {

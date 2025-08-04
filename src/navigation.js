@@ -101,7 +101,7 @@ requestIdleCallback(async () => {
   ]);
 
   getCategoriesPreview(media);
-  getTrendingHome(media);
+  getTrendingHome({media,nroPage});
   getRankHomeImdb({ media, nroPage });
   getRankHomeGd(media);
   getProvider();
