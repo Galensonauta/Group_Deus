@@ -1,5 +1,5 @@
 // Punto de entrada principal de la aplicación
-import { initializeNavigation } from './navigation.mjs';
+import { initializeNavigation } from './navigation.js';
 
 // Este archivo ya no define lógica compleja.
 // Sólo importa e inicia el resto del sistema.
