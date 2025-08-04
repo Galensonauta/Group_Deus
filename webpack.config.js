@@ -1,79 +1,4 @@
-// import { resolve as _resolve } from 'path';
-// import HtmlWebpackPlugin from 'html-webpack-plugin';
-// import MiniCssExtractPlugin, { loader as _loader } from 'mini-css-extract-plugin';
-// import CopyPlugin from 'copy-webpack-plugin';
-// import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
-// import TerserPlugin from 'terser-webpack-plugin';
-// import Dotenv from 'dotenv-webpack';
-// import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 
-// export const entry = "./src/navigation.js";
-// export const output = {
-//   // path es donde estará la carpeta donde se guardará los archivos
-//   // Con path.resolve podemos decir dónde va estar la carpeta y la ubicación del mismo
-//   path: _resolve(__dirname, "dist"),
-//   // filename le pone el nombre al archivo final
-//   filename: "[name].[contenthash].js",
-// };
-// export const resolve = {
-//   // Aqui ponemos las extensiones que tendremos en nuestro proyecto 
-//   //para webpack los lea
-//   extensions: [".js"],
-//   alias: {
-//     "@styles": _resolve(__dirname, "src/styles"),
-//     "@src": _resolve(__dirname, "src")
-//   }
-// };
-// export const optimization = {
-//   minimize: true,
-//   minimizer: [
-//     new CssMinimizerPlugin(),
-//     new TerserPlugin()
-//   ]
-// };
-// export const module = {
-//   // REGLAS PARA TRABAJAR CON WEBPACK
-//   rules: [
-//     {
-//       // LEE LOS ARCHIVOS CON EXTENSION .JS,
-//       test: /\.m?js$/,
-//       // IGNORA LOS MODULOS DE LA CARPETA
-//       exclude: /node_modules/,
-//       use: {
-//         loader: "babel-loader",
-//       },
-//     },
-//     {
-//       test: /\.css$/i, // Archivos CSS
-//       use: [
-//         _loader, // Extrae el CSS en archivos separados
-//         'css-loader'
-//       ],
-//     },
-//   ],
-// };
-// export const plugins = [
-//   new HtmlWebpackPlugin({
-//     inject: "body",
-//     template: './index.html',
-//     filename: './index.html'
-//   }),
-//   new MiniCssExtractPlugin({
-//     filename: '[name].[contenthash].css', // Nombre del archivo CSS generado
-//   }),
-//   new CopyPlugin({
-//     patterns: [
-//       {
-//         from: _resolve(__dirname, "src", "imagesDefault.js"),
-//         to: "assets/images"
-//       }
-//     ]
-//   }),
-//   new Dotenv({ path: './.env' }),
-//   new CleanWebpackPlugin(),
-// ];
-
-// webpack.config.js
 
 const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -93,7 +18,7 @@ const webpack = require('webpack');
 
 module.exports = {
   mode: 'production', // O 'development' si estás en modo de desarrollo
-  entry: "./src/navigation.js",
+entry: "./src/main.mjs",
   output: {
     path: resolve(__dirname, "dist"),
     filename: "[name].[contenthash].js",
